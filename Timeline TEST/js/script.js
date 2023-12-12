@@ -1,22 +1,17 @@
 /* jshint esversion: 6 */
 
-// !! TO-DO !! //
-// Position line and nav arrows.
-// Scroll listener if user scrolls to side (re-adjust timeline position) ??
-// (This could be achieved by adjusting line position left and right when
-//  user hovers over a date above/below median list event)
-// Responsiveness - converts to vertical
-// !! TO-DO !! //
-let prevEvent = null;
-let prevYr = null;
-let prevInfo = null;
-let clicked = false;
-let timelineExtended = false;
-let md;
-
 function block3SetUp() {
   ("use strict");
 
+  // !! TO-DO !! //
+  // Responsiveness - converts to vertical at mobile-size
+  // !! TO-DO !! //
+  let prevEvent = null;
+  let prevYr = null;
+  let prevInfo = null;
+  let clicked = false;
+  let timelineExtended = false;
+  let md;
   const timeline = document.querySelector(".events ol");
   const events = document.querySelectorAll(".events ol li a");
 
@@ -36,13 +31,23 @@ function block3SetUp() {
     );
 
     event.addEventListener("mouseover", () => {
+      const before = document.querySelector("#before");
+      const after = document.querySelector("#after");
+
       event.style.color = "var(--highlightColour1)";
 
+      // Modify timeline graphic
       if (!timelineExtended && yr > midYr) {
-        timeline.classList.add("progressTimeline");
+        before.innerHTML = "<<<";
+        after.innerHTML = "";
+        timeline.style.transition = "transform 1.5s ease-out";
+        timeline.style.transform = "translateX(-20%)";
         timelineExtended = true;
       } else if (timelineExtended && yr < midYr) {
-        timeline.classList.add("retractTimeline");
+        before.innerHTML = "";
+        after.innerHTML = ">>>";
+        timeline.style.transition = "transform 1.5s ease-out";
+        timeline.style.transform = "translateX(0%)";
         timelineExtended = false;
       }
     });
