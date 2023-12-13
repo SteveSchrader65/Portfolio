@@ -9,14 +9,18 @@
   --textColour: #cccccc;
   --backColour: #210000;
   --highlightColour1: #b3d9ff;
-  --highlightColour2: #05b6fa;
-  --highlightColour3: #3399ff;
+  --highlightColour2: #3399ff;
   --postItColour: #fffcaa;
   --sidebarTextColour: black;
   --sidebarBackgroundColour: #8f8c8a;
   --sidebarBorderColour: #0e0cf3;
   --colour1: black;
   --colour2: white;
+  --scrollTrackColour: ;
+  --scrollThumbColour1: ;
+  --scrollThumbColour2: ;
+  --scrollButtonColour1: ;
+  --scrollButtonColour2: ;
   --borderImage: url("../images/border-dark.png");
 }
 
@@ -26,6 +30,9 @@
 }
 
 html {
+  -webkit-animation: fadein 2s ease-in;
+  -moz-animation: fadein 2s ease-in;
+  -o-animation:  fadein 2s ease-in;
   animation: fadein 2s ease-in;
 }
 @keyframes fadein {
@@ -43,8 +50,38 @@ body {
   padding: 0;
   font-size: 23px;
   background-color: var(--backColour);
+  overflow-x: hidden;
 }
 
+/* SCROLLBARS */
+::-webkit-scrollbar {
+  width: 0.6em;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollTrackColour);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollThumbColour1);
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollThumbColour2);
+}
+
+::-webkit-scrollbar-button {
+	background-color: var(--scrollButtonColour1);
+	border-radius: 5px;
+}
+
+
+::-webkit-scrollbar-button:hover {
+  background-color: var(--scrollButtonColour2);
+}
+
+/* BACKDROP */
 .parallax {
   width: 95%;
   margin: 0 auto;
@@ -93,9 +130,11 @@ body {
   text-shadow: -4px 4px gray, -3px -3px 25px yellow, -1px -1px 5px darkblue;
 }
 
+/* MAIN */
 div p,
 div span {
   background: transparent;
+  color: var(--textColour);
 }
 
 .text_block {
@@ -109,7 +148,7 @@ div span {
   /* background-image: url("../images/stars_background.jpg"); */
 }
 
-/* Nav */
+/* NAV */
 nav {
   position: fixed;
   top: 0;
@@ -126,6 +165,22 @@ nav {
   box-shadow: 1px 1px var(--navTextColour); /* ?? */
 }
 
+nav a {
+  float: left;
+  display: block;
+  color: var(--navTextColour);
+  background-color: var(--navButtonColour);
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+
+nav a:not(#dropmenu-content a),
+#dropmenu #dropbtn {
+  text-shadow: -2px 2px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
+}
+
+/* VIEWMODE */
 .viewingMode {
   display: flex;
   background-color: var(--navBackColor);
@@ -151,21 +206,7 @@ nav {
   left: 5px;
 }
 
-nav a {
-  float: left;
-  display: block;
-  color: var(--navTextColour);
-  background-color: var(--navButtonColour);
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 1.3rem;
-}
-
-nav a:not(#dropmenu-content a),
-#dropmenu #dropbtn {
-  text-shadow: -2px 2px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
-}
-
+/* DROPDOWN */
 #dropmenu {
   float: left;
   overflow: hidden;
@@ -221,7 +262,7 @@ nav a:hover,
 /* STUDIES */
 #block2 {
   display: grid;
-  grid-template-rows: 2fr 7fr 4fr;
+  grid-template-rows: 2fr 7fr auto;
   grid-template-columns: 1fr;
   row-gap: 3%;
 }
@@ -471,7 +512,7 @@ a:not(.content ol li:first-of-type p a) {
   font-weight: 700;
   line-height: 1.2;
   padding-top: 5%;
-  color: var(--highlightColour3);
+  color: var(--highlightColour2);
 }
 
 .content em {
@@ -483,7 +524,6 @@ a:not(.content ol li:first-of-type p a) {
 
 .content p {
   font-size: 1.2em !important;
-  color: var(--white);
   line-height: 1;
 }
 

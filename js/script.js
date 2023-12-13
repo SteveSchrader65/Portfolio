@@ -31,20 +31,22 @@ function setViewingMode() {
     root.style.setProperty("--titleColour", "#cccc00");
     root.style.setProperty("--navBarColour", "#cccccc");
     root.style.setProperty("--navTextColour", "black");
-    root.style.setProperty("--navHoverColour", "#e6e6e5");
+    root.style.setProperty("--navHoverColour", "#82827d");
     root.style.setProperty("--textColour", "#210000");
-    root.style.setProperty("--backColour", "#cccccc");
-    // Change these colours to light-mode versions (yellow->mid-green ??)
-    root.style.setProperty("--highlightColour1", "#b3d9ff");
-    root.style.setProperty("--highlightColour2", "#05b6fa");
-    root.style.setProperty("--highlightColour3", "#3399ff");
-    //
+    root.style.setProperty("--backColour", "#f2f2f2");
+    root.style.setProperty("--highlightColour1", "#3399ff");
+    root.style.setProperty("--highlightColour2", "#0059b3");
     root.style.setProperty("--postItColour", "#fffcaa");
     root.style.setProperty("--sidebarTextColour", "#0000cc");
     root.style.setProperty("--sidebarBackgroundColour", "#e8e8e8");
     root.style.setProperty("--sidebarBorderColour", "#33cc33");
     root.style.setProperty("--colour1", "#000000");
     root.style.setProperty("--colour2", "#ffffff");
+    root.style.setProperty("--scrollTrackColour", "");
+    root.style.setProperty("--scrollThumbColour1", "");
+    root.style.setProperty("--scrollThumbColour2", "");
+    root.style.setProperty("--scrollButtonColour1", "");
+    root.style.setProperty("--scrollButtonColour2", "");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
   }
 
@@ -62,14 +64,18 @@ function setViewingMode() {
     root.style.setProperty("--textColour", "#cccccc");
     root.style.setProperty("--backColour", "#210000");
     root.style.setProperty("--highlightColour1", "#b3d9ff");
-    root.style.setProperty("--highlightColour2", "#05b6fa");
-    root.style.setProperty("--highlightColour3", "#3399ff");
+    root.style.setProperty("--highlightColour2", "#3399ff");
     root.style.setProperty("--postItColour", "#fffcaa");
     root.style.setProperty("--sidebarTextColour", "black");
     root.style.setProperty("--sidebarBackgroundColour", "#8f8c8a");
     root.style.setProperty("--sidebarBorderColour", "#0e0cf3");
-    root.style.setProperty("--colour1", "#000000");
-    root.style.setProperty("--colour2", "#ffffff");
+    root.style.setProperty("--colour1", "black");
+    root.style.setProperty("--colour2", "white");
+    root.style.setProperty("--scrollTrackColour", "");
+    root.style.setProperty("--scrollThumbColour1", "");
+    root.style.setProperty("--scrollThumbColour2", "");
+    root.style.setProperty("--scrollButtonColour1", "");
+    root.style.setProperty("--scrollButtonColour2", "");
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
   }
 }
@@ -177,11 +183,10 @@ function block2SetUp() {
   });
 }
 
+/* Arrows for timeline: See "animated CSS arrows" */
+/* https://www.sliderrevolution.com/resources/css-arrow/ */
 function block3SetUp() {
   ("use strict");
-
-  // Link to download resume PDF
-  // Skill-set section
 
   let prevEvent = null;
   let prevYr = null;
@@ -350,7 +355,7 @@ function init() {
   // Customize scroll-bars ??
   // Tool-tips ??
   // ADD RESPONSIVENESS
-  // block4SetUp(): timeline will become vertical for mobile-sized devices
+  //  - block4SetUp(): timeline will become vertical for mobile-sized devices
 }
 
 // Event listener for the onload event will call the init() function when
