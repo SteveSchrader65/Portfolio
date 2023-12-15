@@ -42,11 +42,12 @@ function setViewingMode() {
     root.style.setProperty("--sidebarBorderColour", "#33cc33");
     root.style.setProperty("--colour1", "#000000");
     root.style.setProperty("--colour2", "#ffffff");
-    root.style.setProperty("--scrollTrackColour", "");
-    root.style.setProperty("--scrollThumbColour1", "");
-    root.style.setProperty("--scrollThumbColour2", "");
-    root.style.setProperty("--scrollButtonColour1", "");
-    root.style.setProperty("--scrollButtonColour2", "");
+    root.style.setProperty("--scrollTrackColour", "#b4b2b1");
+    root.style.setProperty("--scrollThumbColour1", "#1d6dc9");
+    root.style.setProperty("--scrollThumbColour2", "#6c9ee0");
+    root.style.setProperty("--scrollButtonColour1", "#8fbcef");
+    root.style.setProperty("--scrollButtonColour2", "#6c9ee0");
+    root.style.setProperty("--scrollBorderColour", "#b7b6fc");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
   }
 
@@ -71,11 +72,12 @@ function setViewingMode() {
     root.style.setProperty("--sidebarBorderColour", "#0e0cf3");
     root.style.setProperty("--colour1", "black");
     root.style.setProperty("--colour2", "white");
-    root.style.setProperty("--scrollTrackColour", "");
-    root.style.setProperty("--scrollThumbColour1", "");
-    root.style.setProperty("--scrollThumbColour2", "");
-    root.style.setProperty("--scrollButtonColour1", "");
-    root.style.setProperty("--scrollButtonColour2", "");
+    root.style.setProperty("--scrollTrackColour", "#757270");
+    root.style.setProperty("--scrollThumbColour1", "#0a2647");
+    root.style.setProperty("--scrollThumbColour2", "#205295");
+    root.style.setProperty("--scrollButtonColour1", "#1961b3");
+    root.style.setProperty("--scrollButtonColour2", "#4282d7");
+    root.style.setProperty("--scrollBorderColour", "#0e0cf3");
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
   }
 }
@@ -113,8 +115,6 @@ function navbarHide() {
     }
 
     prevScrollPos = currentScrollPos;
-
-    document.querySelector("#viewingMode");
   });
 }
 
@@ -125,9 +125,14 @@ function smoothScroll() {
     anchor.addEventListener("click", function (e) {
       e.preventDefault();
 
-      let selection = document.querySelector(this.getAttribute("href"));
+      let selection;
 
-      selection.scrollIntoView({ behavior: "smooth" });
+      try {
+        selection = document.querySelector(this.getAttribute("href"));
+        selection.scrollIntoView({ behavior: "smooth" });
+      } catch (error) {
+        throw new Error("Sumink went rong: " + error);
+      }
     });
   });
 }
@@ -168,17 +173,26 @@ function block2SetUp() {
       const courseInfo = document.querySelector(cardID);
 
       card.classList.add("course-card-animate");
+      // card.style.transform = "opacity: 1; width: 110%; top: -15%; left: -15%;";
+      // card.style.transition = "transform 1s ease-in-out";
       setTimeout(() => {
         card.classList.add("course-card-flip");
+        // card.style.transform = "rotateY(180deg)";
+        // card.style.transition = "transform 1s ease-in-out";
+
         output.innerHTML = courseInfo.textContent + "<p>" + outro.textContent + "</p>";
-      }, 1000);
+      }, 500);
     });
 
     card.addEventListener("mouseout", function () {
       card.classList.remove("course-card-animate");
+      // card.style.transform = "opacity: 0; width: 85%; top: 15%; left: 15%;";
+      // card.style.transition = "transform 1s ease-in-out";
       setTimeout(() => {
         card.classList.remove("course-card-flip");
-      }, 1000);
+        // card.style.transform = "rotateY(180deg)";
+        // card.style.transition = "transform 1s ease-in-out reverse";
+      }, 500);
     });
   });
 }
@@ -198,12 +212,48 @@ function block3SetUp() {
   const events = document.querySelectorAll(".events ol li a");
   const before = document.querySelector("#before");
   const after = document.querySelector("#after");
+  const arrows1 = document.querySelectorAll("#before .arrow");
+  const arrows2 = document.querySelectorAll("#after .arrow");
 
   if (timelineExtended) {
     md = Math.floor(events.length / 2);
   } else {
     md = Math.ceil(events.length / 2) - 1;
   }
+
+  // NEXT: Make arrows animate across screen, followed by the "timeline" ie: <<<----------------
+  // !! THIS PART FUCKING WORKS - LEAVE IT ALONE, YOU IDIOT !!
+  // Implement arrow animation ...
+  arrows1.forEach((arrow, index) => {
+    const arrowAnim = [
+      { opacity: 0, transform: "translateX(4vw)" },
+      { opacity: 1, transform: "translateX(2vw)" },
+      { opacity: 1, transform: "translateX(-2vw)" },
+      { opacity: 0, transform: "translateX(-4vw)" },
+    ].map((keyframe) => {
+      const transform = keyframe.transform;
+      if (transform) {
+        return {
+          opacity: keyframe.opacity,
+          transform: `translateX(${transform.match(/-?\d+/)[0] / 100}%)`,
+        };
+      } else {
+        return keyframe;
+      }
+    });
+
+    const arrowTiming = {
+      duration: 2000,
+      iterations: Infinity,
+      easing: "ease-in-out",
+    };
+
+    let anime1 = arrow.animate(arrowAnim, arrowTiming);
+    let anime2 = arrows2[index].animate(arrowAnim, arrowTiming);
+
+    anime1.play();
+    anime2.play();
+  });
 
   events.forEach((event) => {
     const eventDate = event.getAttribute("data-date");
@@ -215,22 +265,24 @@ function block3SetUp() {
     );
 
     event.addEventListener("mouseover", () => {
-      event.style.color = "var(--highlightColour1)";
-
-      // Modify timeline graphic
+      // !! THIS PART FUCKING WORKS - LEAVE IT ALONE, YOU IDIOT !!
+      // Move timeline graphic
       if (!timelineExtended && yr > midYr) {
-        before.innerHTML = "<<<";
-        after.innerHTML = "";
-        timeline.style.transition = "transform 1.5s ease-out";
+        before.style.visibility = "visible";
+        before.style.transform = "rotateY(180deg)";
         timeline.style.transform = "translateX(-20%)";
-        timelineExtended = true;
-      } else if (timelineExtended && yr < midYr) {
-        before.innerHTML = "";
-        after.innerHTML = ">>>";
         timeline.style.transition = "transform 1.5s ease-out";
+        timelineExtended = true;
+        after.style.visibility = "hidden";
+      } else if (timelineExtended && yr < midYr) {
+        after.style.visibility = "visible";
         timeline.style.transform = "translateX(0%)";
+        timeline.style.transition = "transform 1.5s ease-out";
         timelineExtended = false;
+        before.style.visibility = "hidden";
       }
+
+      event.style.color = "var(--highlightColour1)";
     });
 
     event.addEventListener("mouseout", () => {
@@ -251,40 +303,59 @@ function block3SetUp() {
       events.forEach((date) => {
         // This branch followed only for second and subsequent selections
         if (prevEvent) {
-          // If this event is the current selection then go to next event
           if (event == prevEvent) {
             next;
           }
 
           prevEvent.style.color = "var(--textColour)";
 
-          // Remove previous event
+          // Remove previous event - NOT WORKING
+          // Try using "visibilty: hidden" instead of "display: none" !!
           if (date == prevEvent) {
             if (prevYr < midYr) {
-              prevInfo.classList.remove("selected", "enter-left");
               prevInfo.classList.add("leave-left");
+              // prevInfo.style.transform = "translateX(0%, -100%)";
+              // prevInfo.style.transition = "transform 2s ease-out;";
+              prevInfo.classList.remove("selected", "enter-left");
+              // prevInfo.style.transform = "translateX(0%, -100%)";
+              // prevInfo.style.transition = "transform 2s ease-out;";
+              // prevInfo.style.display = "none";
             } else {
-              prevInfo.classList.remove("selected", "enter-right");
               prevInfo.classList.add("leave-right");
+              // prevInfo.style.transform = "translateX(0%, 100%)";
+              // prevInfo.style.transition = "transform 2s ease-out;";
+              prevInfo.classList.remove("selected", "enter-right");
+              // prevInfo.style.transform = "translateX(0%, 100%)";
+              // prevInfo.style.transition = "transform 2s ease-out;";
+              // prevInfo.style.display = "none";
             }
           }
         }
 
+        // Try using "visibilty: hidden" instead of "display:" property !!
         // Slide-in new event
         if (date == event) {
           if (yr < midYr) {
             date.classList.add("selected");
+            // date.style.display = "inline-block";
             eventInfo.classList.add("selected", "enter-left");
+            // eventInfo.style.display = "inline-block";
+            // eventInfo.style.transform = "translateX(-100%, 0%)";
+            // eventInfo.style.transition = "transform 2s ease-out;";
           } else {
             date.classList.add("selected");
+            // date.style.display = "inline-block";
             eventInfo.classList.add("selected", "enter-right");
+            // eventInfo.style.display = "inline-block";
+            // eventInfo.style.transform = "translateX(100%, 0%)";
+            // eventInfo.style.transition = "transform 2s ease-out;";
           }
         }
       });
 
       // Remove display classes from previous event
       if (prevEvent) {
-        prevInfo.classList.remove(...prevInfo.classList);
+        prevInfo.classList.remove(prevInfo.classList);
       }
 
       prevEvent = event;
