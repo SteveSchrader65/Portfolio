@@ -220,7 +220,6 @@ function block3SetUp() {
     md = Math.ceil(events.length / 2) - 1;
   }
 
-  // Implement arrow animations
   arrows1.forEach((arrow, index) => {
     const arrowAnim = new KeyframeEffect(
       arrow,
@@ -329,7 +328,6 @@ function block3SetUp() {
         }
       });
 
-      // Remove display classes from previous event
       if (prevEvent) {
         prevInfo.classList.remove(prevInfo.classList);
       }
@@ -368,10 +366,10 @@ function block4SetUp() {
   });
 }
 
+// https://formcarry.com/blog/how-to-create-a-simple-html-contact-form/
 function block5SetUp() {
-  "use strict";
+  ("use strict");
 
-  // Create input form to send e-mail to my address
   // Will require 'AreYouHuman ??' pop-up to allow input
 }
 
@@ -394,10 +392,9 @@ function init() {
   block2SetUp();
   block3SetUp();
   block4SetUp();
-  // block5SetUp();
+  block5SetUp();
   footerDate();
 
-  // Customize scroll-bars ??
   // Tool-tips ??
   // ADD RESPONSIVENESS
   //  - block4SetUp(): timeline will become vertical for mobile-sized devices

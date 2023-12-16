@@ -283,7 +283,7 @@
       </section>
       <p style="color: var(--navHoverColour)">Note:</p>
       <ol style="color: var(--navHoverColour); list-style-type: circle;">
-        <li>Select key-dates on the time-line for further details of my employment history</li>
+        <li>Select key-dates on the time-line for further details on my employment history</li>
         <li>Hover over dates towards either end of the time-line to re-orient it</li>
       </ol>
       <p>
@@ -309,7 +309,6 @@
         few of my personal favourites on this Post-It<span id="copyright">&copy;</span> note. Select
         a project to activate its' info-panel:
       </p>
-      <!-- Modify so that sidebar panel is in same <div> as projectList OR closes on scroll -->
       <ul class="projectList">
         <li data="#project1">Clive ...</li>
         <li data="#project2">Recipe Book</li>
@@ -416,19 +415,27 @@
         </aside>
       </div>
     </div>
-
     <div class="parallax" id="parallax5">
       <span class="title">Contact</span>
     </div>
     <div class="text_block" id="block5">
-      <p>
-        <ul>
-          <li>Include link to GitHub account.</li>
-          <li>Include form to send email directly from site.</li>
-        </ul>
-      </p>
+      <ul style="display: none;">
+        <li>Include link to GitHub account.</li>
+        <li>Include form to send email directly from site.</li>
+      </ul>
+    <div class="form-container">
+      <form action="#" method="POST" class="contact-form">
+      <!-- <form action="contact-process.php" method="POST" class="contact-form"> -->
+        <label for="contact-name">Name</label>
+        <input type="text" id="contact-name" name="fullName" required />
+        <label for="contact-email">Email Address</label>
+        <input type="email" id="contact-email" name="email" required />
+        <label for="contact-message">Message</label>
+        <textarea name="message" id="contact-message" cols="150" rows="10"></textarea>
+        <button type="submit">Send</button>
+      </form>
     </div>
-
+    </div>
     <footer>
       <h3>
       </h3>
