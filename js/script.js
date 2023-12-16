@@ -197,23 +197,22 @@ function block2SetUp() {
   });
 }
 
-/* Arrows for timeline: See "animated CSS arrows" */
-/* https://www.sliderrevolution.com/resources/css-arrow/ */
 function block3SetUp() {
   ("use strict");
 
-  let prevEvent = null;
-  let prevYr = null;
-  let prevInfo = null;
-  let clicked = false;
-  let timelineExtended = false;
-  let md;
   const timeline = document.querySelector(".events ol");
   const events = document.querySelectorAll(".events ol li a");
   const before = document.querySelector("#before");
   const after = document.querySelector("#after");
-  const arrows1 = document.querySelectorAll("#before .arrow");
-  const arrows2 = document.querySelectorAll("#after .arrow");
+  const arrows1 = before.querySelectorAll("#before .arrow");
+  const arrows2 = after.querySelectorAll("#after .arrow");
+  const arrowDelay = 250;
+  let timelineExtended = false;
+  let prevEvent = null;
+  let prevYr = null;
+  let prevInfo = null;
+  let clicked = false;
+  let md;
 
   if (timelineExtended) {
     md = Math.floor(events.length / 2);
@@ -221,38 +220,39 @@ function block3SetUp() {
     md = Math.ceil(events.length / 2) - 1;
   }
 
-  // NEXT: Make arrows animate across screen, followed by the "timeline" ie: <<<----------------
-  // !! THIS PART FUCKING WORKS - LEAVE IT ALONE, YOU IDIOT !!
-  // Implement arrow animation ...
+  // Implement arrow animations
   arrows1.forEach((arrow, index) => {
-    const arrowAnim = [
-      { opacity: 0, transform: "translateX(4vw)" },
-      { opacity: 1, transform: "translateX(2vw)" },
-      { opacity: 1, transform: "translateX(-2vw)" },
-      { opacity: 0, transform: "translateX(-4vw)" },
-    ].map((keyframe) => {
-      const transform = keyframe.transform;
-      if (transform) {
-        return {
-          opacity: keyframe.opacity,
-          transform: `translateX(${transform.match(/-?\d+/)[0] / 100}%)`,
-        };
-      } else {
-        return keyframe;
-      }
-    });
+    const arrowAnim = new KeyframeEffect(
+      arrow,
+      [
+        { opacity: 0, transform: "translateX(4vw)" },
+        { opacity: 1, transform: "translateX(2vw)" },
+        { opacity: 1, transform: "translateX(-2vw)" },
+        { opacity: 0, transform: "translateX(-4vw)" },
+      ],
+      { duration: 2000, delay: index * arrowDelay, iterations: Infinity, easing: "ease-in-out" }
+    );
 
-    const arrowTiming = {
-      duration: 2000,
-      iterations: Infinity,
-      easing: "ease-in-out",
-    };
+    let animation = new Animation(arrowAnim);
 
-    let anime1 = arrow.animate(arrowAnim, arrowTiming);
-    let anime2 = arrows2[index].animate(arrowAnim, arrowTiming);
+    animation.play();
+  });
 
-    anime1.play();
-    anime2.play();
+  arrows2.forEach((arrow, index) => {
+    const arrowAnim = new KeyframeEffect(
+      arrow,
+      [
+        { opacity: 0, transform: "translateX(4vw)" },
+        { opacity: 1, transform: "translateX(2vw)" },
+        { opacity: 1, transform: "translateX(-2vw)" },
+        { opacity: 0, transform: "translateX(-4vw)" },
+      ],
+      { duration: 2000, delay: index * arrowDelay, iterations: Infinity, easing: "ease-in-out" }
+    );
+
+    let animation = new Animation(arrowAnim);
+
+    animation.play();
   });
 
   events.forEach((event) => {
@@ -265,11 +265,8 @@ function block3SetUp() {
     );
 
     event.addEventListener("mouseover", () => {
-      // !! THIS PART FUCKING WORKS - LEAVE IT ALONE, YOU IDIOT !!
-      // Move timeline graphic
       if (!timelineExtended && yr > midYr) {
         before.style.visibility = "visible";
-        before.style.transform = "rotateY(180deg)";
         timeline.style.transform = "translateX(-20%)";
         timeline.style.transition = "transform 1.5s ease-out";
         timelineExtended = true;
@@ -301,54 +298,33 @@ function block3SetUp() {
       clicked = true;
       event.style.color = "var(--highlightColour2)";
       events.forEach((date) => {
-        // This branch followed only for second and subsequent selections
         if (prevEvent) {
           if (event == prevEvent) {
             next;
           }
 
+          // This branch followed only for second and subsequent selections
           prevEvent.style.color = "var(--textColour)";
 
-          // Remove previous event - NOT WORKING
-          // Try using "visibilty: hidden" instead of "display: none" !!
           if (date == prevEvent) {
             if (prevYr < midYr) {
               prevInfo.classList.add("leave-left");
-              // prevInfo.style.transform = "translateX(0%, -100%)";
-              // prevInfo.style.transition = "transform 2s ease-out;";
               prevInfo.classList.remove("selected", "enter-left");
-              // prevInfo.style.transform = "translateX(0%, -100%)";
-              // prevInfo.style.transition = "transform 2s ease-out;";
-              // prevInfo.style.display = "none";
             } else {
               prevInfo.classList.add("leave-right");
-              // prevInfo.style.transform = "translateX(0%, 100%)";
-              // prevInfo.style.transition = "transform 2s ease-out;";
               prevInfo.classList.remove("selected", "enter-right");
-              // prevInfo.style.transform = "translateX(0%, 100%)";
-              // prevInfo.style.transition = "transform 2s ease-out;";
-              // prevInfo.style.display = "none";
             }
           }
         }
 
-        // Try using "visibilty: hidden" instead of "display:" property !!
         // Slide-in new event
         if (date == event) {
           if (yr < midYr) {
             date.classList.add("selected");
-            // date.style.display = "inline-block";
             eventInfo.classList.add("selected", "enter-left");
-            // eventInfo.style.display = "inline-block";
-            // eventInfo.style.transform = "translateX(-100%, 0%)";
-            // eventInfo.style.transition = "transform 2s ease-out;";
           } else {
             date.classList.add("selected");
-            // date.style.display = "inline-block";
             eventInfo.classList.add("selected", "enter-right");
-            // eventInfo.style.display = "inline-block";
-            // eventInfo.style.transform = "translateX(100%, 0%)";
-            // eventInfo.style.transition = "transform 2s ease-out;";
           }
         }
       });
@@ -365,7 +341,6 @@ function block3SetUp() {
   });
 }
 
-// Use this selector (.content li > *) to have sidebar scroll properly with rest of content.
 function block4SetUp() {
   "use strict";
 
@@ -379,7 +354,6 @@ function block4SetUp() {
 
       document.querySelectorAll("aside").forEach((aside) => {
         aside.style.display = "none";
-        // Call animation to close any open sidebar
       });
 
       correspondingSidebar.style.display = "inline-block";

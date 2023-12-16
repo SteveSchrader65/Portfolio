@@ -28,7 +28,6 @@
 /* BODY */
 * {
   box-sizing: border-box;
-  /* scrollbar-gutter: stable both-edges; */
 }
 
 html {
@@ -158,7 +157,7 @@ nav {
   width: 100%;
   display: flex;
   justify-content: space-around;
-  z-index: 10;
+  z-index: 100;
   -webkit-transition: top 0.4s;
   -moz-transition: top 0.4s;
   transition: top 0.4s;
@@ -397,8 +396,6 @@ nav a:hover,
 
 #timeline-wrapper {
   position: relative;
-  /* height: 100%; */
-  /* width: 85%; */
   margin: -1% auto 5%;
   display: grid;
   grid-template-rows: repeat(2, 1fr);
@@ -412,11 +409,6 @@ nav a:hover,
   background: var(--highlightColour2);
   grid-row: 1 / 1;
   grid-column: 2 / 2;
-}
-
-#timeline > * {
-  position: relative;
-  overflow: hidden;
 }
 
 ol,
@@ -444,9 +436,9 @@ ul {
 #after {
   grid-column: 3 / 3;
   visibility: visible;
+  transform: scaleX(-1);
 }
 
-/* Timeline Arrows */
 .arrow {
   width: 0;
   height: 0;
@@ -455,7 +447,6 @@ ul {
   border-right: 1em solid var(--highlightColour2);
 }
 
-/* Display event list horizontally */
 .events ol {
   position: absolute;
   top: 25px;
@@ -472,36 +463,21 @@ ul {
   color: var(--textColour);
 }
 
-.events ol li:nth-of-type(1) {
+.events ol li:nth-of-type(1),
+.events ol li:nth-of-type(8) {
   margin-left: -3%;
 }
 
-.events ol li:nth-of-type(2) {
-  margin-left: -6%;
-}
-
-.events ol li:nth-of-type(3) {
-  margin-left: -6%;
-}
-
-.events ol li:nth-of-type(4) {
-  margin-left: 0%;
-}
-
-.events ol li:nth-of-type(5) {
-  margin-left: -6%;
-}
-
+.events ol li:nth-of-type(2),
+.events ol li:nth-of-type(3),
+.events ol li:nth-of-type(5),
 .events ol li:nth-of-type(6) {
   margin-left: -6%;
 }
 
+.events ol li:nth-of-type(4),
 .events ol li:nth-of-type(7) {
   margin-left: 0%;
-}
-
-.events ol li:nth-of-type(8) {
-  margin-left: -3%;
 }
 
 .events ol li:nth-of-type(9) {
@@ -513,12 +489,10 @@ a:not(.content ol li:first-of-type p a) {
   text-decoration: none;
 }
 
-/* Hide all but selected event */
 .content ol li:not(.selected) {
   display: none;
 }
 
-/* Display selected item - REMOVE FOR JS ONLY */
 .content ol li .selected {
   display: inline-block;
 }
@@ -631,9 +605,9 @@ a:not(.content ol li:first-of-type p a) {
   color: var(--textColour);
 }
 
-#block4 ~ p {
+#block4 p {
   grid-row: 1 / 1;
-  grid-column: 1 / 1;
+  grid-column: 1 / 2;
 }
 
 #copyright {
@@ -647,12 +621,11 @@ a:not(.content ol li:first-of-type p a) {
   color: var(--colour1);
   font-family: "Brush Script MT";
   font-size: 1.5rem;
-  width: 55%;
+  width: 60%;
   grid-row: 2 / 2;
   grid-column: 1 / 1;
   line-height: 1.6;
   box-shadow: -8px 8px 10px #b3b3b3;
-  /* Gradient: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 20%, rgba(61,61,61,1) 25%, rgba(179,179,179,1) 100%); */
   -webkit-transform: rotate(-7deg);
   -moz-transform: rotate(-7deg);
   -ms-transform: rotate(-7deg);
@@ -673,14 +646,25 @@ a:not(.content ol li:first-of-type p a) {
   color: #00b300;
 }
 
+aside {
+  display: none;
+  height: auto;
+  width: 100%;
+  grid-row: 2 / 2;
+  grid-column: 2 / 2;
+  background-color: var(--sidebarBackgroundColour);
+  color: var(--sidebarTextColour);
+  position: relative;
+  z-index: 5;
+  border: 2px solid var(--sidebarBorderColour);
+  padding: 2.5%;
+}
+
 .sidebar {
-  position: fixed;
-  top: 5%;
+  position: absolute;
   right: -55%;
   height: 100%;
   width: 55%;
-  grid-row: 1 / 2;
-  grid-column: 2 / 2;
   font-size: 1rem;
   overflow-x: hidden;
   -webkit-transition: all 0.5s;
@@ -706,40 +690,21 @@ a:not(.content ol li:first-of-type p a) {
   background-color: var(--navHoverColour);
 }
 
-aside {
-  display: none;
-  height: auto;
-  width: 100%;
-  background-color: var(--sidebarBackgroundColour);
-  color: var(--sidebarTextColour);
-  position: relative;
-  z-index: 5;
-  top: -85vh;
-  left: 39.5vw;
-  overflow: hidden;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -ms-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  transition: all 0.5s;
-  border: 2px solid var(--sidebarBorderColour);
-  padding: 2.5%;
-}
-
 .sidebar img {
   padding: 1%;
   border: 10px solid;
   border-image: var(--borderImage) 18 stretch;
 }
 
+/* Add anmation to re-position images */
 .sidebar img:hover:not(#project3 img:hover) {
   margin: 0;
   padding: 0;
-  -webkit-transform: scale(3);
-  -moz-transform: scale(3);
-  -ms-transform: scale(3);
-  -o-transform: scale(3);
-  transform: scale(3);
+  -webkit-transform: scale(2);
+  -moz-transform: scale(2);
+  -ms-transform: scale(2);
+  -o-transform: scale(2);
+  transform: scale(2);
 }
 
 /* CONTACT */
