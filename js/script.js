@@ -45,9 +45,11 @@ function setViewingMode() {
     root.style.setProperty("--scrollTrackColour", "#b4b2b1");
     root.style.setProperty("--scrollThumbColour1", "#1d6dc9");
     root.style.setProperty("--scrollThumbColour2", "#6c9ee0");
-    root.style.setProperty("--scrollButtonColour1", "#8fbcef");
-    root.style.setProperty("--scrollButtonColour2", "#6c9ee0");
+    root.style.setProperty("--scrollButtonColour1", "#6c9ee0");
+    root.style.setProperty("--scrollButtonColour2", "#8fbcef");
     root.style.setProperty("--scrollBorderColour", "#b7b6fc");
+    root.style.setProperty("--alertColour", "#ff1a1a");
+    root.style.setProperty("--successColour", "#69cf9d");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
   }
 
@@ -78,6 +80,8 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour1", "#1961b3");
     root.style.setProperty("--scrollButtonColour2", "#4282d7");
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
+    root.style.setProperty("--alertColour", "#b30000");
+    root.style.setProperty("--successColour", "#29a329");
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
   }
 }

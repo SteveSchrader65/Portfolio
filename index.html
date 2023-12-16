@@ -419,22 +419,27 @@
       <span class="title">Contact</span>
     </div>
     <div class="text_block" id="block5">
+      <p>
+        Thank you for taking the time to read a little about me.
+        <br/><br/>
+        Should you wish to get in touch with any questions -- or to offer me that Dream Job -- you can contact me directly by completing the Contact form on this page.
+      </p>
       <ul style="display: none;">
         <li>Include link to GitHub account.</li>
         <li>Include form to send email directly from site.</li>
       </ul>
-    <div class="form-container">
-      <form action="#" method="POST" class="contact-form">
-      <!-- <form action="contact-process.php" method="POST" class="contact-form"> -->
-        <label for="contact-name">Name</label>
-        <input type="text" id="contact-name" name="fullName" required />
-        <label for="contact-email">Email Address</label>
-        <input type="email" id="contact-email" name="email" required />
-        <label for="contact-message">Message</label>
-        <textarea name="message" id="contact-message" cols="150" rows="10"></textarea>
-        <button type="submit">Send</button>
-      </form>
-    </div>
+      <div class="form-container">
+        <form action="#" method="POST" class="contact-form">
+        <!-- <form action="contact-process.php" method="POST" class="contact-form"> -->
+          <label for="contact-name">Name</label>
+          <input type="text" id="contact-name" name="fullName" placeholder="Please tell me your name ..." required />
+          <label for="contact-email">Email Address</label>
+          <input type="email" id="contact-email" name="email" placeholder="Enter your e-mail address here ..." required />
+          <label for="contact-message">Message</label>
+          <textarea name="message" id="contact-message" cols="150" rows="10" placeholder="Type your message here ..."></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
     </div>
     <footer>
       <h3>
