@@ -165,7 +165,7 @@ function block1SetUp() {
 }
 
 function block2SetUp() {
-  ("use strict");
+  "use strict";
 
   const cards = document.querySelectorAll(".course-card");
   const outro = document.querySelector("#outro");
@@ -176,33 +176,47 @@ function block2SetUp() {
       const cardID = this.getAttribute("data");
       const courseInfo = document.querySelector(cardID);
 
-      card.classList.add("course-card-animate");
-      // card.style.transform = "opacity: 1; width: 110%; top: -15%; left: -15%;";
-      // card.style.transition = "transform 1s ease-in-out";
-      setTimeout(() => {
-        card.classList.add("course-card-flip");
-        // card.style.transform = "rotateY(180deg)";
-        // card.style.transition = "transform 1s ease-in-out";
+      // card.classList.add("course-card-animate");
+      const cardAnim = new KeyframeEffect(card, [{ transform: "matrix(1.3, 0, 0, 1.3, 15, 15)" }], {
+        duration: 1000,
+        easing: "ease-in-out",
+        fill: "forwards",
+      });
 
+      new Animation(cardAnim).play();
+
+      setTimeout(() => {
+        // card.classList.add("course-card-flip");
+        const cardAnim = new KeyframeEffect(card, [{ transform: "rotateY(180deg)" }], {
+          duration: 1000,
+          easing: "ease-in-out",
+          fill: "forwards",
+        });
+
+        new Animation(cardAnim).play();
         output.innerHTML = courseInfo.textContent + "<p>" + outro.textContent + "</p>";
-      }, 500);
+      }, 1000);
     });
 
     card.addEventListener("mouseout", function () {
-      card.classList.remove("course-card-animate");
-      // card.style.transform = "opacity: 0; width: 85%; top: 15%; left: 15%;";
-      // card.style.transition = "transform 1s ease-in-out";
-      setTimeout(() => {
-        card.classList.remove("course-card-flip");
-        // card.style.transform = "rotateY(180deg)";
-        // card.style.transition = "transform 1s ease-in-out reverse";
-      }, 500);
+      //card.classList.remove("course-card-animate");
+      const cardAnim = new KeyframeEffect(
+        card,
+        [{ transform: "translate(0, 0)" }, { transform: "scale(1.0)" }],
+        {
+          duration: 1000,
+          easing: "ease-in-out",
+          fill: "forwards",
+        }
+      );
+
+      new Animation(cardAnim).play();
     });
   });
 }
 
 function block3SetUp() {
-  ("use strict");
+  "use strict";
 
   const timeline = document.querySelector(".events ol");
   const events = document.querySelectorAll(".events ol li a");
@@ -233,12 +247,10 @@ function block3SetUp() {
         { opacity: 1, transform: "translateX(-2vw)" },
         { opacity: 0, transform: "translateX(-4vw)" },
       ],
-      { duration: 2000, delay: index * arrowDelay, iterations: Infinity, easing: "ease-in-out" }
+      { duration: 2000, delay: arrowDelay * index, iterations: Infinity, easing: "ease-in-out" }
     );
 
-    let animation = new Animation(arrowAnim);
-
-    animation.play();
+    new Animation(arrowAnim).play();
   });
 
   arrows2.forEach((arrow, index) => {
@@ -250,12 +262,10 @@ function block3SetUp() {
         { opacity: 1, transform: "translateX(-2vw)" },
         { opacity: 0, transform: "translateX(-4vw)" },
       ],
-      { duration: 2000, delay: index * arrowDelay, iterations: Infinity, easing: "ease-in-out" }
+      { duration: 2000, delay: arrowDelay * index, iterations: Infinity, easing: "ease-in-out" }
     );
 
-    let animation = new Animation(arrowAnim);
-
-    animation.play();
+    new Animation(arrowAnim).play();
   });
 
   events.forEach((event) => {
@@ -270,14 +280,28 @@ function block3SetUp() {
     event.addEventListener("mouseover", () => {
       if (!timelineExtended && yr > midYr) {
         before.style.visibility = "visible";
-        timeline.style.transform = "translateX(-20%)";
-        timeline.style.transition = "transform 1.5s ease-out";
+
+        const futureAnim = new KeyframeEffect(timeline, [{ transform: "translateX(-20%)" }], {
+          duration: 1500,
+          easing: "ease-out",
+          fill: "forwards",
+        });
+
+        new Animation(futureAnim).play();
+
         timelineExtended = true;
         after.style.visibility = "hidden";
       } else if (timelineExtended && yr < midYr) {
         after.style.visibility = "visible";
-        timeline.style.transform = "translateX(0%)";
-        timeline.style.transition = "transform 1.5s ease-out";
+
+        const pastAnim = new KeyframeEffect(timeline, [{ transform: "translateX(0%)" }], {
+          duration: 1500,
+          easing: "ease-out",
+          fill: "forwards",
+        });
+
+        new Animation(pastAnim).play();
+
         timelineExtended = false;
         before.style.visibility = "hidden";
       }
@@ -297,48 +321,59 @@ function block3SetUp() {
 
     event.addEventListener("click", () => {
       const eventInfo = document.querySelector(eventDate);
+      let eventAnim;
+      let eventDirection;
 
       clicked = true;
       event.style.color = "var(--highlightColour2)";
       events.forEach((date) => {
         if (prevEvent) {
-          if (event == prevEvent) {
-            next;
-          }
-
           // This branch followed only for second and subsequent selections
-          prevEvent.style.color = "var(--textColour)";
+          if (event != prevEvent) {
+            prevEvent.style.color = "var(--textColour)";
 
-          if (date == prevEvent) {
-            if (prevYr < midYr) {
-              prevInfo.classList.add("leave-left");
-              prevInfo.classList.remove("selected", "enter-left");
-            } else {
-              prevInfo.classList.add("leave-right");
-              prevInfo.classList.remove("selected", "enter-right");
+            // Slide current event off-screen
+            if (date == prevEvent) {
+              if (prevYr < midYr) {
+                eventDirection = "translateX(-200%)";
+              } else {
+                eventDirection = "translateX(200%)";
+              }
+
+              eventAnim = new KeyframeEffect(prevInfo, [{ transform: eventDirection }], {
+                duration: 500,
+                easing: "ease-in",
+                fill: "forwards",
+              });
+
+              new Animation(eventAnim).play();
             }
           }
         }
 
-        // Slide-in new event
+        // Slide new event onto screen
         if (date == event) {
           if (yr < midYr) {
-            date.classList.add("selected");
-            eventInfo.classList.add("selected", "enter-left");
+            eventInfo.style.transform = "translateX(-200%)";
           } else {
-            date.classList.add("selected");
-            eventInfo.classList.add("selected", "enter-right");
+            eventInfo.style.transform = "translateX(200%)";
           }
+
+          eventAnim = new KeyframeEffect(eventInfo, [{ transform: "translateX(0%)" }], {
+            duration: 1500,
+            easing: "ease-out",
+            fill: "forwards",
+          });
+
+          eventInfo.style.display = "inline-block";
+          new Animation(eventAnim).play();
         }
       });
-
-      if (prevEvent) {
-        prevInfo.classList.remove(prevInfo.classList);
-      }
 
       prevEvent = event;
       prevYr = yr;
       prevInfo = eventInfo;
+      prevInfo.style.display = "none;";
     });
   });
 }
@@ -372,7 +407,7 @@ function block4SetUp() {
 
 // https://formcarry.com/blog/how-to-create-a-simple-html-contact-form/
 function block5SetUp() {
-  ("use strict");
+  "use strict";
 
   // Will require 'AreYouHuman ??' pop-up to allow input
 }
