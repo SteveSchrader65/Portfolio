@@ -305,42 +305,32 @@ nav a:hover,
 }
 
 .course-card {
-  width: 85%;
   position: relative;
-  z-index: 5;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  cursor: pointer;
+  perspective: 1000px;
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   -ms-transform-style: preserve-3d;
   -o-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  -webkit-transition: all 1s;
-  -moz-transition: all 1s;
-  -ms-transition: all 1s;
-  -o-transition: all 1s;
-  transition: all 1s ease-in-out;
 }
 
-.course-card-front {
+.course-card-front,
+.course-card-back {
   position: absolute;
+  width: 100%;
+  height: 100%;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
-  transition: all 1s ease-in-out;
 }
 
 .course-card-back {
-  position: absolute;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: rotateY(180deg);
-  -moz-transform: rotateY(180deg);
-  -ms-transform: rotateY(180deg);
-  -o-transform: rotateY(180deg);
   transform: rotateY(180deg);
-  transition: all 1s ease-in-out;
 }
 
 .course-card img {
@@ -348,42 +338,12 @@ nav a:hover,
   padding: 1%;
   border: 10px solid;
   border-image: var(--borderImage) 18 stretch;
-  -webkit-perspective: 1000px;
-  -moz-perspective: 1000px;
-  -ms-perspective: 1000px;
-  -o-perspective: 1000px;
-  perspective: 1000px;
 }
 
 #outro,
 .course-info {
   display: none;
 }
-
-/* .course-card-animate {
-  opacity: 1;
-  width: 110%;
-  top: -15%;
-  left: -15%;
-  -webkit-animation: all 1s ease-in-out;
-  -moz-animation: all 1s ease-in-out;
-  -ms-animation: all 1s ease-in-out;
-  -o-animation: all 1s ease-in-out;
-  animation: all 1s ease-in-out;
-}
-
-.course-card-flip {
-  -webkit-transform: rotateY(180deg);
-  -moz-transform: rotateY(180deg);
-  -ms-transform: rotateY(180deg);
-  -o-transform: rotateY(180deg);
-  transform: rotateY(180deg);
-  -webkit-animation: all 1s ease-in-out;
-  -moz-animation: all 1s ease-in-out;
-  -ms-animation: all 1s ease-in-out;
-  -o-animation: all 1s ease-in-out;
-  animation: all 1s ease-in-out;
-} */
 
 /* EMPLOYMENT */
 #employTimeline {

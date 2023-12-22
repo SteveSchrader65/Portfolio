@@ -125,14 +125,14 @@ function navbarHide() {
 function smoothScroll() {
   "use strict";
 
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
+  document.querySelectorAll('a[href^="#"]').forEach((section) => {
+    section.addEventListener("click", function (e) {
       e.preventDefault();
 
       let selection;
 
       try {
-        selection = document.querySelector(this.getAttribute("href"));
+        selection = document.querySelector(e.target.getAttribute("href"));
         selection.scrollIntoView({ behavior: "smooth" });
       } catch (error) {
         throw new Error("Sumink went rong: " + error);
@@ -167,50 +167,99 @@ function block1SetUp() {
 function block2SetUp() {
   "use strict";
 
-  const cards = document.querySelectorAll(".course-card");
+  const diplomas = document.querySelectorAll(".course-card");
+  const courseInfo = document.querySelector("#courses");
   const outro = document.querySelector("#outro");
-  const output = document.querySelector("#output");
 
-  cards.forEach((card) => {
-    card.addEventListener("mouseover", function () {
-      const cardID = this.getAttribute("data");
-      const courseInfo = document.querySelector(cardID);
+  diplomas.forEach((diploma, index) => {
+    let isFlipped = false;
 
-      // card.classList.add("course-card-animate");
-      const cardAnim = new KeyframeEffect(card, [{ transform: "matrix(1.3, 0, 0, 1.3, 15, 15)" }], {
-        duration: 1000,
-        easing: "ease-in-out",
-        fill: "forwards",
-      });
-
-      new Animation(cardAnim).play();
-
-      setTimeout(() => {
-        // card.classList.add("course-card-flip");
-        const cardAnim = new KeyframeEffect(card, [{ transform: "rotateY(180deg)" }], {
-          duration: 1000,
-          easing: "ease-in-out",
-          fill: "forwards",
-        });
-
-        new Animation(cardAnim).play();
-        output.innerHTML = courseInfo.textContent + "<p>" + outro.textContent + "</p>";
-      }, 1000);
-    });
-
-    card.addEventListener("mouseout", function () {
-      //card.classList.remove("course-card-animate");
-      const cardAnim = new KeyframeEffect(
-        card,
-        [{ transform: "translate(0, 0)" }, { transform: "scale(1.0)" }],
+    diploma.addEventListener("mouseover", () => {
+      const diplomaAnim = new KeyframeEffect(
+        diploma,
+        [{ transform: "matrix(1.15, 0, 0, 1.15, -9, -9)" }],
         {
-          duration: 1000,
-          easing: "ease-in-out",
+          duration: 500,
+          easing: "linear",
           fill: "forwards",
         }
       );
 
-      new Animation(cardAnim).play();
+      new Animation(diplomaAnim).play();
+
+      setTimeout(() => {
+        courseInfo.innerHTML = diploma.textContent + "<p>" + outro.textContent + "</p>";
+        courseInfo.style.marginTop = "11%";
+      }, 500);
+    });
+
+    // Deflate and re-position diploma on mouse-out
+    diploma.addEventListener("mouseout", () => {
+      if (isFlipped) {
+        const diplomaAnim = new KeyframeEffect(diploma, [{ transform: "rotateY(-180deg" }], {
+          duration: 150,
+          easing: "linear",
+          fill: "forwards",
+        });
+
+        new Animation(diplomaAnim).play();
+      }
+
+      const diplomaAnim = new KeyframeEffect(
+        diploma,
+        [{ transform: "matrix(1.0, 0, 0, 1.0, 0, 0)" }],
+        { duration: 150, delay: 150, easing: "linear", fill: "forwards" }
+      );
+
+      new Animation(diplomaAnim).play();
+    });
+
+    diploma.addEventListener("click", () => {
+      let rotation;
+
+      switch (index) {
+        case 0:
+          rotation = "5deg";
+          break;
+        case 1:
+          rotation = "0deg";
+          break;
+        case 2:
+          rotation = "-5deg";
+          break;
+      }
+
+      if (!isFlipped) {
+        const diplomaAnim = new KeyframeEffect(
+          diploma,
+          [{ transform: `rotateY(180deg) rotateZ(${rotation}) matrix(1.15, 0, 0, 1.15, -9, -9)` }],
+          {
+            duration: 1000,
+            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+            fill: "forwards",
+          }
+        );
+
+        new Animation(diplomaAnim).play();
+      } else {
+        const diplomaAnim = new KeyframeEffect(
+          diploma,
+          [
+            {
+              transform: `rotateY(0deg) rotateZ(${rotation * -1}) matrix(1.15, 0, 0, 1.15, -9, -9)`,
+            },
+          ],
+          {
+            duration: 1000,
+            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+            fill: "forwards",
+          }
+        );
+
+        new Animation(diplomaAnim).play();
+      }
+
+      isFlipped = !isFlipped;
     });
   });
 }
@@ -222,8 +271,7 @@ function block3SetUp() {
   const events = document.querySelectorAll(".events ol li a");
   const before = document.querySelector("#before");
   const after = document.querySelector("#after");
-  const arrows1 = before.querySelectorAll("#before .arrow");
-  const arrows2 = after.querySelectorAll("#after .arrow");
+  const arrows = document.querySelectorAll("#before .arrow, #after .arrow");
   const arrowDelay = 250;
   let timelineExtended = false;
   let prevEvent = null;
@@ -238,7 +286,7 @@ function block3SetUp() {
     md = Math.ceil(events.length / 2) - 1;
   }
 
-  arrows1.forEach((arrow, index) => {
+  arrows.forEach((arrow, index) => {
     const arrowAnim = new KeyframeEffect(
       arrow,
       [
@@ -247,22 +295,7 @@ function block3SetUp() {
         { opacity: 1, transform: "translateX(-2vw)" },
         { opacity: 0, transform: "translateX(-4vw)" },
       ],
-      { duration: 2000, delay: arrowDelay * index, iterations: Infinity, easing: "ease-in-out" }
-    );
-
-    new Animation(arrowAnim).play();
-  });
-
-  arrows2.forEach((arrow, index) => {
-    const arrowAnim = new KeyframeEffect(
-      arrow,
-      [
-        { opacity: 0, transform: "translateX(4vw)" },
-        { opacity: 1, transform: "translateX(2vw)" },
-        { opacity: 1, transform: "translateX(-2vw)" },
-        { opacity: 0, transform: "translateX(-4vw)" },
-      ],
-      { duration: 2000, delay: arrowDelay * index, iterations: Infinity, easing: "ease-in-out" }
+      { duration: 2000, delay: arrowDelay * index, iterations: Infinity, easing: "linear" }
     );
 
     new Animation(arrowAnim).play();
@@ -341,8 +374,8 @@ function block3SetUp() {
               }
 
               eventAnim = new KeyframeEffect(prevInfo, [{ transform: eventDirection }], {
-                duration: 500,
-                easing: "ease-in",
+                duration: 750,
+                easing: "ease-out",
                 fill: "forwards",
               });
 
@@ -361,7 +394,7 @@ function block3SetUp() {
 
           eventAnim = new KeyframeEffect(eventInfo, [{ transform: "translateX(0%)" }], {
             duration: 1500,
-            easing: "ease-out",
+            easing: "linear",
             fill: "forwards",
           });
 
@@ -385,8 +418,8 @@ function block4SetUp() {
   const closeButton = document.querySelector(".sidebar .close");
 
   document.querySelectorAll(".projectList li").forEach((item) => {
-    item.addEventListener("click", function () {
-      const sidebarID = this.getAttribute("data");
+    item.addEventListener("click", (event) => {
+      const sidebarID = event.getAttribute("data");
       const correspondingSidebar = document.querySelector(sidebarID);
 
       document.querySelectorAll("aside").forEach((aside) => {
@@ -400,7 +433,7 @@ function block4SetUp() {
     });
   });
 
-  closeButton.addEventListener("click", function () {
+  closeButton.addEventListener("click", () => {
     sidebar.style.right = "-57.5%";
   });
 }
