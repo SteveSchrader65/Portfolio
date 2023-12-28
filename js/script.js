@@ -1,4 +1,4 @@
-/* jshint esversion: 6 */
+/* jshint esversion: 8 */
 
 let viewingMode = "";
 const root = document.querySelector(":root");
@@ -22,8 +22,6 @@ function setViewingMode() {
   darkButton.addEventListener("click", _setDarkMode);
 
   function _setLightMode() {
-    "use strict";
-
     viewingMode = "lightness";
     localStorage.setItem("viewingMode", viewingMode);
     lightButton.style.visibility = "hidden";
@@ -54,8 +52,6 @@ function setViewingMode() {
   }
 
   function _setDarkMode() {
-    "use strict";
-
     viewingMode = "darkness";
     localStorage.setItem("viewingMode", viewingMode);
     lightButton.style.visibility = "visible";
@@ -70,7 +66,7 @@ function setViewingMode() {
     root.style.setProperty("--highlightColour2", "#3399ff");
     root.style.setProperty("--postItColour", "#fffcaa");
     root.style.setProperty("--sidebarTextColour", "black");
-    root.style.setProperty("--sidebarBackgroundColour", "#8f8c8a");
+    root.style.setProperty("--sidebarBackgroundColour", "#b4b2b1");
     root.style.setProperty("--sidebarBorderColour", "#0e0cf3");
     root.style.setProperty("--colour1", "black");
     root.style.setProperty("--colour2", "white");
@@ -150,14 +146,14 @@ function block1SetUp() {
   let colourArray;
   let colourIndex;
 
+  if (viewingMode == "lightness") {
+    colourArray = lightArray;
+  } else {
+    colourArray = darkArray;
+  }
+
   setInterval(() => {
     letters.forEach((letter) => {
-      if (viewingMode == "lightness") {
-        colourArray = lightArray;
-      } else {
-        colourArray = darkArray;
-      }
-
       colourIndex = Math.floor(Math.random() * colourArray.length);
       letter.style.color = colourArray[colourIndex];
     });
@@ -168,13 +164,15 @@ function block2SetUp() {
   "use strict";
 
   const diplomas = document.querySelectorAll(".course-card");
-  const courseInfo = document.querySelector("#courses");
+  const courses = document.querySelector("#courses");
   const outro = document.querySelector("#outro");
 
-  diplomas.forEach((diploma, index) => {
+  diplomas.forEach((diploma) => {
     let isFlipped = false;
 
     diploma.addEventListener("mouseover", () => {
+      const courseID = diploma.getAttribute("data-course");
+      const courseInfo = document.querySelector(courseID);
       const diplomaAnim = new KeyframeEffect(
         diploma,
         [{ transform: "matrix(1.15, 0, 0, 1.15, -9, -9)" }],
@@ -188,14 +186,14 @@ function block2SetUp() {
       new Animation(diplomaAnim).play();
 
       setTimeout(() => {
-        courseInfo.innerHTML = diploma.textContent + "<p>" + outro.textContent + "</p>";
-        courseInfo.style.marginTop = "11%";
+        courses.innerHTML = courseInfo.textContent + "<p>" + outro.textContent + "</p>";
+        courses.style.marginTop = "11%";
       }, 500);
     });
 
-    // Deflate and re-position diploma on mouse-out
     diploma.addEventListener("mouseout", () => {
       if (isFlipped) {
+        isFlipped = false;
         const diplomaAnim = new KeyframeEffect(diploma, [{ transform: "rotateY(-180deg" }], {
           duration: 150,
           easing: "linear",
@@ -215,24 +213,10 @@ function block2SetUp() {
     });
 
     diploma.addEventListener("click", () => {
-      let rotation;
-
-      switch (index) {
-        case 0:
-          rotation = "5deg";
-          break;
-        case 1:
-          rotation = "0deg";
-          break;
-        case 2:
-          rotation = "-5deg";
-          break;
-      }
-
       if (!isFlipped) {
         const diplomaAnim = new KeyframeEffect(
           diploma,
-          [{ transform: `rotateY(180deg) rotateZ(${rotation}) matrix(1.15, 0, 0, 1.15, -9, -9)` }],
+          [{ transform: `rotateY(180deg) matrix(1.15, 0, 0, 1.15, -9, -9)` }],
           {
             duration: 1000,
             easing: "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -244,11 +228,7 @@ function block2SetUp() {
       } else {
         const diplomaAnim = new KeyframeEffect(
           diploma,
-          [
-            {
-              transform: `rotateY(0deg) rotateZ(${rotation * -1}) matrix(1.15, 0, 0, 1.15, -9, -9)`,
-            },
-          ],
+          [{ transform: `rotateY(0deg) matrix(1.15, 0, 0, 1.15, -9, -9)` }],
           {
             duration: 1000,
             easing: "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -353,7 +333,7 @@ function block3SetUp() {
     });
 
     event.addEventListener("click", () => {
-      const eventInfo = document.querySelector(eventDate);
+      const eventInfo = document.querySelector(eventDate); // !! selectedProject !!
       let eventAnim;
       let eventDirection;
 
@@ -414,28 +394,129 @@ function block3SetUp() {
 function block4SetUp() {
   "use strict";
 
-  const sidebar = document.querySelector(".sidebar");
-  const closeButton = document.querySelector(".sidebar .close");
+  const projects = document.querySelectorAll("#projectList li");
+  const closeButton = document.querySelector("#sidebar #close");
+  let sidebar = document.querySelector("#sidebar");
+  let isSidebarOpen = false;
+  let selectedProject;
+  let images = [];
 
-  document.querySelectorAll(".projectList li").forEach((item) => {
-    item.addEventListener("click", (event) => {
-      const sidebarID = event.getAttribute("data");
-      const correspondingSidebar = document.querySelector(sidebarID);
+  projects.forEach((project) => {
+    project.addEventListener("click", () => {
+      const projectID = project.getAttribute("data-project");
 
-      document.querySelectorAll("aside").forEach((aside) => {
-        aside.style.display = "none";
-      });
+      if (isSidebarOpen) {
+        __closeSidebar();
+        console.log("1");
+      }
 
-      correspondingSidebar.style.display = "inline-block";
-      sidebar.style.right = "-2.5%";
-      correspondingSidebar.style.top = "0";
-      correspondingSidebar.style.left = "0";
+      // Open sidebar
+      selectedProject = document.querySelector(projectID).cloneNode(true);
+      selectedProject.id = "selectedProject";
+      sidebar.appendChild(selectedProject);
+
+      const openAnim = new KeyframeEffect(
+        sidebar,
+        [{ transform: "translateX(100%)" }, { transform: "translateX(2%)" }],
+        {
+          duration: 750,
+          easing: "ease-in",
+          fill: "forwards",
+        }
+      );
+
+      new Animation(openAnim).play();
+      isSidebarOpen = true;
+
+      // Apply hover to each image - inflate animation to fill sidebar
+      // images = sidebar.querySelectorAll("img");
+
+      // images.forEach((image) => {
+      //   let top;
+      //   let left;
+      //   let width;
+
+      //   image.addEventListener("mouseover", () => {
+      //     let theParent = image.parentElement;
+      //     let boundaries = theParent.getBoundingClientRect();
+      //     top = image.style.top;
+      //     left = image.style.left;
+      //     width = image.width;
+      //     height = image.height;
+      //     image.style.position = "absolute";
+      //     image.style.top = boundaries.top + "px";
+      //     image.style.left = boundaries.left + "px";
+      //     image.style.width = boundaries.width + "px";
+      //     // image.style.height = boundaries.height + "px";
+      //     image.style.zIndex = "50";
+      //   });
+
+      //   image.addEventListener("mouseout", () => {
+      //     image.style.position = "relative";
+      //     image.style.top = top;
+      //     image.style.left = left;
+      //     image.style.width = width;
+      //     // image.style.height = height;
+      //     image.style.zIndex = "25";
+      //   });
+      // });
     });
   });
 
   closeButton.addEventListener("click", () => {
-    sidebar.style.right = "-57.5%";
+    __closeSidebar();
   });
+
+  // Close sidebar
+  //function __closeSidebar() {
+  async function __closeSidebar() {
+    const closeAnim = new KeyframeEffect(
+      sidebar,
+      [{ transform: "translateX(2%)" }, { transform: "translateX(100%)" }],
+      {
+        duration: 750,
+        easing: "ease-in",
+        fill: "forwards",
+      }
+    );
+
+    new Animation(closeAnim).play();
+
+    setTimeout(() => {
+      console.log("2");
+      console.log(sidebar);
+      console.log(selectedProject);
+      sidebar.removeChild(selectedProject);
+      images.forEach((image) => image.remove());
+      isSidebarOpen = false;
+    }, 750);
+    console.log("3");
+
+    // return new Promise((resolve) => {
+    //   console.log("2");
+    //   console.log(sidebar);
+    //   console.log(selectedProject);
+    //   sidebar.removeChild(selectedProject);
+    //   images.forEach((image) => image.remove());
+    //   isSidebarOpen = false;
+    //   setTimeout(resolve, 750);
+    // }).then(() => {
+    //   console.log("3");
+    // });
+
+    // let newPromise = new Promise(function(resolve) {
+    //   setTimeout(() => {
+    //   resolve()
+    //   console.log("2");
+    //   console.log(sidebar);
+    //   console.log(selectedProject);
+    //   sidebar.removeChild(selectedProject);
+    //   images.forEach((image) => image.remove());
+    //   isSidebarOpen = false;
+    // }, 750);
+    // let result = await newPromise;
+    // })
+  }
 }
 
 // https://formcarry.com/blog/how-to-create-a-simple-html-contact-form/
@@ -468,8 +549,11 @@ function init() {
   footerDate();
 
   // Tool-tips ??
+  // Check coolors.com for palette contrast checks
   // ADD RESPONSIVENESS
   //  - block4SetUp(): timeline will become vertical for mobile-sized devices
+  //                   use "display: flex;", "flex-flow: row nowrap;" and "flex-direction: row;"
+  //                   changed in @media to "column" ---------------------------------------^
 }
 
 // Event listener for the onload event will call the init() function when
