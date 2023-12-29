@@ -9,30 +9,31 @@
   </head>
   <body>
     <nav>
-      <button class="viewingMode" id="darkMode">
-        <img src="images/darkModeButton.png" width="40" alt="Button to set light viewing mode">
-      </button>
-      <button class="viewingMode" id="lightMode">
-        <img src="images/lightModeButton.png" width="40" alt="Button to set dark viewing mode">
-      </button>
-      <div style="width: 1%; background-color: inherit"></div>
-      <!-- Convert to list -->
-      <a href="#parallax1">Overview</a>
-      <a href="#parallax2">Studies</a>
-      <a href="#parallax3">Employment</a>
-      <a href="#parallax4">Projects</a>
-      <a href="#parallax5">Contact</a>
-      <div id="dropmenu">
-        <button id="dropbtn">Links</button>
-        <div id="dropmenu-content">
-          <!-- Convert to list -->
-          <a href="/Site1/index.html" target="_blank">Toy Shop</a>
-          <a href="/Site2/index.html" target="_blank">Furniture Store</a>
-          <a href="http://www.captainsteveperth.com" target="_blank">CaptainSteve</a>
-          <a href="#" target="_blank">Hangman</a>
-          <a href="#" target="_blank">Shopping List</a>
-        </div>
-      </div>
+      <ul id="navlist">
+        <li>
+          <button class="viewingMode" id="darkMode">
+            <img src="images/darkModeButton.png" width="40" alt="Button to set light viewing mode">
+          </button>
+          <button class="viewingMode" id="lightMode">
+            <img src="images/lightModeButton.png" width="40" alt="Button to set dark viewing mode">
+          </button>
+        </li>
+        <li><a href="#parallax1">Overview</a></li>
+        <li><a href="#parallax2">Studies</a></li>
+        <li><a href="#parallax3">Employment</a></li>
+        <li><a href="#parallax4">Projects</a></li>
+        <li><a href="#parallax5">Contact</a></li>
+        <li id="dropmenu">
+          <button id="dropbtn">Links</button>
+          <ul id="dropmenu-content">
+            <li><a href="/Site1/index.html" target="_blank">Toy Shop</a></li>
+            <li><a href="/Site2/index.html" target="_blank">Furniture Store</a></li>
+            <li><a href="http://www.captainsteveperth.com" target="_blank">CaptainSteve</a></li>
+            <li><a href="#" target="_blank">Hangman</a></li>
+            <li><a href="#" target="_blank">Shopping List</a></li>
+          </ul>
+        </li>
+      </ul>
     </nav>
     <div class="parallax" id="parallax1">
       <span class="title">Overview</span>
@@ -502,13 +503,9 @@
     </div>
     <footer>
       <h3>That's all, Folks !!</h3>
-      <p>
-        <a href="http://jigsaw.w3.org/css-validator/check/referer">
-          <img style="border:0;width:88px;height:31px"
-            src="http://jigsaw.w3.org/css-validator/images/vcss"
-            alt="Valid CSS!">
-        </a>
-      </p>
+      <a href="http://jigsaw.w3.org/css-validator/check/referer">
+        <img src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!">
+      </a>
     </footer>
     <script src="js/script.js"></script>
   </body>

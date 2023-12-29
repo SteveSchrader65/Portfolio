@@ -39,7 +39,6 @@ html {
 }
 
 body {
-  /* Amend all font, margin and padding settings to rem format  */
   background-color: var(--backColour);
   overflow-x: hidden;
   overflow-y: scroll;
@@ -137,12 +136,6 @@ body {
 }
 
 /* MAIN */
-div p,
-div span {
-  background: transparent;
-  color: var(--textColour);
-}
-
 .text_block {
   position: relative;
   font-size: 1rem;
@@ -158,12 +151,14 @@ div span {
 }
 
 /* NAV */
-nav {
+#navlist {
   position: fixed;
   top: 0;
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
+  align-items: center;
   z-index: 100;
   -webkit-transition: top 0.4s;
   -moz-transition: top 0.4s;
@@ -173,21 +168,20 @@ nav {
   box-shadow: 1px 1px var(--navTextColour);
 }
 
-nav a {
+#navlist a {
   display: block;
   background-color: var(--navButtonColour);
   color: var(--navTextColour);
-  padding: 1% 0.5%;
   text-decoration: none;
   font-size: 1.5rem;
 }
 
-nav a:not(#dropmenu-content a),
+#navlist a:not(#dropmenu-content a),
 #dropmenu #dropbtn {
   text-shadow: -2px 2px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
 }
 
-nav a:hover,
+#navlist a:hover,
 #dropmenu:hover #dropbtn {
   background-color: var(--navHoverColour);
   color: var(--navTextColour);
@@ -196,7 +190,7 @@ nav a:hover,
 
 /* VIEWMODE */
 .viewingMode {
-  display: flex;
+  display: inline-block;
   background-color: var(--navBackColor);
   border: none;
   margin-left: 1%;
@@ -222,8 +216,7 @@ nav a:hover,
 
 /* DROPDOWN */
 #dropmenu {
-  /* Set with flex */
-  float: left;
+  float: left;   /* Set with flex */
   overflow: hidden;
 }
 
@@ -747,6 +740,12 @@ footer h3 {
   background-color: var(--backColour);
   float: right;
   margin-right: 2%;
+}
+
+footer a img {
+  border: 0;
+  width: 66px;
+  height:23px;
 }
 
 @media only screen and (min-width: 768px) {

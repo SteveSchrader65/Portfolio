@@ -97,7 +97,7 @@ function scrollToTop() {
     element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
 
-  document.querySelector("nav").style.top = "0";
+  document.querySelector("#navlist").style.top = "0";
 }
 
 function navbarHide() {
@@ -109,9 +109,9 @@ function navbarHide() {
     let currentScrollPos = window.scrollY;
 
     if (prevScrollPos > currentScrollPos) {
-      document.querySelector("nav").style.top = "0";
+      document.querySelector("#navlist").style.top = "0";
     } else {
-      document.querySelector("nav").style.top = "-55px";
+      document.querySelector("#navlist").style.top = "-55px";
     }
 
     prevScrollPos = currentScrollPos;
@@ -427,40 +427,40 @@ function block4SetUp() {
       new Animation(openAnim).play();
       isSidebarOpen = true;
 
-      // Apply hover to each image - inflate animation to fill sidebar
-      // images = selectedProject.querySelectorAll("img");
+      /* Apply hover to each image */
+      images = selectedProject.querySelectorAll("img");
 
-      // images.forEach((image) => {
-      //   let top;
-      //   let left;
-      //   let width;
+      images.forEach((image) => {
+        let top;
+        let left;
+        let width;
+        let height;
 
-      //   image.addEventListener("mouseover", () => {
-      //     let theParent = SIDEBAR;
-      //     let boundaries = theParent.getBoundingClientRect();
-      //     top = image.style.top;
-      //     left = image.style.left;
-      //     width = image.width;
-      //     height = image.height;
-      //     image.style.position = "absolute"; /* ?? */
-      //     image.style.top = boundaries.top + "px";
-      //     image.style.left = boundaries.left + "px";
-      //     image.style.width = boundaries.width + "px";
-      //     // image.style.height = boundaries.height + "px";
-      //     image.style.zIndex = "50";
-      //     /* In-flate animation */
-      //   });
+        image.addEventListener("mouseover", () => {
+          let boundaries = sidebar.getBoundingClientRect();
+          top = image.style.top;
+          left = image.style.left;
+          width = image.width;
+          height = image.height;
+          // image.style.position = "absolute";
+          image.style.top = boundaries.top + "px";
+          image.style.left = boundaries.left + "px";
+          image.style.width = boundaries.width + "px";
+          image.style.height = boundaries.height + "px";
+          image.style.zIndex = "50";
+          /* Inflate animation to fill sidebar */
+        });
 
-      //   image.addEventListener("mouseout", () => {
-      //     image.style.position = "relative"; /* ?? */
-      //     image.style.top = top;
-      //     image.style.left = left;
-      //     image.style.width = width;
-      //     // image.style.height = height;
-      //     image.style.zIndex = "25";
-      //     /* De-flate animation */
-      //   });
-      // });
+        image.addEventListener("mouseout", () => {
+          // image.style.position = "relative";
+          image.style.top = top;
+          image.style.left = left;
+          image.style.width = width;
+          image.style.height = height;
+          image.style.zIndex = "25";
+          /* De-flate animation */
+        });
+      });
     });
   });
 
