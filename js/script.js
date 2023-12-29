@@ -402,12 +402,11 @@ function block4SetUp() {
   let images = [];
 
   projects.forEach((project) => {
-    project.addEventListener("click", () => {
+    project.addEventListener("click", async () => {
       const projectID = project.getAttribute("data-project");
 
       if (isSidebarOpen) {
-        __closeSidebar();
-        console.log("1");
+        await __closeSidebar();
       }
 
       // Open sidebar
@@ -429,7 +428,7 @@ function block4SetUp() {
       isSidebarOpen = true;
 
       // Apply hover to each image - inflate animation to fill sidebar
-      // images = sidebar.querySelectorAll("img");
+      // images = selectedProject.querySelectorAll("img");
 
       // images.forEach((image) => {
       //   let top;
@@ -437,27 +436,29 @@ function block4SetUp() {
       //   let width;
 
       //   image.addEventListener("mouseover", () => {
-      //     let theParent = image.parentElement;
+      //     let theParent = SIDEBAR;
       //     let boundaries = theParent.getBoundingClientRect();
       //     top = image.style.top;
       //     left = image.style.left;
       //     width = image.width;
       //     height = image.height;
-      //     image.style.position = "absolute";
+      //     image.style.position = "absolute"; /* ?? */
       //     image.style.top = boundaries.top + "px";
       //     image.style.left = boundaries.left + "px";
       //     image.style.width = boundaries.width + "px";
       //     // image.style.height = boundaries.height + "px";
       //     image.style.zIndex = "50";
+      //     /* In-flate animation */
       //   });
 
       //   image.addEventListener("mouseout", () => {
-      //     image.style.position = "relative";
+      //     image.style.position = "relative"; /* ?? */
       //     image.style.top = top;
       //     image.style.left = left;
       //     image.style.width = width;
       //     // image.style.height = height;
       //     image.style.zIndex = "25";
+      //     /* De-flate animation */
       //   });
       // });
     });
@@ -468,8 +469,7 @@ function block4SetUp() {
   });
 
   // Close sidebar
-  //function __closeSidebar() {
-  async function __closeSidebar() {
+  function __closeSidebar() {
     const closeAnim = new KeyframeEffect(
       sidebar,
       [{ transform: "translateX(2%)" }, { transform: "translateX(100%)" }],
@@ -482,40 +482,16 @@ function block4SetUp() {
 
     new Animation(closeAnim).play();
 
-    setTimeout(() => {
-      console.log("2");
-      console.log(sidebar);
-      console.log(selectedProject);
-      sidebar.removeChild(selectedProject);
-      images.forEach((image) => image.remove());
-      isSidebarOpen = false;
-    }, 750);
-    console.log("3");
+    const finished = new Promise((resolve) => {
+      setTimeout(() => {
+        sidebar.removeChild(selectedProject);
+        images.forEach((image) => image.remove());
+        isSidebarOpen = false;
+        resolve(true);
+      }, 750);
+    });
 
-    // return new Promise((resolve) => {
-    //   console.log("2");
-    //   console.log(sidebar);
-    //   console.log(selectedProject);
-    //   sidebar.removeChild(selectedProject);
-    //   images.forEach((image) => image.remove());
-    //   isSidebarOpen = false;
-    //   setTimeout(resolve, 750);
-    // }).then(() => {
-    //   console.log("3");
-    // });
-
-    // let newPromise = new Promise(function(resolve) {
-    //   setTimeout(() => {
-    //   resolve()
-    //   console.log("2");
-    //   console.log(sidebar);
-    //   console.log(selectedProject);
-    //   sidebar.removeChild(selectedProject);
-    //   images.forEach((image) => image.remove());
-    //   isSidebarOpen = false;
-    // }, 750);
-    // let result = await newPromise;
-    // })
+    return finished;
   }
 }
 

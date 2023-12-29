@@ -144,12 +144,17 @@ div span {
 }
 
 .text_block {
+  position: relative;
   font-size: 1rem;
   color: var(--textColour);
   margin: 2.5% 2.5% 10% 2.5%;
   padding: 0 5%;
   text-align: justify;
   text-justify: inter-word;
+}
+
+.text_block p {
+  margin-top: 2%;
 }
 
 /* NAV */
@@ -169,13 +174,12 @@ nav {
 }
 
 nav a {
-  float: left;
   display: block;
-  color: var(--navTextColour);
   background-color: var(--navButtonColour);
-  padding: 14px 16px;
+  color: var(--navTextColour);
+  padding: 1% 0.5%;
   text-decoration: none;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 nav a:not(#dropmenu-content a),
@@ -205,48 +209,48 @@ nav a:hover,
 #lightMode {
   visibility: hidden;
   position: absolute;
-  top: 14px;
-  left: 5px;
+  top: 30%;
+  left: 0.1%;
 }
 
 #darkMode {
   visibility: visible;
   position: absolute;
-  top: 14px;
-  left: 5px;
+  top: 30%;
+  left: 0.1%;
 }
 
 /* DROPDOWN */
 #dropmenu {
+  /* Set with flex */
   float: left;
   overflow: hidden;
 }
 
 #dropmenu #dropbtn {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   border: none;
   outline: none;
   color: var(--navTextColour);
   background-color: var(--navBarColour);
-  padding: 14px 16px;
+  padding: 22% 1%;
   font-family: inherit;
-  margin: 0;
 }
 
 #dropmenu-content {
   display: none;
   position: absolute;
-  min-width: 195px;
+  min-width: 15%;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  margin-left: -7.76%;
+  z-index: 10;
+  margin-left: -10.5%;
   opacity: 1;
 }
 
 #dropmenu-content a {
   float: none;
   color: var(--colour1);
-  padding: 12px 16px;
+  padding: 8%;
   text-decoration: none;
   background-color: var(--navHoverColour);
   font-size: 1.1rem;
@@ -491,10 +495,18 @@ ul {
   text-justify: inter-word;
 }
 
+#employNotes,
+#employNotes + p {
+  color: var(--navHoverColour);
+}
+
+#employNotes + p {
+  list-style-type: circle;
+}
+
 /* PROJECTS */
 #block4 {
-  /* position: absolute; // ?? All blocks should be set to position: absolute; ?? */
-  min-height: 35rem;
+  min-height: 50rem;
   display: grid;
   grid-template-rows: 2fr 10fr;
   grid-template-columns: 2fr 3fr;
@@ -550,6 +562,8 @@ ul {
   margin-top: -8%;
   grid-row: 2 / 2;
   grid-column: 2 / 2;
+  /* padding: ??rem; */
+  overflow: hidden;
   transform: translateX(100%);
 }
 
