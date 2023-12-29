@@ -46,6 +46,7 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour1", "#6c9ee0");
     root.style.setProperty("--scrollButtonColour2", "#8fbcef");
     root.style.setProperty("--scrollBorderColour", "#b7b6fc");
+    root.style.setProperty("--progressColour", "#008000");
     root.style.setProperty("--alertColour", "#ff1a1a");
     root.style.setProperty("--successColour", "#69cf9d");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
@@ -76,6 +77,7 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour1", "#1961b3");
     root.style.setProperty("--scrollButtonColour2", "#4282d7");
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
+    root.style.setProperty("--progressColour", "#99ff99");
     root.style.setProperty("--alertColour", "#b30000");
     root.style.setProperty("--successColour", "#29a329");
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
@@ -111,7 +113,7 @@ function navbarHide() {
     if (prevScrollPos > currentScrollPos) {
       document.querySelector("#navlist").style.top = "0";
     } else {
-      document.querySelector("#navlist").style.top = "-55px";
+      document.querySelector("#navlist").style.top = "-58px";
     }
 
     prevScrollPos = currentScrollPos;
@@ -416,7 +418,7 @@ function block4SetUp() {
 
       const openAnim = new KeyframeEffect(
         sidebar,
-        [{ transform: "translateX(100%)" }, { transform: "translateX(2%)" }],
+        [{ transform: "translateX(115%)" }, { transform: "translateX(15%)" }],
         {
           duration: 750,
           easing: "ease-in",
@@ -472,7 +474,7 @@ function block4SetUp() {
   function __closeSidebar() {
     const closeAnim = new KeyframeEffect(
       sidebar,
-      [{ transform: "translateX(2%)" }, { transform: "translateX(100%)" }],
+      [{ transform: "translateX(15%)" }, { transform: "translateX(115%)" }],
       {
         duration: 750,
         easing: "ease-in",
@@ -526,6 +528,7 @@ function init() {
 
   // Tool-tips ??
   // Check coolors.com for palette contrast checks
+  // NOTE: Hide navlist for mobile-sized screens and display hamburger drop-down menu
   // ADD RESPONSIVENESS
   //  - block4SetUp(): timeline will become vertical for mobile-sized devices
   //                   use "display: flex;", "flex-flow: row nowrap;" and "flex-direction: row;"

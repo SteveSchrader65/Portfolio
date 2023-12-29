@@ -22,6 +22,7 @@
   --scrollButtonColour1: #1961b3;
   --scrollButtonColour2: #4282d7;
   --scrollBorderColour: #0e0cf3;
+  --progressColour: #99ff99;
   --alertColour: #b30000;
   --successColour: #29a329;
   --borderImage: url("../images/border-dark.png");
@@ -89,12 +90,11 @@ body {
   width: 95%;
   margin: 0 auto;
   height: 75vh;
+  display: grid;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  display: grid;
-  place-content: center left;
   border-radius: 10px;
 }
 
@@ -104,14 +104,15 @@ body {
   font-weight: bold;
   color: var(--titleColour);
   background-color: transparent;
-  margin: -30% 0 0 30%;
-  opacity: 0.55;
+  padding: 10% 10%;
+  opacity: 0.65;
   letter-spacing: 0.55rem;
   text-shadow: -4px 4px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
 }
 
 #parallax1 {
   background-image: url("../images/rocket1.jpg");
+  margin-top: 2%;
 }
 
 #parallax2 {
@@ -133,6 +134,36 @@ body {
 #parallax5 .title {
   color: #e68a00;
   text-shadow: -4px 4px gray, -3px -3px 25px yellow, -1px -1px 5px darkblue;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .parallax {
+    scale: 0.8;
+    opacity: 0;
+    animation: parallaxFade 0.5s linear forwards;
+    animation-timeline: view();
+    animation-range: entry;
+  }
+  @keyframes parallaxFade {
+    to { scale: 1; opacity: 1; }
+  }
+
+  #scroll-progress {
+    height: 2px;
+    position: absolute;
+    top: 56px;
+    opacity: 0.8;
+    z-index: 55;
+    background-color: var(--progressColour);
+    width: 100%;
+    scale: 0 1;
+    transform-origin: left;
+    animation: progressLine linear;
+    animation-timeline: scroll();
+  }
+  @keyframes progressLine {
+    to { scale: 1 1; }
+  }
 }
 
 /* MAIN */
@@ -157,13 +188,12 @@ body {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   z-index: 100;
   -webkit-transition: top 0.4s;
   -moz-transition: top 0.4s;
   transition: top 0.4s;
-  font-size: 1rem;
   background-color: var(--navBarColour);
   box-shadow: 1px 1px var(--navTextColour);
 }
@@ -173,12 +203,8 @@ body {
   background-color: var(--navButtonColour);
   color: var(--navTextColour);
   text-decoration: none;
-  font-size: 1.5rem;
-}
-
-#navlist a:not(#dropmenu-content a),
-#dropmenu #dropbtn {
-  text-shadow: -2px 2px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
+  font-size: 1.6rem;
+  margin-left: -33%;
 }
 
 #navlist a:hover,
@@ -186,6 +212,12 @@ body {
   background-color: var(--navHoverColour);
   color: var(--navTextColour);
   cursor: pointer;
+  /* padding: 8% 5%; */
+}
+
+#navlist a:not(#dropmenu-content a),
+#dropmenu #dropbtn {
+  text-shadow: -2px 2px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
 }
 
 /* VIEWMODE */
@@ -488,8 +520,7 @@ ul {
   text-justify: inter-word;
 }
 
-#employNotes,
-#employNotes + p {
+.employNotes {
   color: var(--navHoverColour);
 }
 
@@ -557,7 +588,8 @@ ul {
   grid-column: 2 / 2;
   /* padding: ??rem; */
   overflow: hidden;
-  transform: translateX(100%);
+  /* overflow: clip; */
+  transform: translateX(115%);
 }
 
 #selectedProject {
@@ -565,7 +597,7 @@ ul {
   display: block;
   top: 0;
   height: 35rem;
-  width: 98%;
+  width: 100%;
   font-size: 1rem;
   padding: 2.5%;
   text-align: justify;
@@ -733,19 +765,21 @@ ul {
 }
 
 /* FOOTER */
+/* ?? Possible grid ?? */
 footer h3 {
   font-size: 0.9rem;
   font-weight: normal;
   color: var(--textColour);
   background-color: var(--backColour);
   float: right;
-  margin-right: 2%;
+  margin-right: 0.5%;
 }
 
 footer a img {
   border: 0;
   width: 66px;
   height:23px;
+  margin-left: 0.5%;
 }
 
 @media only screen and (min-width: 768px) {
