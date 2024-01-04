@@ -2,8 +2,8 @@
 
 let viewingMode = "";
 const root = document.querySelector(":root");
-const lightButton = document.querySelector("#lightMode");
-const darkButton = document.querySelector("#darkMode");
+const lightButton = document.querySelector(".lightMode");
+const darkButton = document.querySelector(".darkMode");
 
 function setViewingMode() {
   "use strict";
@@ -109,30 +109,51 @@ function scrollToTop() {
 }
 
 function navSetup() {
-  ("use strict");
+  "use strict";
 
-  let mainMenu = document.querySelector("#navList");
-  let hamburgerMenu = document.querySelector("#hamburger");
+  let mainMenu = document.querySelector("nav > ul:first-child");
+  let hamburgerMenu = document.querySelector("nav > ul:nth-of-type(2)");
+
+  const mainSelectors = ["nth-child(2)", "first-child", "last-child"];
+  const mainClasses = ["viewingMode", "menu_content", "scroll-progress"];
+  const hamburgerSelectors = ["first-child", "nth-child(2)", "last-child"];
+  const hamburgerClasses = ["menu-content", "viewingMode", "scroll-progress"];
   const menuButton = document.querySelector(".dropMenuBtn");
+  const menuBars = [mainMenu, hamburgerMenu];
+  const menuIDs =["mainNav", "hamburgerNav"];
+  let menuSelectors;
+  let menuClasses;
 
-  // Build main navigation menu
-  mainMenu.appendChild(document.querySelector(".viewingMode").cloneNode(true));
-  mainMenu.appendChild(document.querySelector(".menu_content").cloneNode(true));
-  mainMenu.appendChild(document.querySelector(".scroll-progress").cloneNode(true));
+  //Build main navigation menu
+  menuBars.forEach((menu, index1) => {
+    if (index1 == 0) {
+      menuSelectors = [...mainSelectors];
+      menuClasses = [...mainClasses];
+    } else {
+      menuSelectors = [...hamburgerSelectors];
+      menuClasses = [...hamburgerClasses];
+    }
 
-  // Build hamburger menu
-  hamburgerMenu.appendChild(document.querySelector(".menu_content").cloneNode(true));
-  hamburgerMenu.appendChild(document.querySelector(".viewingMode").cloneNode(true));
-  hamburgerMenu.appendChild(document.querySelector(".scroll-progress").cloneNode(true));
+    menuSelectors.forEach((selector, index2) => {
+      menu.appendChild(
+        document.querySelector("nav ul:nth-child(3) > li:" + selector).cloneNode(true)
+      );
+
+      if (index2 == 0) {
+        menu.id = menuIDs[index1];
+      }
+
+      document.querySelector("#" + (menu.id).toString() + " > li:last-child").setAttribute("class", menuClasses[index2]);
+    });
+  });
 
   console.log(mainMenu);
   console.log(hamburgerMenu);
 
-  // Build hamburger icon
-
+  // Build hamburger icon (use CSS)
   // Get screen-size (use eventListener to detect change)
   window.addEventListener("resize", (event) => {
-    console.log(event);
+    // console.log(event);
   });
   // OR new ResizeObserver
 
@@ -150,11 +171,11 @@ function navbarHide() {
 
     if (prevScrollPos > currentScrollPos) {
       // Can both selectors go on same line ??
-      document.querySelector("#navlist").style.top = "0";
-      document.querySelector("#hamburger").style.top = "0";
+      document.querySelector("#mainNav").style.top = "0";
+      document.querySelector("#hamburgerNav").style.top = "0";
     } else {
-      document.querySelector("#navlist").style.top = "-58px";
-      document.querySelector("#hamburger").style.top = "-58px";
+      document.querySelector("#mainNav").style.top = "-58px";
+      document.querySelector("#hamburgerNav").style.top = "-58px";
     }
 
     prevScrollPos = currentScrollPos;
