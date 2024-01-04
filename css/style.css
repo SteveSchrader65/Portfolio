@@ -503,11 +503,6 @@ ul {
   text-decoration: none;
 }
 
-/* Not sure if this will fix problem with slide-in panels */
-/* .content {
-  display: block;
-} */
-
 .content ol li {
   display: none;
   position: absolute;
