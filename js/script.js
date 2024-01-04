@@ -2,8 +2,8 @@
 
 let viewingMode = "";
 const root = document.querySelector(":root");
-const lightButton = document.querySelector("#lightMode");
-const darkButton = document.querySelector("#darkMode");
+const lightButton = document.querySelector(".lightMode");
+const darkButton = document.querySelector(".darkMode");
 
 function setViewingMode() {
   "use strict";
@@ -47,6 +47,9 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour2", "#8fbcef");
     root.style.setProperty("--scrollBorderColour", "#b7b6fc");
     root.style.setProperty("--progressColour", "#008000");
+    // root.style.setProperty("--tipBorderColour", "");
+    // root.style.setProperty("--tipBackgroundColour", "");
+    // root.style.setProperty("--tipTextColour", "");
     root.style.setProperty("--alertColour", "#ff1a1a");
     root.style.setProperty("--successColour", "#69cf9d");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
@@ -78,6 +81,9 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour2", "#4282d7");
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
     root.style.setProperty("--progressColour", "#99ff99");
+    // root.style.setProperty("--tipBorderColour", "");
+    // root.style.setProperty("--tipBackgroundColour", "");
+    // root.style.setProperty("--tipTextColour", "");
     root.style.setProperty("--alertColour", "#b30000");
     root.style.setProperty("--successColour", "#29a329");
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
@@ -99,7 +105,60 @@ function scrollToTop() {
     element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
 
-  document.querySelector("#navlist").style.top = "0";
+  document.querySelector("nav").style.top = "0";
+}
+
+function navSetup() {
+  "use strict";
+
+  let mainMenu = document.querySelector("nav > ul:first-child");
+  let hamburgerMenu = document.querySelector("nav > ul:nth-of-type(2)");
+
+  const mainSelectors = ["nth-child(2)", "first-child", "last-child"];
+  const mainClasses = ["viewingMode", "menu_content", "scroll-progress"];
+  const hamburgerSelectors = ["first-child", "nth-child(2)", "last-child"];
+  const hamburgerClasses = ["menu-content", "viewingMode", "scroll-progress"];
+  const menuButton = document.querySelector(".dropMenuBtn");
+  const menuBars = [mainMenu, hamburgerMenu];
+  const menuIDs =["mainNav", "hamburgerNav"];
+  let menuSelectors;
+  let menuClasses;
+
+  //Build main navigation menu
+  menuBars.forEach((menu, index1) => {
+    if (index1 == 0) {
+      menuSelectors = [...mainSelectors];
+      menuClasses = [...mainClasses];
+    } else {
+      menuSelectors = [...hamburgerSelectors];
+      menuClasses = [...hamburgerClasses];
+    }
+
+    menuSelectors.forEach((selector, index2) => {
+      menu.appendChild(
+        document.querySelector("nav ul:nth-child(3) > li:" + selector).cloneNode(true)
+      );
+
+      if (index2 == 0) {
+        menu.id = menuIDs[index1];
+      }
+
+      document.querySelector("#" + (menu.id).toString() + " > li:last-child").setAttribute("class", menuClasses[index2]);
+    });
+  });
+
+  console.log(mainMenu);
+  console.log(hamburgerMenu);
+
+  // Build hamburger icon (use CSS)
+  // Get screen-size (use eventListener to detect change)
+  window.addEventListener("resize", (event) => {
+    // console.log(event);
+  });
+  // OR new ResizeObserver
+
+  // Add menu Event listeners
+  // Activate 'display: block(??)' for required components
 }
 
 function navbarHide() {
@@ -111,9 +170,12 @@ function navbarHide() {
     let currentScrollPos = window.scrollY;
 
     if (prevScrollPos > currentScrollPos) {
-      document.querySelector("#navlist").style.top = "0";
+      // Can both selectors go on same line ??
+      document.querySelector("#mainNav").style.top = "0";
+      document.querySelector("#hamburgerNav").style.top = "0";
     } else {
-      document.querySelector("#navlist").style.top = "-58px";
+      document.querySelector("#mainNav").style.top = "-58px";
+      document.querySelector("#hamburgerNav").style.top = "-58px";
     }
 
     prevScrollPos = currentScrollPos;
@@ -517,13 +579,14 @@ function init() {
 
   setViewingMode();
   scrollToTop();
+  navSetup();
   navbarHide();
   smoothScroll();
-  block1SetUp();
-  block2SetUp();
-  block3SetUp();
-  block4SetUp();
-  block5SetUp();
+  // block1SetUp();
+  // block2SetUp();
+  // block3SetUp();
+  // block4SetUp();
+  // block5SetUp();
   footerDate();
 
   // Tool-tips ??
