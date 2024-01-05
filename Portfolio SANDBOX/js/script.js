@@ -111,9 +111,8 @@ function scrollToTop() {
 function navSetup() {
   "use strict";
 
-  let mainMenu = document.querySelector("nav > ul:first-child");
-  let hamburgerMenu = document.querySelector("nav > ul:nth-of-type(2)");
-
+  const mainMenu = document.querySelector("nav > ul:first-child");
+  const hamburgerMenu = document.querySelector("nav > ul:nth-of-type(2)");
   const mainSelectors = ["nth-child(2)", "first-child", "last-child"];
   const mainClasses = ["viewingMode", "menu_content", "scroll-progress"];
   const hamburgerSelectors = ["first-child", "nth-child(2)", "last-child"];
@@ -124,9 +123,9 @@ function navSetup() {
   let menuSelectors;
   let menuClasses;
 
-  //Build main navigation menu
-  menuBars.forEach((menu, index1) => {
-    if (index1 == 0) {
+  // Build navigation menus (standard and hamburger) from templates (nav ul:last-child)
+  menuBars.forEach((menu, menuIndex) => {
+    if (menuIndex == 0) {
       menuSelectors = [...mainSelectors];
       menuClasses = [...mainClasses];
     } else {
@@ -134,18 +133,19 @@ function navSetup() {
       menuClasses = [...hamburgerClasses];
     }
 
-    menuSelectors.forEach((selector, index2) => {
+    menu.id = menuIDs[menuIndex];
+
+    menuSelectors.forEach((selector, selectorIndex) => {
       menu.appendChild(
-        document.querySelector("nav ul:nth-child(3) > li:" + selector).cloneNode(true)
+        document.querySelector("nav ul:last-child > li:" + selector).cloneNode(true)
       );
 
-      if (index2 == 0) {
-        menu.id = menuIDs[index1];
-      }
-
-      document.querySelector("#" + (menu.id).toString() + " > li:last-child").setAttribute("class", menuClasses[index2]);
+      document.querySelector("#" + menu.id + " > li:last-child").setAttribute("class", menuClasses[selectorIndex]);
     });
   });
+
+  // Remove templates from DOM
+  document.querySelector("nav ul:nth-child(3)").remove();
 
   console.log(mainMenu);
   console.log(hamburgerMenu);

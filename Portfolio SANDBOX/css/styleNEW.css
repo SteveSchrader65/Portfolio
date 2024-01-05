@@ -114,9 +114,110 @@ ol {
 }
 
 /* NAVIGATION */
-nav ul:last-of-type,
-.dropMenu_content {
+#mainNav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 100;
+  -webkit-transition: top 0.4s;
+  -moz-transition: top 0.4s;
+  transition: top 0.4s;
+  background-color: var(--navBarColour);
+  box-shadow: 1px 1px var(--navTextColour);
+}
+
+#mainNav a {
+  display: block;
+  background-color: var(--navButtonColour);
+  color: var(--navTextColour);
+  text-decoration: none;
+  font-size: 1.6rem;
+  margin-left: -33%;
+}
+
+#mainNav a:hover,
+#mainNav .dropMenu:hover .dropMenuBtn {
+  background-color: var(--navHoverColour);
+  color: var(--navTextColour);
+  cursor: pointer;
+}
+
+#mainNav .menu-content {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  background-color: var(--navBackColor);
+  margin: 0;
+  display: -ms-grid;
+  display: grid;
+  grid-template-rows: 1fr repeat(4, 0.5fr);
+  grid-row-gap: 25px;
+  padding: 0 5%;
+  width: auto;
+  text-align: left;
+  height: 0px;
+  overflow: hidden;
+  transition: height .4s ease;
+  z-index: 120;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#mainNav .dropMenu {
+  float: left;
+  overflow: hidden;
+}
+
+#mainNav .dropMenu .dropMenuBtn {
+  font-size: 1.5rem;
+  border: none;
+  outline: none;
+  color: var(--navTextColour);
+  background-color: var(--navBarColour);
+  padding: 22% 1%;
+  font-family: inherit;
+}
+
+#mainNav .dropMenu_content { 
+  display: none; /* ??? */
+}
+
+#mainNav .dropMenu-content a {
+  float: none;
+  color: var(--colour1);
+  padding: 8%;
+  text-decoration: none;
+  background-color: var(--navHoverColour);
+  font-size: 1.1rem;
+}
+
+#mainNav .dropMenu:hover .dropMenu-content {
+  display: block;
+}
+
+#mainNav .dropMenu-content a:hover {
+  background-color: var(--textColour);
+  color: var(--colour2);
+  cursor: pointer;
+}
+
+#mainNav .dropMenu .dropMenuBtn:hover {
+
+}
+
+#mainNav .dropMenu_content {
   display: none;
+  position: absolute;
+  min-width: 15%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  margin-left: -10.5%;
+  opacity: 1;
 }
 
 #hamburgerIcon {
@@ -171,22 +272,6 @@ nav ul:last-of-type,
   margin-bottom: 40px;
 }
 
-#mainNav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  z-index: 100;
-  -webkit-transition: top 0.4s;
-  -moz-transition: top 0.4s;
-  transition: top 0.4s;
-  background-color: var(--navBarColour);
-  box-shadow: 1px 1px var(--navTextColour);
-}
-
 #hamburgerNav {
   position: absolute; /* Check parent is position: relative */
   top: 0;
@@ -208,15 +293,6 @@ nav ul:last-of-type,
   grid-column: 3 / 3;
 }
 
-#mainNav a {
-  display: block;
-  background-color: var(--navButtonColour);
-  color: var(--navTextColour);
-  text-decoration: none;
-  font-size: 1.6rem;
-  margin-left: -33%;
-}
-
 #hamburgerNav a {
   display: block;
   background-color: var(--navButtonColour);
@@ -226,40 +302,11 @@ nav ul:last-of-type,
   margin-left: -33%;
 }
 
-#mainNav a:hover,
-#mainNav .dropMenu:hover .dropMenuBtn {
-  background-color: var(--navHoverColour);
-  color: var(--navTextColour);
-  cursor: pointer;
-}
-
 #hamburgerNav a:hover,
 #hamburgerNav .dropMenu:hover .dropMenuBtn {
   background-color: var(--navHoverColour);
   color: var(--navTextColour);
   cursor: pointer;
-}
-
-#mainNav .menu-content {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  width: 100%;
-  background-color: var(--navBackColor);
-  margin: 0;
-  display: -ms-grid;
-  display: grid;
-  grid-template-rows: 1fr repeat(4, 0.5fr);
-  grid-row-gap: 25px;
-  padding: 0 5%;
-  width: auto;
-  text-align: left;
-  height: 0px;
-  overflow: hidden;
-  transition: height .4s ease;
-  z-index: 120;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
 }
 
 #hamburgerNav .menu-content {
@@ -291,31 +338,12 @@ nav ul:last-of-type,
   text-shadow: -2px 2px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
 }
 
-#mainNav .dropMenu {
-  float: left;
-  overflow: hidden;
-}
-
 #hamburgerNav .dropMenu {
   float: left;
   overflow: hidden;
 }
 
-#mainNav .dropMenu .dropMenuBtn {
-  font-size: 1.5rem;
-  border: none;
-  outline: none;
-  color: var(--navTextColour);
-  background-color: var(--navBarColour);
-  padding: 22% 1%;
-  font-family: inherit;
-}
-
 #hamburgerNav .dropMenu .dropMenuBtn {
-
-}
-
-#mainNav .dropMenu .dropMenuBtn:hover {
 
 }
 
@@ -329,15 +357,9 @@ nav ul:last-of-type,
   font-family: inherit;
 }
 
-#mainNav .dropMenu_content {
-  display: none;
-  position: absolute;
-  min-width: 15%;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  margin-left: -10.5%;
-  opacity: 1;
-}
+/* #hamburgerNav .dropMenu_content { 
+  display: none; // ???
+} */
 
 #hamburgerNav .dropMenu_content {
   display: inline-block;
@@ -349,31 +371,12 @@ nav ul:last-of-type,
   opacity: 1;
 }
 
-#mainNav .dropMenu-content a {
-  float: none;
-  color: var(--colour1);
-  padding: 8%;
-  text-decoration: none;
-  background-color: var(--navHoverColour);
-  font-size: 1.1rem;
-}
-
 #hamburgerNav .dropMenu-content a {
 
 }
 
-#mainNav .dropMenu:hover .dropMenu-content {
-  display: block;
-}
-
 #hamburgerNav .dropMenu:hover .dropMenu-content {
   display: block;
-}
-
-#mainNav .dropMenu-content a:hover {
-  background-color: var(--textColour);
-  color: var(--colour2);
-  cursor: pointer;
 }
 
 #hamburgerNav .dropMenu-content a:hover {
