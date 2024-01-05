@@ -123,7 +123,7 @@ function navSetup() {
   let menuSelectors;
   let menuClasses;
 
-  // Build navigation menus (standard and hamburger) from templates (nav ul:last-child)
+  // Build navigation menus (standard and hamburger) from templates (ul:last-child)
   menuBars.forEach((menu, menuIndex) => {
     if (menuIndex == 0) {
       menuSelectors = [...mainSelectors];
@@ -137,12 +137,13 @@ function navSetup() {
 
     menuSelectors.forEach((selector, selectorIndex) => {
       menu.appendChild(
-        document.querySelector("nav ul:last-child > li:" + selector).cloneNode(true)
+        document.querySelector("nav ul:nth-child(3) > li:" + selector).cloneNode(true)
       );
 
       document.querySelector("#" + menu.id + " > li:last-child").setAttribute("class", menuClasses[selectorIndex]);
     });
   });
+
 
   // Remove templates from DOM
   document.querySelector("nav ul:nth-child(3)").remove();

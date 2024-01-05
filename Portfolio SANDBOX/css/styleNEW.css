@@ -80,7 +80,7 @@ body {
   overflow-y: scroll;
 }
 
-header, nav, footer {
+header/*, nav*/, footer {
   display: grid;
   grid-template-columns: 100%;
 }
@@ -116,10 +116,11 @@ ol {
 /* NAVIGATION */
 #mainNav {
   position: fixed;
+  display: flex;
+  /*display: grid */
+  flex-direction: row;
   top: 0;
   width: 100%;
-  display: flex;
-  flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   z-index: 100;
@@ -144,9 +145,15 @@ ol {
   background-color: var(--navHoverColour);
   color: var(--navTextColour);
   cursor: pointer;
+  /* padding: 8% 5%; */
 }
 
-#mainNav .menu-content {
+#mainNav .dropMenu {
+  float: left;   /* Set with flex */
+  overflow: hidden;
+}
+
+/* #mainNav .menu_content {
   position: absolute;
   top: 40px;
   left: 0;
@@ -166,12 +173,7 @@ ol {
   z-index: 120;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-}
-
-#mainNav .dropMenu {
-  float: left;
-  overflow: hidden;
-}
+} */
 
 #mainNav .dropMenu .dropMenuBtn {
   font-size: 1.5rem;
@@ -184,10 +186,16 @@ ol {
 }
 
 #mainNav .dropMenu_content { 
-  display: none; /* ??? */
+  display: none;
+  position: absolute;
+  min-width: 15%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  margin-left: -10.5%;
+  opacity: 1;
 }
 
-#mainNav .dropMenu-content a {
+#mainNav .dropMenu_content a {
   float: none;
   color: var(--colour1);
   padding: 8%;
@@ -196,28 +204,21 @@ ol {
   font-size: 1.1rem;
 }
 
-#mainNav .dropMenu:hover .dropMenu-content {
+#mainNav .dropMenu:hover .dropMenu_content {
   display: block;
 }
 
-#mainNav .dropMenu-content a:hover {
+#mainNav .dropMenu_content a:hover {
   background-color: var(--textColour);
   color: var(--colour2);
   cursor: pointer;
 }
 
-#mainNav .dropMenu .dropMenuBtn:hover {
-
-}
-
-#mainNav .dropMenu_content {
-  display: none;
-  position: absolute;
-  min-width: 15%;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  margin-left: -10.5%;
-  opacity: 1;
+#mainNav a:not(.dropMenu_content a),
+#hamburgerNav a:not(.dropMenu_content a),
+#mainNav .dropMenu .dropMenuBtn,
+#hamburgerNav .dropMenu .dropMenuBtn {
+  text-shadow: -2px 2px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
 }
 
 #hamburgerIcon {
@@ -274,6 +275,7 @@ ol {
 
 #hamburgerNav {
   position: absolute; /* Check parent is position: relative */
+  display: none;
   top: 0;
   width: 40%;
   z-index: 100;
@@ -282,13 +284,9 @@ ol {
   transition: top 0.4s;
   background-color: var(--navBarColour);
   box-shadow: 1px 1px var(--navTextColour);
-  display: -ms-grid;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr 8fr 1fr;
 }
 
-#hamburgerNav .viewingMode {
+#hamburgerNav .viewingMode button {
   grid-row: 1 / 1;
   grid-column: 3 / 3;
 }
@@ -309,7 +307,7 @@ ol {
   cursor: pointer;
 }
 
-#hamburgerNav .menu-content {
+#hamburgerNav .menu_content {
   position: absolute;
   top: 40px;
   left: 0;
@@ -331,13 +329,6 @@ ol {
   transition: all 0.3s ease;
 }
 
-#mainNav a:not(.dropMenu-content a),
-#hamburgerNav a:not(.dropMenu-content a),
-#mainNav .dropMenu .dropMenuBtn,
-#hamburgerNav .dropMenu .dropMenuBtn {
-  text-shadow: -2px 2px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
-}
-
 #hamburgerNav .dropMenu {
   float: left;
   overflow: hidden;
@@ -357,10 +348,6 @@ ol {
   font-family: inherit;
 }
 
-/* #hamburgerNav .dropMenu_content { 
-  display: none; // ???
-} */
-
 #hamburgerNav .dropMenu_content {
   display: inline-block;
   position: absolute;
@@ -371,15 +358,15 @@ ol {
   opacity: 1;
 }
 
-#hamburgerNav .dropMenu-content a {
+#hamburgerNav .dropMenu_content a {
 
 }
 
-#hamburgerNav .dropMenu:hover .dropMenu-content {
+#hamburgerNav .dropMenu:hover .dropMenu_content {
   display: block;
 }
 
-#hamburgerNav .dropMenu-content a:hover {
+#hamburgerNav .dropMenu_content a:hover {
 
 }
 
@@ -392,18 +379,18 @@ ol {
 }
 
 /* VIEWMODE */
-.viewingMode {
+.viewingMode button {
   display: inline-block;
   background-color: var(--navBackColor);
   border: none;
   margin-left: 1%;
 }
 
-.viewingMode img {
+.viewingMode button img {
   width: 75%;
 }
 
-.viewingMode:hover {
+.viewingMode button:hover {
   cursor: pointer;
 }
 
@@ -589,7 +576,7 @@ ol {
   }
 
   #hamburgerNav {
-    display: grid;
+    display: block;
   }
 }
 
