@@ -26,10 +26,11 @@
   --scrollButtonColour1: #1961b3;
   --scrollButtonColour2: #4282d7;
   --scrollBorderColour: #0e0cf3;
+  --tipBackgroundColour: #757270;
+  --tipTextColour: #0a2647;
+  --tipBorderColour: #205295;
+  --tipShadow: -2px -2px 3px #cccccc;
   --progressColour: #99ff99;
-  /* --tipBorderColour: ;
-  --tipBackgroundColour: ;
-  --tipTextColour: ; */
   --alertColour: #b30000;
   --successColour: #29a329;
   --borderImage: url("../images/border-dark.png");
@@ -104,103 +105,6 @@ img {
 
 ::-webkit-scrollbar-button:hover {
   background-color: var(--scrollButtonColour2);
-}
-
-/* BACKDROP */
-.parallax {
-  width: 95%;
-  margin: 0 auto;
-  height: 90vh;
-  display: grid;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 10px;
-}
-
-.parallax .title {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 5rem;
-  font-weight: bold;
-  color: var(--titleColour);
-  background-color: transparent;
-  padding: 10%;
-  opacity: 0.65;
-  letter-spacing: 0.55rem;
-  text-shadow: -4px 4px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
-}
-
-#parallax1 {
-  background-image: url("../images/rocket1.jpg");
-  margin-top: 2%;
-}
-
-#parallax2 {
-  background-image: url("../images/rocket2.jpg");
-}
-
-#parallax3 {
-  background-image: url("../images/rocket3.jpg");
-}
-
-#parallax4 {
-  background-image: url("../images/rocket4.jpg");
-}
-
-#parallax5 {
-  background-image: url("../images/rocket5.jpg");
-}
-
-#parallax5 .title {
-  color: #e68a00;
-  text-shadow: -4px 4px gray, -3px -3px 25px yellow, -1px -1px 5px darkblue;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .parallax:not(#parallax1) {
-    scale: 0.85;
-    opacity: 0.2;
-    animation: parallaxFade 0.5s linear forwards;
-    animation-timeline: view();
-    animation-range: entry;
-  }
-  @keyframes parallaxFade {
-    to { scale: 1; opacity: 1; }
-  }
-
-  #scroll-progress {
-    height: 2px;
-    position: absolute;
-    top: 56px;
-    opacity: 0.8;
-    z-index: 55;
-    background-color: var(--progressColour);
-    width: 100%;
-    scale: 0 1;
-    transform-origin: left;
-    animation: progressLine linear;
-    animation-timeline: scroll();
-  }
-  @keyframes progressLine {
-    to { scale: 1 1; }
-  }
-}
-
-/* MAIN */
-.text_block {
-  position: relative;
-  min-height: 35rem;
-  font-size: 1rem;
-  color: var(--textColour);
-  margin: 2.5% 2.5% 10% 2.5%;
-  padding: 0 5%;
-  text-align: justify;
-  text-justify: inter-word;
-}
-
-.text_block p {
-  margin-top: 2%;
 }
 
 /* NAV */
@@ -317,6 +221,127 @@ img {
   color: var(--colour2);
   cursor: pointer;
 }
+
+/* BACKDROP */
+.parallax {
+  width: 95%;
+  margin: 0 auto;
+  height: 90vh;
+  display: grid;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+}
+
+.parallax .title {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--titleColour);
+  background-color: transparent;
+  padding: 10%;
+  opacity: 0.65;
+  letter-spacing: 0.55rem;
+  text-shadow: -4px 4px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
+}
+
+#parallax1 {
+  background-image: url("../images/rocket1.jpg");
+  margin-top: 2%;
+}
+
+#parallax2 {
+  background-image: url("../images/rocket2.jpg");
+}
+
+#parallax3 {
+  background-image: url("../images/rocket3.jpg");
+}
+
+#parallax4 {
+  background-image: url("../images/rocket4.jpg");
+}
+
+#parallax5 {
+  background-image: url("../images/rocket5.jpg");
+}
+
+#parallax5 .title {
+  color: #e68a00;
+  text-shadow: -4px 4px gray, -3px -3px 25px yellow, -1px -1px 5px darkblue;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .parallax:not(#parallax1) {
+    scale: 0.85;
+    opacity: 0.2;
+    animation: parallaxFade 0.5s linear forwards;
+    animation-timeline: view();
+    animation-range: entry;
+  }
+  @keyframes parallaxFade {
+    to { scale: 1; opacity: 1; }
+  }
+
+  #scroll-progress {
+    height: 2px;
+    position: absolute;
+    top: 56px;
+    opacity: 0.8;
+    z-index: 55;
+    background-color: var(--progressColour);
+    width: 100%;
+    scale: 0 1;
+    transform-origin: left;
+    animation: progressLine linear;
+    animation-timeline: scroll();
+  }
+  @keyframes progressLine {
+    to { scale: 1 1; }
+  }
+}
+
+/* MAIN */
+.text_block {
+  position: relative;
+  min-height: 35rem;
+  font-size: 1rem;
+  color: var(--textColour);
+  margin: 2.5% 2.5% 10% 2.5%;
+  padding: 0 5%;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.text_block p {
+  margin-top: 2%;
+}
+
+.tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.tooltip:hover::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -30px;
+  left: 1vw;
+  padding: 5px 10px;
+  white-space: nowrap;
+  background-color: var(--tipBackgroundColour);
+  color: var(--tipTextColour); 
+  border: 1px solid var(--tipBorderColour);
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-style: italic;
+}
+
+/* .content {
+  margin-top: 20px;
+} */
 
 /* STUDIES */
 #block2 {
@@ -587,6 +612,19 @@ ul {
   grid-column: 1 / 1;
   line-height: 1.6;
   box-shadow: -8px 8px 10px #b3b3b3;
+  /* Try: box-shadow: 10px -10px 15px rgba(0, 0, 0, 0.5); */
+  /* Or:
+  .box::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top left, rgba(0, 0, 0, 0.5), transparent);
+    pointer-events: none;
+  }
+  */
   -webkit-transform: rotate(-7deg);
   -moz-transform: rotate(-7deg);
   -ms-transform: rotate(-7deg);
