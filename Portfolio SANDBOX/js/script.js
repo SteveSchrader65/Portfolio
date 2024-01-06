@@ -148,6 +148,11 @@ function navSetup() {
   // Remove templates from DOM
   document.querySelector("nav ul:nth-child(3)").remove();
 
+
+
+  let temp1 = document.querySelectorAll("#mainNav .menu-content li");
+
+  console.log("Temp1: ", temp1);
   console.log(mainMenu);
   console.log(hamburgerMenu);
 
@@ -171,7 +176,6 @@ function navbarHide() {
     let currentScrollPos = window.scrollY;
 
     if (prevScrollPos > currentScrollPos) {
-      // Can both selectors go on same line ??
       document.querySelector("#mainNav").style.top = "0";
       document.querySelector("#hamburgerNav").style.top = "0";
     } else {
@@ -590,7 +594,6 @@ function init() {
   // block5SetUp();
   footerDate();
 
-  // Tool-tips ??
   // Check coolors.com for palette contrast checks
   // NOTE: Hide navlist for mobile-sized screens and display hamburger drop-down menu
   // ADD RESPONSIVENESS

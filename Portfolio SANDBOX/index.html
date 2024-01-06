@@ -19,7 +19,7 @@
           </li>
         </ul>
         <ul>
-          <li> <!-- .menu_content -->
+          <li> <!-- .menu_content li above ul with list of -->
             <ul>
               <li><a href="#parallax1">Overview</a></li>
               <li><a href="#parallax2">Studies</a></li>
@@ -39,14 +39,23 @@
             </ul>
           </li>
           <li><!-- .viewingMode -->
+            <!-- <span class="tooltip" data-tooltip="Select light-mode"> -->
+            <!-- Will require changes to CSS -->
             <button class="darkMode">
               <img src="images/darkModeButton.png" width="56" height="29" alt="Button to set light viewing mode">
             </button>
+            <!-- </span> -->
+            <!-- <span class="tooltip" data-tooltip="Select dark-mode"> -->
+            <!-- Will require changes to CSS -->
             <button class="lightMode">
               <img src="images/lightModeButton.png" width="56" height="29" alt="Button to set dark viewing mode">
             </button>
+            <!-- </span> -->
           </li>
-          <li><!-- .scroll-progress --></li>
+          <!-- <span class="tooltip" data-tooltip="Scroll progress indicator"> -->
+          <!-- Will require changes to CSS -->
+          <li id="scroll-progress"></li>
+          <!-- </span> -->
         </ul>
       </nav>
 
@@ -121,9 +130,9 @@
           return to full-time studies.
         </p>
         <p>
-          Hi !! I'm <span class="animateMe">S</span><span class="animateMe">t</span
+          Hi !! I'm <span class="tooltip" data-tooltip="Just a little JS wizardry"><span class="animateMe">S</span><span class="animateMe">t</span
           ><span class="animateMe">e</span><span class="animateMe">v</span
-          ><span class="animateMe">e</span> ...
+          ><span class="animateMe">e</span></span> ...
         </p>
         <p>
           Having worked numerous roles in the transport industry over a twenty-year period, I found
@@ -399,9 +408,12 @@
           (HTML, CSS and JavaScript) was written by myself. Incidentally, you can use this PDF link to
           download Steve's resume.
         </p>
-        <a href="images/Resume.pdf" download="resumeSteveSchrader"
-          ><img src="images/pdf.png" alt="Button image for resume PDF download" width="65" height="65">
-        </a> -->
+          <span class="tooltip" data-tooltip="Click to download Steve's resume">
+            <a href="images/Resume.pdf" download="resumeSteveSchrader">
+              <img src="images/pdf.png" alt="Button image for resume PDF download" width="65" height="65">
+            </a>
+          </span>
+      -->
       </div>
       <div class="parallax" id="parallax4">
         <span class="title">Projects</span>
@@ -412,16 +424,19 @@
           I've jotted down a few of my personal favourites on this Post-It<span id="copyright">
           &copy;</span>note. Select a project to activate its' info-panel:
         </p>
-        <ul id="projectList">
-          <li data-project="#project1">Clive ...</li>
-          <li data-project="#project2">Recipe Book</li>
-          <li data-project="#project3">CaptainSteve</li>
-          <li data-project="#project4">Anagrams</li>
-          <li data-project="#project5">Video Player</li>
-          <li data-project="#project6">PLUMS</li>
-          <li data-project="#project7">Hangman</li>
-          <li data-project="#project8">Shopping List</li>
-        </ul>
+        <span class="tooltip" data-tooltip="Choose a project ...">
+        *** Location needs to be modified for this tooltip ***
+          <ul id="projectList">
+            <li data-project="#project1">Clive ...</li>
+            <li data-project="#project2">Recipe Book</li>
+            <li data-project="#project3">CaptainSteve</li>
+            <li data-project="#project4">Anagrams</li>
+            <li data-project="#project5">Video Player</li>
+            <li data-project="#project6">PLUMS</li>
+            <li data-project="#project7">Hangman</li>
+            <li data-project="#project8">Shopping List</li>
+          </ul>
+        </span>
         <div id="sidebar">
           <button id="close">X</button>
         </div>

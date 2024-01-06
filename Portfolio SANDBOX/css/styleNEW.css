@@ -1,38 +1,38 @@
 @charset "UTF-8";
-
-:root {
-  /* Light-mode colour palette */
-  --titleColour: #cccc00;
-  --navBarColour: #cccccc;
-  --navTextColour: black;
-  --navHoverColour: #82827d;
-  --textColour: #210000;
-  --backColour: #f2f2f2;
-  --highlightColour1: #3399ff;
-  --highlightColour2: #0059b3;
-  --postItColour: #fffcaa;
-  --sidebarTextColour: #0000cc;
-  --sidebarBackgroundColour: #e8e8e8;
-  --sidebarBorderColour: #33cc33;
-  --colour1: #000000;
-  --colour2: #ffffff;
-  --scrollTrackColour: #b4b2b1;
-  --scrollThumbColour1: #1d6dc9;
-  --scrollThumbColour2: #6c9ee0;
-  --scrollButtonColour1: #6c9ee0;
-  --scrollButtonColour2: #8fbcef;
-  --scrollBorderColour: #b7b6fc;
-  --progressColour: #008000;
-  /* --tipBorderColour: ;
-  --tipBackgroundColour: ;
-  --tipTextColour: ; */
-  --alertColour: #ff1a1a;
-  --successColour: #69cf9d;
-  --borderImage: url("../images/border-light.png");
+@media (prefers-color-scheme: light) {
+  :root {
+    --titleColour: #cccc00;
+    --navBarColour: #cccccc;
+    --navTextColour: black;
+    --navHoverColour: #82827d;
+    --textColour: #210000;
+    --backColour: #f2f2f2;
+    --highlightColour1: #3399ff;
+    --highlightColour2: #0059b3;
+    --postItColour: #fffcaa;
+    --sidebarTextColour: #0000cc;
+    --sidebarBackgroundColour: #e8e8e8;
+    --sidebarBorderColour: #33cc33;
+    --colour1: #000000;
+    --colour2: #ffffff;
+    --scrollTrackColour: #b4b2b1;
+    --scrollThumbColour1: #1d6dc9;
+    --scrollThumbColour2: #6c9ee0;
+    --scrollButtonColour1: #6c9ee0;
+    --scrollButtonColour2: #8fbcef;
+    --scrollBorderColour: #b7b6fc;
+    --progressColour: #008000;
+    /* --tipBorderColour: ;
+    --tipBackgroundColour: ;
+    --tipTextColour: ; */
+    --alertColour: #ff1a1a;
+    --successColour: #69cf9d;
+    --borderImage: url("../images/border-light.png");
+  }
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
-  /* Dark-mode colour palette */
   --titleColour: #0e0cf3;
   --navBarColour: #210000;
   --navTextColour: #cccc00;
@@ -63,6 +63,7 @@
   --borderImage: url("../images/border-dark.png");
   }
 }
+
 /* LAYOUT */
 * {
   margin: 0;
@@ -78,11 +79,23 @@ body {
   background-color: var(--backColour);
   overflow-x: hidden;
   overflow-y: scroll;
+  -webkit-animation: fadein 2s ease-in;
+  -moz-animation: fadein 2s ease-in;
+  -o-animation: fadein 2s ease-in;
+  animation: fadein 2s ease-in;
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-header/*, nav*/, footer {
+header, .text_block, footer {
   display: grid;
-  grid-template-columns: 100%;
+  /* grid-template-columns: 100%; */
 }
 
 main {
@@ -117,7 +130,6 @@ ol {
 #mainNav {
   position: fixed;
   display: flex;
-  /*display: grid */
   flex-direction: row;
   top: 0;
   width: 100%;
@@ -152,28 +164,6 @@ ol {
   float: left;   /* Set with flex */
   overflow: hidden;
 }
-
-/* #mainNav .menu_content {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  width: 100%;
-  background-color: var(--navBackColor);
-  margin: 0;
-  display: -ms-grid;
-  display: grid;
-  grid-template-rows: 1fr repeat(4, 0.5fr);
-  grid-row-gap: 25px;
-  padding: 0 5%;
-  width: auto;
-  text-align: left;
-  height: 0px;
-  overflow: hidden;
-  transition: height .4s ease;
-  z-index: 120;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-} */
 
 #mainNav .dropMenu .dropMenuBtn {
   font-size: 1.5rem;
@@ -221,7 +211,7 @@ ol {
   text-shadow: -2px 2px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
 }
 
-#hamburgerIcon {
+/* #hamburgerIcon {
   position: absolute;
   height: 45px;
   margin: 10px;
@@ -274,7 +264,7 @@ ol {
 }
 
 #hamburgerNav {
-  position: absolute; /* Check parent is position: relative */
+  position: absolute;
   display: none;
   top: 0;
   width: 40%;
@@ -284,9 +274,9 @@ ol {
   transition: top 0.4s;
   background-color: var(--navBarColour);
   box-shadow: 1px 1px var(--navTextColour);
-}
+} */
 
-#hamburgerNav .viewingMode button {
+/* #hamburgerNav .viewingMode button {
   grid-row: 1 / 1;
   grid-column: 3 / 3;
 }
@@ -376,9 +366,10 @@ ol {
 
 #hamburgerNav .menu_content a:last-child {
   margin-bottom: 40px;
-}
+} */
 
 /* VIEWMODE */
+/* .viewingMode:has(button) { */
 .viewingMode button {
   display: inline-block;
   background-color: var(--navBackColor);
@@ -386,10 +377,12 @@ ol {
   margin-left: 1%;
 }
 
+/* .viewingMode img:has(button) { */
 .viewingMode button img {
   width: 75%;
 }
 
+/* .viewingMode:has(button) button:hover { */
 .viewingMode button:hover {
   cursor: pointer;
 }
@@ -402,8 +395,8 @@ ol {
 }
 
 .darkMode {
-  visibility: hidden;
-  /* visibility: visible; */
+  /* visibility: hidden; */
+  visibility: visible;
   position: absolute;
   top: 30%;
   left: 0.1%;
