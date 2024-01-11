@@ -1,0 +1,303 @@
+@charset "UTF-8";
+
+:root {
+  /* || Dark-mode colour palette */
+  --titleColour: #0e0cf3;
+  --navBarColour: #210000;
+  --navTextColour: #cccc00;
+  --navHoverColour: #82807d;
+  --textColour: #cccccc;
+  --backColour: #210000;
+  --highlightColour1: #b3d9ff;
+  --highlightColour2: #3399ff;
+  --postItColour: #fffcaa;
+  --sidebarTextColour: black;
+  --sidebarBackgroundColour: #b4b2b1;
+  --sidebarBorderColour: #0e0cf3;
+  --colour1: black;
+  --colour2: white;
+  --scrollTrackColour: #757270;
+  --scrollThumbColour1: #0a2647;
+  --scrollThumbColour2: #205295;
+  --scrollButtonColour1: #1961b3;
+  --scrollButtonColour2: #4282d7;
+  --scrollBorderColour: #0e0cf3;
+  --tipBackgroundColour: #757270;
+  --tipTextColour: #0a2647;
+  --tipBorderColour: #205295;
+  --progressColour: #99ff99;
+  --alertColour: #b30000;
+  --successColour: #34ad34;
+
+  /* || Font-sizes */
+  --titleSize: min(5rem, 10vw);
+  --linkSize1: min(2rem, 2.4vw);
+  --linkSize2: min(1.75rem, 3.75vh);
+  --heading1Size: min(3rem, 4vw);
+  --heading2Size: min(4rem, 6vw);
+  --textSize: min(1rem, 1.8vw);
+  --tipSize: min(0.5rem, 1.2vw);
+
+  /* || Miscellaneous */
+  --borderImage: url("../images/border-dark.png");
+  --tipShadow: -2px -2px 3px var(--navTextColour);
+}
+
+/* || General */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+img {
+  height: auto;
+}
+
+ul {
+  list-style-type: none;
+}
+
+/* || Navigation Menu  */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 3em;
+  z-index: 100;
+  background-color: var(--navBarColour);
+  box-shadow: 1px 1px var(--navTextColour);
+  -webkit-transition: top 0.4s;
+  -moz-transition: top 0.4s;
+  transition: top 0.4s;
+}
+
+#hamburgerNav {
+  display: none;
+}
+
+#mainNav {
+  display: flex;
+  flex-flow: row nowrap;
+  place-content: center space-around;
+}
+
+#mainNav a {
+  display: block;
+  font-size: var(--linkSize1);
+  background-color: var(--navButtonColour);
+  color: var(--navTextColour);
+  text-decoration: none;
+  margin-top: 3%;
+}
+
+#mainNav a:hover {
+  animation: linkPop 0.5s forwards;
+}
+@keyframes linkPop {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.2); }
+}
+
+#mainNav a,
+#mainNav .dropMenu {
+  font-size: var(--linkSize1);
+  font-family: inherit;
+  color: var(--navTextColour);
+}
+
+#mainNav .dropMenu {
+  margin-top: 0.25%;
+}
+
+#mainNav .dropMenu:hover {
+  background-color: var(--navHoverColour);
+  cursor: pointer;
+}
+
+#mainNav .dropMenu:hover .dropMenuContent {
+  display: block;
+}
+
+#mainNav .dropMenuContent {
+  display: none;
+  position: absolute;
+  min-width: 15%; /* Modify min-width values as screen-size changes */
+  z-index: 105;
+  margin-left: -9.75%; /* Modify margin values as screen-size changes */
+  box-shadow: 4px 4px 6px var(--sidebarBackgroundColour);
+  background-color: var(--navHoverColour);
+}
+
+#mainNav .dropMenuContent a {
+  font-size: var(--linkSize2);
+  background-color: var(--navHoverColour);
+  color: var(--colour1);
+  text-decoration: none;
+  padding: 5%; /* Modify padding values as screen-size changes */
+}
+
+#mainNav .dropMenuContent a:hover {
+  background-color: var(--textColour);
+  color: var(--colour2);
+  cursor: pointer;
+}
+
+/* || Light/Dark Viewing Mode */
+.viewingMode {
+  display: inline-block;
+  background-color: var(--navBarColour);
+  border: none;
+}
+
+.viewingMode img {
+  width: min(6vw, 56px);
+}
+
+.viewingMode button:hover {
+  cursor: pointer;
+}
+
+.lightMode {
+  visibility: hidden;
+  position: absolute;
+  top: 0.6rem;
+  left: 1rem;
+}
+
+.darkMode {
+  visibility: visible;
+  position: absolute;
+  top: 0.6rem;
+  left: 1rem;
+}
+
+/* || Scroll Progress Indicator */
+.scrollProgress {
+  height: 2px;
+  position: absolute;
+  top: 7.85vh; /* Modify positioning values as screen-size changes */
+  opacity: 0.8;
+  z-index: 100;
+  background-color: var(--progressColour);
+  width: 100%;
+  scale: 0 1;
+  flex-direction: row;
+  transform-origin: left;
+  animation: progressLine linear;
+  animation-timeline: scroll();
+}
+@keyframes progressLine {
+  to { scale: 1 1; }
+}
+
+/* || Tooltips */
+.tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.tooltip:hover::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -30px;
+  left: 1vw;
+  padding: 5px 10px;
+  white-space: nowrap;
+  background-color: var(--tipBackgroundColour);
+  color: var(--tipTextColour);
+  border: 1px solid var(--tipBorderColour);
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-style: italic;
+  z-index: 100;
+}
+
+nav > ul > li:first-child > .tooltip:hover::before {
+  top: 30px;
+}
+
+/* Multiple queries needed to modify size of viewingMode button as screen size changes
+@media (max-width: 600px) {
+  .viewingMode {
+    width: 28px;
+  }
+}
+*/
+
+/* Display hamburger menu for noarrower screens */
+@media screen and (max-width: 560px) {
+  #mainNav {
+    display: none;
+  }
+
+  #hamburgerNav .mainMenu {
+    display: none;
+  }
+
+  #hamburgerNav .mainMenu .dropMenuContent {
+    display: none;
+  }
+
+  #hamburgerNav {
+    display: flex; /* ?? display: block; ?? */
+    justify-content: space-between;
+  }
+
+  #hamburgerNav #hamburgerButton {
+    background-color: transparent;
+    border: none;
+    width: 48px; /* Modify width value as screen-size changes */
+    height: 48px; /* Modify height value as screen-size changes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  #hamburgerNav #hamburgerIcon,
+  #hamburgerNav #hamburgerIcon::before,
+  #hamburgerNav #hamburgerIcon::after {
+    /* background-color: var(--navTextColour); */
+    background-color: var(--successColour);
+    width: 40px; /* Modify width value as screen-size changes */
+    height: 5px;
+    border-radius: 5px;
+    position: absolute;
+    transition: all 0.5s;
+  }
+
+  #hamburgerNav #hamburgerIcon::before,
+  #hamburgerNav #hamburgerIcon::after {
+    content: "";
+  }
+
+  #hamburgerNav #hamburgerIcon::before {
+    transform: translate(-20px, -12px); /* Modify values as screen-size changes */
+  }
+
+  #hamburgerNav #hamburgerIcon::after {
+    transform: translate(-20px, 12px); /* Modify values as screen-size changes */
+  }
+
+  #hamburgerNav #hamburgerButton:hover #hamburgerIcon {
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  #hamburgerNav #hamburgerButton:hover #hamburgerIcon::before {
+    transform: translateX(-20px) rotate(405deg); /* Modify translate value as screen-size changes */
+  }
+
+  #hamburgerNav #hamburgerButton:hover #hamburgerIcon::after {
+    transform: translateX(-20px) rotate(-405deg); /* Modify translate value as screen-size changes */
+  }
+
+  #hamburgerNav #hamburgerButton:hover .mainMenu {
+    display: block;
+  }
+
+  #hamburgerNav .viewingMode {
+    align-self: flex-end;
+  }
+}

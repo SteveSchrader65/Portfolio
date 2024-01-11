@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Navigation Bar</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul id="mainNav">
+          <li>
+            <button class="viewingMode darkMode">
+              <span class="tooltip" data-tooltip="Select dark-mode">
+                <img src="images/darkModeButton.png" width="56" height="29" alt="Button to set light viewing mode">
+              </span>
+            </button>
+            <button class="viewingMode lightMode">
+              <span class="tooltip" data-tooltip="Select light-mode">
+                <img src="images/lightModeButton.png" width="56" height="29" alt="Button to set dark viewing mode">
+              </span>
+            </button>
+          </li>
+          <li><a href="#parallax1">Overview</a></li>
+          <li><a href="#parallax2">Studies</a></li>
+          <li><a href="#parallax3">Employment</a></li>
+          <li><a href="#parallax4">Projects</a></li>
+          <li><a href="#parallax5">Contact</a></li>
+          <li class="dropMenu">Links
+            <ul class="dropMenuContent">
+              <li><a href="/Site1/index.html" target="_blank">Toy Shop</a></li>
+              <li><a href="/Site2/index.html" target="_blank">Furniture Store</a></li>
+              <li><a href="http://www.captainsteveperth.com" target="_blank">CaptainSteve</a></li>
+              <li><a href="#" target="_blank">Hangman</a></li>
+              <li><a href="#" target="_blank">Shopping List</a></li>
+            </ul>
+          </li>
+          <li class="scrollProgress">
+            <span class="tooltip" data-tooltip="Scroll progress indicator">
+              <div></div>
+            </span>
+          </li>
+        </ul>
+
+        <ul id="hamburgerNav">
+          <li>
+            <button id="hamburgerButton">
+              <div id="hamburgerIcon"></div>
+              <li class="mainMenu">
+                <ul>
+                  <li><a href="#parallax1">Overview</a></li>
+                  <li><a href="#parallax2">Studies</a></li>
+                  <li><a href="#parallax3">Employment</a></li>
+                  <li><a href="#parallax4">Projects</a></li>
+                  <li><a href="#parallax5">Contact</a></li>
+                  <li class="dropMenu">Links
+                    <ul class="dropMenuContent">
+                      <li><a href="/Site1/index.html" target="_blank">Toy Shop</a></li>
+                      <li><a href="/Site2/index.html" target="_blank">Furniture Store</a></li>
+                      <li><a href="http://www.captainsteveperth.com" target="_blank">CaptainSteve</a></li>
+                      <li><a href="#" target="_blank">Hangman</a></li>
+                      <li><a href="#" target="_blank">Shopping List</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </button>
+          </li>
+          <li>
+            <button class="viewingMode darkMode">
+              <span class="tooltip" data-tooltip="Select dark-mode">
+                <img src="images/darkModeButton.png" width="56" height="29" alt="Button to set light viewing mode">
+              </span>
+            </button>
+            <button class="viewingMode lightMode">
+              <span class="tooltip" data-tooltip="Select light-mode">
+                <img src="images/lightModeButton.png" width="56" height="29" alt="Button to set dark viewing mode">
+              </span>
+            </button>
+          </li>
+          <li>
+            <span class="tooltip" data-tooltip="Scroll progress indicator">
+              <div class="scrollProgress"></div>
+            </span>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main></main>
+    <footer></footer>
+    <script src="js/script.js"></script>
+  </body>
+</html>
