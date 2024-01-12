@@ -99,27 +99,27 @@ nav {
 }
 
 #mainNav a,
-#mainNav .dropMenu {
+#mainNav .dropMenuTrigger {
   font-size: var(--linkSize1);
   font-family: inherit;
   color: var(--navTextColour);
 }
 
-#mainNav .dropMenu {
+#mainNav .dropMenuTrigger {
   margin-top: 0.25%;
   /* padding: ?? */
 }
 
-#mainNav .dropMenu:hover {
+#mainNav .dropMenuTrigger:hover {
   background-color: var(--navHoverColour);
   cursor: pointer;
 }
 
-#mainNav .dropMenu:hover .dropMenuContent {
+#mainNav .dropMenuTrigger:hover .dropMenu {
   display: block;
 }
 
-#mainNav .dropMenuContent {
+#mainNav .dropMenu {
   display: none;
   position: absolute;
   min-width: 15%;
@@ -130,14 +130,14 @@ nav {
   background-color: var(--navHoverColour);
 }
 
-#mainNav .dropMenuContent a {
+#mainNav .dropMenu a {
   font-size: var(--linkSize2);
   color: var(--colour1);
   text-decoration: none;
   padding: 5%; /* Modify padding values as screen-size changes */
 }
 
-#mainNav .dropMenuContent a:hover {
+#mainNav .dropMenu a:hover {
   background-color: var(--textColour);
   color: var(--colour2);
   cursor: pointer;
@@ -283,7 +283,7 @@ nav > ul > li:first-child > .tooltip:hover::before {
   }
 
   #hamburgerNav #hamburgerButton .mainMenu,
-  #hamburgerNav .dropMenu .dropMenuContent {
+  #hamburgerNav .dropMenuTrigger .dropMenu {
     display: none;
     position: absolute;
     background-color: var(--navHoverColour);
@@ -311,18 +311,18 @@ nav > ul > li:first-child > .tooltip:hover::before {
     top: 100%;
     left: -25%;
   }
-  #hamburgerNav .dropMenuContent {
+  #hamburgerNav .dropMenu {
     top: 0%;
     left: 100%;
   }
 
   #hamburgerNav #hamburgerButton:hover .mainMenu,
-  #hamburgerNav .dropMenu:hover .dropMenuContent {
+  #hamburgerNav .dropMenuTrigger:hover .dropMenu {
     display: block;
   }
 
   #hamburgerNav .mainMenu a,
-  #hamburgerNav .dropMenu {
+  #hamburgerNav .dropMenuTrigger {
     display: block;
     font-size: var(--linkSize2);
     color: var(--navTextColour);
@@ -333,13 +333,13 @@ nav > ul > li:first-child > .tooltip:hover::before {
   }
 
   #hamburgerNav .mainMenu,
-  #hamburgerNav .dropMenuContent {
+  #hamburgerNav .dropMenu {
     background-color: var(--navHoverColour);
     padding: 10%; /* !! No padding .mainMenu !! */
   }
 
   #hamburgerNav .mainMenu a:hover,
-  #hamburgerNav .dropMenu:hover {
+  #hamburgerNav .dropMenuTrigger:hover {
     background-color: var(--textColour);
     color: var(--colour2);
     cursor: pointer;
