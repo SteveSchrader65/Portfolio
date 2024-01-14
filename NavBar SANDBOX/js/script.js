@@ -2,8 +2,8 @@
 
 let viewingMode = "";
 const root = document.querySelector(":root");
-const lightButton = document.querySelector(".lightMode");
-const darkButton = document.querySelector(".darkMode");
+const lightButtons = document.querySelectorAll(".lightMode");
+const darkButtons = document.querySelectorAll(".darkMode");
 
 function setViewingMode() {
   "use strict";
@@ -18,14 +18,26 @@ function setViewingMode() {
     _setDarkMode();
   }
 
-  lightButton.addEventListener("click", _setLightMode);
-  darkButton.addEventListener("click", _setDarkMode);
+  lightButtons.forEach((button) => {
+    button.addEventListener("click", _setLightMode);
+  });
+
+  darkButtons.forEach((button) => {
+    button.addEventListener("click", _setDarkMode);
+  });
 
   function _setLightMode() {
     viewingMode = "lightness";
     localStorage.setItem("viewingMode", viewingMode);
-    lightButton.style.visibility = "hidden";
-    darkButton.style.visibility = "visible";
+
+    lightButtons.forEach((light) => {
+      light.style.visibility = "hidden";
+    });
+
+    darkButtons.forEach((dark) => {
+      dark.style.visibility = "visible";
+    });
+
     root.style.setProperty("--titleColour", "#cccc00");
     root.style.setProperty("--navBarColour", "#cccccc");
     root.style.setProperty("--navTextColour", "black");
@@ -47,10 +59,9 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour2", "#8fbcef");
     root.style.setProperty("--scrollBorderColour", "#b7b6fc");
     root.style.setProperty("--progressColour", "#008000");
-    root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
+    root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--tipTextColour", "#1d6dc9");
-    root.style.setProperty("--tipShadow", "-2px -2px 3px #210000;");
     root.style.setProperty("--alertColour", "#ff1a1a");
     root.style.setProperty("--successColour", "#69cf9d");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
@@ -59,8 +70,15 @@ function setViewingMode() {
   function _setDarkMode() {
     viewingMode = "darkness";
     localStorage.setItem("viewingMode", viewingMode);
-    lightButton.style.visibility = "visible";
-    darkButton.style.visibility = "hidden";
+
+    lightButtons.forEach((light) => {
+      light.style.visibility = "visible";
+    });
+
+    darkButtons.forEach((dark) => {
+      dark.style.visibility = "hidden";
+    });
+
     root.style.setProperty("--titleColour", "#0e0cf3");
     root.style.setProperty("--navBarColour", "#210000");
     root.style.setProperty("--navTextColour", "#cccc00");
@@ -82,10 +100,9 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour2", "#4282d7");
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
     root.style.setProperty("--progressColour", "#99ff99");
-    root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
     root.style.setProperty("--tipTextColour", "#1d6dc9");
-    root.style.setProperty("--tipShadow", "-2px -2px 3px #210000;");
+    root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--alertColour", "#b30000");
     root.style.setProperty("--successColour", "#29a329");
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
@@ -109,32 +126,6 @@ function scrollToTop() {
 
   document.querySelector("nav").style.top = "0";
 }
-
-function navSetup() {
-  "use strict";
-
-  // const mainMenu = document.querySelector("#mainNav");
-  // const hamburgerMenu = document.querySelector("#hamburgerNav");
-
-  // document.querySelector("#hamburgerButton").addEventListener("mouseover", function () {
-  //   document.querySelector("nav").style.display = "block";
-  // });
-
-  // document.querySelector("#hamburgerButton").addEventListener("mouseout", function () {
-  //   document.querySelector("nav").style.display = "none";
-  // });
-
-
-  // Get screen-size (use eventListener to detect change)
-  // window.addEventListener("resize", (event) => {
-    // console.log(event);
-  // });
-  // OR new ResizeObserver
-
-  // Add menu Event listeners
-  // Activate 'display: block(??)' for required components
-}
-
 
 function navbarHide() {
   "use strict";
@@ -180,7 +171,6 @@ function init() {
 
   setViewingMode();
   scrollToTop();
-  // navSetup();
   navbarHide();
   smoothScroll();
 }

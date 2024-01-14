@@ -1,35 +1,6 @@
 @charset "UTF-8";
 
 :root {
-  /* || Dark-mode colour palette */
-  --titleColour: #0e0cf3;
-  --navBarColour: #210000;
-  --navTextColour: #cccc00;
-  --navHoverColour: #82807d;
-  --textColour: #cccccc;
-  --backColour: #210000;
-  --highlightColour1: #b3d9ff;
-  --highlightColour2: #3399ff;
-  --postItColour: #fffcaa;
-  --sidebarTextColour: black;
-  --sidebarBackgroundColour: #b4b2b1;
-  --sidebarBorderColour: #0e0cf3;
-  --colour1: black;
-  --colour2: white;
-  --scrollTrackColour: #757270;
-  --scrollThumbColour1: #0a2647;
-  --scrollThumbColour2: #205295;
-  --scrollButtonColour1: #1961b3;
-  --scrollButtonColour2: #4282d7;
-  --scrollBorderColour: #0e0cf3;
-  --tipBackgroundColour: #757270;
-  --tipTextColour: #0a2647;
-  --tipBorderColour: #205295;
-  --progressColour: #99ff99;
-  --alertColour: #b30000;
-  --successColour: #34ad34;
-
-  /* || Font-sizes */
   --titleSize: min(5rem, 10vw);
   --linkSize1: min(2rem, 2.4vw);
   --linkSize2: min(1.75rem, 3.75vh);
@@ -37,9 +8,6 @@
   --heading2Size: min(4rem, 6vw);
   --textSize: min(1rem, 1.8vw);
   --tipSize: min(0.5rem, 1.2vw);
-
-  /* || Miscellaneous */
-  --borderImage: url("../images/border-dark.png");
   --tipShadow: -2px -2px 3px var(--navTextColour);
 }
 
@@ -163,11 +131,11 @@ nav {
   cursor: pointer;
 }
 
-/* || Scroll Progress Indicator */
 .scrollProgress {
   height: 2px;
   position: absolute;
   top: 7.85vh; /* Modify positioning values as screen-size changes */
+  /* left: 0; */
   opacity: 0.8;
   z-index: 100;
   background-color: var(--progressColour);
@@ -208,14 +176,6 @@ nav {
   top: 30px;
 }
 
-/* Multiple queries needed to modify size and positioning of portfolio elements as screen size changes
-@media (max-width: 600px) {
-  .viewingMode {
-    width: 28px;
-  }
-}
-*/
-
 /* Display hamburger menu for narrower screens */
 @media screen and (max-width: 560px) {
   #mainNav {
@@ -225,19 +185,16 @@ nav {
   #hamburgerNav {
     display: flex;
     flex-flow: row nowrap;
-    /* place-content: center space-between; */
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 0 2%;
   }
 
   #hamburgerNav #hamburgerButton {
     background-color: transparent;
-    order: 1; /* ?? */
     border: none;
-    width: 48px; /* Modify width value as screen-size changes */
-    height: 48px; /* Modify height value as screen-size changes */
+    width: 48px;
+    height: 48px;
     display: flex;
-    justify-content: center;
     align-items: center;
     position: relative;
   }
@@ -245,8 +202,7 @@ nav {
   #hamburgerNav #hamburgerIcon,
   #hamburgerNav #hamburgerIcon::before,
   #hamburgerNav #hamburgerIcon::after {
-    /* background-color: var(--navTextColour); */
-    background-color: var(--successColour);
+    background-color: var(--navTextColour);
     width: 40px; /* Modify width value as screen-size changes */
     height: 5px;
     border-radius: 5px;
@@ -288,7 +244,7 @@ nav {
     font-size: var(--linkSize2);
     text-align: left;
     min-width: 15%;
-    z-index: 105;
+    z-index: 100;
     box-shadow: 4px 4px 6px var(--sidebarBackgroundColour);
     animation: menuBounce 0.3s ease-in-out forwards;
     transform-origin: top center;
@@ -352,4 +308,10 @@ nav {
   #hamburgerNav .viewingMode img {
     width: min(7.5vw, 56px); /* Adjust as necessary */
   }
+
+  /* #hamburgerNav .scrollProgress {
+    position: relative;
+    top: 30%;
+    left: 0%;
+  } */
 }
