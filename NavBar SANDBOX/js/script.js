@@ -1,12 +1,13 @@
 /* jshint esversion: 6 */
 
 let viewingMode = "";
-const root = document.querySelector(":root");
-const lightButtons = document.querySelectorAll(".lightMode");
-const darkButtons = document.querySelectorAll(".darkMode");
 
 function setViewingMode() {
   "use strict";
+
+  const root = document.querySelector(":root");
+  const lightButtons = document.querySelectorAll(".lightMode");
+  const darkButtons = document.querySelectorAll(".darkMode");
 
   viewingMode = localStorage.getItem("viewingMode");
 

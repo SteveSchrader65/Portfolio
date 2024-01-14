@@ -43,13 +43,13 @@ nav {
   display: none;
 }
 
-#mainNav {
+#mainNav ul {
   display: flex;
   flex-flow: row nowrap;
   place-content: center space-around;
 }
 
-#mainNav a {
+#mainNav ul a {
   display: block;
   font-size: var(--linkSize1);
   color: var(--navTextColour);
@@ -57,7 +57,7 @@ nav {
   margin-top: 3%;
 }
 
-#mainNav a:hover {
+#mainNav ul a:hover {
   animation: linkPop 0.5s forwards;
 }
 @keyframes linkPop {
@@ -65,28 +65,28 @@ nav {
   100% { transform: scale(1.2); }
 }
 
-#mainNav a,
-#mainNav .dropMenuTrigger {
+#mainNav ul a,
+#mainNav ul .dropMenuTrigger {
   font-size: var(--linkSize1);
   font-family: inherit;
   color: var(--navTextColour);
 }
 
-#mainNav .dropMenuTrigger {
+#mainNav ul .dropMenuTrigger {
   margin-top: 0.25%;
   /* padding: ?? */
 }
 
-#mainNav .dropMenuTrigger:hover {
+#mainNav ul .dropMenuTrigger:hover {
   background-color: var(--navHoverColour);
   cursor: pointer;
 }
 
-#mainNav .dropMenuTrigger:hover .dropMenu {
+#mainNav ul .dropMenuTrigger:hover .dropMenu {
   display: block;
 }
 
-#mainNav .dropMenu {
+#mainNav ul .dropMenu {
   display: none;
   position: absolute;
   min-width: 15%;
@@ -96,14 +96,14 @@ nav {
   background-color: var(--navHoverColour);
 }
 
-#mainNav .dropMenu a {
+#mainNav ul .dropMenu a {
   font-size: var(--linkSize2);
   color: var(--colour1);
   text-decoration: none;
   padding: 5%; /* Modify padding values as screen-size changes */
 }
 
-#mainNav .dropMenu a:hover {
+#mainNav ul .dropMenu a:hover {
   background-color: var(--textColour);
   color: var(--colour2);
   cursor: pointer;
@@ -112,9 +112,8 @@ nav {
 /* || Light/Dark Viewing Mode */
 .viewingMode {
   display: flex;
-  /* flex: 0 1 auto; */
   position: relative;
-  top: 15%;
+  top: 15%; /* ?? */
   left: 0%;
   background-color: var(--navBarColour);
   border: none;
@@ -127,7 +126,7 @@ nav {
   width: min(4vw, 56px);
 }
 
-.viewingMode button:hover {
+.viewingMode:hover {
   cursor: pointer;
 }
 
@@ -172,7 +171,7 @@ nav {
   z-index: 100;
 }
 
-.viewingMode > .tooltip:hover::before {
+.viewingMode .tooltip:hover::before {
   top: 30px;
 }
 
@@ -192,8 +191,8 @@ nav {
   #hamburgerNav #hamburgerButton {
     background-color: transparent;
     border: none;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 35px;
     display: flex;
     align-items: center;
     position: relative;
@@ -203,7 +202,7 @@ nav {
   #hamburgerNav #hamburgerIcon::before,
   #hamburgerNav #hamburgerIcon::after {
     background-color: var(--navTextColour);
-    width: 40px; /* Modify width value as screen-size changes */
+    width: 30px; /* Modify width value as screen-size changes */
     height: 5px;
     border-radius: 5px;
     position: absolute;
@@ -216,11 +215,11 @@ nav {
   }
 
   #hamburgerNav #hamburgerIcon::before {
-    transform: translate(-20px, -12px); /* Modify values as screen-size changes */
+    transform: translate(0px, -12px); /* Modify values as screen-size changes */
   }
 
   #hamburgerNav #hamburgerIcon::after {
-    transform: translate(-20px, 12px); /* Modify values as screen-size changes */
+    transform: translate(0px, 12px); /* Modify values as screen-size changes */
   }
 
   #hamburgerNav #hamburgerButton:hover #hamburgerIcon {
@@ -229,11 +228,11 @@ nav {
   }
 
   #hamburgerNav #hamburgerButton:hover #hamburgerIcon::before {
-    transform: translateX(-20px) rotate(405deg); /* Modify translate value as screen-size changes */
+    transform: translateX(0px) rotate(405deg); /* Modify translate value as screen-size changes */
   }
 
   #hamburgerNav #hamburgerButton:hover #hamburgerIcon::after {
-    transform: translateX(-20px) rotate(-405deg); /* Modify translate value as screen-size changes */
+    transform: translateX(0px) rotate(-405deg); /* Modify translate value as screen-size changes */
   }
 
   #hamburgerNav #hamburgerButton .mainMenu,
@@ -300,18 +299,18 @@ nav {
   }
 
   #hamburgerNav .viewingMode {
-    position: relative;
+    position: absolute;
     top: 25%;
-    right: 0%;
+    left: 90%;
   }
 
   #hamburgerNav .viewingMode img {
     width: min(7.5vw, 56px); /* Adjust as necessary */
   }
 
-  /* #hamburgerNav .scrollProgress {
-    position: relative;
+  #hamburgerNav .scrollProgress {
+    position: absolute;
     top: 30%;
     left: 0%;
-  } */
+  }
 }
