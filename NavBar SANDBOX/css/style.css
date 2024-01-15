@@ -3,7 +3,7 @@
 :root {
   --titleSize: min(5rem, 10vw);
   --linkSize1: min(2rem, 2.4vw);
-  --linkSize2: min(1.75rem, 3.75vh);
+  --linkSize2: min(1.75rem, 2.4vw);
   --heading1Size: min(3rem, 4vw);
   --heading2Size: min(4rem, 6vw);
   --textSize: min(1rem, 1.8vw);
@@ -46,13 +46,11 @@ nav {
 #mainNav ul {
   display: flex;
   flex-flow: row nowrap;
-  place-content: center space-around;
+  place-content: center space-evenly;
 }
 
 #mainNav ul a {
   display: block;
-  font-size: var(--linkSize1);
-  color: var(--navTextColour);
   text-decoration: none;
   margin-top: 3%;
 }
@@ -110,7 +108,7 @@ nav {
 }
 
 /* || Light/Dark Viewing Mode */
-.viewingMode {
+.viewingMode button {
   display: flex;
   position: relative;
   top: 15%; /* ?? */
@@ -121,9 +119,9 @@ nav {
 
 .viewingMode img {
   position: absolute;
-  top: 0;
+  top: 5px;
   left: 0;
-  width: min(4vw, 56px);
+  width: min(4vw, 50px);
 }
 
 .viewingMode:hover {
@@ -298,13 +296,14 @@ nav {
     cursor: pointer;
   }
 
-  #hamburgerNav .viewingMode {
+  #hamburgerNav .viewingMode button {
     position: absolute;
     top: 25%;
     left: 90%;
   }
 
   #hamburgerNav .viewingMode img {
+    top: -0.1em;
     width: min(7.5vw, 56px); /* Adjust as necessary */
   }
 
