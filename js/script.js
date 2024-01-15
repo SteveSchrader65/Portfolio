@@ -1,12 +1,13 @@
 /* jshint esversion: 8 */
 
 let viewingMode = "";
-const root = document.querySelector(":root");
-const lightButton = document.querySelector("#lightMode");
-const darkButton = document.querySelector("#darkMode");
 
 function setViewingMode() {
   "use strict";
+
+  const root = document.querySelector(":root");
+  const lightButtons = document.querySelectorAll(".lightMode");
+  const darkButtons = document.querySelectorAll(".darkMode");
 
   viewingMode = localStorage.getItem("viewingMode");
 
@@ -18,14 +19,26 @@ function setViewingMode() {
     _setDarkMode();
   }
 
-  lightButton.addEventListener("click", _setLightMode);
-  darkButton.addEventListener("click", _setDarkMode);
+  lightButtons.forEach((button) => {
+    button.addEventListener("click", _setLightMode);
+  });
+
+  darkButtons.forEach((button) => {
+    button.addEventListener("click", _setDarkMode);
+  });
 
   function _setLightMode() {
     viewingMode = "lightness";
     localStorage.setItem("viewingMode", viewingMode);
-    lightButton.style.visibility = "hidden";
-    darkButton.style.visibility = "visible";
+
+    lightButtons.forEach((light) => {
+      light.style.visibility = "hidden";
+    });
+
+    darkButtons.forEach((dark) => {
+      dark.style.visibility = "visible";
+    });
+
     root.style.setProperty("--titleColour", "#cccc00");
     root.style.setProperty("--navBarColour", "#cccccc");
     root.style.setProperty("--navTextColour", "black");
@@ -46,11 +59,10 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour1", "#6c9ee0");
     root.style.setProperty("--scrollButtonColour2", "#8fbcef");
     root.style.setProperty("--scrollBorderColour", "#b7b6fc");
-    root.style.setProperty("--tipBorderColour", "#6c9ee0");
-    root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
-    root.style.setProperty("--tipTextColour", "#1d6dc9");
-    root.style.setProperty("--tipShadow", "-2px -2px 3px #210000;");
     root.style.setProperty("--progressColour", "#008000");
+    root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
+    root.style.setProperty("--tipBorderColour", "#6c9ee0");
+    root.style.setProperty("--tipTextColour", "#1d6dc9");
     root.style.setProperty("--alertColour", "#ff1a1a");
     root.style.setProperty("--successColour", "#69cf9d");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
@@ -59,8 +71,15 @@ function setViewingMode() {
   function _setDarkMode() {
     viewingMode = "darkness";
     localStorage.setItem("viewingMode", viewingMode);
-    lightButton.style.visibility = "visible";
-    darkButton.style.visibility = "hidden";
+
+    lightButtons.forEach((light) => {
+      light.style.visibility = "visible";
+    });
+
+    darkButtons.forEach((dark) => {
+      dark.style.visibility = "hidden";
+    });
+
     root.style.setProperty("--titleColour", "#0e0cf3");
     root.style.setProperty("--navBarColour", "#210000");
     root.style.setProperty("--navTextColour", "#cccc00");
@@ -81,11 +100,10 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour1", "#1961b3");
     root.style.setProperty("--scrollButtonColour2", "#4282d7");
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
-    root.style.setProperty("--tipBorderColour", "#205295");
-    root.style.setProperty("--tipBackgroundColour", "#757270");
-    root.style.setProperty("--tipTextColour", "#0a2647");
-    root.style.setProperty("--tipShadow", "-2px -2px 3px #cccccc");
     root.style.setProperty("--progressColour", "#99ff99");
+    root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
+    root.style.setProperty("--tipTextColour", "#1d6dc9");
+    root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--alertColour", "#b30000");
     root.style.setProperty("--successColour", "#29a329");
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
@@ -107,7 +125,7 @@ function scrollToTop() {
     element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
 
-  document.querySelector("#navlist").style.top = "0";
+  document.querySelector("nav").style.top = "0";
 }
 
 function navbarHide() {
@@ -119,9 +137,9 @@ function navbarHide() {
     let currentScrollPos = window.scrollY;
 
     if (prevScrollPos > currentScrollPos) {
-      document.querySelector("#navlist").style.top = "0";
+      document.querySelector("nav").style.top = "0";
     } else {
-      document.querySelector("#navlist").style.top = "-58px";
+      document.querySelector("nav").style.top = "-58px";
     }
 
     prevScrollPos = currentScrollPos;
@@ -521,26 +539,32 @@ function footerDate() {
 }
 
 function init() {
-  "use strict";
+  ("use strict");
 
   setViewingMode();
   scrollToTop();
   navbarHide();
   smoothScroll();
-  block1SetUp();
-  block2SetUp();
-  block3SetUp();
-  block4SetUp();
-  block5SetUp();
+  // block1SetUp();
+  // block2SetUp();
+  // block3SetUp();
+  // block4SetUp();
+  // block5SetUp();
   footerDate();
 
-  // Tool-tips ??
-  // Check coolors.com for palette contrast checks
-  // NOTE: Hide navlist for mobile-sized screens and display hamburger drop-down menu
+  // NOTES - 14/1/24
+  // Adjust height and placement of title as screen size changes
+  // Examine problem with scrollProgress
+  // Fonts not working for nav-bar
+  // Parallax images are not re-sizing
+  // Move light/dark tootip for mobile in from right-of-screen
+  // ADD "mouseout" eventListeners to reverse animations on elements (ie: menu-links, drop-menus)
+  
+  // Detect "prefers-viewing-mode" to set initial setting
+  // Check coolors.com for colour palette contrasts
   // ADD RESPONSIVENESS
   //  - block4SetUp(): timeline will become vertical for mobile-sized devices
-  //                   use "display: flex;", "flex-flow: row nowrap;" and "flex-direction: row;"
-  //                   changed in @media to "column" ---------------------------------------^
+  //
 }
 
 // Event listener for the onload event will call the init() function when
