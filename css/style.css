@@ -1,10 +1,11 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Tektur&display=swap');
 
 :root {
-  --titleSize1: min(5rem, 10vw);
-  --titleSize2: min(2rem, 4vw);
-  --linkSize1: min(2rem, 2.4vw);
-  --linkSize2: min(1.75rem, 2.4vw);
+  --parallaxSize: min(3.5rem, 15vw); /* !! Not scaling !! */
+  --navLinkSize: min(3rem, 2vw);
+  --dropMenuSize: min(1.75rem, 2.4vw);
+  /* --titleSize2: min(2rem, 4vw); */
   --linkSize3: min(2rem, 2.4vw);
   --linkSize4: min(1.75rem, 2.4vw);
   --heading1Size: min(3rem, 4vw);
@@ -15,7 +16,7 @@
 }
 
 
-/* || UTILITIES */
+/* || Utilities */
 .offscreen {
   position: absolute;
   left: -10000px;
@@ -29,7 +30,7 @@
   text-align: center;
 }
 
-/* || LAYOUT */
+/* || Layout */
 * {
   margin: 0;
   padding: 0;
@@ -114,6 +115,7 @@ nav {
   display: flex;
   flex-flow: row nowrap;
   place-content: center space-evenly;
+  font-family: Tektur;
 }
 
 #mainNav ul a {
@@ -122,17 +124,9 @@ nav {
   margin-top: 3%;
 }
 
-#mainNav ul a:hover {
-  animation: linkPop 0.5s forwards;
-}
-@keyframes linkPop {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.2); }
-}
-
 #mainNav ul a,
 #mainNav ul .dropMenuTrigger {
-  font-size: var(--linkSize1);
+  font-size: var(--navLinkSize);
   font-family: inherit;
   color: var(--navTextColour);
 }
@@ -157,12 +151,13 @@ nav {
   min-width: 15%;
   z-index: 100;
   margin-left: -9.75%; /* Modify margin values as screen-size changes */
-  box-shadow: 4px 4px 6px var(--sidebarBackgroundColour);
   background-color: var(--navHoverColour);
+  animation: menuBounce 0.3s ease-in-out forwards;
+  transform-origin: top center;
 }
 
 #mainNav ul .dropMenu a {
-  font-size: var(--linkSize2);
+  font-size: var(--dropMenuSize);
   color: var(--colour1);
   text-decoration: none;
   padding: 5%; /* Modify padding values as screen-size changes */
@@ -178,7 +173,7 @@ nav {
 .viewingMode button {
   display: flex;
   position: relative;
-  top: 15%; /* ?? */
+  top: 15%;
   left: 0%;
   background-color: var(--navBarColour);
   border: none;
@@ -186,9 +181,9 @@ nav {
 
 .viewingMode img {
   position: absolute;
-  top: 5px;
-  left: 0;
-  width: min(4vw, 50px);
+  top: min(3px, 1.5rem);
+  left: 0.2rem;
+  width: min(4vw, 40px);
 }
 
 .viewingMode:hover {
@@ -217,11 +212,16 @@ nav {
   z-index: 100;
 }
 
-.viewingMode .tooltip:hover::before {
-  top: 30px;
+#mainNav .viewingMode .tooltip:hover::before {
+  top: 2rem;
 }
 
-/* || BACKDROP */
+#hamburgerNav .viewingMode .tooltip:hover::before {
+  top: 2rem;
+  left: -6rem;
+}
+
+/* || Backdrop */
 .parallax {
   width: 95%;
   margin: 0 auto;
@@ -230,13 +230,13 @@ nav {
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: min(120%, 1800px);
   border-radius: 10px;
 }
 
 .parallax .title {
   font-family: "Times New Roman", Times, serif;
-  font-size: var(--titleSize);
+  font-size: var(--parallaxSize);
   font-weight: bold;
   color: var(--titleColour);
   background-color: transparent;
@@ -246,9 +246,12 @@ nav {
   text-shadow: -4px 4px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
 }
 
+.parallax img {
+  height: auto;
+}
+
 #parallax1 {
   background-image: url("../images/rocket1.jpg");
-  margin-top: 2%;
 }
 
 #parallax2 {
@@ -272,7 +275,6 @@ nav {
   text-shadow: -4px 4px gray, -3px -3px 25px yellow, -1px -1px 5px darkblue;
 }
 
-/* || MAIN */
 .text_block {
   position: relative;
   min-height: 35rem;
@@ -344,8 +346,6 @@ footer a img {
   .scrollProgress {
     height: 2px;
     position: absolute;
-    top: 7.85vh; /* Modify positioning values as screen-size changes */
-    /* left: 0; */
     opacity: 0.8;
     z-index: 100;
     background-color: var(--progressColour);
@@ -360,8 +360,24 @@ footer a img {
     to { scale: 1 1; }
   }
 
-  #hamburger .scrollProgress {
-    margin-top: -6%;
+  #mainNav ul .dropMenu,
+  #hamburgerNav #hamburgerButton .mainMenu,
+  #hamburgerNav .dropMenuTrigger .dropMenu {
+    animation: menuBounce 0.3s ease-in-out forwards;
+    transform-origin: top center;
+  }
+  @keyframes menuBounce {
+    0% { transform: scaleY(0); }
+    80% { transform: scaleY(1.1); }
+    100% { transform: scaleY(1); }
+  }
+
+  #hamburgerNav #hamburgerButton:hover #hamburgerIcon::before {
+    transform: translateX(0px) rotate(405deg);
+  }
+
+  #hamburgerNav #hamburgerButton:hover #hamburgerIcon::after {
+    transform: translateX(0px) rotate(-405deg);
   }
 }
 
@@ -374,33 +390,16 @@ footer a img {
 @media screen and (min-width: 1025px) and (max-width: 1200px) {
 }
 
-/* Lap-top and small screens */
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-  /* Not required, as this is the current device */
-}
-
 /* iPad and Tablet */
-/* @media screen and (max-width: 768px) {
-  .parallax {
-    background-size: contain;
-  }
+@media screen and (max-width: 768px) {
 
-  .parallax .title {
-    font-size: 1.5rem;
-  }
-} */
+}
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
-  /* .parallax {
-    background-size: contain;
-  } */
 
-  .parallax .title {
-    font-size: 1.5rem;
-  }
 }
 
-/* || SCROLLBARS - Hidden for mobile-sized devices */
+/* || Scrollbars - Hidden for mobile-sized devices */
 @media screen and (min-width: 560px) {
   ::-webkit-scrollbar {
     width: 0.8rem;
@@ -457,7 +456,7 @@ footer a img {
   #hamburgerNav #hamburgerIcon::before,
   #hamburgerNav #hamburgerIcon::after {
     background-color: var(--navTextColour);
-    width: 30px; /* Modify width value as screen-size changes */
+    width: 30px;
     height: 5px;
     border-radius: 5px;
     position: absolute;
@@ -470,11 +469,11 @@ footer a img {
   }
 
   #hamburgerNav #hamburgerIcon::before {
-    transform: translate(0px, -12px); /* Modify values as screen-size changes */
+    transform: translate(0px, -12px);
   }
 
   #hamburgerNav #hamburgerIcon::after {
-    transform: translate(0px, 12px); /* Modify values as screen-size changes */
+    transform: translate(0px, 12px);
   }
 
   #hamburgerNav #hamburgerButton:hover #hamburgerIcon {
@@ -482,37 +481,15 @@ footer a img {
     cursor: pointer;
   }
 
-  #hamburgerNav #hamburgerButton:hover #hamburgerIcon::before {
-    transform: translateX(0px) rotate(405deg); /* Modify translate value as screen-size changes */
-  }
-
-  #hamburgerNav #hamburgerButton:hover #hamburgerIcon::after {
-    transform: translateX(0px) rotate(-405deg); /* Modify translate value as screen-size changes */
-  }
-
   #hamburgerNav #hamburgerButton .mainMenu,
   #hamburgerNav .dropMenuTrigger .dropMenu {
     display: none;
     position: absolute;
     background-color: var(--navHoverColour);
-    font-size: var(--linkSize2);
+    font-size: var(--dropMenuSize);
     text-align: left;
     min-width: 15%;
     z-index: 100;
-    box-shadow: 4px 4px 6px var(--sidebarBackgroundColour);
-    animation: menuBounce 0.3s ease-in-out forwards;
-    transform-origin: top center;
-    }
-    @keyframes menuBounce {
-    0% {
-      transform: scaleY(0);
-    }
-    80% {
-      transform: scaleY(1.1);
-    }
-    100% {
-      transform: scaleY(1);
-    }
   }
 
   #hamburgerNav .mainMenu {
@@ -532,7 +509,7 @@ footer a img {
   #hamburgerNav .mainMenu a,
   #hamburgerNav .dropMenuTrigger {
     display: block;
-    font-size: var(--linkSize2);
+    font-size: var(--dropMenuSize);
     color: var(--colour1);
     text-decoration: none;
     padding: 3%; /* !! No padding to left/right !! */
@@ -561,17 +538,17 @@ footer a img {
 
   #hamburgerNav .viewingMode img {
     top: -0.1em;
-    width: min(7.5vw, 56px); /* Adjust as necessary */
+    width: min(7.5vw, 56px);
   }
 
   #hamburgerNav .scrollProgress {
     position: absolute;
-    top: 30%;
+    top: 100%;
     left: 0%;
   }
 }
 
-/* Small and mobile */
+/* Small and mobile devices */
 @media screen and (max-width: 480px) {
   body {
     flex-direction: column;

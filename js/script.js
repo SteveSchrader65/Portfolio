@@ -82,7 +82,7 @@ function setViewingMode() {
 
     root.style.setProperty("--titleColour", "#0e0cf3");
     root.style.setProperty("--navBarColour", "#210000");
-    root.style.setProperty("--navTextColour", "#cccc00");
+    root.style.setProperty("--navTextColour", "#d4bc2b");
     root.style.setProperty("--navHoverColour", "#82807d");
     root.style.setProperty("--textColour", "#cccccc");
     root.style.setProperty("--backColour", "#210000");
@@ -100,7 +100,7 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour1", "#1961b3");
     root.style.setProperty("--scrollButtonColour2", "#4282d7");
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
-    root.style.setProperty("--progressColour", "#99ff99");
+    root.style.setProperty("--progressColour", "#29a329");
     root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
     root.style.setProperty("--tipTextColour", "#1d6dc9");
     root.style.setProperty("--tipBorderColour", "#6c9ee0");
@@ -163,6 +163,50 @@ function smoothScroll() {
       }
     });
   });
+}
+
+function unanimate() {
+  "use strict";
+
+  const links = document.querySelectorAll("#mainNav ul a");
+  const prefersReduced = window.matchMedia(`(prefers-reduced-motion: reduce)`);
+
+  if (prefersReduced) {
+    links.forEach((link) => {
+      link.addEventListener("mouseover", () => {
+        const linkPopAnim = new KeyframeEffect(
+          link,
+          [{ transform: "scale(1)" }, { transform: "scale(1.2)" }],
+          {
+            duration: 250,
+            easing: "ease-out",
+            fill: "forwards",
+          }
+        );
+
+        new Animation(linkPopAnim).play();
+      });
+    });
+
+    links.forEach((link) => {
+      link.addEventListener("mouseout", () => {
+        const linkUnpopAnim = new KeyframeEffect(
+          link,
+          [
+            { transform: "scale(1.2)" },
+            { transform: "scale(1)" }
+          ],
+          {
+            duration: 250,
+            easing: "ease-out",
+            fill: "forwards",
+          }
+        );
+
+        new Animation(linkUnpopAnim).play();
+      });
+    });
+  }
 }
 
 function block1SetUp() {
@@ -361,7 +405,7 @@ function block3SetUp() {
     });
 
     event.addEventListener("click", () => {
-      const eventInfo = document.querySelector(eventDate); // !! selectedProject !!
+      const eventInfo = document.querySelector(eventDate);
       let eventAnim;
       let eventDirection;
 
@@ -442,7 +486,7 @@ function block4SetUp() {
       selectedProject.id = "selectedProject";
       sidebar.appendChild(selectedProject);
 
-      const openAnim = new KeyframeEffect(
+      const openSidebarAnim = new KeyframeEffect(
         sidebar,
         [{ transform: "translateX(115%)" }, { transform: "translateX(15%)" }],
         {
@@ -452,7 +496,7 @@ function block4SetUp() {
         }
       );
 
-      new Animation(openAnim).play();
+      new Animation(openSidebarAnim).play();
       isSidebarOpen = true;
 
       /* Apply hover to each image */
@@ -496,7 +540,6 @@ function block4SetUp() {
     __closeSidebar();
   });
 
-  // Close sidebar
   function __closeSidebar() {
     const closeAnim = new KeyframeEffect(
       sidebar,
@@ -545,26 +588,24 @@ function init() {
   scrollToTop();
   navbarHide();
   smoothScroll();
-  // block1SetUp();
+  unanimate();
+  block1SetUp();
   // block2SetUp();
   // block3SetUp();
   // block4SetUp();
   // block5SetUp();
   footerDate();
 
-  // NOTES - 14/1/24
-  // Adjust height and placement of title as screen size changes
-  // Examine problem with scrollProgress
-  // Fonts not working for nav-bar
-  // Parallax images are not re-sizing
-  // Move light/dark tootip for mobile in from right-of-screen
-  // ADD "mouseout" eventListeners to reverse animations on elements (ie: menu-links, drop-menus)
-  
+  // NOTES - 15/1/24
+  // Re-consider layout of text block for section1
+  // Modify paddings/margins/backgroundColor to drop menus
+  // Titles need to move with background-images
+  // Look further into unanimating drop menus
+
   // Detect "prefers-viewing-mode" to set initial setting
+  // block4SetUp(): timeline will become vertical for mobile-sized devices
+
   // Check coolors.com for colour palette contrasts
-  // ADD RESPONSIVENESS
-  //  - block4SetUp(): timeline will become vertical for mobile-sized devices
-  //
 }
 
 // Event listener for the onload event will call the init() function when
