@@ -2,83 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="author" content="Steve Schrader">
+    <meta name="description" content="Peronal portfolio and project launch platform">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/styleNEW.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <title>Portfolio</title>
   </head>
   <body>
     <header>
       <nav>
-        <ul><!-- Placeholder for main navigation menu --></ul>
-        <ul><!-- Placeholder for hamburger navigation menu -->
-          <li id="hamburgerIcon">
-            <div id="topbun"></div>
-            <div id="bacon"></div>
-            <div id="bottombun"></div>
-          </li>
-        </ul>
-        <ul>
-          <li> <!-- .menu_content li above ul with list of -->
-            <ul>
-              <li><a href="#parallax1">Overview</a></li>
-              <li><a href="#parallax2">Studies</a></li>
-              <li><a href="#parallax3">Employment</a></li>
-              <li><a href="#parallax4">Projects</a></li>
-              <li><a href="#parallax5">Contact</a></li>
-              <li class="dropMenu">
-                <button class="dropMenuBtn">Links</button>
-                <ul class="dropMenu-content">
-                  <li><a href="/Site1/index.html" target="_blank">Toy Shop</a></li>
-                  <li><a href="/Site2/index.html" target="_blank">Furniture Store</a></li>
-                  <li><a href="http://www.captainsteveperth.com" target="_blank">CaptainSteve</a></li>
-                  <li><a href="#" target="_blank">Hangman</a></li>
-                  <li><a href="#" target="_blank">Shopping List</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li><!-- .viewingMode -->
-            <!-- <span class="tooltip" data-tooltip="Select light-mode"> -->
-            <!-- Will require changes to CSS -->
+        <div id="mainNav">
+          <div class="viewingMode">
             <button class="darkMode">
-              <img src="images/darkModeButton.png" width="56" height="29" alt="Button to set light viewing mode">
+              <span class="tooltip" data-tooltip="Select dark-mode">
+                <img src="images/darkModeButton.png" width="56" height="29" alt="Button to set light viewing mode">
+              </span>
             </button>
-            <!-- </span> -->
-            <!-- <span class="tooltip" data-tooltip="Select dark-mode"> -->
-            <!-- Will require changes to CSS -->
             <button class="lightMode">
-              <img src="images/lightModeButton.png" width="56" height="29" alt="Button to set dark viewing mode">
+              <span class="tooltip" data-tooltip="Select light-mode">
+                <img src="images/lightModeButton.png" width="56" height="29" alt="Button to set dark viewing mode">
+              </span>
             </button>
-            <!-- </span> -->
-          </li>
-          <!-- <span class="tooltip" data-tooltip="Scroll progress indicator"> -->
-          <!-- Will require changes to CSS -->
-          <li id="scroll-progress"></li>
-          <!-- </span> -->
-        </ul>
-      </nav>
-
-      <!-- PREVIOUS NAVIGATION MENUS
-      <nav>
-        <div id="hamburger">
-          // ADD HTML for drop-down nav menu. This is a 2-step menu, with 2nd step for Links
-          <input id="hamburger_toggle" type="checkbox">
-          <label class="hamburger_icon" for="hamburger_toggle">
-            <div id="top"></div>
-            <div id="middle"></div>
-            <div id="bottom"></div>
-          </label>
-          <div class="scroll-progress"></div>
-          <ul id="hamburger_menu">
-            <li><a class="link" href="#parallax1">Overview</a></li>
-            <li><a class="link" href="#parallax2">Studies</a></li>
-            <li><a class="link" href="#parallax3">Employment</a></li>
-            <li><a class="link" href="#parallax4">Projects</a></li>
-            <li><a class="link" href="#parallax5">Contact</a></li>
-            <li id="hamburger_dropmenu">
-              <button id="hamburger_dropbtn">Links</button>
-              <ul id="hamburger_dropmenu-content">
+          </div>
+          <ul>
+            <li><a href="#parallax1">Overview</a></li>
+            <li><a href="#parallax2">Studies</a></li>
+            <li><a href="#parallax3">Employment</a></li>
+            <li><a href="#parallax4">Projects</a></li>
+            <li><a href="#parallax5">Contact</a></li>
+            <li class="dropMenuTrigger">Links
+              <ul class="dropMenu">
                 <li><a href="/Site1/index.html" target="_blank">Toy Shop</a></li>
                 <li><a href="/Site2/index.html" target="_blank">Furniture Store</a></li>
                 <li><a href="http://www.captainsteveperth.com" target="_blank">CaptainSteve</a></li>
@@ -87,36 +41,48 @@
               </ul>
             </li>
           </ul>
+          <div class="scrollProgress">
+            <span class="tooltip" data-tooltip="Scroll progress indicator"></span>
+          </div>
         </div>
-        <ul id="navlist">
-          <li>
-            <button class="viewingMode" id="darkMode">
-              <img src="images/darkModeButton.png" width="57" height="31" alt="Button to set light viewing mode">
-            </button>
-            <button class="viewingMode" id="lightMode">
-              <img src="images/lightModeButton.png" width="57" height="31" alt="Button to set dark viewing mode">
-            </button>
-          </li>
-          <li><a href="#parallax1">Overview</a></li>
-          <li><a href="#parallax2">Studies</a></li>
-          <li><a href="#parallax3">Employment</a></li>
-          <li><a href="#parallax4">Projects</a></li>
-          <li><a href="#parallax5">Contact</a></li>
-          <li id="dropmenu">
-            <button id="dropbtn">Links</button>
-            <ul id="dropmenu-content">
-              <li><a href="/Site1/index.html" target="_blank">Toy Shop</a></li>
-              <li><a href="/Site2/index.html" target="_blank">Furniture Store</a></li>
-              <li><a href="http://www.captainsteveperth.com" target="_blank">CaptainSteve</a></li>
-              <li><a href="#" target="_blank">Hangman</a></li>
-              <li><a href="#" target="_blank">Shopping List</a></li>
+        <div id="hamburgerNav">
+          <div id="hamburgerButton">
+            <div id="hamburgerIcon"></div>
+            <ul class="mainMenu">
+              <li><a href="#parallax1">Overview</a></li>
+              <li><a href="#parallax2">Studies</a></li>
+              <li><a href="#parallax3">Employment</a></li>
+              <li><a href="#parallax4">Projects</a></li>
+              <li><a href="#parallax5">Contact</a></li>
+              <li><hr></li>
+              <li class="dropMenuTrigger">Links
+                <ul class="dropMenu">
+                  <li><a href="/Site1/index.html" target="_blank">Toy Shop</a></li>
+                  <li><a href="/Site2/index.html" target="_blank">Furniture Store</a></li>
+                  <li><a href="http://www.captainsteveperth.com" target="_blank">CaptainSteve</a></li>
+                  <li><a href="#" target="_blank">Hangman</a></li>
+                  <li><a href="#" target="_blank">Shopping List</a></li>
+                </ul>
+              </li>
             </ul>
-          </li>
-          <li class="scroll-progress"></li>
-        </ul>
+          </div>
+          <div class="viewingMode">
+            <button class="darkMode">
+              <span class="tooltip" data-tooltip="Select dark-mode">
+                <img src="images/darkModeButton.png" width="56" height="29" alt="Button to set light viewing mode">
+              </span>
+            </button>
+            <button class="lightMode">
+              <span class="tooltip" data-tooltip="Select light-mode">
+                <img src="images/lightModeButton.png" width="56" height="29" alt="Button to set dark viewing mode">
+              </span>
+            </button>
+          </div>
+          <div class="scrollProgress">
+            <span class="tooltip" data-tooltip="Scroll progress indicator"></span>
+          </div>
+        </div>
       </nav>
-      -->
-
     </header>
     <main>
       <div class="parallax" id="parallax1">

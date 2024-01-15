@@ -1,12 +1,13 @@
 /* jshint esversion: 8 */
 
 let viewingMode = "";
-const root = document.querySelector(":root");
-const lightButton = document.querySelector(".lightMode");
-const darkButton = document.querySelector(".darkMode");
 
 function setViewingMode() {
   "use strict";
+
+  const root = document.querySelector(":root");
+  const lightButtons = document.querySelectorAll(".lightMode");
+  const darkButtons = document.querySelectorAll(".darkMode");
 
   viewingMode = localStorage.getItem("viewingMode");
 
@@ -18,14 +19,26 @@ function setViewingMode() {
     _setDarkMode();
   }
 
-  lightButton.addEventListener("click", _setLightMode);
-  darkButton.addEventListener("click", _setDarkMode);
+  lightButtons.forEach((button) => {
+    button.addEventListener("click", _setLightMode);
+  });
+
+  darkButtons.forEach((button) => {
+    button.addEventListener("click", _setDarkMode);
+  });
 
   function _setLightMode() {
     viewingMode = "lightness";
     localStorage.setItem("viewingMode", viewingMode);
-    lightButton.style.visibility = "hidden";
-    darkButton.style.visibility = "visible";
+
+    lightButtons.forEach((light) => {
+      light.style.visibility = "hidden";
+    });
+
+    darkButtons.forEach((dark) => {
+      dark.style.visibility = "visible";
+    });
+
     root.style.setProperty("--titleColour", "#cccc00");
     root.style.setProperty("--navBarColour", "#cccccc");
     root.style.setProperty("--navTextColour", "black");
@@ -47,9 +60,9 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour2", "#8fbcef");
     root.style.setProperty("--scrollBorderColour", "#b7b6fc");
     root.style.setProperty("--progressColour", "#008000");
-    // root.style.setProperty("--tipBorderColour", "");
-    // root.style.setProperty("--tipBackgroundColour", "");
-    // root.style.setProperty("--tipTextColour", "");
+    root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
+    root.style.setProperty("--tipBorderColour", "#6c9ee0");
+    root.style.setProperty("--tipTextColour", "#1d6dc9");
     root.style.setProperty("--alertColour", "#ff1a1a");
     root.style.setProperty("--successColour", "#69cf9d");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
@@ -58,8 +71,15 @@ function setViewingMode() {
   function _setDarkMode() {
     viewingMode = "darkness";
     localStorage.setItem("viewingMode", viewingMode);
-    lightButton.style.visibility = "visible";
-    darkButton.style.visibility = "hidden";
+
+    lightButtons.forEach((light) => {
+      light.style.visibility = "visible";
+    });
+
+    darkButtons.forEach((dark) => {
+      dark.style.visibility = "hidden";
+    });
+
     root.style.setProperty("--titleColour", "#0e0cf3");
     root.style.setProperty("--navBarColour", "#210000");
     root.style.setProperty("--navTextColour", "#cccc00");
@@ -81,9 +101,9 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour2", "#4282d7");
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
     root.style.setProperty("--progressColour", "#99ff99");
-    // root.style.setProperty("--tipBorderColour", "");
-    // root.style.setProperty("--tipBackgroundColour", "");
-    // root.style.setProperty("--tipTextColour", "");
+    root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
+    root.style.setProperty("--tipTextColour", "#1d6dc9");
+    root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--alertColour", "#b30000");
     root.style.setProperty("--successColour", "#29a329");
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
@@ -108,65 +128,6 @@ function scrollToTop() {
   document.querySelector("nav").style.top = "0";
 }
 
-function navSetup() {
-  "use strict";
-
-  const mainMenu = document.querySelector("nav > ul:first-child");
-  const hamburgerMenu = document.querySelector("nav > ul:nth-of-type(2)");
-  const mainSelectors = ["nth-child(2)", "first-child", "last-child"];
-  const mainClasses = ["viewingMode", "menu_content", "scroll-progress"];
-  const hamburgerSelectors = ["first-child", "nth-child(2)", "last-child"];
-  const hamburgerClasses = ["menu-content", "viewingMode", "scroll-progress"];
-  const menuButton = document.querySelector(".dropMenuBtn");
-  const menuBars = [mainMenu, hamburgerMenu];
-  const menuIDs =["mainNav", "hamburgerNav"];
-  let menuSelectors;
-  let menuClasses;
-
-  // Build navigation menus (standard and hamburger) from templates (ul:last-child)
-  menuBars.forEach((menu, menuIndex) => {
-    if (menuIndex == 0) {
-      menuSelectors = [...mainSelectors];
-      menuClasses = [...mainClasses];
-    } else {
-      menuSelectors = [...hamburgerSelectors];
-      menuClasses = [...hamburgerClasses];
-    }
-
-    menu.id = menuIDs[menuIndex];
-
-    menuSelectors.forEach((selector, selectorIndex) => {
-      menu.appendChild(
-        document.querySelector("nav ul:nth-child(3) > li:" + selector).cloneNode(true)
-      );
-
-      document.querySelector("#" + menu.id + " > li:last-child").setAttribute("class", menuClasses[selectorIndex]);
-    });
-  });
-
-
-  // Remove templates from DOM
-  document.querySelector("nav ul:nth-child(3)").remove();
-
-
-
-  let temp1 = document.querySelectorAll("#mainNav .menu-content li");
-
-  console.log("Temp1: ", temp1);
-  console.log(mainMenu);
-  console.log(hamburgerMenu);
-
-  // Build hamburger icon (use CSS)
-  // Get screen-size (use eventListener to detect change)
-  window.addEventListener("resize", (event) => {
-    // console.log(event);
-  });
-  // OR new ResizeObserver
-
-  // Add menu Event listeners
-  // Activate 'display: block(??)' for required components
-}
-
 function navbarHide() {
   "use strict";
 
@@ -176,11 +137,9 @@ function navbarHide() {
     let currentScrollPos = window.scrollY;
 
     if (prevScrollPos > currentScrollPos) {
-      document.querySelector("#mainNav").style.top = "0";
-      document.querySelector("#hamburgerNav").style.top = "0";
+      document.querySelector("nav").style.top = "0";
     } else {
-      document.querySelector("#mainNav").style.top = "-58px";
-      document.querySelector("#hamburgerNav").style.top = "-58px";
+      document.querySelector("nav").style.top = "-58px";
     }
 
     prevScrollPos = currentScrollPos;
@@ -580,11 +539,10 @@ function footerDate() {
 }
 
 function init() {
-  "use strict";
+  ("use strict");
 
   setViewingMode();
   scrollToTop();
-  navSetup();
   navbarHide();
   smoothScroll();
   // block1SetUp();
@@ -594,12 +552,20 @@ function init() {
   // block5SetUp();
   footerDate();
 
-  // Check coolors.com for palette contrast checks
-  // NOTE: Hide navlist for mobile-sized screens and display hamburger drop-down menu
+
+  // NOTES - 14/1/24
+  // Adjust height and placement of title as screen size changes
+  // Examine problem with scrollProgress
+  // Fonts not working for nav-bar
+  // Adjust height of W3C badge (make smaller)
+  // Parallax images are not re-sizing
+
+  // Check coolors.com for colour palette contrasts
+
   // ADD RESPONSIVENESS
   //  - block4SetUp(): timeline will become vertical for mobile-sized devices
-  //                   use "display: flex;", "flex-flow: row nowrap;" and "flex-direction: row;"
-  //                   changed in @media to "column" ---------------------------------------^
+  //
+  // ADD "mouseout" eventListeners to reverse animations on elements (ie: menu-links, drop-menus)
 }
 
 // Event listener for the onload event will call the init() function when
