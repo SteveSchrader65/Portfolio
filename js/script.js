@@ -9,16 +9,6 @@ function setViewingMode() {
   const lightButtons = document.querySelectorAll(".lightMode");
   const darkButtons = document.querySelectorAll(".darkMode");
 
-  viewingMode = localStorage.getItem("viewingMode");
-
-  if (!viewingMode) viewingMode = "lightness";
-
-  if (viewingMode == "lightness") {
-    _setLightMode();
-  } else if (viewingMode == "darkness") {
-    _setDarkMode();
-  }
-
   lightButtons.forEach((button) => {
     button.addEventListener("click", _setLightMode);
   });
@@ -26,6 +16,14 @@ function setViewingMode() {
   darkButtons.forEach((button) => {
     button.addEventListener("click", _setDarkMode);
   });
+
+  viewingMode = localStorage.getItem("viewingMode");
+
+  if (viewingMode == "darkness" || window.matchMedia(`(prefers-color-scheme: dark)`).matches) {
+    _setDarkMode();
+  } else {
+    _setLightMode();
+  }
 
   function _setLightMode() {
     viewingMode = "lightness";
@@ -168,10 +166,9 @@ function smoothScroll() {
 function unanimate() {
   "use strict";
 
-  const links = document.querySelectorAll("#mainNav ul a");
-  const prefersReduced = window.matchMedia(`(prefers-reduced-motion: reduce)`);
+  const links = document.querySelectorAll("#mainNav .mainMenu a:not(.dropMenu a)");
 
-  if (prefersReduced) {
+  if (!window.matchMedia(`(prefers-reduced-motion: reduce)`).matches) {
     links.forEach((link) => {
       link.addEventListener("mouseover", () => {
         const linkPopAnim = new KeyframeEffect(
@@ -192,10 +189,7 @@ function unanimate() {
       link.addEventListener("mouseout", () => {
         const linkUnpopAnim = new KeyframeEffect(
           link,
-          [
-            { transform: "scale(1.2)" },
-            { transform: "scale(1)" }
-          ],
+          [{ transform: "scale(1.2)" }, { transform: "scale(1)" }],
           {
             duration: 250,
             easing: "ease-out",
@@ -596,18 +590,12 @@ function init() {
   // block5SetUp();
   footerDate();
 
-  // NOTES - 15/1/24
+  // NOTES - 16/1/24
+  // Modify font-size/paddings/margins/backgroundColor for hamburger menus
   // Re-consider layout of text block for section1
-  // Modify paddings/margins/backgroundColor to drop menus
-  // Titles need to move with background-images
-  // Look further into unanimating drop menus
 
-  // Detect "prefers-viewing-mode" to set initial setting
   // block4SetUp(): timeline will become vertical for mobile-sized devices
-
   // Check coolors.com for colour palette contrasts
 }
 
-// Event listener for the onload event will call the init() function when
-// loading of the Document Object Model (DOM) has been completed
 window.onload = init;

@@ -45,18 +45,6 @@ body {
   background-color: var(--backColour);
   overflow-x: hidden;
   overflow-y: scroll;
-  -webkit-animation: fadein 2s ease-in;
-  -moz-animation: fadein 2s ease-in;
-  -o-animation: fadein 2s ease-in;
-  animation: fadein 2s ease-in;
-}
-@keyframes fadein {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 header, .text_block, footer {
@@ -145,15 +133,13 @@ nav {
   display: block;
 }
 
-#mainNav ul .dropMenu {
+#mainNav .dropMenu {
   display: none;
   position: absolute;
   min-width: 15%;
   z-index: 100;
-  margin-left: -9.75%; /* Modify margin values as screen-size changes */
+  margin-left: -9.75%;
   background-color: var(--navHoverColour);
-  animation: menuBounce 0.3s ease-in-out forwards;
-  transform-origin: top center;
 }
 
 #mainNav ul .dropMenu a {
@@ -243,6 +229,7 @@ nav {
   padding: 10%;
   opacity: 0.65;
   letter-spacing: 0.55rem;
+  transform: translateY(1.2em);
   text-shadow: -4px 4px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue;
 }
 
@@ -332,7 +319,8 @@ footer a img {
     }
   }
 
-  .parallax:not(#parallax1) {
+  .parallax {
+  /* .parallax:not(#parallax1) { */
     scale: 0.85;
     opacity: 0;
     animation: parallaxFade 0.5s linear forwards;
@@ -360,7 +348,7 @@ footer a img {
     to { scale: 1 1; }
   }
 
-  #mainNav ul .dropMenu,
+  #mainNav .dropMenu,
   #hamburgerNav #hamburgerButton .mainMenu,
   #hamburgerNav .dropMenuTrigger .dropMenu {
     animation: menuBounce 0.3s ease-in-out forwards;
@@ -379,24 +367,6 @@ footer a img {
   #hamburgerNav #hamburgerButton:hover #hamburgerIcon::after {
     transform: translateX(0px) rotate(-405deg);
   }
-}
-
-/* Extra-large screens */
-@media screen and (min-width: 1201px) {
-
-}
-
-/* Desktop and large screens */
-@media screen and (min-width: 1025px) and (max-width: 1200px) {
-}
-
-/* iPad and Tablet */
-@media screen and (max-width: 768px) {
-
-}
-
-@media screen and (min-width: 481px) and (max-width: 768px) {
-
 }
 
 /* || Scrollbars - Hidden for mobile-sized devices */
@@ -548,7 +518,42 @@ footer a img {
   }
 }
 
-/* Small and mobile devices */
+@media screen and (max-width: 1201px) {
+  #mainNav .dropMenu {
+    margin-left: -6.4em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .parallax .title {
+    transform: translateY(2.8em);
+  }
+}
+
+/* Extra-large screens */
+@media screen and (min-width: 1251px) {
+}
+
+/* Laptop - large and desktop */
+@media screen and (min-width: 1172px) and (max-width: 1250px) {
+}
+
+/* Laptop - medium */
+@media screen and (min-width: 1025px) and (max-width: 1171px) {
+}
+
+/* iPad and Tablet */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+}
+
+/* Large mobile devices */
+@media screen and (min-width: 481) and (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+}
+
+/* Small mobile devices */
 @media screen and (max-width: 480px) {
   body {
     flex-direction: column;
