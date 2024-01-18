@@ -60,7 +60,7 @@ function setViewingMode() {
     root.style.setProperty("--progressColour", "#008000");
     root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
     root.style.setProperty("--tipBorderColour", "#6c9ee0");
-    root.style.setProperty("--tipTextColour", "#1d6dc9");
+    root.style.setProperty("--tipTextColour", "black");
     root.style.setProperty("--alertColour", "#ff1a1a");
     root.style.setProperty("--successColour", "#69cf9d");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
@@ -100,7 +100,7 @@ function setViewingMode() {
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
     root.style.setProperty("--progressColour", "#29a329");
     root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
-    root.style.setProperty("--tipTextColour", "#1d6dc9");
+    root.style.setProperty("--tipTextColour", "black");
     root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--alertColour", "#b30000");
     root.style.setProperty("--successColour", "#29a329");
@@ -200,6 +200,69 @@ function unanimate() {
         new Animation(linkUnpopAnim).play();
       });
     });
+  }
+}
+
+function setFontsAndSizings() {
+  "use strict";
+
+  const root = document.querySelector(":root");
+  let w = window.innerWidth;
+  let navLinkSize;
+  let navDropLinkSize;
+  let navDropMenuWidth;
+  let hamburgerLinkSize;
+  let hamburgerMenuWidth;
+  let viewModeButtonSize;
+  let parallaxFontSize;
+  let textFontSize;
+  let footerFontSize;
+  let tipFontSize;
+  let temp;
+
+  temp = w / 675;
+  navLinkSize = _clamp(temp, 0.85, 4.75);
+  root.style.setProperty("--navLinkSize", navLinkSize + "rem");
+
+  navDropLinkSize = _clamp(temp, 1, 4.5);
+  root.style.setProperty("--navDropLinkSize", navDropLinkSize + "rem");
+
+  temp = w / 67;
+  navDropMenuWidth = _clamp(temp, 8, 43);
+  root.style.setProperty("--navDropMenuWidth", navDropMenuWidth + "rem");
+
+  temp = w / 500;
+  hamburgerLinkSize = _clamp(temp, 0.6, 1.5);
+  root.style.setProperty("--hamburgerLinkSize", hamburgerLinkSize + "rem");
+
+  temp = w / 300;
+  hamburgerMenuWidth = _clamp(temp, 30, 60);
+  root.style.setProperty("--hamburgerMenuWidth", hamburgerMenuWidth + "rem");
+
+  viewModeButtonSize = _clamp(temp, 2, 10);
+  root.style.setProperty("--viewModeButtonSize", viewModeButtonSize + "rem");
+
+  temp = w / 250;
+  parallaxFontSize = _clamp(temp, 1.5, 12);
+  root.style.setProperty("--parallaxFontSize", parallaxFontSize + "rem");
+
+  temp = w / 1000;
+  textFontSize = _clamp(temp, 1, 3.5);
+  root.style.setProperty("--textFontSize", textFontSize + "rem");
+
+  footerFontSize = _clamp(temp, 0.7, 1.75);
+  root.style.setProperty("--footerFontSize", footerFontSize + "rem");
+
+  temp = w / 2000;
+  tipFontSize = _clamp(temp, 0.75, 3);
+  root.style.setProperty("--tipFontSize", tipFontSize + "rem");
+
+  function _clamp(value, min, max) {
+    let clamped;
+
+    clamped = Math.min(Math.max(value, min), max);
+    console.log("Clamped: ", clamped);
+    return clamped;
   }
 }
 
@@ -576,13 +639,14 @@ function footerDate() {
 }
 
 function init() {
-  ("use strict");
+  "use strict";
 
   setViewingMode();
   scrollToTop();
   navbarHide();
   smoothScroll();
   unanimate();
+  setFontsAndSizings();
   block1SetUp();
   // block2SetUp();
   // block3SetUp();
@@ -590,9 +654,11 @@ function init() {
   // block5SetUp();
   footerDate();
 
-  // NOTES - 16/1/24
-  // Modify font-size/paddings/margins/backgroundColor for hamburger menus
+  window.addEventListener("resize", setFontsAndSizings);
+
+  // NOTES - 17/1/24
   // Re-consider layout of text block for section1
+  // Re-work all CSS sizings to use "--width" and "--height" variables
 
   // block4SetUp(): timeline will become vertical for mobile-sized devices
   // Check coolors.com for colour palette contrasts

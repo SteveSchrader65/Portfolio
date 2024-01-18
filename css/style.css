@@ -2,24 +2,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Tektur&display=swap');
 
 :root {
-  --parallaxSize: min(3.5rem, 15vw); /* !! Not scaling !! */
-  --navLinkSize: min(3rem, 2vw);
-  --dropMenuSize: min(1.75rem, 2.4vw);
-  /* --titleSize2: min(2rem, 4vw); */
-  --linkSize3: min(2rem, 2.4vw);
-  --linkSize4: min(1.75rem, 2.4vw);
-  --heading1Size: min(3rem, 4vw);
-  --heading2Size: min(4rem, 6vw);
-  --textSize: min(1rem, 1.8vw);
-  --tipSize: min(0.5rem, 1.2vw);
   --tipShadow: -2px -2px 3px var(--navTextColour);
+  /* --navLinkSize: calc(1rem + ((1vw - 2.5px) * (5rem - 1rem) / (3000px - 250px))); */
+  /* --navDropLinkSize: calc(0.5rem + ((1vw - 2.5px) * (4.5rem - 0.5rem) / (3000px - 250px))); */
+  /* || Values calculated in JS
+    --navLinkSize:
+    --navDropLinkSize:
+    --navDropMenuWidth:
+    --hamburgerLinkSize:
+    --hamburgerMenuWidth:
+    --viewModeButtonSize:
+    --parallaxFontSize:
+    --textFontSize:
+    --footerFontSize:
+    --tipFontSize:
+  */
 }
 
 
 /* || Utilities */
 .offscreen {
   position: absolute;
-  left: -10000px;
+  left: -3000px;
 }
 
 .nowrap {
@@ -52,12 +56,8 @@ header, .text_block, footer {
   grid-template-columns: 100%;
 }
 
-main {
-  flex-grow: 1;
-}
-
 img {
-  display: block; /* ?? */
+  display: block;
   height: auto;
 }
 
@@ -109,19 +109,17 @@ nav {
 #mainNav ul a {
   display: block;
   text-decoration: none;
-  margin-top: 3%;
 }
 
 #mainNav ul a,
 #mainNav ul .dropMenuTrigger {
-  font-size: var(--navLinkSize);
   font-family: inherit;
+  font-size: var(--navLinkSize);
   color: var(--navTextColour);
 }
 
 #mainNav ul .dropMenuTrigger {
-  margin-top: 0.25%;
-  /* padding: ?? */
+  position: relative;
 }
 
 #mainNav ul .dropMenuTrigger:hover {
@@ -136,17 +134,21 @@ nav {
 #mainNav .dropMenu {
   display: none;
   position: absolute;
-  min-width: 15%;
-  z-index: 100;
-  margin-left: -9.75%;
+  right: 0;
   background-color: var(--navHoverColour);
+  min-width: var(--navDropMenuWidth);
+  z-index: 100;
 }
 
 #mainNav ul .dropMenu a {
-  font-size: var(--dropMenuSize);
+  font-size: var(--navDropLinkSize);
   color: var(--colour1);
   text-decoration: none;
-  padding: 5%; /* Modify padding values as screen-size changes */
+  padding: 2% 10%;
+}
+
+#mainNav ul .dropMenu li:last-child {
+  padding-bottom: 5%;
 }
 
 #mainNav ul .dropMenu a:hover {
@@ -159,17 +161,15 @@ nav {
 .viewingMode button {
   display: flex;
   position: relative;
-  top: 15%;
-  left: 0%;
+  top: 2px; /* !! THIS !! */
+  left: 0%; /* !! THIS !! */
   background-color: var(--navBarColour);
   border: none;
 }
 
 .viewingMode img {
   position: absolute;
-  top: min(3px, 1.5rem);
-  left: 0.2rem;
-  width: min(4vw, 40px);
+  width: var(--viewModeButtonSize);
 }
 
 .viewingMode:hover {
@@ -185,48 +185,51 @@ nav {
 .tooltip:hover::before {
   content: attr(data-tooltip);
   position: absolute;
-  top: -30px;
-  left: 1vw;
-  padding: 5px 10px;
+  top: -30px; /* !! THIS !! */
+  left: 1vw; /* !! THIS !! */
+  padding: 5px 10px; /* !! THIS !! */
   white-space: nowrap;
   background-color: var(--tipBackgroundColour);
   color: var(--tipTextColour);
   border: 1px solid var(--tipBorderColour);
-  border-radius: 15px;
-  font-size: 0.85em;
+  border-radius: 15px; /* !! THIS !! */
+  font-size: var(--tipFontSize); 
   font-style: italic;
   z-index: 100;
 }
 
+/* ?? Huh ?? */
 #mainNav .viewingMode .tooltip:hover::before {
-  top: 2rem;
+  top: 2rem; /* !! THIS !! */
 }
 
+/* ?? Huh ?? */
 #hamburgerNav .viewingMode .tooltip:hover::before {
-  top: 2rem;
-  left: -6rem;
+  top: 2rem; /* !! THIS !! */
+  left: -6rem; /* !! THIS !! */
 }
 
 /* || Backdrop */
 .parallax {
   width: 95%;
   margin: 0 auto;
-  height: 90vh;
+  min-height: 90vh; /* !! THIS !! */
   display: grid;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: min(120%, 1800px);
+  background-size: min(120%, 1800px); /* !! THIS !! */
   border-radius: 10px;
 }
 
 .parallax .title {
   font-family: "Times New Roman", Times, serif;
-  font-size: var(--parallaxSize);
+  font-size: var(--parallaxFontSize);
   font-weight: bold;
   color: var(--titleColour);
   background-color: transparent;
-  padding: 10%;
+  margin-top: 2%; /* !! THIS !! */
+  padding: 0 10%;
   opacity: 0.65;
   letter-spacing: 0.55rem;
   transform: translateY(1.2em);
@@ -264,8 +267,8 @@ nav {
 
 .text_block {
   position: relative;
-  min-height: 35rem;
-  font-size: 1rem;
+  /* min-height: 35rem; */
+  font-size: var(--textFontSize);
   color: var(--textColour);
   margin: 2.5% 2.5% 10% 2.5%;
   padding: 0 5%;
@@ -274,7 +277,7 @@ nav {
 }
 
 .text_block p {
-  margin-top: 2%;
+  /* margin-top: 2%; */
 }
 
 footer {
@@ -284,7 +287,7 @@ footer {
 }
 
 footer h3 {
-  font-size: 0.9rem;
+  font-size: var(--footerFontSize);
   font-weight: normal;
   grid-row: 1 / 1;
   grid-column: 3 / 3;
@@ -303,6 +306,7 @@ footer a img {
   grid-column: 1 / 1;
 }
 
+/* || Animations */
 @media (prefers-reduced-motion: no-preference) {
   body {
     -webkit-animation: fadein 2s ease-in;
@@ -320,7 +324,6 @@ footer a img {
   }
 
   .parallax {
-  /* .parallax:not(#parallax1) { */
     scale: 0.85;
     opacity: 0;
     animation: parallaxFade 0.5s linear forwards;
@@ -370,7 +373,7 @@ footer a img {
 }
 
 /* || Scrollbars - Hidden for mobile-sized devices */
-@media screen and (min-width: 560px) {
+@media screen and (min-width: 559px) {
   ::-webkit-scrollbar {
     width: 0.8rem;
     border: 2px solid var(--scrollBorderColour);
@@ -399,8 +402,12 @@ footer a img {
   }
 }
 
-/* Display hamburger menu for narrower screens */
-@media screen and (max-width: 560px) {
+/* Exchange nav menu bar for hamburger menu on narrower screens */
+@media screen and (max-width: 559px) {
+  body {
+    flex-direction: column;
+  }
+
   #mainNav {
     display: none;
   }
@@ -415,8 +422,8 @@ footer a img {
   #hamburgerNav #hamburgerButton {
     background-color: transparent;
     border: none;
-    width: 40px;
-    height: 35px;
+    width: 40px; /* !! THIS !! */
+    height: 35px; /* !! THIS !! */
     display: flex;
     align-items: center;
     position: relative;
@@ -426,8 +433,8 @@ footer a img {
   #hamburgerNav #hamburgerIcon::before,
   #hamburgerNav #hamburgerIcon::after {
     background-color: var(--navTextColour);
-    width: 30px;
-    height: 5px;
+    width: 30px; /* !! THIS !! */
+    height: 5px;  /* !! THIS !! */
     border-radius: 5px;
     position: absolute;
     transition: all 0.5s;
@@ -451,46 +458,45 @@ footer a img {
     cursor: pointer;
   }
 
-  #hamburgerNav #hamburgerButton .mainMenu,
-  #hamburgerNav .dropMenuTrigger .dropMenu {
+  #hamburgerNav .mainMenu,
+  #hamburgerNav .dropMenu {
     display: none;
     position: absolute;
     background-color: var(--navHoverColour);
-    font-size: var(--dropMenuSize);
+    font-size: var(--hamburgerLinkSize);
     text-align: left;
-    min-width: 15%;
     z-index: 100;
   }
 
   #hamburgerNav .mainMenu {
     top: 100%;
     left: -25%;
+    width: var(--hamburgerMenuWidth);
   }
+
   #hamburgerNav .dropMenu {
     top: 0%;
     left: 100%;
+    width: var(--hamburgerMenuWidth);
   }
 
   #hamburgerNav #hamburgerButton:hover .mainMenu,
   #hamburgerNav .dropMenuTrigger:hover .dropMenu {
     display: block;
+    min-width: 15%;
+    padding: 5%;
+    font-size: var(--hamburgerLinkSize); /* ?? Here .. ?? */
   }
 
   #hamburgerNav .mainMenu a,
   #hamburgerNav .dropMenuTrigger {
     display: block;
-    font-size: var(--dropMenuSize);
+    font-size: var(--hamburgerLinkSize); /* ?? ... or here ?? */
     color: var(--colour1);
     text-decoration: none;
-    padding: 3%; /* !! No padding to left/right !! */
+    padding: 3% 10%;
     position: relative;
     cursor: pointer;
-  }
-
-  #hamburgerNav .mainMenu,
-  #hamburgerNav .dropMenu {
-    background-color: var(--navHoverColour);
-    padding: 10%; /* !! No padding on .mainMenu !! */
   }
 
   #hamburgerNav .mainMenu a:hover,
@@ -508,55 +514,13 @@ footer a img {
 
   #hamburgerNav .viewingMode img {
     top: -0.1em;
-    width: min(7.5vw, 56px);
+    width: var(--viewModeButtonSize);
   }
 
   #hamburgerNav .scrollProgress {
     position: absolute;
     top: 100%;
     left: 0%;
-  }
-}
-
-@media screen and (max-width: 1201px) {
-  #mainNav .dropMenu {
-    margin-left: -6.4em;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .parallax .title {
-    transform: translateY(2.8em);
-  }
-}
-
-/* Extra-large screens */
-@media screen and (min-width: 1251px) {
-}
-
-/* Laptop - large and desktop */
-@media screen and (min-width: 1172px) and (max-width: 1250px) {
-}
-
-/* Laptop - medium */
-@media screen and (min-width: 1025px) and (max-width: 1171px) {
-}
-
-/* iPad and Tablet */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-}
-
-/* Large mobile devices */
-@media screen and (min-width: 481) and (max-width: 768px) {
-  body {
-    flex-direction: column;
-  }
-}
-
-/* Small mobile devices */
-@media screen and (max-width: 480px) {
-  body {
-    flex-direction: column;
   }
 }
 
