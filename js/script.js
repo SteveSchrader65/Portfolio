@@ -126,24 +126,6 @@ function scrollToTop() {
   document.querySelector("nav").style.top = "0";
 }
 
-function navbarHide() {
-  "use strict";
-
-  let prevScrollPos = window.scrollY;
-
-  document.addEventListener("scroll", () => {
-    let currentScrollPos = window.scrollY;
-
-    if (prevScrollPos > currentScrollPos) {
-      document.querySelector("nav").style.top = "0";
-    } else {
-      document.querySelector("nav").style.top = "-58px";
-    }
-
-    prevScrollPos = currentScrollPos;
-  });
-}
-
 function smoothScroll() {
   "use strict";
 
@@ -160,6 +142,78 @@ function smoothScroll() {
         throw new Error("Sumink went rong: " + error);
       }
     });
+  });
+}
+
+function setFontsAndSizings() {
+  "use strict";
+
+  const root = document.querySelector(":root");
+  let navLinkSize;
+  let navDropLinkSize;
+  let navDropMenuWidth;
+  let hamburgerLinkSize;
+  let hamburgerMenuWidth;
+  let viewModeButtonSize;
+  let parallaxFontSize;
+  let textFontSize;
+  let footerFontSize;
+  let tipFontSize;
+  let mobileInflate = 1.1;
+  let screenWidth = window.innerWidth;
+
+  // The value 2750 represents difference between min screen
+  // size (250px) and max screen size (3000px)
+  let temp = screenWidth / 2750;
+
+  navLinkSize = _clamp(temp * 4.5, 0.85, 4.75);
+  navDropLinkSize = _clamp(temp * 4.5, 1, 4.5);
+  navDropMenuWidth = _clamp(temp * 39, 5, 36);
+  hamburgerLinkSize = _clamp(temp * 10, 1.2, 1.8);
+  hamburgerMenuWidth = _clamp(temp * 80, 9, 14);
+  viewModeButtonSize = _clamp(temp * 6, 2, 8);
+  if (screenWidth < 560) viewModeButtonSize *= mobileInflate;
+  parallaxFontSize = _clamp(temp * 12, 1.5, 12);
+  textFontSize = _clamp(temp * 3.5, 1.2, 3.5);
+  if (screenWidth < 560) textFontSize *= mobileInflate + 0.2;
+  footerFontSize = _clamp(temp * 2.5, 0.85, 2.5);
+  tipFontSize = _clamp(temp * 2.1, 0.7, 2.1);
+  if (screenWidth < 560) tipFontSize *= mobileInflate;
+
+  root.style.setProperty("--navLinkSize", navLinkSize + "rem");
+  root.style.setProperty("--navDropLinkSize", navDropLinkSize + "rem");
+  root.style.setProperty("--navDropMenuWidth", navDropMenuWidth + "rem");
+  root.style.setProperty("--hamburgerLinkSize", hamburgerLinkSize + "rem");
+  root.style.setProperty("--hamburgerMenuWidth", hamburgerMenuWidth + "rem");
+  root.style.setProperty("--viewModeButtonSize", viewModeButtonSize + "rem");
+  root.style.setProperty("--parallaxFontSize", parallaxFontSize + "rem");
+  root.style.setProperty("--textFontSize", textFontSize + "rem");
+  root.style.setProperty("--footerFontSize", footerFontSize + "rem");
+  root.style.setProperty("--tipFontSize", tipFontSize + "rem");
+
+  function _clamp(value, min, max) {
+    let clamped;
+
+    clamped = Math.min(Math.max(value, min), max);
+    return clamped;
+  }
+}
+
+function navbarHide() {
+  "use strict";
+
+  let prevScrollPos = window.scrollY;
+
+  document.addEventListener("scroll", () => {
+    let currentScrollPos = window.scrollY;
+
+    if (prevScrollPos > currentScrollPos) {
+      document.querySelector("nav").style.top = "0";
+    } else {
+      document.querySelector("nav").style.top = "-6rem";
+    }
+
+    prevScrollPos = currentScrollPos;
   });
 }
 
@@ -200,69 +254,6 @@ function unanimate() {
         new Animation(linkUnpopAnim).play();
       });
     });
-  }
-}
-
-function setFontsAndSizings() {
-  "use strict";
-
-  const root = document.querySelector(":root");
-  let w = window.innerWidth;
-  let navLinkSize;
-  let navDropLinkSize;
-  let navDropMenuWidth;
-  let hamburgerLinkSize;
-  let hamburgerMenuWidth;
-  let viewModeButtonSize;
-  let parallaxFontSize;
-  let textFontSize;
-  let footerFontSize;
-  let tipFontSize;
-  let temp;
-
-  temp = w / 675;
-  navLinkSize = _clamp(temp, 0.85, 4.75);
-  root.style.setProperty("--navLinkSize", navLinkSize + "rem");
-
-  navDropLinkSize = _clamp(temp, 1, 4.5);
-  root.style.setProperty("--navDropLinkSize", navDropLinkSize + "rem");
-
-  temp = w / 67;
-  navDropMenuWidth = _clamp(temp, 8, 43);
-  root.style.setProperty("--navDropMenuWidth", navDropMenuWidth + "rem");
-
-  temp = w / 500;
-  hamburgerLinkSize = _clamp(temp, 0.6, 1.5);
-  root.style.setProperty("--hamburgerLinkSize", hamburgerLinkSize + "rem");
-
-  temp = w / 300;
-  hamburgerMenuWidth = _clamp(temp, 30, 60);
-  root.style.setProperty("--hamburgerMenuWidth", hamburgerMenuWidth + "rem");
-
-  viewModeButtonSize = _clamp(temp, 2, 10);
-  root.style.setProperty("--viewModeButtonSize", viewModeButtonSize + "rem");
-
-  temp = w / 250;
-  parallaxFontSize = _clamp(temp, 1.5, 12);
-  root.style.setProperty("--parallaxFontSize", parallaxFontSize + "rem");
-
-  temp = w / 1000;
-  textFontSize = _clamp(temp, 1, 3.5);
-  root.style.setProperty("--textFontSize", textFontSize + "rem");
-
-  footerFontSize = _clamp(temp, 0.7, 1.75);
-  root.style.setProperty("--footerFontSize", footerFontSize + "rem");
-
-  temp = w / 2000;
-  tipFontSize = _clamp(temp, 0.75, 3);
-  root.style.setProperty("--tipFontSize", tipFontSize + "rem");
-
-  function _clamp(value, min, max) {
-    let clamped;
-
-    clamped = Math.min(Math.max(value, min), max);
-    console.log("Clamped: ", clamped);
-    return clamped;
   }
 }
 
@@ -641,12 +632,21 @@ function footerDate() {
 function init() {
   "use strict";
 
+  // NOTES - 20/1/24
+  // Re-consider layout of text block for section1
+  // Tweak tooltips (border, colours, position)
+  // Reduce size of hamburger menu
+
+  // NOTES - 3/12/23
+  // block4SetUp(): timeline will become vertical for mobile-sized devices
+  // Check coolors.com for colour palette contrasts
+
   setViewingMode();
   scrollToTop();
-  navbarHide();
   smoothScroll();
-  unanimate();
   setFontsAndSizings();
+  navbarHide();
+  unanimate();
   block1SetUp();
   // block2SetUp();
   // block3SetUp();
@@ -655,13 +655,6 @@ function init() {
   footerDate();
 
   window.addEventListener("resize", setFontsAndSizings);
-
-  // NOTES - 17/1/24
-  // Re-consider layout of text block for section1
-  // Re-work all CSS sizings to use "--width" and "--height" variables
-
-  // block4SetUp(): timeline will become vertical for mobile-sized devices
-  // Check coolors.com for colour palette contrasts
 }
 
 window.onload = init;

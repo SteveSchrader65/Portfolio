@@ -3,9 +3,9 @@
 
 :root {
   --tipShadow: -2px -2px 3px var(--navTextColour);
-  /* --navLinkSize: calc(1rem + ((1vw - 2.5px) * (5rem - 1rem) / (3000px - 250px))); */
-  /* --navDropLinkSize: calc(0.5rem + ((1vw - 2.5px) * (4.5rem - 0.5rem) / (3000px - 250px))); */
-  /* || Values calculated in JS
+
+  /*
+    || Values calculated in JS
     --navLinkSize:
     --navDropLinkSize:
     --navDropMenuWidth:
@@ -17,6 +17,9 @@
     --footerFontSize:
     --tipFontSize:
   */
+
+  /* --navLinkSize: calc(1rem + ((1vw - 2.5px) * (5rem - 1rem) / (3000px - 250px))); */
+  /* --navDropLinkSize: calc(0.5rem + ((1vw - 2.5px) * (4.5rem - 0.5rem) / (3000px - 250px))); */
 }
 
 
@@ -102,6 +105,7 @@ nav {
 #mainNav ul {
   display: flex;
   flex-flow: row nowrap;
+  margin-left: 3%;
   place-content: center space-evenly;
   font-family: Tektur;
 }
@@ -161,8 +165,8 @@ nav {
 .viewingMode button {
   display: flex;
   position: relative;
-  top: 2px; /* !! THIS !! */
-  left: 0%; /* !! THIS !! */
+  top: 0.25rem;
+  left: 0.25rem;
   background-color: var(--navBarColour);
   border: none;
 }
@@ -180,12 +184,13 @@ nav {
 .tooltip {
   position: relative;
   cursor: help;
+  z-index: 110;
 }
 
 .tooltip:hover::before {
   content: attr(data-tooltip);
   position: absolute;
-  top: -30px; /* !! THIS !! */
+  top: -35px; /* !! THIS !! */
   left: 1vw; /* !! THIS !! */
   padding: 5px 10px; /* !! THIS !! */
   white-space: nowrap;
@@ -198,27 +203,25 @@ nav {
   z-index: 100;
 }
 
-/* ?? Huh ?? */
 #mainNav .viewingMode .tooltip:hover::before {
-  top: 2rem; /* !! THIS !! */
+  top: 1.5rem;
 }
 
-/* ?? Huh ?? */
 #hamburgerNav .viewingMode .tooltip:hover::before {
-  top: 2rem; /* !! THIS !! */
-  left: -6rem; /* !! THIS !! */
+  top: 1.5rem;
+  left: -6rem;
 }
 
 /* || Backdrop */
 .parallax {
   width: 95%;
   margin: 0 auto;
-  min-height: 90vh; /* !! THIS !! */
+  height: 90vh;
   display: grid;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: min(120%, 1800px); /* !! THIS !! */
+  background-size: min(150%, 3000px);
   border-radius: 10px;
 }
 
@@ -267,7 +270,6 @@ nav {
 
 .text_block {
   position: relative;
-  /* min-height: 35rem; */
   font-size: var(--textFontSize);
   color: var(--textColour);
   margin: 2.5% 2.5% 10% 2.5%;
@@ -276,9 +278,19 @@ nav {
   text-justify: inter-word;
 }
 
-.text_block p {
-  /* margin-top: 2%; */
+.text_block p:not(p:first-of-type) {
+  margin-top: 2%;
 }
+
+
+
+
+
+
+
+
+
+
 
 footer {
   bottom: 0;
@@ -485,13 +497,11 @@ footer a img {
     display: block;
     min-width: 15%;
     padding: 5%;
-    font-size: var(--hamburgerLinkSize); /* ?? Here .. ?? */
   }
 
   #hamburgerNav .mainMenu a,
   #hamburgerNav .dropMenuTrigger {
     display: block;
-    font-size: var(--hamburgerLinkSize); /* ?? ... or here ?? */
     color: var(--colour1);
     text-decoration: none;
     padding: 3% 10%;
@@ -507,9 +517,8 @@ footer a img {
   }
 
   #hamburgerNav .viewingMode button {
-    position: absolute;
-    top: 25%;
-    left: 90%;
+    top: 0.5rem;
+    left: -8vw;
   }
 
   #hamburgerNav .viewingMode img {
@@ -522,8 +531,16 @@ footer a img {
     top: 100%;
     left: 0%;
   }
+
+  .text_block {
+    text-align: start;
+    text-justify: none;
+  }
 }
 
+@media screen and (max-width: 450px) {
+
+}
 /* Mobile device in landscape-mode */
 @media screen and (max-height: 425px) and (min-aspect-ratio: 7/4) {
   body {
