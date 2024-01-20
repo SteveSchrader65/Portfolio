@@ -37,18 +37,23 @@ function setViewingMode() {
       dark.style.visibility = "visible";
     });
 
-    root.style.setProperty("--titleColour", "#cccc00");
-    root.style.setProperty("--navBarColour", "#cccccc");
-    root.style.setProperty("--navTextColour", "black");
-    root.style.setProperty("--navHoverColour", "#82827d");
     root.style.setProperty("--textColour", "#210000");
     root.style.setProperty("--backColour", "#f2f2f2");
+    root.style.setProperty("--navBarColour", "#cccccc");
+    root.style.setProperty("--navTextColour", "black");
+    root.style.setProperty("--navHoverColour", "#9b9b97");
+    root.style.setProperty("--menuBackgroundColour", "#9b9b97");
+    root.style.setProperty("--menuTextColour", "#e6e6e6");
+    root.style.setProperty("--menuBackgroundHoverColour", "#82827d");
+    root.style.setProperty("--menuTextHoverColour", "#f5f5f5");
+    root.style.setProperty("--hamburgerButtonColour", "#0059b3");
+    root.style.setProperty("--titleColour", "#cccc00");
     root.style.setProperty("--highlightColour1", "#3399ff");
     root.style.setProperty("--highlightColour2", "#0059b3");
     root.style.setProperty("--postItColour", "#fffcaa");
-    root.style.setProperty("--sidebarTextColour", "#0000cc");
-    root.style.setProperty("--sidebarBackgroundColour", "#e8e8e8");
-    root.style.setProperty("--sidebarBorderColour", "#33cc33");
+    // root.style.setProperty("--sidebarTextColour", "#0000cc");
+    // root.style.setProperty("--sidebarBackgroundColour", "#e8e8e8");
+    // root.style.setProperty("--sidebarBorderColour", "#33cc33");
     root.style.setProperty("--colour1", "#000000");
     root.style.setProperty("--colour2", "#ffffff");
     root.style.setProperty("--scrollTrackColour", "#b4b2b1");
@@ -58,9 +63,9 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour2", "#8fbcef");
     root.style.setProperty("--scrollBorderColour", "#b7b6fc");
     root.style.setProperty("--progressColour", "#008000");
-    root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
+    root.style.setProperty("--tipBackgroundColour", "#333333");
     root.style.setProperty("--tipBorderColour", "#6c9ee0");
-    root.style.setProperty("--tipTextColour", "black");
+    root.style.setProperty("--tipTextColour", "whitesmoke");
     root.style.setProperty("--alertColour", "#ff1a1a");
     root.style.setProperty("--successColour", "#69cf9d");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
@@ -78,18 +83,23 @@ function setViewingMode() {
       dark.style.visibility = "hidden";
     });
 
-    root.style.setProperty("--titleColour", "#0e0cf3");
+    root.style.setProperty("--textColour", "#cccccc");
+    root.style.setProperty("--backColour", "#262626");
     root.style.setProperty("--navBarColour", "#210000");
     root.style.setProperty("--navTextColour", "#d4bc2b");
     root.style.setProperty("--navHoverColour", "#82807d");
-    root.style.setProperty("--textColour", "#cccccc");
-    root.style.setProperty("--backColour", "#210000");
+    root.style.setProperty("--menuBackgroundColour", "#82827d");
+    root.style.setProperty("--menuTextColour", "#210000");
+    root.style.setProperty("--menuBackgroundHoverColour", "#cccccc");
+    root.style.setProperty("--menuTextHoverColour", "#f5f5f5");
+    root.style.setProperty("--hamburgerButtonColour", "#82827d");
+    root.style.setProperty("--titleColour", "#0e0cf3");
     root.style.setProperty("--highlightColour1", "#b3d9ff");
     root.style.setProperty("--highlightColour2", "#3399ff");
     root.style.setProperty("--postItColour", "#fffcaa");
-    root.style.setProperty("--sidebarTextColour", "black");
-    root.style.setProperty("--sidebarBackgroundColour", "#b4b2b1");
-    root.style.setProperty("--sidebarBorderColour", "#0e0cf3");
+    // root.style.setProperty("--sidebarTextColour", "black");
+    // root.style.setProperty("--sidebarBackgroundColour", "#b4b2b1");
+    // root.style.setProperty("--sidebarBorderColour", "#0e0cf3");
     root.style.setProperty("--colour1", "black");
     root.style.setProperty("--colour2", "white");
     root.style.setProperty("--scrollTrackColour", "#757270");
@@ -146,46 +156,59 @@ function smoothScroll() {
 }
 
 function setFontsAndSizings() {
-  "use strict";
+  ("use strict");
 
   const root = document.querySelector(":root");
   let navLinkSize;
   let navDropLinkSize;
   let navDropMenuWidth;
+  let hamburgerWidth;
+  let hamburgerLayerHeight;
+  let hamburgerSpacer;
   let hamburgerLinkSize;
   let hamburgerMenuWidth;
   let viewModeButtonSize;
+  let viewModeTop;
+  let viewModeLeft;
   let parallaxFontSize;
   let textFontSize;
   let footerFontSize;
   let tipFontSize;
+  let largeSize = 650;
   let mobileInflate = 1.1;
   let screenWidth = window.innerWidth;
-
-  // The value 2750 represents difference between min screen
-  // size (250px) and max screen size (3000px)
-  let temp = screenWidth / 2750;
+  let temp = screenWidth / 3395;
 
   navLinkSize = _clamp(temp * 4.5, 0.85, 4.75);
-  navDropLinkSize = _clamp(temp * 4.5, 1, 4.5);
-  navDropMenuWidth = _clamp(temp * 39, 5, 36);
-  hamburgerLinkSize = _clamp(temp * 10, 1.2, 1.8);
-  hamburgerMenuWidth = _clamp(temp * 80, 9, 14);
-  viewModeButtonSize = _clamp(temp * 6, 2, 8);
-  if (screenWidth < 560) viewModeButtonSize *= mobileInflate;
+  navDropLinkSize = _clamp(temp * 4, 0.6, 4);
+  navDropMenuWidth = _clamp(temp * 35, 4.5, 49);
+  hamburgerWidth = _clamp(temp * 150, 18, 32);
+  hamburgerLayerHeight = _clamp(temp * 20, 1, 3);
+  hamburgerSpacer = _clamp(temp * 80, 6, 9);
+  hamburgerLinkSize = _clamp(temp * 9, 1, 1.6);
+  hamburgerMenuWidth = _clamp(temp * 73, 8, 14);
+  viewModeButtonSize = _clamp(temp * 6, 2, 7);
+  if (screenWidth < largeSize) viewModeButtonSize *= mobileInflate;
+  viewModeTop = _clamp(temp * 24, 2, 18); // Top
+  viewModeLeft = screenWidth < largeSize ? _clamp(temp * -10, -4, -1) : _clamp(temp * 10, 1, 4) / 2;
   parallaxFontSize = _clamp(temp * 12, 1.5, 12);
-  textFontSize = _clamp(temp * 3.5, 1.2, 3.5);
-  if (screenWidth < 560) textFontSize *= mobileInflate + 0.2;
-  footerFontSize = _clamp(temp * 2.5, 0.85, 2.5);
-  tipFontSize = _clamp(temp * 2.1, 0.7, 2.1);
-  if (screenWidth < 560) tipFontSize *= mobileInflate;
+  textFontSize = _clamp(temp * 2.7, 0.9, 2.7);
+  if (screenWidth < largeSize) textFontSize *= mobileInflate + 0.15;
+  footerFontSize = _clamp(temp * 2.25, 0.77, 2.25);
+  tipFontSize = _clamp(temp * 1.9, 0.6, 1.9);
+  if (screenWidth < largeSize) tipFontSize *= mobileInflate;
 
   root.style.setProperty("--navLinkSize", navLinkSize + "rem");
   root.style.setProperty("--navDropLinkSize", navDropLinkSize + "rem");
   root.style.setProperty("--navDropMenuWidth", navDropMenuWidth + "rem");
+  root.style.setProperty("--hamburgerWidth", hamburgerWidth + "px");
+  root.style.setProperty("--hamburgerLayerHeight", hamburgerLayerHeight + "px");
+  root.style.setProperty("--hamburgerSpacer", hamburgerSpacer + "px");
   root.style.setProperty("--hamburgerLinkSize", hamburgerLinkSize + "rem");
   root.style.setProperty("--hamburgerMenuWidth", hamburgerMenuWidth + "rem");
   root.style.setProperty("--viewModeButtonSize", viewModeButtonSize + "rem");
+  root.style.setProperty("--viewModeTop", viewModeTop + "px");
+  root.style.setProperty("--viewModeLeft", viewModeLeft + "rem");
   root.style.setProperty("--parallaxFontSize", parallaxFontSize + "rem");
   root.style.setProperty("--textFontSize", textFontSize + "rem");
   root.style.setProperty("--footerFontSize", footerFontSize + "rem");
@@ -210,7 +233,7 @@ function navbarHide() {
     if (prevScrollPos > currentScrollPos) {
       document.querySelector("nav").style.top = "0";
     } else {
-      document.querySelector("nav").style.top = "-6rem";
+      document.querySelector("nav").style.top = "-5rem";
     }
 
     prevScrollPos = currentScrollPos;
@@ -630,14 +653,13 @@ function footerDate() {
 }
 
 function init() {
-  "use strict";
+  ("use strict");
 
-  // NOTES - 20/1/24
-  // Re-consider layout of text block for section1
-  // Tweak tooltips (border, colours, position)
-  // Reduce size of hamburger menu
+  // NOTES - 21/1/24
+  // Contact page CSS
 
   // NOTES - 3/12/23
+  // Re-consider layout of text block for section1
   // block4SetUp(): timeline will become vertical for mobile-sized devices
   // Check coolors.com for colour palette contrasts
 

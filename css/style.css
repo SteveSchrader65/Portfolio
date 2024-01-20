@@ -1,7 +1,10 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Tektur&display=swap');
 
-:root {
+
+  /* --navLinkSize: calc(1rem + ((1vw - 2.5px) * (5rem - 1rem) / (3000px - 250px))); */
+  /* --navDropLinkSize: calc(0.5rem + ((1vw - 2.5px) * (4.5rem - 0.5rem) / (3000px - 250px))); */
+  :root {
   --tipShadow: -2px -2px 3px var(--navTextColour);
 
   /*
@@ -9,6 +12,9 @@
     --navLinkSize:
     --navDropLinkSize:
     --navDropMenuWidth:
+    --hamburgerWidth:
+    --hamburgerLayerHeight:
+    --hamburgerSpacer:
     --hamburgerLinkSize:
     --hamburgerMenuWidth:
     --viewModeButtonSize:
@@ -16,10 +22,41 @@
     --textFontSize:
     --footerFontSize:
     --tipFontSize:
-  */
+    --borderImage:
 
-  /* --navLinkSize: calc(1rem + ((1vw - 2.5px) * (5rem - 1rem) / (3000px - 250px))); */
-  /* --navDropLinkSize: calc(0.5rem + ((1vw - 2.5px) * (4.5rem - 0.5rem) / (3000px - 250px))); */
+    || Colours defined in JS for light and dark modes
+    --textColour:
+    --backColour:
+    --navBarColour:
+    --navTextColour:
+    --navHoverColour:
+    --menuBackgroundColour:
+    --menuTextColour:
+    --menuBackgroundHoverColour:
+    --menuTextHoverColour:
+    --hamburgerButtonColour:
+    --titleColour:
+    --highlightColour1:
+    --highlightColour2:
+    --postItColour:
+    //--sidebarTextColour", "#0000cc");
+    //--sidebarBackgroundColour:
+    //--sidebarBorderColour:
+    --colour1:
+    --colour2:
+    --scrollTrackColour:
+    --scrollThumbColour1:
+    --scrollThumbColour2:
+    --scrollButtonColour1:
+    --scrollButtonColour2:
+    --scrollBorderColour:
+    --progressColour":
+    --tipBackgroundColour:
+    --tipBorderColour:
+    --tipTextColour:
+    --alertColour:
+    --successColour:
+  */
 }
 
 
@@ -127,7 +164,7 @@ nav {
 }
 
 #mainNav ul .dropMenuTrigger:hover {
-  background-color: var(--navHoverColour);
+  background-color: var(--menuBackgroundColour);
   cursor: pointer;
 }
 
@@ -139,7 +176,7 @@ nav {
   display: none;
   position: absolute;
   right: 0;
-  background-color: var(--navHoverColour);
+  background-color: var(--menuBackgroundColour);
   min-width: var(--navDropMenuWidth);
   z-index: 100;
 }
@@ -156,8 +193,8 @@ nav {
 }
 
 #mainNav ul .dropMenu a:hover {
-  background-color: var(--textColour);
-  color: var(--colour2);
+  background-color: var(--menuBackgroundHoverColour);
+  color: var(--menuTextHoverColour);
   cursor: pointer;
 }
 
@@ -165,8 +202,8 @@ nav {
 .viewingMode button {
   display: flex;
   position: relative;
-  top: 0.25rem;
-  left: 0.25rem;
+  top: var(--viewModeTop);
+  left: var(--viewModeLeft);
   background-color: var(--navBarColour);
   border: none;
 }
@@ -184,20 +221,21 @@ nav {
 .tooltip {
   position: relative;
   cursor: help;
+  font-weight: bold;
   z-index: 110;
 }
 
 .tooltip:hover::before {
   content: attr(data-tooltip);
   position: absolute;
-  top: -35px; /* !! THIS !! */
-  left: 1vw; /* !! THIS !! */
-  padding: 5px 10px; /* !! THIS !! */
+  top: -1.75rem;
+  left: 0.1rem;
+  padding: 0.4rem;
   white-space: nowrap;
   background-color: var(--tipBackgroundColour);
   color: var(--tipTextColour);
   border: 1px solid var(--tipBorderColour);
-  border-radius: 15px; /* !! THIS !! */
+  border-radius: 1em;
   font-size: var(--tipFontSize); 
   font-style: italic;
   z-index: 100;
@@ -216,12 +254,12 @@ nav {
 .parallax {
   width: 95%;
   margin: 0 auto;
-  height: 90vh;
+  height: 80vh;
   display: grid;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: min(150%, 3000px);
+  background-size: min(150%, 5000px);
   border-radius: 10px;
 }
 
@@ -230,7 +268,6 @@ nav {
   font-size: var(--parallaxFontSize);
   font-weight: bold;
   color: var(--titleColour);
-  background-color: transparent;
   margin-top: 2%; /* !! THIS !! */
   padding: 0 10%;
   opacity: 0.65;
@@ -304,16 +341,14 @@ footer h3 {
   grid-row: 1 / 1;
   grid-column: 3 / 3;
   color: var(--textColour);
-  background-color: var(--backColour);
   text-align: right;
   margin-right: 0.5%;
 }
 
 footer a img {
-  border: 0;
-  width: 66px;
-  height: 23px;
+  width: 3.5rem;
   margin-left: 0.5%;
+  border-radius: 0.3rem;
   grid-row: 1 / 1;
   grid-column: 1 / 1;
 }
@@ -385,7 +420,7 @@ footer a img {
 }
 
 /* || Scrollbars - Hidden for mobile-sized devices */
-@media screen and (min-width: 559px) {
+@media screen and (min-width: 650px) {
   ::-webkit-scrollbar {
     width: 0.8rem;
     border: 2px solid var(--scrollBorderColour);
@@ -415,7 +450,7 @@ footer a img {
 }
 
 /* Exchange nav menu bar for hamburger menu on narrower screens */
-@media screen and (max-width: 559px) {
+@media screen and (max-width: 649px) {
   body {
     flex-direction: column;
   }
@@ -428,14 +463,12 @@ footer a img {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    padding: 0 2%;
+    margin: 0.25% 2%;
   }
 
   #hamburgerNav #hamburgerButton {
-    background-color: transparent;
     border: none;
-    width: 40px; /* !! THIS !! */
-    height: 35px; /* !! THIS !! */
+    height: calc(var(--hamburgerLayerHeight) * 3 + 2 * var(--hamburgerSpacer));
     display: flex;
     align-items: center;
     position: relative;
@@ -444,9 +477,9 @@ footer a img {
   #hamburgerNav #hamburgerIcon,
   #hamburgerNav #hamburgerIcon::before,
   #hamburgerNav #hamburgerIcon::after {
-    background-color: var(--navTextColour);
-    width: 30px; /* !! THIS !! */
-    height: 5px;  /* !! THIS !! */
+    background-color: var(--hamburgerButtonColour);
+    width: var(--hamburgerWidth);
+    height: var(--hamburgerLayerHeight);
     border-radius: 5px;
     position: absolute;
     transition: all 0.5s;
@@ -458,11 +491,11 @@ footer a img {
   }
 
   #hamburgerNav #hamburgerIcon::before {
-    transform: translate(0px, -12px);
+    transform: translate(0px, calc(var(--hamburgerSpacer) * -1));
   }
 
   #hamburgerNav #hamburgerIcon::after {
-    transform: translate(0px, 12px);
+    transform: translate(0px, var(--hamburgerSpacer));
   }
 
   #hamburgerNav #hamburgerButton:hover #hamburgerIcon {
@@ -474,22 +507,22 @@ footer a img {
   #hamburgerNav .dropMenu {
     display: none;
     position: absolute;
-    background-color: var(--navHoverColour);
+    background-color: var(--menuBackgroundColour);
     font-size: var(--hamburgerLinkSize);
     text-align: left;
     z-index: 100;
+    width: var(--hamburgerMenuWidth);
   }
 
   #hamburgerNav .mainMenu {
     top: 100%;
     left: -25%;
-    width: var(--hamburgerMenuWidth);
   }
 
   #hamburgerNav .dropMenu {
     top: 0%;
     left: 100%;
-    width: var(--hamburgerMenuWidth);
+    min-width: calc(var(--navDropMenuWidth) * 3.25);
   }
 
   #hamburgerNav #hamburgerButton:hover .mainMenu,
@@ -502,7 +535,7 @@ footer a img {
   #hamburgerNav .mainMenu a,
   #hamburgerNav .dropMenuTrigger {
     display: block;
-    color: var(--colour1);
+    color: var(--menuTextColour);
     text-decoration: none;
     padding: 3% 10%;
     position: relative;
@@ -511,14 +544,14 @@ footer a img {
 
   #hamburgerNav .mainMenu a:hover,
   #hamburgerNav .dropMenuTrigger:hover {
-    background-color: var(--textColour);
-    color: var(--colour2);
+    background-color: var(--menuBackgroundHoverColour);
+    color: var(--menuTextHoverColour);
     cursor: pointer;
   }
 
   #hamburgerNav .viewingMode button {
-    top: 0.5rem;
-    left: -8vw;
+    top: var(--viewModeTop);
+    left: var(--viewModeLeft);
   }
 
   #hamburgerNav .viewingMode img {
@@ -538,9 +571,6 @@ footer a img {
   }
 }
 
-@media screen and (max-width: 450px) {
-
-}
 /* Mobile device in landscape-mode */
 @media screen and (max-height: 425px) and (min-aspect-ratio: 7/4) {
   body {
