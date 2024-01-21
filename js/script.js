@@ -48,12 +48,6 @@ function setViewingMode() {
     root.style.setProperty("--menuTextHoverColour", "#f5f5f5");
     root.style.setProperty("--hamburgerButtonColour", "#0059b3");
     root.style.setProperty("--titleColour", "#cccc00");
-    root.style.setProperty("--highlightColour1", "#3399ff");
-    root.style.setProperty("--highlightColour2", "#0059b3");
-    root.style.setProperty("--postItColour", "#fffcaa");
-    // root.style.setProperty("--sidebarTextColour", "#0000cc");
-    // root.style.setProperty("--sidebarBackgroundColour", "#e8e8e8");
-    // root.style.setProperty("--sidebarBorderColour", "#33cc33");
     root.style.setProperty("--colour1", "#000000");
     root.style.setProperty("--colour2", "#ffffff");
     root.style.setProperty("--scrollTrackColour", "#b4b2b1");
@@ -66,6 +60,12 @@ function setViewingMode() {
     root.style.setProperty("--tipBackgroundColour", "#333333");
     root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--tipTextColour", "whitesmoke");
+    root.style.setProperty("--highlightColour1", "#3399ff");
+    root.style.setProperty("--highlightColour2", "#0059b3");
+    root.style.setProperty("--postItColour", "#fffcaa");
+    root.style.setProperty("--sidebarTextColour", "#0000cc");
+    root.style.setProperty("--sidebarBackgroundColour", "#e8e8e8");
+    root.style.setProperty("--sidebarBorderColour", "#33cc33");
     root.style.setProperty("--alertColour", "#ff1a1a");
     root.style.setProperty("--successColour", "#69cf9d");
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
@@ -94,12 +94,6 @@ function setViewingMode() {
     root.style.setProperty("--menuTextHoverColour", "#f5f5f5");
     root.style.setProperty("--hamburgerButtonColour", "#82827d");
     root.style.setProperty("--titleColour", "#0e0cf3");
-    root.style.setProperty("--highlightColour1", "#b3d9ff");
-    root.style.setProperty("--highlightColour2", "#3399ff");
-    root.style.setProperty("--postItColour", "#fffcaa");
-    // root.style.setProperty("--sidebarTextColour", "black");
-    // root.style.setProperty("--sidebarBackgroundColour", "#b4b2b1");
-    // root.style.setProperty("--sidebarBorderColour", "#0e0cf3");
     root.style.setProperty("--colour1", "black");
     root.style.setProperty("--colour2", "white");
     root.style.setProperty("--scrollTrackColour", "#757270");
@@ -112,6 +106,12 @@ function setViewingMode() {
     root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
     root.style.setProperty("--tipTextColour", "black");
     root.style.setProperty("--tipBorderColour", "#6c9ee0");
+    root.style.setProperty("--highlightColour1", "#b3d9ff");
+    root.style.setProperty("--highlightColour2", "#3399ff");
+    root.style.setProperty("--postItColour", "#fffcaa");
+    root.style.setProperty("--sidebarTextColour", "black");
+    root.style.setProperty("--sidebarBackgroundColour", "#b4b2b1");
+    root.style.setProperty("--sidebarBorderColour", "#0e0cf3");
     root.style.setProperty("--alertColour", "#b30000");
     root.style.setProperty("--successColour", "#29a329");
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
@@ -156,7 +156,7 @@ function smoothScroll() {
 }
 
 function setFontsAndSizings() {
-  ("use strict");
+  "use strict";
 
   const root = document.querySelector(":root");
   let navLinkSize;
@@ -189,9 +189,9 @@ function setFontsAndSizings() {
   hamburgerMenuWidth = _clamp(temp * 73, 8, 14);
   viewModeButtonSize = _clamp(temp * 6, 2, 7);
   if (screenWidth < largeSize) viewModeButtonSize *= mobileInflate;
-  viewModeTop = _clamp(temp * 24, 2, 18); // Top
+  viewModeTop = _clamp(temp * 24, 2, 18); 
   viewModeLeft = screenWidth < largeSize ? _clamp(temp * -10, -4, -1) : _clamp(temp * 10, 1, 4) / 2;
-  parallaxFontSize = _clamp(temp * 12, 1.5, 12);
+  parallaxFontSize = _clamp(temp * 12, 3, 12);
   textFontSize = _clamp(temp * 2.7, 0.9, 2.7);
   if (screenWidth < largeSize) textFontSize *= mobileInflate + 0.15;
   footerFontSize = _clamp(temp * 2.25, 0.77, 2.25);
@@ -653,11 +653,14 @@ function footerDate() {
 }
 
 function init() {
-  ("use strict");
+  "use strict";
 
   // NOTES - 21/1/24
   // Contact page CSS
-
+  // Studies page CSS
+  // Employment page CSS
+  // Projects page CSS
+  
   // NOTES - 3/12/23
   // Re-consider layout of text block for section1
   // block4SetUp(): timeline will become vertical for mobile-sized devices
@@ -670,10 +673,10 @@ function init() {
   navbarHide();
   unanimate();
   block1SetUp();
-  // block2SetUp();
-  // block3SetUp();
-  // block4SetUp();
-  // block5SetUp();
+  block2SetUp();
+  block3SetUp();
+  block4SetUp();
+  block5SetUp();
   footerDate();
 
   window.addEventListener("resize", setFontsAndSizings);
