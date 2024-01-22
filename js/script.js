@@ -187,16 +187,22 @@ function setFontsAndSizings() {
   hamburgerSpacer = _clamp(temp * 80, 6, 9);
   hamburgerLinkSize = _clamp(temp * 9, 1, 1.6);
   hamburgerMenuWidth = _clamp(temp * 73, 8, 14);
-  viewModeButtonSize = _clamp(temp * 6, 2, 7);
-  if (screenWidth < largeSize) viewModeButtonSize *= mobileInflate;
-  viewModeTop = _clamp(temp * 24, 2, 18); 
+  viewModeButtonSize = screenWidth < largeSize ? _clamp(temp * 6, 2, 7) * mobileInflate: _clamp(temp * 6, 2, 7);
+  viewModeTop = _clamp(temp * 24, 2, 18);
   viewModeLeft = screenWidth < largeSize ? _clamp(temp * -10, -4, -1) : _clamp(temp * 10, 1, 4) / 2;
   parallaxFontSize = _clamp(temp * 12, 3, 12);
-  textFontSize = _clamp(temp * 2.7, 0.9, 2.7);
-  if (screenWidth < largeSize) textFontSize *= mobileInflate + 0.15;
+
+  textFontSize =
+    screenWidth < largeSize
+      ? _clamp(temp * 2.7, 0.9, 2.7) * (mobileInflate + 0.15)
+      : _clamp(temp * 2.7, 0.9, 2.7);
+
   footerFontSize = _clamp(temp * 2.25, 0.77, 2.25);
-  tipFontSize = _clamp(temp * 1.9, 0.6, 1.9);
-  if (screenWidth < largeSize) tipFontSize *= mobileInflate;
+
+  tipFontSize =
+    screenWidth < largeSize
+      ? _clamp(temp * 1.9, 0.6, 1.9) * mobileInflate
+      : _clamp(temp * 1.9, 0.6, 1.9);
 
   root.style.setProperty("--navLinkSize", navLinkSize + "rem");
   root.style.setProperty("--navDropLinkSize", navDropLinkSize + "rem");
@@ -289,18 +295,21 @@ function block1SetUp() {
   let colourArray;
   let colourIndex;
 
-  if (viewingMode == "lightness") {
-    colourArray = lightArray;
-  } else {
-    colourArray = darkArray;
-  }
+  if (!window.matchMedia(`(prefers-reduced-motion: reduce)`).matches) {
 
-  setInterval(() => {
-    letters.forEach((letter) => {
-      colourIndex = Math.floor(Math.random() * colourArray.length);
-      letter.style.color = colourArray[colourIndex];
-    });
-  }, 250);
+    if (viewingMode == "lightness") {
+      colourArray = lightArray;
+    } else {
+      colourArray = darkArray;
+    }
+
+    setInterval(() => {
+      letters.forEach((letter) => {
+        colourIndex = Math.floor(Math.random() * colourArray.length);
+        letter.style.color = colourArray[colourIndex];
+      });
+    }, 250);
+  }
 }
 
 function block2SetUp() {
@@ -637,10 +646,11 @@ function block4SetUp() {
   }
 }
 
-// https://formcarry.com/blog/how-to-create-a-simple-html-contact-form/
+
 function block5SetUp() {
   "use strict";
 
+  // https://formcarry.com/blog/how-to-create-a-simple-html-contact-form/
   // Will require 'AreYouHuman ??' pop-up to allow input
 }
 
@@ -655,12 +665,12 @@ function footerDate() {
 function init() {
   "use strict";
 
-  // NOTES - 21/1/24
+  // NOTES - 22/1/24
   // Contact page CSS
-  // Studies page CSS
-  // Employment page CSS
-  // Projects page CSS
-  
+  // Studies page CSS and wrap animations
+  // Employment page CSS and wrap animations
+  // Projects page CSS and wrap animations
+
   // NOTES - 3/12/23
   // Re-consider layout of text block for section1
   // block4SetUp(): timeline will become vertical for mobile-sized devices
@@ -673,9 +683,9 @@ function init() {
   navbarHide();
   unanimate();
   block1SetUp();
-  block2SetUp();
-  block3SetUp();
-  block4SetUp();
+  // block2SetUp();
+  // block3SetUp();
+  // block4SetUp();
   block5SetUp();
   footerDate();
 
