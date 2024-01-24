@@ -520,39 +520,44 @@
       <div class="text_block" id="block5">
         <p>
           Thank you for taking the time to read a little about me.
-
-          I am now eager to leverage my learned skills, coupled with my strong work ethic, to contribute
-          effectively to a forward-thinking organization. I am excited at the prospect of gaining practical
-          experience, honing my skills, and making meaningful contributions to your company.
-
-          Should you wish to get in touch with any questions -- or to offer that Dream Job -- you can
-          contact me directly by completing the Contact form here.
         </p>
-        <div class="form-container">
-          <form action="#" method="POST" class="contact-form">
-          <form action="mailProcess.php" method="POST" class="contact-form">
-            <label for="contact-name">Name</label>
+        <p>
+          I am now eager to leverage my learned skills - coupled with my strong work ethic - to contribute
+          effectively to a forward-thinking employer. I am excited at the prospect of gaining practical
+          experience, honing my skills, and making meaningful contributions to your company.
+        </p>
+        <p>
+          Should you wish to get in touch with any questions -- or to offer that Dream Job -- you can
+          contact me directly by completing the Contact form below.
+        </p>
+        <div class="formContainer">
+          <form action="#" method="POST" class="contactForm">
+          <!-- <form action="mailProcess.php" method="POST" class="contactForm"> -->
+            <label for="contactName">Name</label>
             <input
               type="text"
-              id="contact-name"
+              id="contactName"
               name="fullName"
               placeholder="Please tell me your name ..."
               required>
-            <label for="contact-email">E-mail Address</label>
+            <label for="contactEmail">E-mail Address</label>
             <input
               type="email"
-              id="contact-email"
+              id="contactEmail"
               name="email"
               placeholder="Enter your e-mail address here ..."
               required>
-            <label for="contact-message">Message</label>
+            <label for="contactMessage">Message</label>
             <textarea
+              id="contactMessage"
               name="message"
-              id="contact-message"
               cols="150"
               rows="10"
               placeholder="Type your message here ...">
             </textarea>
+            <span class="tooltip" data-tooltip="Check to forward a copy of this e-mail to your in-box">
+              <input type="checkbox" id="contactForward" name="forward" checked>cc: e-mail
+            </span>
             <button type="submit">Send</button>
           </form>
         </div>

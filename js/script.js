@@ -60,6 +60,21 @@ function setViewingMode() {
     root.style.setProperty("--tipBackgroundColour", "#333333");
     root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--tipTextColour", "whitesmoke");
+
+    /* ---------- Colours used for contact form ---------- */
+    root.style.setProperty("--contactFormBorderColour", "#b3d9ff");
+    root.style.setProperty("--contactLabelColour", "#b3d9ff");
+    root.style.setProperty("--contactBackgroundColour", "#b3d9ff");
+    root.style.setProperty("--contactFieldPlaceholderColour", "#b3d9ff");
+    root.style.setProperty("--contactFieldTextColour", "#b3d9ff");
+    root.style.setProperty("--contactFieldBackgroundColour", "#b3d9ff");
+    root.style.setProperty("--contactFieldBorderColour", "#b3d9ff");
+    root.style.setProperty("--contactFieldBorderFocusColour", "#b3d9ff");
+    root.style.setProperty("--contactButtonColour", "#b3d9ff");
+    root.style.setProperty("--contactButtonHoverColour", "#b3d9ff");
+    root.style.setProperty("--contactButtonActiveColour", "#b3d9ff");
+
+    /* ---------- Colours below this line not currently in use ---------- */
     root.style.setProperty("--highlightColour1", "#3399ff");
     root.style.setProperty("--highlightColour2", "#0059b3");
     root.style.setProperty("--postItColour", "#fffcaa");
@@ -103,14 +118,28 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour2", "#4282d7");
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
     root.style.setProperty("--progressColour", "#29a329");
-    root.style.setProperty("--tipBackgroundColour", "#b4b2b1");
-    root.style.setProperty("--tipTextColour", "black");
+    root.style.setProperty("--tipBackgroundColour", "#8f8b8a");
     root.style.setProperty("--tipBorderColour", "#6c9ee0");
+    root.style.setProperty("--tipTextColour", "black");
+
+    /* ---------- Colours used for contact form ---------- */
+    root.style.setProperty("--contactFormBorderColour", "#830000");
+    root.style.setProperty("--contactLabelColour", "#b3d9ff");
+    root.style.setProperty("--contactBackgroundColour", "#8f8c8a");
+    root.style.setProperty("--contactFieldPlaceholderColour", "black");
+    root.style.setProperty("--contactFieldTextColour", "#black");
+    root.style.setProperty("--contactFieldBackgroundColour", "#8f8b8a");
+    root.style.setProperty("--contactFieldBorderFocusColour", "#990000");
+    root.style.setProperty("--contactButtonColour", "#b3d9ff");
+    root.style.setProperty("--contactButtonHoverColour", "#b3d9ff");
+    root.style.setProperty("--contactButtonActiveColour", "#b3d9ff");
+
+    /* ---------- Colours below this line not currently in use ---------- */
     root.style.setProperty("--highlightColour1", "#b3d9ff");
     root.style.setProperty("--highlightColour2", "#3399ff");
     root.style.setProperty("--postItColour", "#fffcaa");
     root.style.setProperty("--sidebarTextColour", "black");
-    root.style.setProperty("--sidebarBackgroundColour", "#b4b2b1");
+    root.style.setProperty("--sidebarBackgroundColour", "#8f8b8a");
     root.style.setProperty("--sidebarBorderColour", "#0e0cf3");
     root.style.setProperty("--alertColour", "#b30000");
     root.style.setProperty("--successColour", "#29a329");
@@ -190,7 +219,7 @@ function setFontsAndSizings() {
   viewModeButtonSize = screenWidth < largeSize ? _clamp(temp * 6, 2, 7) * mobileInflate: _clamp(temp * 6, 2, 7);
   viewModeTop = _clamp(temp * 24, 2, 18);
   viewModeLeft = screenWidth < largeSize ? _clamp(temp * -10, -4, -1) : _clamp(temp * 10, 1, 4) / 2;
-  parallaxFontSize = _clamp(temp * 12, 3, 12);
+  parallaxFontSize = _clamp(temp * 12, 2, 12);
 
   textFontSize =
     screenWidth < largeSize
@@ -232,18 +261,26 @@ function navbarHide() {
   "use strict";
 
   let prevScrollPos = window.scrollY;
+  let isScrolling;
 
-  document.addEventListener("scroll", () => {
-    let currentScrollPos = window.scrollY;
+  if (!window.matchMedia(`(prefers-reduced-motion: reduce)`).matches) {
+    document.addEventListener("scroll", () => {
+      let currentScrollPos = window.scrollY;
 
-    if (prevScrollPos > currentScrollPos) {
-      document.querySelector("nav").style.top = "0";
-    } else {
-      document.querySelector("nav").style.top = "-5rem";
-    }
+      if (prevScrollPos > currentScrollPos) {
+        document.querySelector("nav").style.top = "0";
+      } else {
+        document.querySelector("nav").style.top = "-5rem";
+      }
 
-    prevScrollPos = currentScrollPos;
-  });
+      clearTimeout(isScrolling);
+      isScrolling = setTimeout(() => {
+        document.querySelector("nav").style.top = "0";
+      }, 2500);
+
+      prevScrollPos = currentScrollPos;
+    });
+  }
 }
 
 function unanimate() {
@@ -295,21 +332,18 @@ function block1SetUp() {
   let colourArray;
   let colourIndex;
 
-  if (!window.matchMedia(`(prefers-reduced-motion: reduce)`).matches) {
-
-    if (viewingMode == "lightness") {
-      colourArray = lightArray;
-    } else {
-      colourArray = darkArray;
-    }
-
-    setInterval(() => {
-      letters.forEach((letter) => {
-        colourIndex = Math.floor(Math.random() * colourArray.length);
-        letter.style.color = colourArray[colourIndex];
-      });
-    }, 250);
+  if (viewingMode == "lightness") {
+    colourArray = lightArray;
+  } else {
+    colourArray = darkArray;
   }
+
+  setInterval(() => {
+    letters.forEach((letter) => {
+      colourIndex = Math.floor(Math.random() * colourArray.length);
+      letter.style.color = colourArray[colourIndex];
+    });
+  }, 250);
 }
 
 function block2SetUp() {
@@ -650,7 +684,6 @@ function block4SetUp() {
 function block5SetUp() {
   "use strict";
 
-  // https://formcarry.com/blog/how-to-create-a-simple-html-contact-form/
   // Will require 'AreYouHuman ??' pop-up to allow input
 }
 
@@ -665,24 +698,26 @@ function footerDate() {
 function init() {
   "use strict";
 
-  // NOTES - 22/1/24
+  // NOTES - 23/1/24
   // Contact page CSS
   // Studies page CSS and wrap animations
-  // Employment page CSS and wrap animations
+  // Employment page CSS and wrap animations (timeline swaps to vertical for smaller devices)
   // Projects page CSS and wrap animations
-
-  // NOTES - 3/12/23
   // Re-consider layout of text block for section1
-  // block4SetUp(): timeline will become vertical for mobile-sized devices
   // Check coolors.com for colour palette contrasts
+  // Edit and finalize text portions
 
   setViewingMode();
-  scrollToTop();
-  smoothScroll();
   setFontsAndSizings();
-  navbarHide();
-  unanimate();
-  block1SetUp();
+
+  if (!window.matchMedia(`(prefers-reduced-motion: reduce)`).matches) {
+    scrollToTop();
+    smoothScroll();
+    navbarHide();
+    unanimate();
+    block1SetUp();
+  }
+
   // block2SetUp();
   // block3SetUp();
   // block4SetUp();
