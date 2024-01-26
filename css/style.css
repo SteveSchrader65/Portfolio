@@ -3,7 +3,7 @@
 
 :root {
   --tipShadow: -2px -2px 3px var(--navTextColour);
-  --contactShadow: -3px 3px 8px var(--contactFieldBackgroundColour); 
+  --contactShadow: -3px 3px 8px rgba(193, 190, 190, 0.4);
 
   /*
     || Values calculated in JS
@@ -52,11 +52,11 @@
     --contactFieldPlaceholderColour:
     --contactFieldTextColour:
     --contactFieldBackgroundColour:
-    --contactFieldBorderColour:
     --contactFieldBorderFocusColour:
     --contactButtonColour:
     --contactButtonHoverColour:
     --contactButtonActiveColour:
+
     --highlightColour1:
     --highlightColour2:
     --postItColour:
@@ -102,7 +102,7 @@ body {
   overflow-y: scroll;
 }
 
-header, .text_block, footer {
+header, footer {
   display: grid;
   grid-template-columns: 100%;
 }
@@ -667,28 +667,32 @@ aside {
 
 /* || Contact */
 .formContainer {
-  margin-top: 5rem;
-  display: flex;
   background-color: var(--contactBackgroundColour);
   border: 5px solid var(--contactFormBorderColour);
+  margin-top: 5rem;
+  padding: 1rem 2rem 2rem;
   border-radius: 5px;
   box-shadow: var(--contactShadow);
+  cursor: none;
 }
 
 .contactForm {
   display: grid;
-  font-family: "Roboto", sans-serif;
-  grid-template-rows: repeat(3, 1fr) auto 1fr;
-  grid-template-columns: 4fr 7fr;
-  padding: 0 2rem;
-  cursor: none;
-
+  align-items: center;
+  place-items: flex-start;
+  grid-template-rows: repeat(2, 6%) 10% 70% 8%;
+  grid-template-columns: 35% 65%;
+  font-family: "Roboto", sans-serif; /* !! Font not working */
 }
 
-.contactForm label,
-.contactForm input {
+.contactForm label {
   font-family: inherit;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--contactLabelColour);
+  display: block;
 }
+
 .contactForm label:nth-of-type(1) {
   grid-row: 1 / 1;
   grid-column: 1 / 1;
@@ -697,100 +701,103 @@ aside {
 .contactForm label:nth-of-type(2) {
   grid-row: 1 / 1;
   grid-column: 2 / 2;
+  margin-left: 10%;
+}
+
+.contactForm label:nth-of-type(3) {
+  grid-row: 3 / 3;
+  grid-column: 1 / 1;
+  align-self: flex-end;
 }
 
 #contactName {
+  width: 100%;
+  height: 5vh;
   grid-row: 2 / 2;
   grid-column: 1 / 1;
 }
 
 #contactEmail {
+  width: 90%;
+  height: 5vh;
   grid-row: 2 / 2;
   grid-column: 2 / 2;
+  margin-left: 10%;
 }
 
-.contactForm label:nth-of-type(3) {
-  grid-row: 3 / 3;
+.contactForm input {
+  margin-bottom: 1.5%;
+}
+
+.contactForm textarea {
+  width: 100%;
+  resize: none;
+  grid-row: 4 / 4;
   grid-column: 1 / -1;
-}
-
-.contactForm label {
-  display: block;
-  padding: 12px 0 2px 0;
-  margin: 2% 0 0 2%;
-  letter-spacing: -0.2px;
-  cursor: pointer;
-  font-weight: 700;
 }
 
 .contactForm input,
 .contactForm textarea {
-  font-size: 1em;
-  padding: 2%;
-  color: var(--contactFieldTextColour);
+  font-size: 1rem;
+  line-height: 1.6rem;
+  padding: 0.5% 1%;
   background-color: var(--contactFieldBackgroundColour);
   outline: none;
   border: 4px solid var(--contactFormBorderColour);
   border-radius: 8px;
 }
 
-::placeholder {
-  color: var(--contactFieldPlaceholderColour);
-  opacity: 0.5;
-}
-
- /* Edge 12 - 18 compatibility */
-::-ms-input-placeholder {
+.contactForm input::placeholder,
+.contactForm input::-ms-input-placeholder {
   color: var(--contactFieldPlaceholderColour);
 }
-
-.contactForm textarea {
-  resize: none;
-  grid-row: 4 / 4;
-  grid-column: 1 / -1;
-}
-
 
 .contactForm input:focus,
-.contactForm textarea:focus {
+.contactForm textarea:focus,
+.contactForm input:hover,
+.contactForm textarea:hover {
+  color: var(--contactFieldTextColour);
   border-color: var(--contactFieldBorderFocusColour);
-  color: var(/* --color-dark-gray */);
 }
-
 
 /* .contactForm input:focus:required:invalid {
   border-color: var(--alertColour);
   background-color: var(--colour2);
 } */
 
+.contactForm > span {
+  grid-row: 5 / 5;
+  grid-column: 1 / 1;
+}
+
 .contactForm #contactForward {
-  margin-right: 3%;
+  margin-right: 0.5rem;
 }
 
 .contactForm button {
   display: block;
-  margin-top: 1%;
   padding: 12px 20px;
+  width: 50%;
   grid-row: 5 / 5;
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
   border-radius: 8px;
-  border-color: transparent;
-  background-color: var(--scrollButtonColour1);
-  color: var(--colour2);
+  border: 2px solid var(colour2);
+  background-color: var(--contactButtonColour);
+  color: var(--contactFieldTextColour);
   font-weight: 700;
   font-size: 18px;
   transition: 0.5s all;
 }
 
 .contactForm button:hover {
-  background-color: var(--scrollButtonColour2);
+  background-color: var(--contactButtonHoverColour);
 }
 
 /* ?? WTF are the following */
 /* .contactFormAlert {
   padding: 12px;
   border-radius: 10px;
-  color: var(--colour2);
+  color: var(--alertColour);
   font-size: 14px;
   font-weight: 400;
   margin-top: 12px;
@@ -930,12 +937,12 @@ footer a img {
   }
 }
 
-/* Exchange nav menu bar for hamburger menu on narrower screens */
 @media screen and (max-width: 649px) {
   body {
     flex-direction: column;
   }
 
+  /* Exchange nav menu bar for hamburger menu on narrower screens */
   #mainNav {
     display: none;
   }
@@ -1049,6 +1056,76 @@ footer a img {
   .text_block {
     text-align: start;
     text-justify: none;
+  }
+
+  /* Re-arrange contact form as column for narrower screens */
+  .contactForm {
+    display: grid;
+    align-items: flex-start;
+    place-items: flex-start;
+    grid-template-rows: repeat(5, 7%) 68% 4%;
+    grid-template-columns: 30% 70%;
+  }
+
+  .contactForm label:nth-of-type(1) {
+    align-self: flex-end;
+    grid-row: 1 / 1;
+    grid-column: 1 / -1;
+  }
+
+  .contactForm label:nth-of-type(2) {
+    align-self: flex-end;
+    grid-row: 3 / 3;
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+
+  .contactForm label:nth-of-type(3) {
+    grid-row: 5 / 5;
+    grid-column: 1 / -1;
+    align-self: flex-end;
+  }
+
+  #contactName {
+    width: 100%;
+    height: 5vh;
+    grid-row: 2 / 2;
+    grid-column: 1 / -1;
+  }
+
+  #contactEmail {
+    width: 100%;
+    height: 5vh;
+    grid-row: 4 / 4;
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+
+  .contactForm textarea {
+    width: 100%;
+    resize: none;
+    grid-row: 6 / 6;
+    grid-column: 1 / -1;
+  }
+
+  /* .contactForm input:focus:required:invalid {
+    border-color: var(--alertColour);
+    background-color: var(--colour2);
+  } */
+
+  .contactForm > span {
+    grid-row: 7 / 7;
+    grid-column: 1 / 1;
+    transform: translateY(-100%)
+  }
+
+  .contactForm button {
+    display: block;
+    padding: 2%;
+    width: 70%;
+    grid-row: 7 / 7;
+    grid-column: 2 / 2;
+    transform: translateY(-65%)
   }
 }
 

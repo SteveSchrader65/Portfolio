@@ -56,23 +56,21 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour1", "#6c9ee0");
     root.style.setProperty("--scrollButtonColour2", "#8fbcef");
     root.style.setProperty("--scrollBorderColour", "#b7b6fc");
-    root.style.setProperty("--progressColour", "#008000");
-    root.style.setProperty("--tipBackgroundColour", "#333333");
+    root.style.setProperty("--progressColour", "#cccc00");
+    root.style.setProperty("--tipBackgroundColour", "#808080");
     root.style.setProperty("--tipBorderColour", "#6c9ee0");
     root.style.setProperty("--tipTextColour", "whitesmoke");
+    root.style.setProperty("--contactFormBorderColour", "#737373");
+    root.style.setProperty("--contactLabelColour", "#000000");
+    root.style.setProperty("--contactBackgroundColour", "#cccccc");
+    root.style.setProperty("--contactFieldPlaceholderColour", "rgba(0, 0, 0, 0, 0.4)");
+    root.style.setProperty("--contactFieldTextColour", "#000000");
+    root.style.setProperty("--contactFieldBackgroundColour", "rgba(179, 217, 255, 0.2)");
+    root.style.setProperty("--contactFieldBorderFocusColour", "#0d0d0d");
 
-    /* ---------- Colours used for contact form ---------- */
-    root.style.setProperty("--contactFormBorderColour", "#b3d9ff");
-    root.style.setProperty("--contactLabelColour", "#b3d9ff");
-    root.style.setProperty("--contactBackgroundColour", "#b3d9ff");
-    root.style.setProperty("--contactFieldPlaceholderColour", "#b3d9ff");
-    root.style.setProperty("--contactFieldTextColour", "#b3d9ff");
-    root.style.setProperty("--contactFieldBackgroundColour", "#b3d9ff");
-    root.style.setProperty("--contactFieldBorderColour", "#b3d9ff");
-    root.style.setProperty("--contactFieldBorderFocusColour", "#b3d9ff");
-    root.style.setProperty("--contactButtonColour", "#b3d9ff");
-    root.style.setProperty("--contactButtonHoverColour", "#b3d9ff");
-    root.style.setProperty("--contactButtonActiveColour", "#b3d9ff");
+    root.style.setProperty("--contactButtonColour", "#8ae600");
+    root.style.setProperty("--contactButtonHoverColour", "#99ff00");
+    root.style.setProperty("--contactButtonActiveColour", "#ffff33");
 
     /* ---------- Colours below this line not currently in use ---------- */
     root.style.setProperty("--highlightColour1", "#3399ff");
@@ -83,6 +81,7 @@ function setViewingMode() {
     root.style.setProperty("--sidebarBorderColour", "#33cc33");
     root.style.setProperty("--alertColour", "#ff1a1a");
     root.style.setProperty("--successColour", "#69cf9d");
+
     root.style.setProperty("--borderImage", "url('../images/border-light.png')");
   }
 
@@ -117,22 +116,20 @@ function setViewingMode() {
     root.style.setProperty("--scrollButtonColour1", "#1961b3");
     root.style.setProperty("--scrollButtonColour2", "#4282d7");
     root.style.setProperty("--scrollBorderColour", "#0e0cf3");
-    root.style.setProperty("--progressColour", "#29a329");
-    root.style.setProperty("--tipBackgroundColour", "#8f8b8a");
-    root.style.setProperty("--tipBorderColour", "#6c9ee0");
+    root.style.setProperty("--progressColour", "#0e0cf3");
+    root.style.setProperty("--tipBackgroundColour", "#3399ff");
+    root.style.setProperty("--tipBorderColour", "black");
     root.style.setProperty("--tipTextColour", "black");
-
-    /* ---------- Colours used for contact form ---------- */
-    root.style.setProperty("--contactFormBorderColour", "#830000");
-    root.style.setProperty("--contactLabelColour", "#b3d9ff");
+    root.style.setProperty("--contactFormBorderColour", "#0000a9");
+    root.style.setProperty("--contactLabelColour", "#00008b");
     root.style.setProperty("--contactBackgroundColour", "#8f8c8a");
-    root.style.setProperty("--contactFieldPlaceholderColour", "black");
-    root.style.setProperty("--contactFieldTextColour", "#black");
-    root.style.setProperty("--contactFieldBackgroundColour", "#8f8b8a");
-    root.style.setProperty("--contactFieldBorderFocusColour", "#990000");
-    root.style.setProperty("--contactButtonColour", "#b3d9ff");
-    root.style.setProperty("--contactButtonHoverColour", "#b3d9ff");
-    root.style.setProperty("--contactButtonActiveColour", "#b3d9ff");
+    root.style.setProperty("--contactFieldPlaceholderColour", "rgba(0, 0, 0, 0, 0.4");
+    root.style.setProperty("--contactFieldTextColour", "black");
+    root.style.setProperty("--contactFieldBackgroundColour", "#c1bebe");
+    root.style.setProperty("--contactFieldBorderFocusColour", "#1e0cf3");
+    root.style.setProperty("--contactButtonColour", "#009900");
+    root.style.setProperty("--contactButtonHoverColour", "#00cc00");
+    root.style.setProperty("--contactButtonActiveColour", "#cccc00");
 
     /* ---------- Colours below this line not currently in use ---------- */
     root.style.setProperty("--highlightColour1", "#b3d9ff");
@@ -143,6 +140,7 @@ function setViewingMode() {
     root.style.setProperty("--sidebarBorderColour", "#0e0cf3");
     root.style.setProperty("--alertColour", "#b30000");
     root.style.setProperty("--successColour", "#29a329");
+
     root.style.setProperty("--borderImage", "url('../images/border-dark.png')");
   }
 }
@@ -276,7 +274,7 @@ function navbarHide() {
       clearTimeout(isScrolling);
       isScrolling = setTimeout(() => {
         document.querySelector("nav").style.top = "0";
-      }, 2500);
+      }, 2000);
 
       prevScrollPos = currentScrollPos;
     });
@@ -699,7 +697,6 @@ function init() {
   "use strict";
 
   // NOTES - 23/1/24
-  // Contact page CSS
   // Studies page CSS and wrap animations
   // Employment page CSS and wrap animations (timeline swaps to vertical for smaller devices)
   // Projects page CSS and wrap animations
