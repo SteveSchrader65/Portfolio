@@ -54,6 +54,7 @@
     --contactFieldBackgroundColour:
     --contactFieldBorderFocusColour:
     --contactButtonColour:
+    --contactButtonTextColour:
     --contactButtonHoverColour:
     --contactButtonActiveColour:
 
@@ -409,6 +410,7 @@ nav {
 
 .course-card img {
   background-color: transparent;
+  width: 80%;
   padding: 1%;
   border: 10px solid;
   border-image: var(--borderImage) 18 stretch;
@@ -668,7 +670,7 @@ aside {
 /* || Contact */
 .formContainer {
   background-color: var(--contactBackgroundColour);
-  border: 5px solid var(--contactFormBorderColour);
+  border: 3px solid var(--contactFormBorderColour);
   margin-top: 5rem;
   padding: 1rem 2rem 2rem;
   border-radius: 5px;
@@ -743,7 +745,7 @@ aside {
   padding: 0.5% 1%;
   background-color: var(--contactFieldBackgroundColour);
   outline: none;
-  border: 4px solid var(--contactFormBorderColour);
+  border: 2px solid var(--contactFormBorderColour);
   border-radius: 8px;
 }
 
@@ -783,7 +785,7 @@ aside {
   border-radius: 8px;
   border: 2px solid var(colour2);
   background-color: var(--contactButtonColour);
-  color: var(--contactFieldTextColour);
+  color: var(--contactButtonTextColour);
   font-weight: 700;
   font-size: 18px;
   transition: 0.5s all;

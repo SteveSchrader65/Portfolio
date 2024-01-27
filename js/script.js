@@ -62,13 +62,13 @@ function setViewingMode() {
     root.style.setProperty("--tipTextColour", "whitesmoke");
     root.style.setProperty("--contactFormBorderColour", "#737373");
     root.style.setProperty("--contactLabelColour", "#000000");
-    root.style.setProperty("--contactBackgroundColour", "#cccccc");
+    root.style.setProperty("--contactBackgroundColour", "#cceeff");
     root.style.setProperty("--contactFieldPlaceholderColour", "rgba(0, 0, 0, 0, 0.4)");
     root.style.setProperty("--contactFieldTextColour", "#000000");
-    root.style.setProperty("--contactFieldBackgroundColour", "rgba(179, 217, 255, 0.2)");
+    root.style.setProperty("--contactFieldBackgroundColour", "rgba(179, 217, 255, 0.6)");
     root.style.setProperty("--contactFieldBorderFocusColour", "#0d0d0d");
-
     root.style.setProperty("--contactButtonColour", "#8ae600");
+    root.style.setProperty("--contactButtonTextColour", "#000000");
     root.style.setProperty("--contactButtonHoverColour", "#99ff00");
     root.style.setProperty("--contactButtonActiveColour", "#ffff33");
 
@@ -120,16 +120,17 @@ function setViewingMode() {
     root.style.setProperty("--tipBackgroundColour", "#3399ff");
     root.style.setProperty("--tipBorderColour", "black");
     root.style.setProperty("--tipTextColour", "black");
-    root.style.setProperty("--contactFormBorderColour", "#0000a9");
-    root.style.setProperty("--contactLabelColour", "#00008b");
-    root.style.setProperty("--contactBackgroundColour", "#8f8c8a");
-    root.style.setProperty("--contactFieldPlaceholderColour", "rgba(0, 0, 0, 0, 0.4");
-    root.style.setProperty("--contactFieldTextColour", "black");
-    root.style.setProperty("--contactFieldBackgroundColour", "#c1bebe");
-    root.style.setProperty("--contactFieldBorderFocusColour", "#1e0cf3");
-    root.style.setProperty("--contactButtonColour", "#009900");
-    root.style.setProperty("--contactButtonHoverColour", "#00cc00");
-    root.style.setProperty("--contactButtonActiveColour", "#cccc00");
+    root.style.setProperty("--contactFormBorderColour", "#0033cc");
+    root.style.setProperty("--contactLabelColour", "#8c8c8c");
+    root.style.setProperty("--contactBackgroundColour", "#4e4c4b");
+    root.style.setProperty("--contactFieldPlaceholderColour", "rgba(38, 38, 38, 0.6)");
+    root.style.setProperty("--contactFieldTextColour", "#262626");
+    root.style.setProperty("--contactFieldBackgroundColour", "#827d7d");
+    root.style.setProperty("--contactFieldBorderFocusColour", "#3399ff");
+    root.style.setProperty("--contactButtonColour", "#006600");
+    root.style.setProperty("--contactButtonTextColour", "#8c8c8c");
+    root.style.setProperty("--contactButtonHoverColour", "#009900");
+    root.style.setProperty("--contactButtonActiveColour", "#8ae600");
 
     /* ---------- Colours below this line not currently in use ---------- */
     root.style.setProperty("--highlightColour1", "#b3d9ff");
@@ -715,7 +716,7 @@ function init() {
     block1SetUp();
   }
 
-  // block2SetUp();
+  block2SetUp();
   // block3SetUp();
   // block4SetUp();
   block5SetUp();
