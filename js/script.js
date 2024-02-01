@@ -121,7 +121,7 @@ function setViewingMode() {
     root.style.setProperty("--tipBorderColour", "black");
     root.style.setProperty("--tipTextColour", "black");
     root.style.setProperty("--contactFormBorderColour", "#0033cc");
-    root.style.setProperty("--contactLabelColour", "#8c8c8c");
+    root.style.setProperty("--contactLabelColour", "#0d0d0d");
     root.style.setProperty("--contactBackgroundColour", "#4e4c4b");
     root.style.setProperty("--contactFieldPlaceholderColour", "rgba(38, 38, 38, 0.6)");
     root.style.setProperty("--contactFieldTextColour", "#262626");
@@ -695,7 +695,7 @@ function footerDate() {
 }
 
 function init() {
-  "use strict";
+  ("use strict");
 
   // NOTES - 23/1/24
   // Studies page CSS and wrap animations
@@ -718,7 +718,7 @@ function init() {
 
   block2SetUp();
   // block3SetUp();
-  // block4SetUp();
+  // block4SetUp();  // Use grid to display images -- possibly for Projects ??
   block5SetUp();
   footerDate();
 

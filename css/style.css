@@ -684,11 +684,10 @@ aside {
   place-items: flex-start;
   grid-template-rows: repeat(2, 6%) 10% 70% 8%;
   grid-template-columns: 35% 65%;
-  font-family: "Roboto", sans-serif; /* !! Font not working */
 }
 
 .contactForm label {
-  font-family: inherit;
+  font-family: "Tektur";
   font-weight: bold;
   font-size: 1.2rem;
   color: var(--contactLabelColour);
@@ -749,8 +748,8 @@ aside {
   border-radius: 8px;
 }
 
-.contactForm input::placeholder,
-.contactForm input::-ms-input-placeholder {
+.contactForm input::-webkit-input-placeholder,
+.contactForm textarea::-webkit-input-placeholder {
   color: var(--contactFieldPlaceholderColour);
 }
 
@@ -786,8 +785,9 @@ aside {
   border: 2px solid var(colour2);
   background-color: var(--contactButtonColour);
   color: var(--contactButtonTextColour);
-  font-weight: 700;
-  font-size: 18px;
+  font-family: "Tektur";
+  font-weight: bold;
+  font-size: 1.3rem;
   transition: 0.5s all;
 }
 
@@ -795,7 +795,6 @@ aside {
   background-color: var(--contactButtonHoverColour);
 }
 
-/* ?? WTF are the following */
 /* .contactFormAlert {
   padding: 12px;
   border-radius: 10px;
