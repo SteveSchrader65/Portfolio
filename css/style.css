@@ -278,7 +278,7 @@ nav {
 }
 
 .parallax .title {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Tektur", sans-serif;
   font-size: var(--parallaxFontSize);
   font-weight: bold;
   color: var(--titleColour);
@@ -309,7 +309,11 @@ nav {
   background-image: url("../images/rocket5.jpg");
 }
 
-#parallax5 .title {
+#parallax6 {
+  background-image: url("../images/rocket6.jpg");
+}
+
+#parallax6 .title {
   color: #e68a00;
   text-shadow: -4px 4px gray, -3px -3px 25px yellow, -1px -1px 5px darkblue;
 }
@@ -329,18 +333,18 @@ nav {
 
 /* !! All section animations to be wrapped with "prefers-reduced-motion" @media-query */
 /* || Studies */
-#block2 {
+#block3 {
   display: grid;
   grid-template-rows: 2fr 7fr 4fr;
   grid-template-columns: 1fr;
 }
 
-#block2 p:nth-of-type(1) {
+#block3 p:nth-of-type(1) {
   grid-row: 1 / 1;
   grid-column: 1 / -1;
 }
 
-#block2 ul {
+#block3 ul {
   grid-row: 2 / 2;
   grid-column: 1 / -1;
   opacity: 0.7;
@@ -351,22 +355,22 @@ nav {
   list-style-type: none;
 }
 
-#block2 ul li:nth-of-type(1) {
+#block3 ul li:nth-of-type(1) {
   grid-row: 1 / -1;
   grid-column: 1 / 1;
 }
 
-#block2 ul li:nth-of-type(2) {
+#block3 ul li:nth-of-type(2) {
   grid-row: 1 / -1;
   grid-column: 2 / 2;
 }
 
-#block2 ul li:nth-of-type(3) {
+#block3 ul li:nth-of-type(3) {
   grid-row: 1 / -1;
   grid-column: 3 / 3;
 }
 
-#block2 p:nth-of-type(2) {
+#block3 p:nth-of-type(2) {
   grid-row: 3 / 3;
   grid-column: 1 / -1;
 }
@@ -452,7 +456,7 @@ nav {
 }
 
 /* || Employment */
-#block3 {
+#block4 {
   /* display: grid; */
   /* grid-template-rows: 2fr 7fr 4fr;
   grid-template-columns: 1fr; */
@@ -549,14 +553,14 @@ nav {
 }
 
 /* || Projects */
-/* #block4 {
+/* #block5 {
   display: grid;
   grid-template-rows: 2fr 8fr;
   grid-template-columns: 2fr 3fr;
   color: var(--textColour);
 }
 
-#block4 ~ p {
+#block5 ~ p {
   grid-row: 1 / 1;
   grid-column: 1 / 1;
 }
