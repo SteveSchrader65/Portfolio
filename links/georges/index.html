@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta name="author" content="Steve Schrader">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <title>Georges Garden Centre</title>
+    <style>
+      body {
+        background-image: url("images/backgrounds/index.png");
+      }
+    </style>
+  </head>
+  <body>
+    <header class="container-fluid border border-dark border-2 border-top-0 border-start-0 border-end-0">
+      <div class="row">
+        <div class="col-lg-2">
+          <a href="index.html" class="navbar navbar-brand">
+            <img src="images/logo.png" class="mx-3 img-fluid border border-dark rounded-circle d-none d-lg-inline-block" width="110" height="110" alt="Georges Garden Centre logo">
+          </a>
+        </div>
+        <div class="col-lg-10">
+          <div class="row">
+            <h1 class="fw-bold mt-3" id="title">Georges Garden Centre</h1>
+          </div>
+          <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+              <div class="container-fluid">
+                <button type="button" class="navbar-toggler ps-0" data-bs-toggle="collapse" data-bs-target="#georgeNav" aria-controls="georgeNav" aria-expanded="false" aria-label="Toggle Navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="georgeNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link" id="navbarDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                      Products
+                      </a>
+                      <ul class="dropdown-menu border border-top-0 border-dark border-1 rounded-0" id="navbarMenu" onmouseleave="hideDropdown()" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="products.html#plan">Plants</a></li>
+                        <li><a class="dropdown-item" href="products.html#pots">Pots</a></li>
+                        <li><a class="dropdown-item" href="products.html#gift">Gifts</a></li>
+                        <li><a class="dropdown-item" href="products.html#tool">Tools</a></li>
+                        <li><a class="dropdown-item" href="products.html#fert">Fertilizers</a></li>
+                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a href="about.html" class="nav-link" aria-current="page">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="info.html" class="nav-link" aria-current="page">Gardening</a>
+                    </li>
+                  </ul>
+                  <div class="row">
+                    <div class="col-lg-2" style="background-color: white; border-start-start-radius: 50%; border-end-start-radius: 50%;">
+                      <span><i class="bi bi-search"></i></span>
+                    </div>
+                    <div class="col-lg-10">
+                      <form class="form-group">
+                        <input class="form-control me-2" type="search" aria-label="Search">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="container-fluid px-4">
+      <h2 class="col text-center mt-3">Welcome to George's Garden Centre</h2>
+      <div class="row text-justify">
+        <div class="col sidebar float-md-start mb-3 py-3">
+          <p>Hi y'all!! Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque nulla quis inventore est quasi natus libero in, vero totam tempore labore veniam similique eos itaque molestias earum quia, voluptatum consequuntur. Nam dolore laudantium vitae, facilis corporis quae maxime pariatur. Sint libero, quidem modi eos laudantium in minima sit autem facilis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda maxime consequuntur eius totam nulla distinctio, excepturi possimus debitis omnis odio eos magnam eaque laudantium ullam, itaque obcaecati quos hic harum.</p>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-sm-12 col-md-8">
+          <div class="row mb-3">
+            <div class="col">
+              <div id="carousel" class="carousel slide border border-3 border-dark" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"></button>
+                  <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"></button>
+                  <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"></button>
+                  <button type="button" data-bs-target="#carousel" data-bs-slide-to="3"></button>
+                  <button type="button" data-bs-target="#carousel" data-bs-slide-to="4"></button>
+                  <button type="button" data-bs-target="#carousel" data-bs-slide-to="5"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="3500">
+                    <a href="products.html#plan"><img src="images/carousel/carousel1.jpg" class="d-block" alt="Tray of seedlings" style="width:100%"></a>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="3500">
+                    <a href="products.html#fert"><img src="images/carousel/carousel2.jpg" class="d-block" alt="Fertilizer sale" style="width:100%"></a>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="3500">
+                    <a href="products.html#plan"><img src="images/carousel/carousel3.jpg" class="d-block" alt="Pot plant display" style="width:100%"></a>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="3500">
+                    <a href="products.html#gift"><img src="images/carousel/carousel4.jpg" class="d-block" alt="Weed & Feed display" style="width:100%"></a>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="3500">
+                    <a href="products.html#tool"><img src="images/carousel/carousel5.jpg" class="d-block" alt="Garden tools display" style="width:100%"></a>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="3500">
+                    <a href="products.html#gift"><img src="images/carousel/carousel6.jpg" class="d-block" alt="Gardening Gift ideas" style="width:100%"></a>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <div class="sidebar">
+                <h3 class="h4 text-center text-decoration-underline px-3 pt-3">Beautiful Gardens Competition</h3>
+                <p class="text-justify px-3 pb-3">Porro, ex. Voluptas et, ipsa libero molestiae excepturi quam laborum. Accusantium impedit earum aspernatur pariatur nostrum porro facilis asperiores, atque veritatis quo odit voluptate dolorum tempore iure similique voluptates! Saepe cum obcaecati molestiae velit temporibus repellendus animi doloremque rerum deserunt incidunt ea dolores esse quam tempora eaque culpa eius exercitationem quis, dicta vitae ipsum laborum? Labore id vel, tempore animi at reiciendis</p>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <div class="row">
+                <div class="col">
+                  <div class="sidebar text-center py-3">
+                    <img class="border border-2 border-dark" src="images/sidebar1/garden1.jpg" alt="A beautiful garden">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="sidebar text-center py-3">
+                    <img class="border border-2 border-dark" src="images/sidebar1/garden2.jpg" alt="Another beautiful garden">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="sidebar text-center py-3">
+                    <img class="border border-2 border-dark" src="images/sidebar1/garden3.jpg" alt="Yet another beautiful garden">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="sidebar text-center py-3">
+                    <img class="border border-2 border-dark" src="images/sidebar1/garden4.jpg" alt="And one more beautiful garden">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-3 offset-md-1 mb-3">
+          <div class="sidebar" style="height: 100%;">
+            <h3 class="h4 text-center text-decoration-underline px-3 pt-3">It's Mad Money Month !!</h3>
+            <p class="text-justify px-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi non amet, numquam hic dolorem unde suscipit?</p>
+            <ul style="list-style: lower-roman;">
+              <li>Perspiciatis laboriosam</li>
+              <li>Reprehenderit</li>
+              <li>Veritatis reiciendis</li>
+              <li>Opus voluptate fugit</li>
+            </ul>
+            <p class="text-justify px-2 pb-2">Laborum cum debitis maiores consequatur maxime? Quod tempore aperiam, esse iste ea reprehenderit officia facilis molestias.</p>
+            <p class="display-4 text-center py-2">$$$</p>
+            <p class="text-justify px-2 pb-2">Inventore ipsum temporibus quisquam placeat qui hic numquam tempora optio ex facilis. Perspiciatis inventore natus dolores omnis fuga, digni simos nostrum et sequintur, eligendi pariatur dolore que, tenetur sit</p>
+            <p class="text-justify px-2 pb-2">Molestiae, est sint. Quas fugit veniam cum deserunt? Deserunt fuga nostrum natus commodi omnis saepe illo dolorem laboriosam sunt aut, voluptatum labore neque ab, necessitatibus tempore!</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="container-fluid footer-fixed border border-2 border-dark rounded-0 border-bottom-0 border-start-0 border-end-0">
+      <div class="row justify-content-around">
+        <div class="col-xs-12 col-md-6 col-lg-3">
+          <h4>Links</h4>
+          <ul>
+            <li><a class="nav-link" aria-current="page" href="products.html">Our Products</a></li>
+            <li><a class="nav-link" aria-current="page" href="info.html">Gardening Tips</a></li>
+            <li><a class="nav-link" aria-current="page" href="about.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-3">
+          <h4 class="ms-0">Contact Us</h4>
+          <table class="ms-4 table-responsive">
+            <tbody>
+              <tr>
+                <th>Address:</th>
+                <td>25-37 Greenway Ave</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Austin  TX  73344</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>USA</td>
+              </tr>
+              <tr>
+                <th>Telephone:</th>
+                <td>512-555-0113</td>
+              </tr>
+              <tr>
+                <th>e-Mail:</th>
+                <td>admin@georges.com</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-xs col-md-6 col-lg-3">
+          <h4 class="ms-0">Social Media</h4>
+          <ul>
+            <li><i class="bi bi-facebook" data-tooltip="FakeBook" style="color: #3b5998;"></i></li>
+            <li><i class="bi bi-twitter" data-tooltip="Twitter" style="color: #55acee;"></i></li>
+            <li><i class="bi bi-instagram" data-tooltip="Instagram" style="color: #ac2bac;"></i></li>
+            <li><i class="bi bi-linkedin" data-tooltip="LinkedIn" style="color: #0082ca;"></i></li>
+          </ul>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-3">
+          <h4>Legals</h4>
+          <ul>
+            <li><a href="#privacy" id="privacy">Privacy Policy</a></li>
+            <li><a href="#corporate" id="corporate">Corporate</a></li>
+            <li><a href="#terms" id="terms">Terms & Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+      <h5 class="mt-3 fw-bold text-end">&copy;Steve Schrader<script>document.write(new Date().getFullYear())</script></h5>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous">
+    </script>
+    <script src="js/dropdown.js"></script>
+  </body>
+</html>

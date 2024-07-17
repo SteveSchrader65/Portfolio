@@ -1,0 +1,26 @@
+/* Generate custom scroll-bars */
+body,
+main .form-select {
+  &::-webkit-scrollbar {
+    position: relative;
+    background-color: $scrollbarTrackColour;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $scrollbarColour;
+    border-radius: 1em;
+
+    &:hover {
+      background-color: $scrollbarHoverColour;
+    }
+  }
+
+  &::-webkit-scrollbar-button {
+    background-color: $scrollbarColour;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: $scrollbarHoverColour;
+    }
+  }
+}

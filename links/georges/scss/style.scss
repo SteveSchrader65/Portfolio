@@ -1,0 +1,200 @@
+@import "./resources/colours";
+@import "./resources/reset";
+@import "./resources/scrollbars";
+@import "./resources/tooltips";
+
+/* Import Blacksword font */
+@font-face {
+  font-family: Blacksword;
+  src: url("../scss/resources/fonts/Blacksword.otf");
+}
+
+/* Main */
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  header {
+    background: $headerGradient;
+
+    #title {
+      font-family: Blacksword;
+      font-style: italic;
+      margin-top: 0.5%;
+      margin-left: 35%;
+      background: $titleGradient;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      transform: scale(1.4);
+    }
+
+    .navbar .navbar-toggler {
+      overflow: hidden;
+    }
+
+    .navbar .dropdown-menu,
+    .navbar .dropdown-menu li a {
+      background: $dropdownGradient;
+    }
+
+    .navbar .dropdown-menu {
+      box-shadow: -3px 3px 5px $shadow;
+    }
+
+    .nav-item {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-right: 25%;
+
+      .dropdown-menu li a:hover {
+        font-weight: bold;
+      }
+    }
+
+    form {
+      margin-left: -10%;
+
+      .form-control:focus {
+        border: none;
+        box-shadow: none;
+      }
+    }
+  }
+
+  main {
+    .text-justify {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .sidebar {
+      background-color: $green;
+      opacity: 0.7;
+
+      li {
+        line-height: 3em;
+      }
+
+      a {
+        font-weight: bold;
+        text-decoration: none;
+        color: $black;
+
+        &:hover {
+          color: $red;
+          transition: 0.5s all ease-in-out;
+        }
+
+        &:not(:hover) {
+          color: $black;
+          transition: 0.5s all ease-in-out;
+        }
+      }
+    }
+
+    .card {
+      &:hover {
+        transform: scale(1.1);
+        box-shadow: -25px 25px 35px $shadow;
+        transition: 0.5s all ease-in-out;
+
+        .card-text {
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          max-width: 100%;
+          transform: scale(1.1);
+          transition: 0.5s all ease-in-out;
+        }
+      }
+
+      &:not(:hover) {
+        transform: scale(1);
+        box-shadow: -2px 2px 3px $shadow;
+        transition: 0.5s all ease-in-out;
+
+        .card-text {
+          transform: scale(1);
+          transition: 0.5s all ease-in-out;
+        }
+      }
+
+      .truncate-paragraph {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-clamp: 4;
+        -webkit-line-clamp: 4;
+        max-height: 5em;
+        position: relative;
+
+        &:after {
+          content: '\02026';
+          position: absolute;
+          bottom: 0;
+        }
+      }
+    }
+
+    [src="images/about/map.jpg"] {
+      width: 100%;
+    }
+  }
+
+  footer {
+    background: $headerGradient;
+
+    h4 {
+      margin-top: 3%;
+      margin-left: 10%;
+      font-weight: bold;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      list-style-type: none;
+
+      li {
+        a {
+          color: $black;
+        }
+
+        i:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    div:nth-of-type(1) ul li:hover {
+      font-weight: bold;
+    }
+
+    div:nth-of-type(3) ul {
+      flex-direction: row;
+      font-size: 2em;
+
+      li {
+        margin-right: 7.5%;
+      }
+    }
+
+    div:nth-of-type(4) ul {
+      width: 150%;
+    }
+
+    h5 {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+@import "./resources/mediaqueries";

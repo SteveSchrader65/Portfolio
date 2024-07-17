@@ -1,0 +1,27 @@
+/* Generate tooltips to display message on hover. Content set via data-social attribute in HTML */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -1em;
+    left: 2.5em;
+    background-color: $grey2;
+    color: $navy;
+    font-size: 0.85rem;
+    font-weight: bold;
+    padding: 20%;
+    border: 2px solid $navy;
+    border-radius: 35%;
+    box-shadow: 1px 1px 3px $shadow;
+    white-space: nowrap;
+    opacity: 0;
+    z-index: 999;
+}
+
+[data-tooltip]:hover:after {
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+}

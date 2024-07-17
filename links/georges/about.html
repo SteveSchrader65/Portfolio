@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta name="author" content="Steve Schrader">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <title>George's Garden Centre</title>
+    <style>
+      body {
+        background-image: url("images/backgrounds/about.png");
+      }
+    </style>
+  </head>
+  <body>
+    <header class="container-fluid border border-dark border-2 border-top-0 border-start-0 border-end-0">
+      <div class="row">
+        <div class="col-lg-2">
+          <a href="index.html" class="navbar navbar-brand">
+            <img src="images/logo.png" class="mx-3 img-fluid border border-dark rounded-circle d-none d-lg-inline-block" width="110" height="110" alt="Georges Garden Centre logo">
+          </a>
+        </div>
+        <div class="col-lg-10">
+          <div class="row">
+            <h1 class="fw-bold mt-3" id="title">Georges Garden Centre</h1>
+          </div>
+          <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+              <div class="container-fluid">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#georgeNav" aria-controls="georgeNav" aria-expanded="false" aria-label="Toggle Navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="georgeNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link" id="navbarDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                      Products
+                      </a>
+                      <ul class="dropdown-menu border border-top-0 border-dark border-1 rounded-0" onmouseleave="hideDropdown()" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="products.html#plan">Plants</a></li>
+                        <li><a class="dropdown-item" href="products.html#pots">Pots</a></li>
+                        <li><a class="dropdown-item" href="products.html#gift">Gifts</a></li>
+                        <li><a class="dropdown-item" href="products.html#tool">Tools</a></li>
+                        <li><a class="dropdown-item" href="products.html#fert">Fertilizers</a></li>
+                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a href="index.html" class="nav-link" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="info.html" class="nav-link" aria-current="page">Gardening</a>
+                    </li>
+                  </ul>
+                  <div class="row">
+                    <div class="col-lg-2" style="background-color: white; border-start-start-radius: 50%; border-end-start-radius: 50%;">
+                      <span><i class="bi bi-search"></i></span>
+                    </div>
+                    <div class="col-lg-10">
+                      <form class="form-group">
+                        <input class="form-control me-2" type="search" aria-label="Search">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="container-fluid px-4">
+      <h2 class="col-xl-12 h3 text-center mt-2">All About George's Garden Centre</h2>
+      <div class="row sidebar py-3">
+        <div class="col col-xl-12 text-justify">
+          <p>George's Garden Centre is the largest of its' kind in this section of the street where we are located. Amet distinctio porro quod odit explicabo vero architecto ea, reiciendis, itaque dignissimos, quaerat eius asperiores nihil debitis! Repellat dolorem sequi iure delectus cum, fugit est eum incidunt. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus, laborum ad illum debitis libero inventore voluptates itaque incidunt voluptatum quia autem necessitatibus quaerat accusantium ipsam quo, voluptatibus eveniet. Ex inventore quisquam nemo deleniti nam cumque enim odit minus saepe maiores. Nesciunt possimus odit consequuntur expedita.</p>
+          <ul class="d-flex flex-row justify-content-evenly mt-2">
+            <li><a href="#map">Map</a></li>
+            <li><a href="#history">History</a></li>
+            <li><a href="#news">Sign-Up</a></li>
+          </ul>
+        </div>
+        <div class="row mb-5">
+          <img src="images/about/entry.jpg" class="border border-dark border-2 mt-3" height="550" alt="Main Entrance">
+        </div>
+      </div>
+      <h2 id="map" class="col-xl-12 h3 text-center mt-5">Finding your way around George's ...</h2>
+      <div class="row mb-5">
+        <div class="sidebar col col-xl-12 py-3 text-justify">
+          <p>Here at George's we understand how massively HUGE our Garden Centre has grown over the years. Ea illum laboriosam, tempore blanditiis ratione reiciendis quis cumque voluptates. Omnis suscipit sunt deserunt dolorem blanditiis quo impedit iste quae, perferendis earum perspiciatis saepe aliquid totam repellendus rerum numquam esse nulla nostrum reiciendis.</p>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-8">
+            <img src="images/about/map.jpg" class="border border-dark border-2 mt-3" alt="Map of George's Garden Centre">
+            <div class="row mt-4">
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <div class="sidebar tour p-2">
+                  <img src="images/about/plants.jpg" class="img-fluid" alt="Indoor Plants">
+                  <img src="images/about/a.png" width="30" alt="First list item">
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <div class="sidebar tour p-2">
+                  <img src="images/about/greenhouse.jpg" class="img-fluid" alt="Outdoor Plants">
+                  <img src="images/about/b.png" width="30" alt="Second list item">
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <div class="sidebar tour p-2">
+                  <img src="images/about/water.jpg" class="img-fluid" alt="Water Features">
+                  <img src="images/about/c.png" width="30" alt="Third list item">
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <div class="sidebar tour p-2">
+                  <img src="images/about/indoor.jpg" class="img-fluid" alt="Potted Plants">
+                  <img src="images/about/d.png" width="30" alt="Fourth list item">
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <div class="sidebar tour p-2">
+                  <img src="images/about/toolstore.jpg" class="img-fluid" alt="Tool Shed">
+                  <img src="images/about/e.png" width="30" alt="Fifth list item">
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <div class="sidebar tour p-2">
+                  <img src="images/about/giftshop.jpg" class="img-fluid" alt="Gift Shop">
+                  <img src="images/about/f.png" width="30" alt="Sixth list item">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sidebar col-sm-12 col-md-3 offset-md-1 mt-3">
+            <h3 class="h4 text-center text-decoration-underline pt-3">Index to Map</h3>
+            <ul id="mapIndex">
+              <li><img src="images/about/a.png" width="30" alt="First list item">Indoor Plants</li>
+              <li><img src="images/about/b.png" width="30" alt="Second list item">Outdoor Plants</li>
+              <li><img src="images/about/c.png" width="30" alt="Third list item">Water Features</li>
+              <li><img src="images/about/d.png" width="30" alt="Fourth list item">Potted Plants</li>
+              <li><img src="images/about/e.png" width="30" alt="Fifth list item">Tool Shed</li>
+              <li><img src="images/about/f.png" width="30" alt="Sixth list item">Gift Shop</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <h2 id="history" class="col-xl-12 h3 text-center mt-5">The History of George's Garden Centre ...</h2>
+      <div class="row mb-5">
+        <div class="sidebar col col-xl-12 py-3 text-justify">
+          <p>George's Garden Centre beginnings stretch back to George's grandfather selling tomatoes from isi placeat vero sint doloremque possimus modi quod repellat. Esse aspernatur magnam minus culpa, minima nobis iste quaerat deserunt fugiat distinctio error quam ratione beatae ipsa ipsum enim optio ad nesciunt voluptate.</p>
+        </div>
+        <div class="row">
+          <div class="col p-3">
+            <div class="row">
+              <div class="sidebar py-3 text-justify">
+                <p>Odio nobis sint at 1967 volupe tatem ad dolore odit mol estiae corporis quibu dam repellat.</p>
+                <img src="images/about/history1.jpg" class="border border-dark border-2" alt="1967 Breaking ground and setting-up irrigation system.">
+              </div>
+            </div>
+          </div>
+          <div class="col p-3">
+            <div class="row">
+              <div class="sidebar py-3 text-justify">
+                <img src="images/about/history2.jpg" class="border border-dark border-2" alt="1969 - Construction of building which later becomes our Tool Shop.">
+                <p>Nihil volupti atum porro! Tecu sandae neque ratione sapi ente maxime. 1969 - Magnam repel lat consequatur.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col p-3">
+            <div class="row">
+              <div class="sidebar py-3 text-justify">
+                <p>Num quam quasi verite atis except urim iste accusamus - 1970. Apiente vero quos facilis quae fugit, porro quo simili ques.</p>
+                <img src="images/about/history3.jpg" class="border border-dark border-2" alt="1970 - First greenhouses established.">
+              </div>
+            </div>
+          </div>
+          <div class="col p-3">
+            <div class="row">
+              <div class="sidebar py-3 text-justify">
+                <img src="images/about/history4.jpg" class="border border-dark border-2" alt="1972 - Excavation for the Waterscape and water features section.">
+                <p>1972 - Dolo rem nihil quidem! Totam nihil nulla repell endus ex magnam blen ditiis per spiciatis placeat eaque error omnis animi quia velit.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col p-3">
+            <div class="row">
+              <div class="sidebar py-3 text-justify">
+                <p>Alia quida dolore vero fugit cumque aspern natur ut dolor in - 1981. Modi tempore delectus quasi laud antium facere aliquid ducimus soluta cum volupti atem.</p>
+                <img src="images/about/history5.jpg" class="border border-dark border-2" alt="1981 - Greenhouse building housing our three greenhouses.">
+              </div>
+            </div>
+          </div>
+          <div class="col p-3">
+            <div class="row">
+              <div class="sidebar py-3 text-justify">
+                <img src="images/about/history6.jpg" class="border border-dark border-2" alt="1983 - Our Garden Restaurant just prior to opening day.">
+                <p>Minima nihil dolores autem vel sim lique maiores temp oribus neque vitae per iatis verite atis dicta culpa totam - 1983. Quidem corporis harum ut.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 id="news" class="col-xl-12 h3 text-center mt-5">Newsletter Sign-Up</h2>
+      <div class="row sidebar m-3 p-3">
+        <p>Sign-up for George's monthly newsletter ab minus quas, laudantium, numquam harum quo reprehenderit saepe veritatis reiciendis sit repudiandae enim eum rerum quae deserunt incidunt voluptatem esse blanditiis libero consequatur recusandae vitae hic architecto ex? Id a ratione ab, animi suscipit debitis mollitia?</p>
+      </div>
+      <div class="row sidebar m-3">
+        <div class="sidebar d-none d-sm-block col-sm-12 d-md-none py-3">
+          <img src="images/about/postbox.png" alt="Your mailbox waiting for our next newsletter" height="150">
+        </div>
+        <form class="col col-sm-12 col-md-10 p-3">
+          <div class="row mb-3">
+            <div class="col">
+              <label for="firstName" class="form-label">First Name *</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" required>
+            </div>
+            <div class="col">
+              <label for="lastName" class="form-label">Last Name *</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address *</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="interests" class="form-label">Interests</label>
+            <select class="form-select" id="interests" name="interests[]" multiple data-live-search="true">
+              <option value="house">Caring for house plants</option>
+              <option value="outdoor">Caring for outdoor plants</option>
+              <option value="soil">Soil maintenance and care</option>
+              <option value="lawn">Lawn growth and maintenance</option>
+              <option value="flowers">Getting the best blooms</option>
+              <option value="water">Water features and fountains</option>
+              <option value="tool1">Gardening tools and accessories</option>
+              <option value="tool2">Power tools !!!</option>
+            </select>
+          </div>
+            <button type="submit" class="btn btn-primary text-center">Sign Up</button>
+        </form>
+        <div class="sidebar d-none d-sm-none d-md-block col-md-2 col-lg-2 py-3">
+          <img src="images/about/postbox.png" alt="Your mailbox waiting for our next newsletter" height="150">
+        </div>
+      </div>
+    </main>
+    <footer class="container-fluid footer-fixed border border-2 border-dark rounded-0 border-bottom-0 border-start-0 border-end-0">
+      <div class="row">
+        <div class="col-xs-12 col-md-6 col-lg-3">
+          <h4 class="ms-0">Links</h4>
+          <ul>
+            <li><a class="nav-link" aria-current="page" href="products.html">Our Products</a></li>
+            <li><a class="nav-link" aria-current="page" href="index.html">Home</a></li>
+            <li><a class="nav-link" aria-current="page" href="info.html">Gardening Tips</a></li>
+          </ul>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-3">
+          <h4>Contact Us</h4>
+          <table class="ms-4 table-responsive">
+            <tbody>
+              <tr>
+                <th>Address:</th>
+                <td>25-37 Greenway Ave</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Austin  TX  73344</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>USA</td>
+              </tr>
+              <tr>
+                <th>Telephone:</th>
+                <td>512-555-0113</td>
+              </tr>
+              <tr>
+                <th>e-Mail:</th>
+                <td>admin@georges.com</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-xs col-md-6 col-lg-3">
+          <h4 class="ms-0">Social Media</h4>
+          <ul>
+            <li><i class="bi bi-facebook" data-tooltip="FakeBook" style="color: #3b5998;"></i></li>
+            <li><i class="bi bi-twitter" data-tooltip="Twitter" style="color: #55acee;"></i></li>
+            <li><i class="bi bi-instagram" data-tooltip="Instagram" style="color: #ac2bac;"></i></li>
+            <li><i class="bi bi-linkedin" data-tooltip="LinkedIn" style="color: #0082ca;"></i></li>
+          </ul>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-3">
+          <h4>Legals</h4>
+          <ul>
+            <li><a href="#privacy" id="privacy">Privacy Policy</a></li>
+            <li><a href="#corporate" id="corporate">Corporate</a></li>
+            <li><a href="#terms" id="terms">Terms & Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+      <h5 class="mt-3 fw-bold text-end">&copy;Steve Schrader<script>document.write(new Date().getFullYear())</script></h5>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous">
+    </script>
+    <script src="js/dropdown.js"></script>
+  </body>
+</html>
