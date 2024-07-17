@@ -1,0 +1,502 @@
+* {
+	font-family: "Deja Vu Sans", Verdana, "sans-serif";
+	font-size: 16px;
+	color: #000;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.clearfloat {
+    font-size: 0px;
+    margin: 0px;
+    padding: 0px;
+    clear: both;
+    float: none;
+    height: 0px;
+    width: 0px;
+    border: 0px none;
+    line-height: 0px;
+}
+
+#topnav ul li {
+    width: 15%;
+}
+
+h1 {
+	font-size: 2.7em;
+	text-align: center;
+}
+
+h2 {
+	font-size: 1.6em;
+}
+
+h3 {
+	font-size: 1.2em;
+}
+
+h4 {
+	font-size: 1.6em;
+	float: left;
+	margin: 15% 0 2% 0;
+	color: green;
+}
+
+li {
+	list-style-type: none;
+}
+
+li:not(#topnav li) {
+	line-height: 1.5em;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+/* Findability Menu */
+#ship {
+    margin: 1% 0 0 2%;
+	width: 55px;
+    position: absolute;
+	animation: shipMotion 7s linear infinite;
+}
+
+#menu #main-column {
+    min-height: 628px;
+    overflow: hidden;
+}
+
+#menu ul {
+    margin: 0 0 5% 5%;
+    font-size: 2em;
+    font-weight: bold;
+    color: red;
+    display: grid;
+    grid-template-rows: repeat(6, 0.3fr);
+    grid-template-columns: 1fr;
+}
+
+#menu li {
+    margin-left: 2%;
+    font-size: 0.8em;
+}
+
+#menu li:first-of-type {
+    grid-row: 2 / 3;
+    grid-column: 1 / -1;
+}
+
+#menu li:nth-of-type(2) {
+    grid-row: 3 / 4;
+    grid-column: 1 / -1;
+}
+
+#menu li:nth-of-type(3) {
+    grid-row: 4 / 5;
+    grid-column: 1 / -1;
+}
+
+#menu li:nth-of-type(4) {
+    grid-row: 5 / 6;
+    grid-column: 1 / -1;
+}
+
+#menu li:nth-of-type(5) {
+    grid-row: 6 / 7;
+    grid-column: 1 / -1;
+}
+
+#menu li:nth-of-type(6) {
+    grid-row: 7 / -1;
+    grid-column: 1 / -1;
+}
+
+#menu li span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Blog Page */
+#blog div {
+	display: grid;
+    grid-template-rows: 0.125fr 0.125fr repeat(2, 0.25fr) 0.25fr;
+    grid-template-columns: 1fr 1fr;
+	grid-column-gap: 0.1fr;
+}
+
+#blog h1 {
+	grid-row: 1 / 2;
+	grid-column: 1 / 5;
+	margin-top: 2%;
+}
+	
+#blog h2 {
+	grid-row: 2 / 3;
+	grid-column: 1 / 3;
+	margin: 3% 0 -0.75% 2%;
+}
+
+#blog a:nth-of-type(1) {
+	grid-row: 3 / 4;
+	grid-column: 1 / 2;
+	margin: -2% 0 0 9.5%;
+}
+
+#blog a:nth-of-type(2) {
+	grid-row: 3 / 4;
+	grid-column: 2 / -1;
+	margin: -2% 0 0 9.5%;
+}
+
+#blog a:nth-of-type(3) {
+	grid-row: 4 / 5;
+	grid-column: 1 / 2;
+	margin: 7% 0 0 9.5%;
+}
+
+#blog img {
+	border: 5px solid black;
+	padding: 4px;
+	margin: 5%;
+}
+
+#blog h3 {
+	margin: -4% 0 0 8%;
+}
+
+#blog a:nth-of-type(4) {
+	grid-row: 5 / 6;
+	grid-column: 1 / 3;
+}
+
+/* SEO Page */
+#seo li {
+    margin: 1% 7%;
+}
+
+/* Research Page */
+#research iframe {
+	height: 840px;
+	width: 1460px;
+	border: 3px solid red;
+	margin: 0 2%;
+}
+
+#research h3 {
+	margin: 2% 0 0 2%;
+}
+
+#research img {
+	width: 3em;
+	float: left;
+	margin: 1% 0 0 2%;
+	width: 65px;
+}
+
+#research h4 {
+	margin: 15% 0 2% -4%;
+}
+
+/* Resources Page */
+#resources {
+	overflow: hidden;
+}
+
+#resources h1 {
+	margin: 2% 0;
+}
+
+#resources h2 {
+	color: red;
+}
+
+#resources h3 {
+	color: blue;
+}
+
+#resources ul li:nth-of-type(1) {
+	list-style: none;
+}
+
+#resources div:nth-of-type(1) {
+	width: 120%;
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 0.3fr repeat(5, 1fr);
+	grid-column-gap: 0.2fr;
+}
+
+#resources div:nth-of-type(1) ul:nth-of-type(1) {
+	grid-row: 1 / -1;
+	grid-column: 2 / 3;
+}
+
+#resources div:nth-of-type(1) ul:nth-of-type(2) {
+	grid-row: 1 / -1;
+	grid-column: 3 / 4;
+	margin-left: -7%;
+}
+
+#resources div:nth-of-type(1) ul:nth-of-type(3) {
+	grid-row: 1 / -1;
+	grid-column: 4 / 5;	
+}
+
+#resources div:nth-of-type(1) ul:nth-of-type(4) {
+	grid-row: 1 / -1;
+	grid-column: 5 / 6;	
+}
+
+#resources div:nth-of-type(1) ul:nth-of-type(5) {
+	grid-row: 1 / -1;
+	grid-column: 6 / -1;	
+}
+
+#resources div:nth-of-type(2) {
+	width: 110%;
+	display: grid;
+    grid-template-rows: 0.5fr repeat(3, 1fr);
+    grid-template-columns: 0.3fr repeat(4, 1fr) 0.3fr;
+	grid-row-gap: 0.2fr;
+    grid-column-gap: 0.3fr;
+}
+
+#resources div:nth-of-type(2) h2 {
+	grid-row: 1 / 2;
+	grid-column: 2 / -1;
+	margin: 4% 0 0 0;
+}
+
+#resources div:nth-of-type(2) ul:nth-of-type(1) {
+	grid-row: 2 / 3;
+	grid-column: 2 / 3;	
+}
+
+#resources div:nth-of-type(2) ul:nth-of-type(2) {
+	grid-row: 2 / 3;
+	grid-column: 3 / 4;	
+}
+
+#resources div:nth-of-type(2) ul:nth-of-type(3) {
+	grid-row: 2 / 3;
+	grid-column: 4 / 5;	
+}
+
+#resources div:nth-of-type(2) ul:nth-of-type(4) {
+	grid-row: 2 / 3;
+	grid-column: 5 / 6;	
+}
+
+#resources div:nth-of-type(2) ul:nth-of-type(5) {
+	grid-row: 3 / 4;
+	grid-column: 2 / 3;	
+    margin-top: 2.5%;
+}
+
+#resources div:nth-of-type(2) ul:nth-of-type(6) {
+	grid-row: 3 / 4;
+	grid-column: 3 / 4;	
+    margin-top: 2.5%;
+}
+
+#resources div:nth-of-type(2) ul:nth-of-type(7) {
+    grid-row: 3 / 4;
+    grid-column: 4 / 5;
+    margin-top: 2.5%;
+}
+
+#resources div:nth-of-type(2) ul:nth-of-type(8) {
+    grid-row: 3 / 4;
+    grid-column: 5 / 6;
+    margin-top: 2.5%;
+}
+
+#resources div:nth-of-type(2) ul:nth-of-type(9) {
+    grid-row: 4 / 5;
+    grid-column: 2 / 3;
+    margin-top: 5%;
+}
+
+#resources div:nth-of-type(3) li h3 {
+    margin-top: 5%;
+}
+
+#resources div:nth-of-type(3) ul:nth-of-type(1),
+#resources div:nth-of-type(3) ul:nth-of-type(2),
+#resources div:nth-of-type(3) ul:nth-of-type(3),
+#resources div:nth-of-type(3) ul:nth-of-type(4) {
+    margin-top: -5%;
+}
+
+#resources div:nth-of-type(3) {
+	width: 110%;
+	display: grid;
+    grid-template-rows: 0.1fr repeat(2, 1fr);
+    grid-template-columns: 0.3fr repeat(4, 1fr) 0.3fr;
+	grid-row-gap: 0.3fr;
+    grid-column-gap: 0.3fr;
+}
+
+#resources div:nth-of-type(3) h2 {
+    grid-row: 1 / 2;
+    grid-column: 2 / -1;
+	margin: 4% 0 0 0;
+}
+
+#resources div:nth-of-type(3) ul:nth-of-type(1) {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+#resources div:nth-of-type(3) ul:nth-of-type(2) {
+    grid-row: 2 / 3;
+    grid-column: 3 / 4;
+}
+
+#resources div:nth-of-type(3) ul:nth-of-type(3) {
+    grid-row: 2 / 3;
+    grid-column: 4 / 5;
+}
+
+#resources div:nth-of-type(3) ul:nth-of-type(4) {
+    grid-row: 2 / 3;
+    grid-column: 5 / 6;
+}
+
+#resources div:nth-of-type(3) ul:nth-of-type(5) {
+    grid-row: 3 / 4;
+    grid-column: 2 / 3;
+}
+
+#resources div:nth-of-type(3) ul:nth-of-type(6) {
+    grid-row: 3 / 4;
+    grid-column: 3 / 4;
+}
+
+#resources div:nth-of-type(3) ul:nth-of-type(7) {
+    grid-row: 3 / 4;
+    grid-column: 4 / 5;
+}
+
+#resources div:nth-of-type(3) ul:nth-of-type(8) {
+    grid-row: 3 / 4;
+    grid-column: 5 / 6;
+}
+
+#resources a:not(#return):hover {
+	font-size: 1.05em;
+	font-weight: bold;
+}
+
+/* Vocabulary Page */
+#vocab #main-column {
+    margin-top: 5%;
+    display: grid;
+    grid-template-rows: 0.25fr 1fr 0.05fr;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 0.25fr;
+}
+
+#vocab h1 {
+    margin: 2% 0;
+    grid-row: 1 / 2;
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+#vocab dl:first-of-type {
+	grid-row: 2 / 3;
+    grid-column: 1 / 2; 
+}
+
+#vocab dl:nth-of-type(2) {
+	grid-row: 2 / 3;
+    grid-column: 2 / -1;
+}
+
+#vocab dl {
+    float: left;
+	display: grid;
+    grid-template-rows: repeat(5, 0.3fr 1fr);
+    grid-template-columns: 1fr;
+    grid-row-gap: 0.2fr;
+}
+
+#vocab dt {
+    margin: 0 3%;
+    font-size: 1.1em;
+    font-style: normal;
+    font-weight: bold;
+    color:blue
+}
+
+#vocab dt {
+    margin-top: 2%;
+}
+
+#vocab dd {
+    margin: 0 3%;
+    padding: 1% 1% 0 1%;
+    font-size: 0.9em;
+    font-style: italic;
+    font-weight: normal;
+    border: 2px solid black;
+}
+
+#vocab dd p {
+    margin-left: 0%;
+    font-size: 1em;
+}
+
+#vocab dd a {
+    text-decoration: underline;
+    text-decoration-color: blue;
+}
+
+#vocab a {
+    grid-row: 3 / -1;
+    grid-column: 1 / 2;
+    margin-bottom: -15%;
+}
+
+/* Web-Site Log Page */
+#modlog #main-column {
+    min-height: 2300px;
+}
+
+#diary-page {
+    background-image: url("../images/diary-slice.png");
+	width: 96%;
+	background-repeat: repeat-y;
+	background-position: center;
+    position: relative;
+    margin: 2%;
+}
+
+#diary-page ul {
+    width: 50%;
+    float: left;
+}
+
+#diary-page span {
+	font-size: 0.7em;
+    font-weight: bold;
+}
+
+#modlog a {
+    margin-top: 80%;
+}
+
+@keyframes shipMotion {
+    0% { transform: skewX(0deg) rotate(3deg) }
+    25% { transform: skewX(15deg) }
+    50% { transform: rotate(-7deg) }
+    75% { transform: skewX(-15deg) }
+    100% { transform: skewX(0deg) rotate(3deg) }
+}
