@@ -1,0 +1,1825 @@
+@charset "UTF-8";
+
+#enlist {    
+    background-image: linear-gradient(90deg, #E69900, #FFE680, #FFF0B3, #FFF5CC, #FFEB99, #FFEB99, #FFF5CC ,#FFF0B3, #FFE680, #E69900); 
+    border: 0.3em solid #FF0000;
+    width: 60%;
+    margin: 4% 20%;
+    z-index: 5;
+}
+
+#enlist fieldset {
+    position: relative;
+    color: #000;
+    border: none;
+}
+
+#enlist fieldset legend {
+    background-image: linear-gradient(90deg, #B37700, #FFBB33, #FFDB4D, #FFFF00, #FFFF00, #FFDB4D, #FFBB33,#B37700);
+    margin-left: 7.5%;
+    padding: 0 0.5% 0 0.5%;
+    border: 3px solid #FF8080;
+    font-size: 170%;
+    font-weight: bold;
+}
+
+#formGrid {
+    display: grid;
+    grid-template-rows: 0.1em repeat(11, 3em) 8em;
+    grid-template-columns: 1fr 2fr 4.75fr 0.25fr 5fr 1fr;
+}
+
+#formGrid label:not(#weaponGrid label)::after {
+    content: ":";
+}
+
+#formGrid input:not([type="radio"], [type="checkbox"]),
+#formGrid select {
+    box-shadow: 3px 3px #A9A9A9; 
+}
+
+#formGrid label {
+    font-weight: bold;
+}
+
+#formGrid input {
+    height: 55%;
+    justify-self: right;
+}
+
+/* Sign-up message */
+#formGrid h2 {
+    font-family: ChopinScript;
+    font-size: 2em;
+    margin: 1% 0 0 1%;
+    grid-row: 1 / 2;
+    grid-column: 2 / -1;
+}
+
+/* First Name */
+#formGrid label:nth-of-type(1) { 
+    grid-row: 4 / 5;
+    grid-column: 2 / 3;
+    margin-left: 5%;
+}
+
+#formGrid input:nth-of-type(1) {
+    grid-row: 4 / 5;
+    grid-column: 3 / 4;
+    width: 75%;
+}
+
+#flagColumnfirstName {
+    grid-row: 4 / 5;
+    grid-column: 4 / 5;
+}
+
+/* Last Name */
+#formGrid label:nth-of-type(2) { 
+    grid-row: 5 / 6;
+    grid-column: 2 / 3;
+    margin-left: 5%;
+}
+
+#formGrid input:nth-of-type(2) {
+    grid-row: 5 / 6;
+    grid-column: 3 / 4;
+    width: 75%;
+}
+
+#flagColumnlastName {
+    grid-row: 5 / 6;
+    grid-column: 4 / 5;
+}
+
+/* Pirate Name */
+#formGrid label:nth-of-type(3) {
+    grid-row: 6 / 7;
+    grid-column: 2 / 3;
+    margin-left: 5%;
+}
+
+#formGrid input:nth-of-type(3) {
+    grid-row: 6 / 7;
+    grid-column: 3 / 4;
+    width: 85%;
+}
+
+#flagColumnpirateName {
+    grid-row: 6 / 7;
+    grid-column: 4 / 5;
+}
+
+/* Pirate Port */ 
+#formGrid label:nth-of-type(4) {
+    grid-row: 7 / 8;
+    grid-column: 2 / 3;
+    margin-left: 5%;
+}
+
+#formGrid input:nth-of-type(4) {
+    grid-row: 7 / 8;
+    grid-column: 3 / 4;
+    width: 85%;
+}
+
+#flagColumnpiratePort {
+    grid-row: 7 / 8;
+    grid-column: 4 / 5;
+}
+
+/* Country Selection Box */
+#formGrid label:nth-of-type(5) {
+    grid-row: 8 / 9;
+    grid-column: 2 / 3;
+    margin-left: 5%;
+}
+
+#formGrid select {
+    grid-row: 8 / 9;
+    grid-column: 3 / 4;    
+	border: 2px solid #000;
+    height: 60%;
+    width: 80%;
+    justify-self: right;
+}
+
+#flagColumncountry {
+    grid-row: 8 / 9;
+    grid-column: 4 / 5; 
+}
+
+/* E-mail */
+#formGrid label:nth-of-type(6) {
+    grid-row: 9 / 10;
+    grid-column: 2 / 3;
+    margin-left: 5%;
+}
+
+#formGrid input:nth-of-type(5) {
+    grid-row: 9 / 10;
+    grid-column: 3 / 4;
+    width: 95%;
+}
+
+#flagColumnemail {
+    grid-row: 9 / 10;
+    grid-column: 4 / 5;
+}
+
+/* Select Pirate Weapon */
+#weaponGrid {
+    grid-row: 4 / 5;
+    grid-column: 5 / 6;
+    display: grid;
+    grid-template-rows: repeat(5, 32px);
+    grid-template-columns: 0.5fr 0.5fr 5fr;
+    align-items: left;
+}
+
+#weaponGrid h3 {
+    grid-row: 1 / 2;
+    grid-column: 2 / 4;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0 0 3% 0;
+}
+
+#weaponGrid input {
+    margin-left: 60%;
+}
+
+#weaponGrid input:focus {
+    outline: none;
+}
+
+#weaponGrid input:nth-of-type(1) {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+#weaponGrid label:nth-of-type(1) {
+    grid-row: 2 / 3;
+    grid-column: 3 / 4;
+}
+
+#weaponGrid input:nth-of-type(2) {
+    grid-row: 3 / 4;
+    grid-column: 2 / 3;
+}
+
+#weaponGrid label:nth-of-type(2) {
+    grid-row: 3 / 4;
+    grid-column: 3 / 4;
+}
+
+#weaponGrid input:nth-of-type(3) {
+    grid-row: 4 / 5;
+    grid-column: 2 / 3;
+}
+
+#weaponGrid label:nth-of-type(3) {
+    grid-row: 4 / 5;
+    grid-column: 3 / 4;
+}
+
+#weaponGrid input:nth-of-type(4) {
+    grid-row: 5 / 6;
+    grid-column: 2 / 3;
+}
+
+#weaponGrid label:nth-of-type(4) {
+    grid-row: 5 / 6;
+    grid-column: 3 / 4;
+}
+
+/* AboutMe */
+#formGrid label:nth-of-type(7) {
+    grid-row: 11 / 12;
+    grid-column: 2 / 6;
+    font-size: 1.5em;
+    margin: 2% 0 0 0.5%;
+}
+
+#formGrid textarea {
+    grid-row: 12 / -1;
+    grid-column: 2 / 6;
+    word-wrap: normal;
+    text-align: left;
+    resize: none;
+}
+
+#formGrid .tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+#formGrid .tooltip .tooltiptext {
+	visibility: hidden;
+	font-size: 0.9em;
+	font-weight: bold;
+	line-height: normal;
+	box-shadow:  #FF0000 2px 2px;
+	background-color: #666666;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 10px;
+	position: absolute;
+	z-index: 1;
+	bottom: 115%;
+}
+
+#formGrid .tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 7px;
+	border-style: solid;
+	border-color: #666666 transparent transparent transparent;
+}
+
+#formGrid .tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+#tipone {
+    width: 230px;
+    left: 250%;
+}
+
+#tiptwo {
+    width: 230px;
+    left: 250%;
+}
+
+#tipthree {
+	width: 230px;
+	left: 250%;
+}
+
+#tipfour {
+	width: 320px;
+	left: 35%;
+}
+
+#lowerGrid {
+    display: grid;
+    grid-template-rows: repeat(6, 32px);
+    grid-template-columns: 0.5fr 4fr 5fr 4fr 0.5fr;
+    align-items: center;
+}
+
+#lowerGrid .vcard {
+    grid-row: 2 / 5;
+    grid-column: 2 / 3;
+    border: 2px solid #e6e600;
+    padding: 0.5%;
+}
+
+/* Registration Validated Message */ 
+#lowerGrid #registered {
+    grid-row: 2 / 3;
+    grid-column: 3 / 4;
+	visibility: hidden;
+	font-size: 1.4em;
+    font-weight: bold;
+    width: 100%;
+    color: red;
+    float: left;
+    margin-left: 12%;
+}
+
+#lowerGrid button {
+    grid-row: 4 / 5;
+    grid-column: 3 / 4;
+    font-weight: bold;
+    height: 35px;
+    width: 80%;
+    justify-self: center;
+    border: solid 2px #000;
+    border-radius: 0.5em;
+    background-color: #FF0000;
+    box-shadow: 5px 5px #A9A9A9;
+}
+
+#lowerGrid button:hover {
+    background-color: #FF8080 !important;
+} 
+
+#lowerGrid button:active {
+    transform: translateY(3px);
+    background-color: #FF0000;
+    box-shadow: none;
+}
+
+#lowerGrid iframe {
+    grid-row: 2 / 5;
+    grid-column: 4 / 5;
+    border: 2px solid #e6e600;
+    height: 130%;
+}
+
+#lowerGrid #instruction {
+    grid-row: 6 / 7;
+    grid-column: 1 / -1;
+    color: #000;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 1% 0%;
+    text-align: center;
+}
+
+.correct {
+    background-image: url("../images/greenFlag.png") left top; 
+    width: 16px; 
+    height: 16px;
+    display: inline-block;
+}
+
+.error {
+    background-image: url("../images/skull.png") left top; 
+    width: 16px; 
+    height: 16px;
+    display: inline-block;
+}
+
+/* Large Desktop sizing */
+@media screen and (min-width: 2201px) {
+    #formGrid select {
+        margin: 0.8% 0 0 25.5%;
+    }
+    
+    #tipone {
+        width: 230px;
+        left: 280%;
+    }
+
+    #tiptwo {
+        width: 230px;
+        left: 280%;
+    }
+
+    #tipthree {
+        width: 230px;
+        left: 280%;
+    }
+
+    #tipfour {
+        width: 320px;
+        left: 55%;
+    }
+}
+
+/* Desktop sizing */
+@media screen and (min-width: 1951px) and (max-width: 2200px) {
+    #formGrid select {
+        margin: 0.8% 0 0 25.75%;
+    }
+
+    #formGrid label {
+        font-size: 0.9em; 
+    }
+
+    #weaponGrid h3 {
+        font-size: 1em; 
+    }
+
+    #tipone {
+        width: 230px;
+        left: 250%;
+    }
+    
+    #tiptwo {
+        width: 230px;
+        left: 250%;
+    }
+    
+    #tipthree {
+        width: 230px;
+        left: 250%;
+    }
+
+    #tipfour {
+        width: 320px;
+        left: 40%;
+    }
+}
+
+/* Small Laptop Sizing */
+@media screen and (min-width: 1451px) and (max-width: 1700px) {
+    #enlist {
+        margin: 5% 20%;
+    }
+ 
+    #formGrid h2 {
+        font-size: 1.7em;
+    }
+
+    #formGrid select {
+        margin: 0.8% 0 0 26.5%;
+    }
+
+    #weaponGrid h3 {
+        font-size: 0.9em; 
+    }
+
+    #formGrid label:nth-of-type(7) {
+        font-size: 1.2em;
+    }
+
+    #tipone {
+        width: 230px;
+        left: 225%;
+    }
+    
+    #tiptwo {
+        width: 230px;
+        left: 225%;
+    }
+    
+    #tipthree {
+        width: 230px;
+        left: 225%;
+    }
+    
+    #tipfour {
+        width: 320px;
+        left: 35%;
+    }
+}
+
+/* Large Tablet sizing */
+@media screen and (min-width: 1201px) and (max-width: 1450px) {
+    #enlist {
+        width: 80%;
+        margin: 5% 10%;
+    }
+    
+    #formGrid h2 {
+        font-size: 1.65em; 
+    }
+
+    #formGrid label {
+        font-size: 0.87em;
+    }
+
+    #formGrid select {
+        margin: 0.8% 0 0 27%;
+    }
+
+    #weaponGrid h3 {
+        font-size: 0.9em; 
+    }
+
+    #formGrid label:nth-of-type(7) {
+        font-size: 1.3em;
+    }
+
+    #tipone {
+        width: 230px;
+        left: 230%;
+    }
+    
+    #tiptwo {
+        width: 230px;
+        left: 230%;
+    }
+    
+    #tipthree {
+        width: 230px;
+        left: 230%;
+    }
+    
+    #tipfour {
+        width: 320px;
+        left: 35%;
+    }
+}
+
+/* iPad Sizing */
+@media screen and (min-width: 951px) and (max-width: 1200px) {
+    #enlist {
+        width: 80%;
+        margin: 6% 10%;
+    }
+
+    #formGrid {
+        display: grid;
+        grid-template-rows: 0.3em repeat(9, 3em) 10em 3em 8em;
+        grid-template-columns: 5% 2fr 3fr 5%;
+    }
+
+    #formGrid h2 {
+        font-size: 1.6em;
+        margin: 1% 0 0 1%;
+        grid-row: 1 / 2;
+        grid-column: 2 / -1;
+    }
+
+    #formGrid label:nth-of-type(1) { 
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(1) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(2) { 
+        grid-row: 5 / 6;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(2) {
+        grid-row: 5 / 6;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(5) {
+        grid-row: 8 / 9;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid select {
+        grid-row: 8 / 9;
+        grid-column: 3 / 4;    
+    }
+
+    #formGrid label:nth-of-type(6) {
+        grid-row: 9 / 10;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(5) {
+        grid-row: 9 / 10;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(7) {
+        grid-row: 12 / 13;
+        grid-column: 2 / 4;
+        font-size: 1em;
+    }
+
+    #formGrid textarea {
+        grid-row: 13 / -1;
+        grid-column: 2 / 4;
+    }
+
+    #weaponGrid {
+        grid-row: 11 / 12;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-rows: repeat(5, 32px);
+        grid-template-columns: 5% 1fr 4fr 5%;
+        align-items: left;
+    }
+
+    #weaponGrid h3 {
+        grid-row: 1 / 2;
+        grid-column: 2 / 4;
+        font-size: 1.1em;
+        margin: 0 0 3% 0;
+    }
+
+    #weaponGrid input:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 2 / 3;
+    }
+
+    #weaponGrid label:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 3 / 4;
+    }
+
+    #weaponGrid input:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 2 / 3;
+    }
+
+    #weaponGrid label:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 3 / 4;
+    }
+
+    #weaponGrid input:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-right: -5%;
+    }
+
+    #weaponGrid label:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+
+    #lowerGrid {
+        display: grid;
+        grid-template-rows: repeat(5, 32px) 1.5fr repeat(2, 32px);
+        grid-template-columns: 5% repeat(2, auto) 5%;
+        align-items: center;
+    }
+
+    #lowerGrid #registered {
+        grid-row: 2 / 3;
+        grid-column: 2 / 4;
+        width: 100%;
+    }
+
+    #lowerGrid button {
+        grid-row: 4 / 5;
+        grid-column: 2 / 4;
+        width: 50%;
+    }
+
+    #lowerGrid .vcard {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+    }
+
+    #lowerGrid iframe {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+
+    #lowerGrid #instruction {
+        grid-row: 8 / 9;
+        grid-column: 1 / -1;
+    }
+
+    #tipone {
+        width: 230px;
+        left: 310%;
+    }
+    
+    #tiptwo {
+        width: 230px;
+        left: 310%;
+    }
+    
+    #tipthree {
+        width: 230px;
+        left: 310%;
+    }
+    
+    #tipfour {
+        width: 320px;
+        left: 35%;
+    }
+
+    .correct,
+    .error {
+        background-color: #FFEB99;
+    }
+}
+
+/* Small Tablet Sizing */
+@media screen and (min-width: 851px) and (max-width: 950px) {
+    #enlist {
+        width: 80%;
+        margin: 8% 10%;
+    }
+
+    #formGrid input[type="text"],
+    #formGrid select {
+        width: 100%;
+    }
+    
+    #formGrid h2 {
+        font-size: 1.5em;       
+    }
+
+    #formGrid label,
+    #weaponGrid h3,
+    #weaponGrid label {
+        font-size: 0.7em; 
+    }
+
+    #formGrid {
+        display: grid;
+        grid-template-rows: 0.3em repeat(9, 3em) 10em 3em 8em;
+        grid-template-columns: 5% 2fr 3fr 5%;
+    }
+    
+    #formGrid h2 {
+        font-size: 1.6em;
+        margin: 1% 0 0 1%;
+        grid-row: 1 / 2;
+        grid-column: 2 / -1;
+    }
+    
+    #formGrid label:nth-of-type(1) { 
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(1) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(2) { 
+        grid-row: 5 / 6;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(2) {
+        grid-row: 5 / 6;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(5) {
+        grid-row: 8 / 9;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid select {
+        grid-row: 8 / 9;
+        grid-column: 3 / 4;    
+    }
+    
+    #formGrid label:nth-of-type(6) {
+        grid-row: 9 / 10;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(5) {
+        grid-row: 9 / 10;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(7) {
+        grid-row: 12 / 13;
+        grid-column: 2 / 4;
+        font-size: 1em;
+    }
+    
+    #formGrid textarea {
+        grid-row: 13 / -1;
+        grid-column: 2 / 4;
+    }
+    
+    #weaponGrid {
+        grid-row: 11 / 12;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-rows: repeat(5, 32px);
+        grid-template-columns: 5% 1fr 4fr 5%;
+        align-items: left;
+    }
+    
+    #weaponGrid h3 {
+        grid-row: 1 / 2;
+        grid-column: 2 / 4;
+        font-size: 1.1em;
+        margin: 0 0 3% 0;
+    }
+    
+    #weaponGrid input:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 2 / 3;
+    }
+    
+    #weaponGrid label:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 3 / 4;
+    }
+    
+    #weaponGrid input:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 2 / 3;
+    }
+    
+    #weaponGrid label:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 3 / 4;
+    }
+    
+    #weaponGrid input:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-right: -5%;
+    }
+
+    #weaponGrid label:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+    
+    #lowerGrid {
+        display: grid;
+        grid-template-rows: repeat(5, 32px) 1.5fr repeat(2, 32px);
+        grid-template-columns: 5% repeat(2, auto) 5%;
+        align-items: center;
+    }
+    
+    #lowerGrid #registered {
+        grid-row: 2 / 3;
+        grid-column: 2 / 4;
+        width: 100%;
+    }
+    
+    #lowerGrid button {
+        grid-row: 4 / 5;
+        grid-column: 2 / 4;
+        width: 50%;
+    }
+    
+    #lowerGrid .vcard {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+    }
+    
+    #lowerGrid iframe {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+    
+    #lowerGrid #instruction {
+        grid-row: 8 / 9;
+        grid-column: 1 / -1;
+    }
+
+    #tipone {
+        width: 230px;
+        left: 270%;
+    }
+    
+    #tiptwo {
+        width: 230px;
+        left: 270%;
+    }
+        
+    #tipthree {
+        width: 230px;
+        left: 270%;
+    }
+    
+    #tipfour {
+        width: 320px;
+        left: 35%;
+    }
+
+    .correct,
+    .error {
+        background-color: #FFDB4D;
+    }
+}
+
+/* Intermediate Sizing */
+@media screen and (min-width: 701px) and (max-width: 850px) {
+    #enlist {
+        width: 80%;
+        margin: 18% 10%;
+    }
+
+    #formGrid {
+        display: grid;
+        grid-template-rows: 0.3em repeat(9, 3em) 10em 3em 8em;
+        grid-template-columns: 5% 2fr 3fr 5%;
+    }
+    
+    #formGrid h2 {
+        font-size: 1.3em;
+        margin: 1% 0 0 1%;
+        grid-row: 1 / 2;
+        grid-column: 2 / -1;
+    }
+    
+    #formGrid input[type="text"],
+    #formGrid select {
+        width: 100%;
+    }
+
+    #formGrid label,
+    #weaponGrid h3,
+    #weaponGrid label {
+        font-size: 0.7em; 
+    }
+
+    #formGrid label:nth-of-type(1) { 
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(1) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(2) { 
+        grid-row: 5 / 6;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(2) {
+        grid-row: 5 / 6;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(5) {
+        grid-row: 8 / 9;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid select {
+        grid-row: 8 / 9;
+        grid-column: 3 / 4;    
+    }
+    
+    #formGrid label:nth-of-type(6) {
+        grid-row: 9 / 10;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+    
+    #formGrid input:nth-of-type(5) {
+        grid-row: 9 / 10;
+        grid-column: 3 / 4;
+    }
+    
+    #formGrid label:nth-of-type(7) {
+        grid-row: 12 / 13;
+        grid-column: 2 / 4;
+        font-size: 1em;
+    }
+    
+    #formGrid textarea {
+        grid-row: 13 / -1;
+        grid-column: 2 / 4;
+    }
+    
+    #weaponGrid {
+        grid-row: 11 / 12;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-rows: repeat(5, 32px);
+        grid-template-columns: 5% 1fr 4fr 5%;
+        align-items: left;
+    }
+    
+    #weaponGrid h3 {
+        grid-row: 1 / 2;
+        grid-column: 2 / 4;
+        font-size: 1.1em;
+        margin: 0 0 3% 0;
+    }
+    
+    #weaponGrid input:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 2 / 3;
+    }
+    
+    #weaponGrid label:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 3 / 4;
+    }
+    
+    #weaponGrid input:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 2 / 3;
+    }
+    
+    #weaponGrid label:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 3 / 4;
+    }
+    
+    #weaponGrid input:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-right: -5%;
+    }
+
+    #weaponGrid label:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+    
+    #lowerGrid {
+        display: grid;
+        grid-template-rows: repeat(5, 32px) 1.5fr repeat(2, 32px);
+        grid-template-columns: 5% repeat(2, auto) 5%;
+        align-items: center;
+    }
+    
+    #lowerGrid #registered {
+        grid-row: 2 / 3;
+        grid-column: 2 / 4;
+        width: 100%;
+    }
+    
+    #lowerGrid button {
+        grid-row: 4 / 5;
+        grid-column: 2 / 4;
+        width: 50%;
+    }
+    
+    #lowerGrid .vcard {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+    }
+    
+    #lowerGrid iframe {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+    
+    #lowerGrid #instruction {
+        grid-row: 8 / 9;
+        grid-column: 1 / -1;
+    }
+
+    #tipone {
+        width: 230px;
+        left: 250%;
+    }
+    
+    #tiptwo {
+        width: 230px;
+        left: 250%;
+    }
+        
+    #tipthree {
+        width: 230px;
+        left: 250%;
+    }
+    
+    #tipfour {
+        width: 320px;
+        left: 35%;
+    }
+
+    .correct,
+    .error {
+        background-color: #FFDB4D;
+    }
+}
+
+/* Intermediate Sizing */
+@media screen and (min-width: 551px) and (max-width: 700px) {
+    #enlist {
+        width: 100%;
+        margin: 8% 2%;
+    }
+
+    #formGrid input[type="text"],
+    #formGrid select {
+        width: 100%;
+    }
+
+    #formGrid label,
+    #weaponGrid h3,
+    #weaponGrid label {
+        font-size: 0.9em; 
+    }
+
+    #formGrid {
+        display: grid;
+        grid-template-rows: 0.3em 0.01em repeat(9, 3em) 10em 3em 8em;
+        grid-template-columns: 2% 2fr 3fr 2%;
+    }
+    
+    #formGrid h2 {
+        font-size: 1.3em;
+        margin: 1% 0 0 1%;
+        grid-row: 1 / 2;
+        grid-column: 2 / -1;
+    }
+
+    #formGrid label:nth-of-type(1) { 
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(1) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(2) { 
+        grid-row: 5 / 6;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(2) {
+        grid-row: 5 / 6;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(5) {
+        grid-row: 8 / 9;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid select {
+        grid-row: 8 / 9;
+        grid-column: 3 / 4;    
+    }
+
+    #formGrid label:nth-of-type(6) {
+        grid-row: 9 / 10;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(5) {
+        grid-row: 9 / 10;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(7) {
+        grid-row: 13 / 14;
+        grid-column: 2 / 4;
+        font-size: 1em;
+    }
+
+    #formGrid textarea {
+        grid-row: 14 / -1;
+        grid-column: 2 / 4;
+    }
+
+    #weaponGrid {
+        grid-row: 11 / 12;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-rows: repeat(5, 32px);
+        grid-template-columns: 5% 1fr 4fr 5%;
+        align-items: left;
+    }
+    
+    #weaponGrid h3 {
+        grid-row: 1 / 2;
+        grid-column: 2 / 4;
+        font-size: 1.1em;
+        margin: 0 0 3% 0;
+    }
+
+    #weaponGrid input:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 2 / 3;
+    }
+    
+    #weaponGrid label:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 3 / 4;
+    }
+    
+    #weaponGrid input:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 2 / 3;
+    }
+    
+    #weaponGrid label:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 3 / 4;
+    }
+    
+    #weaponGrid input:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-right: -5%;
+    }
+    
+    #weaponGrid label:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+
+    #lowerGrid {
+        display: grid;
+        grid-template-rows: repeat(5, 32px) 1.5fr repeat(2, 32px);
+        grid-template-columns: 2% repeat(2, auto) 2%;
+        align-items: center;
+    }
+
+    #lowerGrid #registered {
+        grid-row: 2 / 3;
+        grid-column: 2 / 4;
+        width: 100%;
+    }
+    
+    #lowerGrid button {
+        grid-row: 4 / 5;
+        grid-column: 2 / 4;
+        width: 50%;
+    }
+
+    #lowerGrid .vcard {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+    }
+    
+    #lowerGrid iframe {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+    
+    #lowerGrid #instruction {
+        grid-row: 8 / 9;
+        grid-column: 1 / -1;
+    }
+
+    #tipone {
+        width: 230px;
+        left: 250%;
+    }
+    
+    #tiptwo {
+        width: 230px;
+        left: 250%;
+    }
+        
+    #tipthree {
+        width: 230px;
+        left: 250%;
+    }
+    
+    #tipfour {
+        width: 320px;
+        left: 35%;
+    }
+
+    .correct,
+    .error {
+        background-color: #FFE680;
+    }
+}
+
+/* Large Mobile Sizing */
+@media screen and (min-width: 401px) and (max-width: 550px) {
+    #enlist {
+        width: 100%;
+        margin: 4% 2%;
+    }
+
+    #formGrid input[type="text"],
+    #formGrid select {
+        width: 100%;
+    }
+
+    #formGrid label,
+    #weaponGrid h3,
+    #weaponGrid label {
+        font-size: 0.9em; 
+    }
+
+    #formGrid {
+        display: grid;
+        grid-template-rows: 0.3em 0.01em repeat(9, 3em) 10em 3em 8em;
+        grid-template-columns: 2% 2fr 3fr 2%;
+    }
+
+    #formGrid h2 {
+        font-size: 1.2em;
+        margin: 1% 0 0 1%;
+        grid-row: 1 / 2;
+        grid-column: 2 / -1;
+    }
+
+    #formGrid label:nth-of-type(1) { 
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(1) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(2) { 
+        grid-row: 5 / 6;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(2) {
+        grid-row: 5 / 6;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(5) {
+        grid-row: 8 / 9;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid select {
+        grid-row: 8 / 9;
+        grid-column: 3 / 4;    
+    }
+
+    #formGrid label:nth-of-type(6) {
+        grid-row: 9 / 10;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(5) {
+        grid-row: 9 / 10;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(7) {
+        grid-row: 13 / 14;
+        grid-column: 2 / 4;
+        font-size: 0.8em;
+    }
+
+    #formGrid textarea {
+        grid-row: 14 / -1;
+        grid-column: 2 / 4;
+    }
+
+    #weaponGrid {
+        grid-row: 11 / 12;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-rows: repeat(5, 32px);
+        grid-template-columns: 5% 1fr 4fr 5%;
+        align-items: left;
+    }
+
+    #weaponGrid h3 {
+        grid-row: 1 / 2;
+        grid-column: 2 / 4;
+        font-size: 1.1em;
+        margin: 0 0 3% 0;
+    }
+
+    #weaponGrid input:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 2 / 3;
+    }
+
+    #weaponGrid label:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 3 / 4;
+    }
+
+    #weaponGrid input:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 2 / 3;
+    }
+
+    #weaponGrid label:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 3 / 4;
+    }
+
+    #weaponGrid input:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-right: -5%;
+    }
+
+    #weaponGrid label:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+
+    #lowerGrid {
+        display: grid;
+        grid-template-rows: repeat(5, 32px) 1.5fr repeat(2, 32px);
+        grid-template-columns: 2% repeat(2, auto) 2%;
+        align-items: center;
+    }
+
+    #lowerGrid #registered {
+        grid-row: 2 / 3;
+        grid-column: 2 / 4;
+        width: 100%;
+    }
+
+    #lowerGrid button {
+        grid-row: 4 / 5;
+        grid-column: 2 / 4;
+        width: 50%;
+    }
+
+    #lowerGrid .vcard {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+    }
+
+    #lowerGrid iframe {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+
+    #lowerGrid #instruction {
+        grid-row: 8 / 9;
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-left: -23%;
+    }
+
+    #tipone {
+        width: 230px;
+        left: 150%;
+    }
+    
+    #tiptwo {
+        width: 230px;
+        left: 150%;
+    }
+         
+    #tipthree {
+        width: 230px;
+        left: 150%;
+    }
+    
+    #tipfour {
+        width: 320px;
+        left: 5%;
+    }
+
+    .correct,
+    .error {
+        background-color: #e69900;
+    }
+}
+
+/* Small Mobile Sizing */
+@media screen and (max-width: 400px) {
+    #enlist {
+        width: 100%;
+        margin: 8% 2%;
+    }
+
+    #formGrid input[type="text"],
+    #formGrid select {
+        width: 100%;
+    }
+
+    #formGrid label,
+    #weaponGrid h3,
+    #weaponGrid label {
+        font-size: 0.9em; 
+    }
+
+    #formGrid {
+        display: grid;
+        grid-template-rows: 0.3em 0.01em repeat(9, 3em) 10em 3em 8em;
+        grid-template-columns: 2% 2fr 3fr 2%;
+    }
+    
+    #formGrid h2 {
+        font-size: 1.3em;
+        margin: 1% 0 0 1%;
+        grid-row: 1 / 2;
+        grid-column: 2 / -1;
+    }
+
+    #formGrid label:nth-of-type(1) { 
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(1) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(2) { 
+        grid-row: 5 / 6;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(2) {
+        grid-row: 5 / 6;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(3) {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(4) {
+        grid-row: 7 / 8;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(5) {
+        grid-row: 8 / 9;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid select {
+        grid-row: 8 / 9;
+        grid-column: 3 / 4;    
+    }
+
+    #formGrid label:nth-of-type(6) {
+        grid-row: 9 / 10;
+        grid-column: 2 / 3;
+        margin-left: 5%;
+    }
+
+    #formGrid input:nth-of-type(5) {
+        grid-row: 9 / 10;
+        grid-column: 3 / 4;
+    }
+
+    #formGrid label:nth-of-type(7) {
+        grid-row: 13 / 14;
+        grid-column: 2 / 4;
+        font-size: 1em;
+    }
+
+    #formGrid textarea {
+        grid-row: 14 / -1;
+        grid-column: 2 / 4;
+    }
+
+    #weaponGrid {
+        grid-row: 11 / 12;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-rows: repeat(5, 32px);
+        grid-template-columns: 5% 1fr 4fr 5%;
+        align-items: left;
+    }
+    
+    #weaponGrid h3 {
+        grid-row: 1 / 2;
+        grid-column: 2 / 4;
+        font-size: 1.1em;
+        margin: 0 0 3% 0;
+    }
+
+    #weaponGrid input:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 2 / 3;
+    }
+    
+    #weaponGrid label:nth-of-type(1) {
+        grid-row: 2 / 3;
+        grid-column: 3 / 4;
+    }
+    
+    #weaponGrid input:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 2 / 3;
+    }
+    
+    #weaponGrid label:nth-of-type(2) {
+        grid-row: 3 / 4;
+        grid-column: 3 / 4;
+    }
+    
+    #weaponGrid input:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        margin-right: -5%;
+    }
+    
+    #weaponGrid label:nth-of-type(3) {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+    }
+
+    #lowerGrid {
+        display: grid;
+        grid-template-rows: repeat(5, 32px) 1.5fr repeat(2, 32px);
+        grid-template-columns: 2% repeat(2, auto) 2%;
+        align-items: center;
+    }
+
+    #lowerGrid #registered {
+        grid-row: 2 / 3;
+        grid-column: 2 / 4;
+        width: 100%;
+    }
+    
+    #lowerGrid button {
+        grid-row: 4 / 5;
+        grid-column: 2 / 4;
+        width: 50%;
+    }
+
+    #lowerGrid .vcard {
+        grid-row: 6 / 7;
+        grid-column: 2 / 3;
+    }
+    
+    #lowerGrid iframe {
+        grid-row: 6 / 7;
+        grid-column: 3 / 4;
+    }
+    
+    #lowerGrid #instruction {
+        grid-row: 8 / 9;
+        grid-column: 1 / -1;
+    }
+
+    #tipone {
+        width: 545px;
+        left: 545%;
+    }
+    
+    #tiptwo {
+        width: 545px;
+        left: 545%;
+    }
+        
+    #tipthree {
+        width: 230px;
+        left: 100%;
+    }
+    
+    #tipfour {
+        width: 320px;
+        left: -25%;
+    }
+
+    .correct,
+    .error {
+        background-color: #e69900;
+    }
+}

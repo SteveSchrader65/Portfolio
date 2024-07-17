@@ -1,0 +1,72 @@
+</head>
+
+<body>
+  <a id="skipNav" href="about.php#maincontent">Skip to Main Content</a>
+  <audio id="soundEffect" loop>
+    <source src="sounds/oceanSounds001.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Greeting Modal -->
+  <div class="scroll">
+    <div id="greeting">
+      <div id="newVisitor">
+        <p>Arrr !!! Welcome to the online home of CaptainSteve here in Perth, Australia. Navigate to the
+          "island" ye wish to visit:
+        </p>
+      </div>
+      <div id="returnVisitor">
+        <p>Arr !!! 'Tis good to see that ye hath returned, <span id="pirateName"></span> from <span
+            id="piratePort"></span>.
+          Grab-eth yer trusty <span id="pirateWeapon"></span> and continue yer voyages.</p>
+        <br>
+        <p>I be sure ye doth remember how to navigate the High Seas:</p>
+      </div>
+      <br>
+      <ul>
+        <li>Use ARROW keys to move about the screen</li>
+        <li>Beach yer ship on an island to view an page</li>
+        <li>Later I be addin' mouse- and touch-events</li>
+      </ul>
+      <br>
+      <p>After viewing my models, please make sure to visit the Piracy page for the facts (and a laugh),
+        and also my Contact Page, where you can tell me a little about yourself and yer own models.
+      </p>
+      <br>
+      <p>Thank ye fer visitin' my site and enjoy !!
+      </p>
+      <br>
+      <p>NOTE: To mute sound-effects, click-eth on the speaker icon in the top right-hand
+        corner.
+      </p>
+    </div>
+    <button id="setSail">Set Sail !!</button>
+  </div>
+  <!-- Greeting Modal End -->
+
+  <div id="sevenSeas">
+    <img id="oceanImage" src="images/ocean.jpg" height="120" width="120" alt="ocean image for backdrop">
+    <header>
+      <h1>The Life and Boats of CaptainSteve</h1>
+    </header>
+    <img id="ship" src="images/shipEAST.png" alt="Ship Sprite" />
+    <ul class="islands">
+      <li><button id="speakerOff"><img src="images/speakerOn.png" height="80" width="65"
+            alt="Mute sound-effects button"></button></li>
+      <li><button id="speakerOn"><img src="images/speakerOff.png" height="80" width="65"
+            alt="Turn sound-effects on button" /></button></li>
+      <li><a href="victory.php"><img src="images/islands/island1.png" alt="Victory Island"></a></li>
+      <li><a href="apostol.php"><img src="images/islands/island2.png" alt="Apostol Felipe Island"></a></li>
+      <li><a href="launch.php"><img src="images/islands/island3.png" alt="Bounty Launch Island"></a></li>
+      <li><a href="barge.php"><img src="images/islands/island4.png" alt="Queen Anne barge Island"></a></li>
+      <li><a href="about.php"><img src="images/islands/island5.png" alt="About Us Island"></a></li>
+      <li><a href="piracy.php"><img src="images/islands/island6.png" alt="Piracy policy Island"></a></li>
+      <li><a href="contact.php"><img src="images/islands/island7.png" alt="Contact Page Island"></a></li>
+    </ul>
+    <div id="speechBubble">
+      <span id="speechBubbleText">Avast, Cap'n !! Thataways lie dragons!!</span>
+    </div>
+    <div id="landingBubble">
+      <span id="landingBubbleText">Disembarking...</span>
+    </div>
+  </div>
+  <script src="js/landing.js"></script>

@@ -1,0 +1,969 @@
+@charset "utf-8";
+
+@font-face {
+	font-family: ChopinScript;
+	src: url("../fonts/chopin_script/ChopinScript.otf");
+}
+
+:root {
+    --shipWidth: "";
+    --shipHeight: "";
+    --xBubble: "";
+    --yBubble: "";
+    --arrowTop: "";
+    --arrowBottom: "";
+    --arrowLeft: "";
+    --arrowRight: "";
+    --arrowMargin: "";
+    --arrowStyle: "";
+}
+
+* {
+	font-family: "Deja Vu Sans", Verdana, "sans-serif";
+	font-size: 16px;
+	color: #000;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	max-width: 100%;
+	margin: 0 auto;
+    overflow: hidden;
+}
+
+#skipNav {
+	position: absolute;
+	top: 1%;
+	left: 1%;
+	font-weight: bold;
+	padding: 0.5em;
+}
+
+#skipNav:focus {
+	position: absolute;
+	color: black;
+	font-family: Times New Roman;
+	font-size: 1em;
+	background-color: yellow;
+	z-index: 10;
+}
+
+#sevenSeas {
+    width: 100%;
+    height: 100vh;
+}
+
+#oceanImage {
+    background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    animation: oceanMotion 5s ease-in-out infinite;
+	height: 120%;
+	width: 120%;
+}
+
+header {
+    position: sticky;
+	top: 0;
+	max-width: 99.5%;
+    max-height: 15vh;
+	margin: 0 auto;
+	background-image: url("../images/header.jpg");
+	border: 4px solid #B37700;
+    border-radius: 1em;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+h1 {
+	font-family: ChopinScript;
+	font-size: 6em;
+	font-style: italic;
+	color: black;
+	text-align: center;
+	padding: 0.5% 0 2.2% 0;
+}
+
+#ship {
+    visibility: hidden;
+    position: absolute;
+    width: var(--shipWidth);
+    height: var(--shipHeight);
+    z-index: 10;	
+    animation: shipMotion 7s linear infinite;
+}
+
+.scroll {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    height: 100%;
+    width: 70%;
+    z-index: 20;
+	background-image: url("../images/Cap&Map.png");	
+    background-repeat: no-repeat;
+}
+
+#greeting {
+    margin: 12% 23% 0% 32%;
+    color: #000;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: justify;
+    z-index: 20;
+}
+
+#greeting li {
+    margin-left: 12%;
+    font-size: 1.2em;
+}
+
+#newVisitor,
+#returnVisitor {    
+    display: none;
+}
+
+#setSail {
+    position: relative;
+    bottom: -10%;
+    left: 45%;
+    font-weight: bold;
+    height: 5%;
+    width: 15%;
+	border: solid 2px #000;
+	border-radius: 0.5em;
+	background-color: #FF0000;
+	box-shadow: 5px 5px #A9A9A9;
+    cursor: pointer;
+    z-index: 20;
+}
+
+#setSail:hover {
+	background-color: #FF8080;
+}
+
+#setSail:active {
+	transform: translateY(3px);
+	background-color: #32cd32;
+	box-shadow: none;
+}
+
+.islands {
+    height: 85vh;
+	position: relative;
+    display: grid;
+    grid-template-rows: repeat(9, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+}
+
+.islands li {
+    position: absolute;
+    list-style: none;
+}
+
+.islands li a img {
+    width: 130%;
+}
+
+#speakerOn,
+#speakerOff {
+    position: fixed;
+    top: calc(var(--bannerHeight) + 5px);
+    left: 95%;
+    visibility: hidden;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    grid-row: 1 / 2;
+    grid-column: 12 / -1;
+}
+
+.islands li a::after {
+    font-weight: bold;
+    font-size: 1.5em;
+    position: absolute;
+}
+
+.islands li:nth-of-type(3) {
+    grid-row: 1 / 2;
+    grid-column: 3 / 4;
+}
+
+.islands li:nth-of-type(4) {
+    grid-row: 3 / 4;
+    grid-column: 5 / 6;
+}
+
+.islands li:nth-of-type(5) {
+    grid-row: 2 / 3;
+    grid-column: 10 / 11;
+}
+
+.islands li:nth-of-type(6) {
+    grid-row: 5 / 6;
+    grid-column: 8 / 9;
+}
+
+.islands li:nth-of-type(7) {
+    grid-row: 7 / 8;
+    grid-column: 2 / 3;
+}
+
+.islands li:nth-of-type(8) {
+    grid-row: 7 / 8;
+    grid-column: 6 / 7;
+}
+
+.islands li:nth-of-type(9) {
+    grid-row: 7 / 8;
+    grid-column: 11 / 12;
+}
+
+.islands li:nth-of-type(3) a::after {
+    content: "HMS Victory";
+    color: #000000;
+    left: 25%;
+    top: 38%;
+}
+
+.islands li:nth-of-type(4) a::after {
+    content: "Apostol Felipe";
+    color: #ffffff;
+    left: 37%;
+    top: 27%;
+} 
+
+.islands li:nth-of-type(5) a::after {
+    content: "Bounty Launch";
+    color: #ffffff;
+    left: 37%;
+    top: 36%;
+} 
+
+.islands li:nth-of-type(6) a::after {
+    content: "Royal Barge";
+    color: #000000;
+    left: 58%;
+    top: 27%;
+} 
+
+.islands li:nth-of-type(7) a::after {
+    content: "About the Captain";
+    color: #000000;
+    left: 17%;
+    top: 35%;
+} 
+
+.islands li:nth-of-type(8) a::after {
+    content: "Piracy Policy";
+    color: #ffffff;
+    left: 20%;
+    top: 20%;
+} 
+
+.islands li:nth-of-type(9) a::after {
+    content: "Contact Page";
+    color: #ffffff;    
+    left: 44%;
+    top: 40%;
+} 
+
+.blur {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* PARENT CONTAINER FOR SPEECH BUBBLE */
+#speechBubble,
+#landingBubble {
+    position: absolute;
+    display: inline-block;
+}
+
+/* THIS CLASS CREATES AND DISPLAYS SPEECH BUBBLE */
+#speechBubble #speechBubbleText,
+#landingBubble #landingBubbleText {
+    visibility: hidden;
+    font-size: 0.9em;
+    font-weight: bold;
+    line-height: normal;
+    box-shadow: 2px 2px red;
+    background-color: #666666;
+    color: #fff;
+    text-align: center;
+    border-radius: 35%;
+    padding: 10px;
+    width: 180px;
+    position: absolute;
+    z-index: 15;
+    bottom: 100%;
+}
+
+#landingBubble #landingBubbleText {
+    font-size: 1em;
+    box-shadow: none;
+    background-color: #ffff99;
+    color: #cc0000;
+    border-color: black;
+    border-style: dashed;
+    border-radius: 0%;
+}
+
+/* THIS CLASS DRAWS AND POSITIONS TRIANGLE ON SPEECH BUBBLE */
+#speechBubble #speechBubbleText::after {
+    content: "";
+    position: absolute;
+    border-width: 9px;
+    border-style: solid;
+    z-index: 14;
+
+    /* Position of arrow on speech bubble */
+    top: var(--arrowTop);
+    bottom: var(--arrowBottom);
+    left: var(--arrowLeft);
+    right: var(--arrowRight);
+    margin: var(--arrowMargin);
+
+    /* Shape of arrow on speech bubble */
+    border-color: var(--arrowStyle);
+}
+
+/* THIS CLASS POSITIONS SPEECH BUBBLE WHERE REQUIRED */
+.location {
+    top: var(--yBubble);
+    left: var(--xBubble);
+}
+
+@keyframes oceanMotion {
+    0% { transform: translateX(1em) translateY(1em) }
+    50% { transform: translateX(4em) translateY(4em) }
+    100% { transform: translateX(1em) translateY(1em) }
+}
+
+@keyframes shipMotion {
+    0% { transform: skewX(0deg) rotate(3deg) }
+    25% { transform: skewX(15deg) }
+    50% { transform: rotate(-7deg) }
+    75% { transform: skewX(-15deg) }
+    100% { transform: skewX(0deg) rotate(3deg) }
+}
+
+/* Large Desktop sizing */
+@media screen and (min-width: 2201px) {
+    * {
+        font-size: 20px;
+    }
+    
+    h1 {
+        padding: 0% 0 2.2% 0;
+		font-size: 5.5em;
+	}
+
+    .scroll {
+        background-size: cover;
+        left: 10%;
+    }
+
+    #greeting {
+        margin: 12% 15% 0% 36%;
+        font-size: 2em;
+    }
+    
+    #greeting li {
+        margin-left: 13%;
+    }
+        
+    #setSail {
+        left: 50%;
+    }
+    
+    .islands li:nth-of-type(7) a::after {
+        color: #000000;    
+    }
+
+    .islands li:nth-of-type(9) a::after {
+        color: #000000;    
+        left: 36%;
+    } 
+}
+
+/* Desktop sizing */
+@media screen and (min-width: 1951px) and (max-width: 2200px) {
+	* {
+		font-size: 17px;
+	}
+    
+    h1 {
+        padding: 0% 0 2.2% 0;
+		font-size: 5.7em;
+	}
+
+    .scroll {
+        background-size: cover;
+        left: 10%;
+    }
+
+    #greeting {
+        margin: 12% 20% 0% 35%;
+        font-size: 1.2em;
+    }
+    
+    #greeting li {
+        margin-left: 13%;
+    }
+
+    #setSail {
+        left: 50%;
+    }
+
+    .islands li:nth-of-type(7) a::after {
+        color: #000000;
+        left: 10%;
+        top: 29%;
+    } 
+    
+    .islands li:nth-of-type(9) a::after {
+        color: #000000;    
+        left: 36%;
+        top: 35%;
+    } 
+}
+
+/* Small Laptop Sizing */
+@media screen and (min-width: 1451px) and (max-width: 1700px) {    
+    * {
+        font-size: 15px;
+    }
+    
+    h1 {
+        font-size: 5em;
+    }
+
+    .scroll {
+        left: 15%;
+        background-size: contain;
+    }
+
+    #greeting {
+        margin: 12% 15% 0% 35%;
+        font-size: 1.1em;
+    }
+    
+    #greeting li {
+        margin-left: 13%;
+    }
+    
+    #setSail {
+        bottom: -5%;
+        left: 50%;
+
+    }
+
+    .islands li a::after {
+        font-size: 1.1em;
+    }
+    
+    .islands li:nth-of-type(9) a::after {
+        color: #000000;
+        top: 40%;
+        left: 36%;    
+    } 
+}
+
+/* Large Tablet sizing */
+@media screen and (min-width: 1201px) and (max-width: 1450px) {
+    * {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 4.3em;
+    }
+
+    .scroll {
+        background-size: contain;
+        left: 15%;
+    }
+
+    #greeting {
+        margin: 12% 13% 0% 34%;
+        font-size: 0.7em;
+    }
+
+    #greeting li {
+        margin-left: 13%;
+        font-size: 1.1em;
+    }
+    
+    #setSail {
+        bottom: -3%;
+        left: 50%;
+        height: 4%;
+    }
+
+    .islands li a::after {
+        font-size: 1.1em;
+    }
+
+    .islands li:nth-of-type(7) a::after {
+        left: 9%;
+    }
+
+    .islands li:nth-of-type(9) a::after {
+        color: #000000;
+        top: 38%;
+        left: 34%;    
+    }
+}
+
+/* iPad Sizing */
+@media screen and (min-width: 1101px) and (max-width: 1200px) {
+    * {
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 4.3em;
+    }
+
+    .scroll {
+        top: 9%;
+        left: 25%;
+        width: 100%;
+        background-image: url("../images/scroll2.png");
+        background: cover;
+    }
+
+    #greeting {
+        margin: 9% 55% 0% 9%;
+        font-size: 0.5em;
+    }
+
+    #greeting li {
+        margin-left: 13%;
+        font-size: 0.8em;
+    }
+
+    #setSail {
+        height: 4%;
+        bottom: -4%;
+        left: 18%;
+    }
+    
+    .islands li a::after {
+        font-size: 0.85em;
+    }
+
+    .islands li:nth-of-type(7) a::after {
+        left: 9%;
+    }
+
+    .islands li:nth-of-type(9) a::after {
+        color: #000000;
+        top: 40%;
+        left: 36%;    
+    }
+}
+
+/* Intermediate sizing */
+@media screen and (min-width: 951px) and (max-width: 1100px) {
+    * {
+        font-size: 12.5px;
+    }
+
+    h1 {
+        font-size: 3.7em;
+    }
+
+    .scroll {
+        top: 9%;
+        left: 25%;
+        width: 100%;
+        background-image: url("../images/scroll2.png");
+        background: cover;
+    }
+
+    #greeting {
+        margin: 9% 52% 0% 9%;
+        font-size: 0.55em;
+    }
+
+    #greeting li {
+        margin-left: 13%;
+        font-size: 1em;
+    }
+
+    #setSail {
+        height: 4%;
+        bottom: -4%;
+        left: 23%;
+    }
+    
+    .islands li a::after {
+        font-size: 0.85em;
+    }
+
+    .islands li:nth-of-type(7) a::after {
+        left: 9%;
+    }
+
+    .islands li:nth-of-type(9) a::after {
+        color: #000000;
+        top: 40%;
+        left: 36%;    
+    }
+}
+
+/* Small Tablet Sizing */
+@media screen and (min-width: 851px) and (max-width: 950px) {
+    * {
+        font-size: 13px;
+    }
+
+    h1 {
+        font-size: 3.3em;
+    }
+
+    .scroll {
+        top: 8%;
+        left: 15%;
+        width: 70%;
+        background-image: url("../images/scroll2.png");
+        background: cover;
+    }
+
+    #greeting {
+        margin: 15% 19% 0% 20%;
+        font-size: 0.7em;
+    }
+
+    #greeting li {
+        margin-left: 13%;
+        font-size: 1em;
+    }
+    
+    #setSail {
+        bottom: -2%;
+        left: 40%;
+        height: 4%;
+        width: 20%;
+    }
+
+    .islands li a::after {
+        font-size: 0.7em;
+    }
+    
+    .islands li:nth-of-type(9) a::after {
+        content: "Contact";
+        color: #ffffff;
+        top: 40%;
+        left: 42%;    
+    }
+}
+
+/* Intermediate Sizing */
+@media screen and (min-width: 701px) and (max-width: 850px) {
+	* {
+		font-size: 12px;
+	}
+
+	h1 {
+		font-size: 3em;
+	}
+
+    .scroll {
+        top: 7%;
+        left: 14%;
+        width: 70%;
+        background-image: url("../images/scroll3.png");
+        background: cover;
+    }
+
+    #greeting {
+        margin: 18% 25% 0% 15%;
+        font-size: 0.7em;
+    }
+    
+    #greeting li {
+        margin-left: 12%;
+        font-size: 0.9em;
+    }
+
+    #setSail {
+        bottom: -11%;
+        left: 35%;
+        height: 3%;
+        width: 20%;
+    }
+
+    .islands li a::after {
+        font-size: 0.8em;
+    }
+
+    .islands li:nth-of-type(7) a::after {
+        content: "About";
+        left: 35%;
+    }
+    
+    .islands li:nth-of-type(8) a::after {
+        content: "Piracy";
+        top: 30%;
+        left: 25%;
+    }
+
+    .islands li:nth-of-type(9) a::after {
+        content: "Contact";
+        color: #000000;
+        top: 40%;
+        left: 35%;    
+    }
+}
+
+/* Intermediate Sizing */
+@media screen and (min-width: 551px) and (max-width: 700px) {
+	* {
+		font-size: 12px;
+	}
+
+	h1 {
+		font-size: 2.4em;
+	}
+    
+    .scroll {
+        top: 5%;
+        left: 6%;
+        width: 90%;
+        background-image: url("../images/scroll3.png");
+        background: cover;
+    }
+
+    #greeting {
+        margin: 19% 22% 0% 16%;
+        font-size: 0.7em;
+    }
+    
+    #greeting li {
+        margin-left: 12%;
+        font-size: 0.8em;
+    }
+
+    #setSail {
+        bottom: -9%;
+        left: 35%;
+        height: 3%;
+        width: 20%;
+    }
+
+    .islands li a::after {
+        font-size: 0.8em;
+    }
+
+    .islands li:nth-of-type(3) a::after {
+        content: "Victory";
+        left: 10%;
+    }
+
+    .islands li:nth-of-type(4) a::after {
+        content: "Apostol";
+        left: 21%;
+    }
+
+    .islands li:nth-of-type(5) a::after {
+        content: "Launch";
+        left: 25%;
+    }
+
+    .islands li:nth-of-type(6) a::after {
+        content: "Barge";
+        top: 23%;
+        left: 35%;
+    }
+
+    .islands li:nth-of-type(7) a::after {
+        content: "About";
+        left: 28%;
+    }
+    
+    .islands li:nth-of-type(8) a::after {
+        content: "Piracy";
+        left: 17%;
+    }
+
+    .islands li:nth-of-type(9) a::after {
+        content: "Contact";
+        color: #ffffff;
+        top: 40%;
+        left: 25%;    
+    }
+}
+
+/* Large Mobile Sizing */
+@media screen and (min-width: 401px) and (max-width: 550px) {
+	* {
+		font-size: 12px;
+	}
+
+	h1 {
+		font-size: 1.8em;
+	}
+    
+    .scroll {
+        top: 3%;
+        left: 0%;
+        width: 90%;
+        background-image: url("../images/scroll3.png");
+        background: cover;
+    }
+
+    #greeting {
+        margin: 25% 4% 0% 18%;
+        font-size: 0.4em;
+    }
+    
+    #greeting li {
+        font-size: 0.6em;
+    }
+
+    #setSail {
+        bottom: -5%;
+        left: 45%;
+        height: 3%;
+        width: 23%;
+    }
+
+    /* .islands {
+        grid-template-rows: repeat(9, 1fr);
+        grid-template-columns: repeat(12, 1fr);
+    } */
+
+    .islands li a::after {
+        font-size: 0.75em;
+    }
+
+    .islands li:nth-of-type(3) a::after {
+        content: "Victory";
+        left: 10%;
+    }
+
+    .islands li:nth-of-type(4) a::after {
+        content: "Apostol";
+        left: 21%;
+    }
+
+    .islands li:nth-of-type(5) a::after {
+        content: "Launch";
+        left: 25%;
+    }
+
+    .islands li:nth-of-type(6) a::after {
+        content: "Barge";
+        top: 23%;
+        left: 35%;
+    }
+
+    .islands li:nth-of-type(7) a::after {
+        content: "About";
+        left: 28%;
+    }
+    
+    .islands li:nth-of-type(8) a::after {
+        content: "Piracy";
+        left: 17%;
+    }
+
+    .islands li:nth-of-type(9) a::after {
+        content: "Contact";
+        color: #ffffff;
+        top: 40%;
+        left: 25%;    
+    }
+}
+
+/* Small Mobile Sizing */
+@media screen and (max-width: 400px) {
+	* {
+		font-size: 11px;
+	}
+
+	h1 {
+		font-size: 1.8em;
+	}
+    
+    .scroll {
+        top: 1%;
+        left: 0%;
+        width: 88%;
+        background-image: url("../images/scroll3.png");
+        background: cover;
+    }
+
+    #greeting {
+        margin: 28% 4% 0% 18%;
+        font-size: 0.4em;
+    }
+    
+    #greeting li {
+        font-size: 0.6em;
+    }
+
+    #setSail {
+        bottom: -3%;
+        left: 45%;
+        height: 4%;
+        width: 27%;
+    }
+
+    /* .islands {
+        grid-template-rows: repeat(9, 1fr);
+        grid-template-columns: repeat(12, 1fr);
+    } */
+
+    .islands li a::after {
+        font-size: 0.75em;
+    }
+
+    .islands li:nth-of-type(3) a::after {
+        content: "Victory";
+        left: 10%;
+    }
+
+    .islands li:nth-of-type(4) a::after {
+        content: "Apostol";
+        left: 21%;
+    }
+
+    .islands li:nth-of-type(5) a::after {
+        content: "Launch";
+        left: 25%;
+    }
+
+    .islands li:nth-of-type(6) a::after {
+        content: "Barge";
+        top: 23%;
+        left: 35%;
+    }
+
+    .islands li:nth-of-type(7) a::after {
+        content: "About";
+        left: 28%;
+    }
+    
+    .islands li:nth-of-type(8) a::after {
+        content: "Piracy";
+        left: 17%;
+    }
+
+    .islands li:nth-of-type(9) a::after {
+        content: "Contact";
+        color: #ffffff;
+        top: 40%;
+        left: 25%;    
+    }
+}

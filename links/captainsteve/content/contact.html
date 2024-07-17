@@ -1,0 +1,91 @@
+<main>
+	<form action="#" method="post" id="enlist">
+		<fieldset>
+			<legend>Enlistment</legend>
+            <div id="formGrid">
+                <h2>Sign-up now to join CaptainSteve&#39;s crew by complete-ething this form</h2>
+                <label class="input-field" for="firstName">First Name</label>
+                <input type="text" name="firstName" id="firstName">
+                <span id="flagColumnfirstName"></span>
+                <label class="input-field" for="lastName">Last Name</label>
+                <input type="text" name="lastName" id="lastName">
+                <span id="flagColumnlastName"></span>
+                <label class="tooltip input-field" for="pirateName">Pirate Name
+                    <span class="tooltiptext" id="tipone">Tell us your pirate nom-de-plume here</span>
+                </label>
+                <input type="text" name="pirateName" id="pirateName">
+                <span id="flagColumnpirateName"></span>
+                <label class="tooltip input-field" for="piratePort">Home Port
+                    <span class="tooltiptext" id="tiptwo">Enter your main port o' call here</span>
+                </label>
+                <input type="text" name="piratePort" id="piratePort">
+                <span id="flagColumnpiratePort"></span>
+                <label class="tooltip input-field" for="country" id="country-label">Country
+                    <span class="tooltiptext" id="tipthree">Select your Country</span>
+                </label>
+                <select name="country" id="country">
+                    <option value="">Tell me where you are located</option> 
+                    <option value="ARG">Argentina</option>
+                    <option value="OZ">Australia</option>
+                    <option value="BRZ">Brazil</option>
+                    <option value="CAN">Canada</option>
+                    <option value="CHL">Chile</option>
+                    <option value="CHI">China</option>
+                    <option value="DEN">Denmark</option>
+                    <option value="FRA">France</option>
+                    <option value="JAP">Japan</option>
+                    <option value="GER">Germany</option>
+                    <option value="IND">India</option>
+                    <option value="JEW">Israel</option>
+                    <option value="IT">Italy</option>
+                    <option value="NED">Netherlands</option>
+                    <option value="NZ">New Zealand</option>
+                    <option value="RUS">Russia</option>
+                    <option value="SA">South Africa</option>
+                    <option value="ESP">Spain</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="USA">United States of America</option>    
+                    <option value="NONE">My country is not listed &#58;&#40;</option>
+                </select>
+                <span id="flagColumncountry"></span>
+                <div id="weaponGrid">
+                    <h3 id="weaponChosen">-- Choose yer Pirate Weapon --</h3>
+                    <!-- <span id="flagColumnnweapon"></span> -->
+                    <input type="radio" id="weapon1" name="weapon" value="cutlass">
+                    <label for="weapon1">Cutlass</label><br>
+                    <input type="radio" id="weapon2" name="weapon" value="knife">
+                    <label for="weapon2">Knife (Held in teeth)</label><br>
+                    <input type="radio" id="weapon3" name="weapon" value="pistol">
+                    <label for="weapon3">Pistol</label>
+                    <input type="radio" id="weapon4" name="weapon" value="default" checked>
+                    <label for="weapon4">Default</label>
+                </div>
+                <label class="tooltip input-field" for="email">Email Address
+                    <span class="tooltiptext" id="tipfour">Must include &#39;&#64;&#39; and your domain-name (eg: george&#64;home.net)</span>
+                </label>
+                <input type="text" name="email" id="email">
+                <span id="flagColumnemail"></span>
+                <label for="aboutme">Ask a question, or tell CaptainSteve about yer own ships</label>
+                <textarea name="aboutme" id="aboutme" rows="5" cols="40" maxlength="4000" wrap="hard"></textarea>
+            </div>
+            <div id="lowerGrid">
+                <div class="vcard" id="hcard-Captain-Steve">
+                    <span class="fn">Captain Steve</span>
+                    <div class="org">CaptainSteve Industries Inc.</div>
+                    <a class="email" href="mailto:steve@captainsteveperth.com">steve@captainsteveperth.com</a>
+                    <div class="street-address">25 Aberdeen St</div>
+                    <span class="locality">Perth</span>
+                    <span class="region">WA</span>
+                    <span class="postal-code">6000</span>
+                    <span class="country-name">Australia</span>
+                </div>
+                <h3 id="registered">Arrr!! Welcome Aboard!!</h3>
+                <button id="enlist-button" type="submit">Enlist</button> 
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5656.935371958715!2d115.86377722308619!3d-31.947721656097738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2a32bacdf53147a1%3A0x6a13f7dd60dab2c8!2sNorth%20Metropolitan%20TAFE!5e0!3m2!1sen!2sau!4v1646118943123!5m2!1sen!2sau" 
+                    allowfullscreen="" loading="lazy">
+                </iframe>
+                <h4 id="instruction">Note: Double-click-eth any input field to clear</h4>
+            </div>
+        </fieldset>
+	</form>
+</main>
