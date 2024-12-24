@@ -471,7 +471,6 @@ nav {
   height: 78vh;
   background-color: var(--panelBackColour);
   border: 2px solid var(--panelBorderColour);
-  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0;
@@ -526,7 +525,7 @@ nav {
   display: block;
   font-size: 1rem;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin: -2rem 0 0 0;
   color: #333;
   border-bottom: 2px solid blue;
 }
@@ -552,26 +551,35 @@ nav {
 }
 
 #block4 #projectPanel::-webkit-scrollbar {
-  width: 8px;
+  width: 0.8rem;
 }
 
 #block4 #projectPanel::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--panelScrollTrackColour);
 }
 
 #block4 #projectPanel::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: var(--scrollThumbColour);
+  border-radius: 5px;
 }
 
 #block4 #projectPanel::-webkit-scrollbar-thumb:hover {
-  background: #666;
+  background: var(--scrollThumbHoverColour);
+}
+
+#block4 #projectPanel::-webkit-scrollbar-button {
+  background: var(--scrollButtonColour);
+  border-radius: 5px;
+}
+
+#block4 #projectPanel::-webkit-scrollbar-button:hover {
+  background: var(--scrollButtonHoverColour);
 }
 
 #block4 #closePanel {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
+  top: 0.5rem;
+  right: 0.25rem;
   background-color: var(--panelBackColour);
   border: none;
   border-radius: 50%;
@@ -587,8 +595,7 @@ nav {
 }
 
 #block4 #closePanel:hover {
-  background: #e5e5e5;
-  transform: scale(1.1);
+  transform: scale(1.25);
 }
 
 #block4 #projectPanel.closing {
@@ -971,21 +978,21 @@ footer a img {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--scrollThumbColour1);
+    background: var(--scrollThumbColour);
     border-radius: 5px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollThumbColour2);
+    background: var(--scrollThumbHoverColour);
   }
 
   ::-webkit-scrollbar-button {
-    background-color: var(--scrollButtonColour1);
+    background-color: var(--scrollButtonColour);
     border-radius: 5px;
   }
 
   ::-webkit-scrollbar-button:hover {
-    background-color: var(--scrollButtonColour2);
+    background-color: var(--scrollButtonHoverColour);
   }
 }
 
