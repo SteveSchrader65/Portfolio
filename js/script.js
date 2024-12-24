@@ -50,10 +50,10 @@ function setViewingMode() {
     root.style.setProperty("--colour1", "#000000")
     root.style.setProperty("--colour2", "#ffffff")
     root.style.setProperty("--scrollTrackColour", "#b4b2b1")
-    root.style.setProperty("--scrollThumbColour1", "#1d6dc9")
-    root.style.setProperty("--scrollThumbColour2", "#6c9ee0")
-    root.style.setProperty("--scrollButtonColour1", "#6c9ee0")
-    root.style.setProperty("--scrollButtonColour2", "#8fbcef")
+    root.style.setProperty("--scrollThumbColour", "#1d6dc9")
+    root.style.setProperty("--scrollThumbHoverColour", "#3d82dd")
+    root.style.setProperty("--scrollButtonColour", "#6c9ee0")
+    root.style.setProperty("--scrollButtonHoverColour", "#5198ea")
     root.style.setProperty("--scrollBorderColour", "#b7b6fc")
     root.style.setProperty("--progressColour", "#cccc00")
     root.style.setProperty("--tipBackgroundColour", "#808080")
@@ -64,6 +64,7 @@ function setViewingMode() {
 
     root.style.setProperty("--panelBackColour", "#97b8e3")
     root.style.setProperty("--panelBorderColour", "#164684")
+    root.style.setProperty("--panelScrollTrackColour", "##b7d3f7")
 
     root.style.setProperty("--contactFormBorderColour", "#737373")
     root.style.setProperty("--contactLabelColour", "#000000")
@@ -116,10 +117,10 @@ function setViewingMode() {
     root.style.setProperty("--colour1", "black")
     root.style.setProperty("--colour2", "white")
     root.style.setProperty("--scrollTrackColour", "#757270")
-    root.style.setProperty("--scrollThumbColour1", "#0a2647")
-    root.style.setProperty("--scrollThumbColour2", "#205295")
-    root.style.setProperty("--scrollButtonColour1", "#1961b3")
-    root.style.setProperty("--scrollButtonColour2", "#4282d7")
+    root.style.setProperty("--scrollThumbColour", "#0a2647")
+    root.style.setProperty("--scrollThumbHoverColour", "#153a6a")
+    root.style.setProperty("--scrollButtonColour", "#1961b3")
+    root.style.setProperty("--scrollButtonHoverColour", "#1c3c66")
     root.style.setProperty("--scrollBorderColour", "#0e0cf3")
     root.style.setProperty("--progressColour", "#0e0cf3")
     root.style.setProperty("--tipBackgroundColour", "#3399ff")
@@ -130,6 +131,7 @@ function setViewingMode() {
 
     root.style.setProperty("--panelBackColour", "#205ea4")
     root.style.setProperty("--panelBorderColour", "#0e3c70")
+    root.style.setProperty("--panelScrollTrackColour", "#184e8c")
 
     root.style.setProperty("--contactFormBorderColour", "#0033cc")
     root.style.setProperty("--contactLabelColour", "#0d0d0d")
@@ -796,7 +798,7 @@ function init() {
     block3SetUp()
   }
 
-  block4SetUp();
+  block4SetUp();  // Use grid to display images -- possibly for Projects ??
   // block5SetUp()
   block6SetUp()
   footerDate()
