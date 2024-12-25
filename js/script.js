@@ -214,8 +214,8 @@ function setFontsAndSizings() {
   let screenWidth = window.innerWidth
   let temp = screenWidth / 3395
 
-  navLinkSize = _clamp(temp * 4.5, 0.85, 4.75)
-  navDropLinkSize = _clamp(temp * 4, 0.6, 4)
+  navLinkSize = _clamp(temp * 4, 0.85, 4.25)
+  navDropLinkSize = _clamp(temp * 3.5, 0.6, 3.75)
   navDropMenuWidth = _clamp(temp * 35, 4.5, 49)
   hamburgerWidth = _clamp(temp * 150, 18, 32)
   hamburgerLayerHeight = _clamp(temp * 20, 1, 3)
@@ -327,12 +327,14 @@ function unanimate() {
 }
 
 function block2SetUp() {
-  // Modify to read single word, then breakdown to create 'letters' array
-  const letters = document.querySelectorAll(".animateMe")
+  const letters = ["S", "t", "e", "v", "e", " ", ".", ".", "."]
   const darkArray = ["red", "orange", "greenyellow", "limegreen", "#3399ff", "#e600e6"]
   const lightArray = ["#e60000", "#e69500", "#ffff00", "#00cc00", "#0000ff", "#990099"]
   let colourArray
-  let colourIndex
+  const output = document.querySelector("#animateMe")
+
+  // Create span elements for each letter
+  output.innerHTML = letters.map((letter) => `<span class="letter">${letter}</span>`).join("")
 
   if (viewingMode == "lightness") {
     colourArray = lightArray
@@ -341,9 +343,10 @@ function block2SetUp() {
   }
 
   setInterval(() => {
-    letters.forEach((letter) => {
-      colourIndex = Math.floor(Math.random() * colourArray.length)
-      letter.style.color = colourArray[colourIndex]
+    // Select all letter spans and update their colors
+    document.querySelectorAll(".letter").forEach((letterSpan) => {
+      const colourIndex = Math.floor(Math.random() * colourArray.length)
+      letterSpan.style.color = colourArray[colourIndex]
     })
   }, 250)
 }
@@ -499,148 +502,108 @@ function block4SetUp() {
 }
 
 function block5SetUp() {
-  const timeline = document.querySelector(".events ol")
-  const events = document.querySelectorAll(".events ol li a")
-  const before = document.querySelector("#before")
-  const after = document.querySelector("#after")
-  const arrows = document.querySelectorAll("#before .arrow, #after .arrow")
-  const arrowDelay = 250
-  let timelineExtended = false
-  let prevEvent = null
-  let prevYr = null
-  let prevInfo = null
-  let clicked = false
-  let md
-
-  if (timelineExtended) {
-    md = Math.floor(events.length / 2)
-  } else {
-    md = Math.ceil(events.length / 2) - 1
-  }
-
-  arrows.forEach((arrow, index) => {
-    const arrowAnim = new KeyframeEffect(
-      arrow,
-      [
-        {opacity: 0, transform: "translateX(4vw)"},
-        {opacity: 1, transform: "translateX(2vw)"},
-        {opacity: 1, transform: "translateX(-2vw)"},
-        {opacity: 0, transform: "translateX(-4vw)"},
-      ],
-      {duration: 2000, delay: arrowDelay * index, iterations: Infinity, easing: "linear"}
-    )
-
-    new Animation(arrowAnim).play()
-  })
-
-  events.forEach((event) => {
-    const eventDate = event.getAttribute("data-date")
-    let yr = Number(eventDate.substring(eventDate.length - 4))
-    let midYr = Number(
-      events[md]
-        .getAttribute("data-date")
-        .substring(events[md].getAttribute("data-date").length - 4)
-    )
-
-    event.addEventListener("mouseover", () => {
-      if (!timelineExtended && yr > midYr) {
-        before.style.visibility = "visible"
-
-        const futureAnim = new KeyframeEffect(timeline, [{transform: "translateX(-20%)"}], {
-          duration: 1500,
-          easing: "ease-out",
-          fill: "forwards",
-        })
-
-        new Animation(futureAnim).play()
-
-        timelineExtended = true
-        after.style.visibility = "hidden"
-      } else if (timelineExtended && yr < midYr) {
-        after.style.visibility = "visible"
-
-        const pastAnim = new KeyframeEffect(timeline, [{transform: "translateX(0%)"}], {
-          duration: 1500,
-          easing: "ease-out",
-          fill: "forwards",
-        })
-
-        new Animation(pastAnim).play()
-
-        timelineExtended = false
-        before.style.visibility = "hidden"
-      }
-
-      event.style.color = "var(--highlightColour1)"
-    })
-
-    event.addEventListener("mouseout", () => {
-      if (clicked) {
-        event.style.color = "var(--highlightColour2)"
-      } else {
-        event.style.color = "var(--textColour)"
-      }
-
-      clicked = false
-    })
-
-    event.addEventListener("click", () => {
-      const eventInfo = document.querySelector(eventDate)
-      let eventAnim
-      let eventDirection
-
-      clicked = true
-      event.style.color = "var(--highlightColour2)"
-      events.forEach((date) => {
-        if (prevEvent) {
-          // This branch followed only for second and subsequent selections
-          if (event != prevEvent) {
-            prevEvent.style.color = "var(--textColour)"
-
-            // Slide current event off-screen
-            if (date == prevEvent) {
-              if (prevYr < midYr) {
-                eventDirection = "translateX(-200%)"
-              } else {
-                eventDirection = "translateX(200%)"
-              }
-
-              eventAnim = new KeyframeEffect(prevInfo, [{transform: eventDirection}], {
-                duration: 750,
-                easing: "ease-out",
-                fill: "forwards",
-              })
-
-              new Animation(eventAnim).play()
-            }
-          }
-        }
-
-        // Slide new event onto screen
-        if (date == event) {
-          if (yr < midYr) {
-            eventInfo.style.transform = "translateX(-200%)"
-          } else {
-            eventInfo.style.transform = "translateX(200%)"
-          }
-
-          eventAnim = new KeyframeEffect(eventInfo, [{transform: "translateX(0%)"}], {
-            duration: 1500,
-            easing: "linear",
-            fill: "forwards",
-          })
-
-          eventInfo.style.display = "inline-block"
-          new Animation(eventAnim).play()
+  const timeline = document.querySelector("#block5 .timeline")
+  const timelineEvents = document.querySelectorAll("#block5 .event")
+  const resumeButton = document.querySelector("#resumeDownloadButton")
+  const observer = new IntersectionObserver(
+    (events) => {
+      events.forEach((event) => {
+        if (event.isIntersecting) {
+          _animateTimeline(event.target, true)
+        } else {
+          _animateTimeline(event.target, false)
         }
       })
+    },
+    {
+      threshold: 0.2,
+      rootMargin: "-20% 0px",
+    }
+  )
 
-      prevEvent = event
-      prevYr = yr
-      prevInfo = eventInfo
-      prevInfo.style.display = "none;"
-    })
+  _addProgressDots()
+  _updateProgressOnScroll()
+
+  timelineEvents.forEach((event, index) => {
+    event.classList.add(index % 2 === 0 ? "left" : "right")
+    observer.observe(event)
   })
+
+  resumeButton.addEventListener("click", function () {
+    _thankYouBubble(this)
+  })
+
+  function _animateTimeline(event, isEntering) {
+    const content = event.querySelector(".content")
+
+    if (isEntering) {
+      event.classList.add("visible")
+      content.classList.add("reveal")
+
+      setTimeout(() => {
+        event.querySelector(".connect-dot").style.transitionDelay = "0.2s"
+        event.style.setProperty("--line-delay", "0.3s")
+      }, 100)
+    } else {
+      event.classList.remove("visible")
+      content.classList.remove("reveal")
+    }
+  }
+
+  function _addProgressDots() {
+    timelineEvents.forEach(() => {
+      const dot = document.createElement("div")
+
+      dot.className = "progress-dot"
+      timeline.appendChild(dot)
+    })
+  }
+
+  function _updateProgressOnScroll() {
+    const dots = document.querySelectorAll("#block5 .progress-dot")
+
+    dots.forEach((dot, index) => {
+      dot.style.top = `${(index / (dots.length - 1)) * 100}%`
+    })
+
+    window.addEventListener("scroll", () => {
+      const timelineSection = document.querySelector("#block5 #history")
+      const sectionRect = timelineSection.getBoundingClientRect()
+      const scrollProgress = (window.innerHeight - sectionRect.top) / (sectionRect.height + window.innerHeight)      
+      const scrollProgressPercent = Math.min(Math.max(scrollProgress, 0), 1) * 100
+
+      timeline.style.setProperty("--progress", scrollProgressPercent)
+      timelineEvents.forEach((event, index) => {
+        const rect = event.getBoundingClientRect()
+        const isActive =
+          rect.top <= window.innerHeight * 0.6 && rect.bottom >= window.innerHeight * 0.4
+
+        if (isActive) {
+          event.classList.add("active")
+          dots[index]?.classList.add("active")
+        } else {
+          event.classList.remove("active")
+          dots[index]?.classList.remove("active")
+        }
+      })
+    })
+  }
+
+  function _thankYouBubble(buttonElement) {
+    const bubbleContainer = document.createElement("div");
+    bubbleContainer.style.position = "relative";
+
+    const bubble = document.createElement("div");
+    bubble.className = "thank-you-bubble";
+    bubble.textContent = "Thank You!";
+
+    // Insert container right after the button
+    buttonElement.parentNode.insertBefore(bubbleContainer, buttonElement.nextSibling);
+    bubbleContainer.appendChild(bubble);
+    bubble.addEventListener("animationend", () => {
+        bubbleContainer.remove();
+    });
+  }
 }
 
 async function block6SetUp() {
@@ -661,15 +624,11 @@ async function block6SetUp() {
 
     try {
       // Send main email
-      const response = await emailjs.send(
-        "service_7pgphhl",
-        "template_kmnam9c",
-        {
-          from_name: formData.get("fullName"),
-          from_email: formData.get("email"),
-          message: formData.get("message"),
-        }
-      )
+      const response = await emailjs.send("service_7pgphhl", "template_kmnam9c", {
+        from_name: formData.get("fullName"),
+        from_email: formData.get("email"),
+        message: formData.get("message"),
+      })
 
       // If copy requested, send confirmation email
       if (sendCopy) {
@@ -762,30 +721,20 @@ function footerDate() {
   document.querySelector("footer h3").innerHTML = "&copySteve Schrader " + currentYear
 }
 
+function launchControl() {
+  // Get all text_blocks
+  // Get current height of each text_block
+  // Event listeners to animate each height to decrease from current to zero.
+}
+
 function init() {
-  // NOTES - 23/01/2024
-  // Studies page CSS and wrap animations
-  // Employment page CSS and wrap animations (timeline swaps to vertical for smaller devices)
-  // Projects page CSS and wrap animations
-  // Re-consider layout of text blocks for all sections
-  // Check coolors.com for colour palette contrasts
-  // Edit and finalize text portions
   // CONCEPT - 16/10/2024: Button (-) to collapse all panels leaving only the rocket images ...
   //
   // NOTES - 14/12/2024
-  // favicon
-  // Wavy footer for each section (not Contact)
   // Backgrounds animated to on-scroll. Images should scroll in and out as user scrolls past section.
   // (Various images for each section: stars, science/math formulae, computer code)
   // Placeholder image for Dip WebDev
-  // !! Re-do HTML/CSS using Tailwind !!
   //
-  // Education section:
-  // Grid consisting two rows of two images each
-  // Small images for CertIV/larger images for Diplomas (Diploma to left, CertIV to right)
-  // On hover (for each image), other images disappear, selected image expands and
-  // text block appears.
-
   setViewingMode()
   setFontsAndSizings()
 
@@ -796,10 +745,11 @@ function init() {
     unanimate()
     block2SetUp()
     block3SetUp()
+    block4SetUp()
+    block5SetUp()
+    launchControl()
   }
 
-  block4SetUp();  // Use grid to display images -- possibly for Projects ??
-  // block5SetUp()
   block6SetUp()
   footerDate()
 
