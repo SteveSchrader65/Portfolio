@@ -505,6 +505,7 @@ function block5SetUp() {
   const timeline = document.querySelector("#block5 .timeline")
   const timelineEvents = document.querySelectorAll("#block5 .event")
   const resumeButton = document.querySelector("#resumeDownloadButton")
+
   const observer = new IntersectionObserver(
     (events) => {
       events.forEach((event) => {
@@ -521,6 +522,35 @@ function block5SetUp() {
     }
   )
 
+
+  const _downloadResumeFile = async (url, filename = "") => {
+    try {
+      if (filename.length === 0) {
+        filename = url.split("/").pop()
+      }
+
+      const response = await fetch(url)
+      if (!response.ok) throw new Error("Download failed")
+
+      const blob = await response.blob()
+      const href = window.URL.createObjectURL(blob)
+
+      const link = document.createElement("a")
+      link.download = filename
+      link.href = href
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(href)
+
+      return true
+    } catch (error) {
+      console.error("Download error:", error)
+      return false
+    }
+  }
+
+
   _addProgressDots()
   _updateProgressOnScroll()
 
@@ -529,8 +559,17 @@ function block5SetUp() {
     observer.observe(event)
   })
 
-  resumeButton.addEventListener("click", function () {
+  resumeButton.addEventListener("click", function (e) {
+    e.preventDefault()
     _thankYouBubble(this)
+
+    setTimeout(async () => {
+      const success = await _downloadResumeFile(this.href, "resumeSteveSchrader.pdf")
+      if (!success) {
+        // Fallback to opening in new tab if download fails
+        window.open(this.href, "_blank")
+      }
+    }, 1000)
   })
 
   function _animateTimeline(event, isEntering) {
@@ -569,7 +608,8 @@ function block5SetUp() {
     window.addEventListener("scroll", () => {
       const timelineSection = document.querySelector("#block5 #history")
       const sectionRect = timelineSection.getBoundingClientRect()
-      const scrollProgress = (window.innerHeight - sectionRect.top) / (sectionRect.height + window.innerHeight)      
+      const scrollProgress =
+        (window.innerHeight - sectionRect.top) / (sectionRect.height + window.innerHeight)
       const scrollProgressPercent = Math.min(Math.max(scrollProgress, 0), 1) * 100
 
       timeline.style.setProperty("--progress", scrollProgressPercent)
@@ -590,19 +630,19 @@ function block5SetUp() {
   }
 
   function _thankYouBubble(buttonElement) {
-    const bubbleContainer = document.createElement("div");
-    bubbleContainer.style.position = "relative";
+    const bubbleContainer = document.createElement("div")
+    const bubble = document.createElement("div")
 
-    const bubble = document.createElement("div");
-    bubble.className = "thank-you-bubble";
-    bubble.textContent = "Thank You!";
+    bubbleContainer.style.position = "relative"
+    bubble.className = "thank-you-bubble"
+    bubble.textContent = "Thank You!"
 
     // Insert container right after the button
-    buttonElement.parentNode.insertBefore(bubbleContainer, buttonElement.nextSibling);
-    bubbleContainer.appendChild(bubble);
+    buttonElement.parentNode.insertBefore(bubbleContainer, buttonElement.nextSibling)
+    bubbleContainer.appendChild(bubble)
     bubble.addEventListener("animationend", () => {
-        bubbleContainer.remove();
-    });
+      bubbleContainer.remove()
+    })
   }
 }
 
@@ -718,18 +758,18 @@ async function block6SetUp() {
 function footerDate() {
   const currentYear = new Date().getFullYear()
 
-  document.querySelector("footer h3").innerHTML = "&copySteve Schrader " + currentYear
+  document.querySelector("#copyDate").innerHTML = "&copySteve Schrader " + currentYear
 }
 
 function launchControl() {
+  // CONCEPT - 16/10/2024: Button (-) to collapse all panels leaving only the rocket images ...
+  // Un-hide launch/land buttons (to comply w/prefers-reduced-motion setting)
   // Get all text_blocks
   // Get current height of each text_block
   // Event listeners to animate each height to decrease from current to zero.
 }
 
 function init() {
-  // CONCEPT - 16/10/2024: Button (-) to collapse all panels leaving only the rocket images ...
-  //
   // NOTES - 14/12/2024
   // Backgrounds animated to on-scroll. Images should scroll in and out as user scrolls past section.
   // (Various images for each section: stars, science/math formulae, computer code)
