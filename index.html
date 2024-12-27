@@ -30,7 +30,7 @@
           <!-- When button pressed, then ".collapse" class added to all section blocks with ".text_block" class -->
           <!-- Button image toggles when pressed (as per light/dark button) -->
           <!-- PanelsOpen: rocket w/chute deployed    PanelsClosed: rocket ignited -->
-          <!-- <div class="launchControl">
+          <!-- <div id="launchControl">
             <button id="liftoff">
               <span class="tooltip" data-tooltip="Press to Lift-Off">
                 // Panels Open
@@ -122,8 +122,9 @@
         <p>From foundational web technologies to advanced frameworks such as NextJS and NodeJS, each section reflects my commitment
           to continuous learning and professional growth. As I explore new technologies to expand my skillset, this
           portfolio serves as both a testament to my journey and a dynamic showcase of my web developer projects.</p>
-        <p>This portfolio demonstrates my expertise in modern web technologies, featuring projects that highlight my skills in front-end
-          development, programming, and database management. Through my work and studies, I have worked to develop proficiency in creating practical, user-centered solutions.</p>
+        <p>This portfolio aims to demonstrate my growing expertise in modern web technologies, featuring projects that highlight my
+          skills in front-end development, programming, and database management. Through my work and studies, I have worked to develop
+          proficiency in creating practical, user-centered solutions.</p>
         <p>(My current plan is to re-do this site in React, once I gain more proficiency with that JavaScript framework - in its' present
           state, the site uses vanilla JS to perform DOM manipulation for the animations.)</p>
         <p>3 ... 2 ... 1 ...</p>
@@ -147,8 +148,10 @@
         <p>Hello and thank you for visiting my online portfolio, where innovation meets practical experience in web development and programming. I am excited to showcase the skills and projects that I have developed since making the life-changing decision to return to full-time studies.</p>
         <p>After two decades in the transport industry, I reached a pivotal moment and chose to pursue a long-held passion for IT and programming - an interest that had been with me since my teen years.</p>
         <p>In 2019, I took the bold step of returning to studies, a journey that culminated in earning Diplomas of Advanced Programming (2023) and Front-End Web Development (2024). This transition has allowed me to combine my extensive professional experience with cutting-edge technical skills.</p>
-        <p>Throughout this journey, I have developed expertise in numerous programming languages and frameworks, with a particular enthusiasm for JavaScript and its modern frameworks. I've also gained valuable experience working directly with clients, gathering requirements, and implementing solutions based on user feedback. My involvement in team projects has honed my abilities in project planning, UI development, and collaborative problem-solving.</p>
-        <p>Since completing formal studies, I continue to expand my skill-set through tutorials and online courses, delving into frameworks such as ExpressJS and ThreeJS. From crafting responsive websites to developing mobile applications and complex database solutions, my work demonstrates both technical versatility and a commitment to continuous learning.</p>
+        <p>Throughout this journey, I have worked to develop my knowledge in numerous programming languages and frameworks, with a particular enthusiasm for JavaScript and its modern frameworks. I've also gained valuable experience working directly with clients, gathering requirements, and
+          implementing solutions based on user feedback. My involvement in team projects has honed my abilities in project planning, UI development, and collaborative problem-solving.</p>
+        <p>Since completing formal studies, I continue to expand my skill-set through tutorials and online courses, delving into frameworks such as ExpressJS and ThreeJS. From crafting responsive websites to developing mobile applications and complex database solutions, my work demonstrates
+          both technical versatility and a commitment to continuous learning.</p>
         <p>I trust that the projects showcased here reflect my practical approach to problem-solving, my ability to adapt to diverse technical challenges, and my dedication to creating efficient, user-focused solutions.</p>
         <div class="blockEnd"></div>
         <div class="curve">
@@ -163,6 +166,7 @@
         <span class="title">Studies</span>
       </div>
       <section class="text_block" id="block3">
+
         <p>In 2019, I made the decision to re-skill in software development. Over the ensuing four (and a bit)-year period of full-time study, I worked to grow my knowledge base from programming fundamentals through to advanced web development.</p>
         <p style="margin-bottom: 1rem;">Select a diploma for further information:</p>
         <ul>
@@ -186,10 +190,9 @@
         </ul>
         <div id="output"></div>
         <p id="outro">
-          Since ending formal studies, I have aimed to further my knowledge with online tutorials
-          and courses in HTML/CSS and JavaScript frameworks such as React and TypeScript. Indeed,
-          this website was created from scratch using learned skills and (where necessary) researching
-          features that I wished to incorporate.
+          Since ending formal studies, I have aimed to further my knowledge with online tutorials and courses in HTML/CSS and JavaScript frameworks such
+          as React. Indeed, this website was created from scratch using learned skills and (where necessary) researching features that I wished to
+          incorporate.
         </p>
         <div class="diploma-info" id="course1">
           <p>2023 - Diploma of Information Technology (Advanced Programming), North Metropolitan TAFE</p>
@@ -367,7 +370,7 @@
               <img src="images/onering4.png" width="1152" height="515" alt="Contact page from One Ring Rentals">
               <p>User interaction is facilitated through a professionally designed contact form, allowing potential renters to submit property inquiries. The form includes input validation and data processing capabilities, ensuring reliable communication between users and property managers.</p>
               <img src="images/onering5.png" width="1152" height="515" alt="404 page from One Ring Rentals">
-              <p>The project serves as a comprehensive demonstration of modern web development practices, combining front-end frameworks, database integration, image management, and responsive design into a cohesive, professional application. Even the 404 error page was crafted with attention to detail, incorporating humor while maintaining professional functionality.</p>
+              <p>The project serves as a comprehensive demonstration of modern web development practices, combining front-end frameworks, database integration, image management, and responsive design into a cohesive, professional application. Even the 404 error page was crafted with attention to detail, incorporating humour while maintaining professional functionality.</p>
             </li>
           </ul>
         </div>
@@ -503,7 +506,7 @@
               <div class="content">
                 <h2>Return to Studies</h2>
                 <em>June, 2019 to Dec, 2024</em>
-                <p>See <a href="#parallax2">Studies </a>section above.</p>
+                <p>See <a href="#parallax3">Studies </a>section above.</p>
                 <p>I continued to work on a part-time basis as a Secure Document Driver, since beginning full-time study.</p>
               </div>
             </li>
@@ -525,7 +528,7 @@
         </p>
         <br/>
         <span class="tooltip" data-tooltip="Click to download Steve's resume">
-          <a href="images/resume.pdf" id="resumeDownloadButton" download="resumeSteveSchrader">
+          <a href="images/resume.pdf" id="resumeDownloadButton" download="resumeSteveSchrader.pdf" target="_blank">
             <img src="images/pdf.png" alt="Button image for resume PDF download" width="65" height="65">
           </a>
         </span>
@@ -575,10 +578,7 @@
       </section>
     </main>
     <footer>
-      <h3></h3>
-      <a href="http://jigsaw.w3.org/css-validator/check/referer">
-        <img src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!">
-      </a>
+      <div id="copyDate"></div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="js/script.js"></script>
