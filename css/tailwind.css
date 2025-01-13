@@ -1,0 +1,514 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  May become necessary to apply different styles to parallax images.
+  (one set for sm: and one set for md: and above)
+
+  Could remove parallax styles for launchControl animation, to produce a full
+  and scrollable joined image of the rocket.
+*/
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply [&:not(motion-reduce)]:animate-fadeIn;
+  }
+}
+
+@layer components {
+  /* !important applied to CSS rules in Components */
+  .parallax {
+    @apply h-[100vh] min-h-[100vh] max-h-[100vh];
+  }
+
+  .tooltip {
+    @apply invisible group-hover:visible absolute px-2 py-[0.125rem] rounded shadow-lg whitespace-nowrap opacity-85 z-[2000];
+    @apply bg-light-tipBackgroundColour dark:bg-dark-tipBackgroundColour text-light-tipTextColour dark:text-dark-tipTextColour;
+    @apply sm:text-[0.5rem] md:text-[0.7rem] lg:text-[0.75] xl:text-[0.8rem];
+    /* To standardize location of tooltips */
+    @apply -top-2 -left-28 md:left-12;
+  }
+
+  #dropMenu li {
+    @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour md:p-2;
+  }
+
+  @media screen and (min-width: 650px) {
+    #mainMenu {
+      background-color: transparent;
+      left: -50%;
+    }
+
+    #mainMenu > li:not(#dropMenuTrigger) {
+      transition: transform 250ms ease-out;
+    }
+
+    #mainMenu > li:not(#dropMenuTrigger):hover {
+      @apply scale-x-[1.15];
+    }
+  }
+
+  @media screen and (max-width: 649px) {
+    #mainMenu,
+    #dropMenu {
+      @apply min-w-14 max-w-28;
+    }
+
+    #dropMenu {
+      @apply w-[200px] translate-x-[80%];
+    }
+
+    #mainMenu li,
+    #dropMenu li {
+      @apply py-[3%] pr-0 pl-[10%];
+      @apply dark:hover:text-dark-menuTextColour;
+      @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour;
+    }
+  }
+
+  /* || Scrollbars - available for medium-sized and above devices */
+  @media screen and (min-width: 650px) {
+    ::-webkit-scrollbar {
+      @apply w-[0.8rem] border-2 border-light-scrollBorderColour dark:border-dark-scrollBorderColour;
+    }
+
+    ::-webkit-scrollbar-track {
+      @apply bg-light-scrollTrackColour dark:bg-dark-scrollTrackColour;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      @apply rounded-[0.3rem] bg-light-scrollThumbColour dark:border-r-dark-scrollThumbColour;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      @apply bg-light-scrollThumbHoverColour dark:bg-dark-scrollThumbHoverColour;
+    }
+
+    ::-webkit-scrollbar-button {
+      @apply rounded-[0.3rem] bg-light-scrollButtonColour dark:bg-dark-scrollButtonColour;
+    }
+
+    ::-webkit-scrollbar-button:hover {
+      @apply bg-light-scrollButtonHoverColour dark:bg-dark-scrollButtonHoverColour;
+    }
+  }
+}
+
+@layer utilities {
+/* Checks all images to ensure tags have been included */
+  /* img:not([width]),
+    img:not([height]),
+    img:not([alt]),
+    img:not([title]) {
+    border: 5px dashed dodgerblue;
+  } */
+}
+
+/* || Section Dividers */
+.parallaxContainer {
+  @apply relative w-full h-[50vh] md:h-screen overflow-hidden;
+}
+
+.parallax {
+  @apply w-full h-full absolute top-0 left-0;
+  @apply bg-fixed bg-center bg-no-repeat bg-cover md:bg-[length:min(120%,5000px)];
+}
+
+.parallax .title {
+  @apply font-linkFont font-bold tracking-[0.55rem] text-light-textColour dark:text-dark-textColour sm:text-2xl md:text-4xl lg:text-6xl xl:text-8xl;
+  @apply absolute opacity-65 text-shadow-parallaxShadow z-[500];
+  @apply left-1/4 top-1/3 -translate-x-[50%] -translate-y-[50%];
+}
+
+#parallax1 {
+  background-image: url("../images/rocket1.jpg");
+}
+
+#parallax2 {
+  background-image: url("../images/rocket2.jpg");
+}
+
+#parallax3 {
+  background-image: url("../images/rocket3.jpg");
+}
+
+#parallax4 {
+  background-image: url("../images/rocket4.jpg");
+}
+
+#parallax5 {
+  background-image: url("../images/rocket5.jpg");
+}
+
+#parallax6 {
+  background-image: url("../images/rocket6.jpg");
+}
+
+#parallax6 .title {
+  @apply text-[#e68a00] text-shadow-parallaxShadowAlt;
+}
+
+.text_block {
+  @apply relative mt-[3%] mb-[5%] md:mx-[10%] p-[5%] z-[100] text-justify;
+  @apply text-[0.9] md:text-base lg:text-[1.1rem] xl:text-[1.2rem];
+  @apply bg-light-sectionBackColour dark:bg-dark-sectionBackColour;
+  @apply text-light-textColour dark:text-dark-textColour;
+  @apply origin-top;
+  text-justify: inter-word;
+  overflow: hidden;
+}
+
+.text_block p:not(p:first-of-type) {
+  @apply mt-[2%];
+}
+
+.blockEnd {
+  @apply mb-[4rem];
+}
+
+/* || SVG section footer curve */
+.curve {
+  @apply absolute bottom-0 left-0 w-full overflow-hidden;
+  @apply leading-[0] rotate-180;
+}
+
+.curve svg {
+  @apply relative block h-[85px];
+  width: calc(100% + 1.3px);
+}
+
+.curve .shape-fill {
+  @apply fill-light-backColour dark:fill-dark-backColour;
+}
+
+/* || Studies */
+#block3 .diploma-grid {
+  @apply flex-wrap justify-center items-start gap-4;
+  @apply md:flex md:justify-between md:items-start gap-2;
+}
+
+#block3 li {
+  @apply opacity-100;
+}
+
+#block3 li:hover {
+  @apply cursor-pointer;
+}
+
+#block3 li.animate-fadeOut {
+  @apply opacity-0;
+  transition: opacity 1s;
+}
+
+#block3 li img {
+  @apply w-[170px] h-[234px];
+  @apply border-[10px] border-solid [border-image:theme('colors.light.borderImage')_18_stretch] dark:[border-image:theme('colors.dark.borderImage')_18_stretch];
+}
+
+#block3 li:nth-child(1) img,
+#block3 li:nth-child(4) img {
+  @apply w-[213px] h-[292px];
+}
+
+#block3 li:nth-child(1),
+#block3 li:nth-child(2),
+#block3 li:nth-child(3) {
+  @apply md:mb-8;
+}
+
+#block3 li:nth-child(4) {
+  @apply md:ml-[calc(33%-106.5px)];
+}
+
+#block3 li:nth-child(4).selected {
+  @apply md:ml-0;
+}
+
+#block3 li:nth-child(5) {
+  @apply md:mr-[8rem];
+}
+
+#block3 li.selected img {
+  @apply w-full h-full object-contain;
+}
+
+#block3 .selected {
+  position: absolute !important;
+  transform-origin: top left;
+  animation: moveDiploma 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: top, left, width, height; /* ?? */
+}
+
+#block3 .returning {
+  position: absolute;
+  animation: returnDiploma 0.5s forwards;
+}
+
+#diploma-info {
+  position: absolute;
+  left: calc(22.69rem + 4rem);
+  right: 5%;
+  top: 9.25rem;
+}
+
+/* || Projects */
+#block4 #postIt li {
+  @apply ml-[8%];
+  background-color: transparent;
+}
+
+#block4 #postIt li:hover {
+  @apply cursor-pointer font-bold text-light-postItTextColour;
+  background-color: transparent;
+}
+
+#block4 #projectPanel img {
+  @apply max-w-full h-auto mx-0 my-4;
+}
+
+#block4 .panel-slide-in {
+  animation: panelIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes panelIn {
+  0% { transform: translateX(0); }
+  90% { transform: translateX(-105%); }
+  100% { transform: translateX(-100%); }
+}
+
+#block4 .panel-slide-out {
+  animation: panelOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes panelOut {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+
+/* || Employment Timeline */
+#block5 #timelineWrapper {
+  @apply relative h-[8rem] flex items-center;
+}
+
+#block5 #timeline {
+  @apply relative flex-grow h-[5rem] overflow-hidden;
+}
+
+#block5 #timeline:after {
+  @apply content-[''] absolute top-[85%] left-0 right-0 h-[2px] -translate-y-1/2;
+  @apply bg-light-alertColour dark:bg-dark-alertColour;
+}
+
+#block5 #historyLine {
+  @apply absolute top-14 left-0;
+  @apply w-full h-[10%];
+  transition: transform 0.5s ease-in-out;
+}
+
+#block5 #eventsContainer {
+  @apply hidden;
+}
+
+#block5 #dates {
+  @apply relative w-full h-full;
+}
+
+#block5 #dates li {
+  @apply absolute flex flex-col items-center;
+  @apply translate-x-[-50%];
+}
+
+#block5 #dates a {
+  @apply flex flex-col items-center no-underline;
+  @apply text-light-textColour dark:text-dark-textColour;
+}
+
+#block5 .date-label {
+  @apply text-xs absolute -top-4 w-20 text-center;
+  @apply text-light-textColour dark:text-dark-textColour;
+  transition: transform 0.3s ease-out, font-size 0.3s ease-out;
+}
+
+#block5 .date-label.selected {
+  @apply text-sm font-medium scale-110;
+}
+
+#block5 .date-marker {
+  @apply w-[0.65rem] h-[0.65rem] rounded-full;
+  @apply bg-light-colour2 dark:bg-dark-colour1;
+  @apply border border-light-colour1 dark:border-dark-colour2;
+  transition: transform 0.3s ease-out;
+}
+
+#block5 .date-marker.selected {
+  @apply scale-[120%];
+  @apply bg-light-alertColour dark:bg-dark-alertColour;
+  @apply border-light-colour1 dark:border-dark-colour2;
+}
+
+#block5 .prev,
+#block5 .next {
+  @apply absolute p-2 rounded-full top-[60%] z-[400] outline-none;
+  @apply text-light-alertColour dark:text-dark-alertColour;
+  @apply hover:scale-[120%] disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply transition-colors duration-200 pointer-events-auto;
+}
+
+#block5 .prev {
+  @apply absolute -left-3;
+}
+
+#block5 .next {
+  @apply absolute -right-3;
+}
+
+/* || Contact */
+#block6 .contactForm {
+  @apply grid items-center place-items-start;
+  grid-template-rows: repeat(2, 6%) 10% 70% 8%;
+  grid-template-columns: 35% 65%;
+}
+
+#block6 .contactForm label {
+  @apply block font-linkFont font-bold text-xl my-4 text-light-contactLabelColour dark:text-dark-contactLabelColour;
+}
+
+#block6 .contactForm label:nth-of-type(1) {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+#block6 .contactForm label:nth-of-type(2) {
+  @apply ml-[10%];
+  grid-row: 1 / 1;
+  grid-column: 2 / 2;
+}
+
+#block6 .contactForm label:nth-of-type(3) {
+  @apply self-end mt-8 -mb-7;
+  grid-row: 3 / 3;
+  grid-column: 1 / 1;
+}
+
+#block6 #contactName {
+  @apply w-full h-[5vh];
+  grid-row: 2 / 2;
+  grid-column: 1 / 1;
+}
+
+#block6 #contactEmail {
+  @apply w-[90%] h-[5vh] ml-[10%];
+  grid-row: 2 / 2;
+  grid-column: 2 / 2;
+}
+
+#block6 .contactForm input {
+  @apply mb-[1.5%];
+}
+
+#block6 .contactForm textarea {
+  @apply w-full;
+  resize: none;
+  grid-row: 4 / 4;
+  grid-column: 1 / -1;
+}
+
+#block6 .contactForm input,
+#block6 .contactForm textarea {
+  @apply text-base px-[1%] py-[0.5%] outline-none rounded-lg border-2;
+  @apply border-light-contactFormBorderColour dark:border-dark-contactFormBorderColour bg-light-contactFieldBackgroundColour dark:bg-dark-contactFieldBackgroundColour;
+}
+
+#block6 .contactForm input::-webkit-input-placeholder,
+#block6 .contactForm textarea::-webkit-input-placeholder {
+  @apply text-light-contactFieldPlaceholderColour dark:text-dark-contactFieldPlaceholderColour;
+}
+
+#block6 .contactForm input:focus,
+#block6 .contactForm textarea:focus,
+#block6 .contactForm input:hover,
+#block6 .contactForm textarea:hover {
+  @apply text-light-contactFieldTextColour dark:text-dark-contactFieldTextColour;
+  @apply border-2 border-light-contactFieldBorderFocusColour dark:border-dark-contactFieldBorderFocusColour;
+}
+
+#block6 .contactForm input:focus:required:invalid {
+  @apply border-2 border-light-alertColour dark:border-dark-alertColour;
+  @apply bg-light-colour2 dark:bg-dark-colour2;
+}
+
+#block6 .contactForm > span {
+  grid-row: 5 / 5;
+  grid-column: 1 / 1;
+}
+
+
+#block6 #checkboxContainer {
+  @apply flex items-center;
+  grid-row: 5 / 5;
+  grid-column: 1 / 2;
+}
+
+#block6 #checkboxContainer label {
+  @apply mb-0 ml-2 text-base font-normal;
+}
+
+#block6 .contactForm #contactForward {
+  @apply mr-[0.25rem] mt-4 mb-0 text-light-colour1 dark:text-dark-colour2;
+}
+
+#block6 .contactForm button {
+  @apply block font-linkFont font-bold leading-5 px-[1.25rem] py-[0.75rem] w-1/2 rounded-lg;
+  @apply text-light-contactButtonTextColour dark:text-dark-contactButtonTextColour bg-light-contactButtonColour dark:bg-dark-contactButtonColour border-2 border-light-colour2 dark:border-dark-colour2;
+  grid-row: 5 / 5;
+  grid-column: 2 / -1;
+  transition: 0.5s all;
+}
+
+#block6 .contactForm button:hover {
+  @apply bg-light-contactButtonHoverColour dark:bg-dark-contactButtonHoverColour;
+}
+
+/*
+#block6 .contactFormAlert {
+  @apply hidden p-[0.75rem] mt-[0.75rem] rounded-lg text-base font-normal;
+  @apply text-light-alertColour dark:text-dark-alertColour;
+}
+
+#block6 .contactFormAlert.visible {
+  @apply block;
+}
+
+#block6 .contactFormAlert.success {
+  @apply bg-light-successColour dark:bg-dark-successColour;
+}
+
+#block6 .contactFormAlert.error {
+  @apply bg-light-alertColour dark:bg-dark-alertColour;
+}
+*/
+
+#block6 #signatureBlock {
+  @apply -rotate-[15deg] scale-[0.3] -translate-x-[35%] -translate-y-[13%];
+}
+
+#block6 #signatureBlock g {
+  @apply fill-light-signatureColour dark:fill-dark-signatureColour;
+}
+
+/* || Footer */
+footer {
+  @apply grid bottom-0;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+footer #copyDate {
+  @apply text-light-textColour dark:text-dark-textColour pt-[5%] px-[2%] pb-[2%];
+  @apply text-xs md:text-sm lg:text-base xl:text-lg font-normal text-right;
+  grid-row: 1 / 1;
+  grid-column: 3 / 3;
+}

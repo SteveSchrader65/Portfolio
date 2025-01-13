@@ -1,0 +1,954 @@
+/* jshint esversion: 8 */
+"use strict"
+
+let viewingMode = ""
+
+function setViewingMode() {
+  const lightModeButton = document.querySelector("#lightMode")
+  const darkModeButton = document.querySelector("#darkMode")
+
+  lightModeButton.addEventListener("click", _setLightMode)
+  darkModeButton.addEventListener("click", _setDarkMode)
+  viewingMode = localStorage.getItem("viewingMode")
+
+  if (viewingMode == "darkness" || window.matchMedia(`(prefers-color-scheme: dark)`).matches) {
+    _setDarkMode()
+  } else {
+    _setLightMode()
+  }
+
+  function _setLightMode() {
+    document.documentElement.classList.add("dark")
+    localStorage.setItem("viewingMode", "lightness")
+    viewingMode = "lightness"
+  }
+
+  function _setDarkMode() {
+    document.documentElement.classList.remove("dark")
+    localStorage.setItem("viewingMode", "darkness")
+    viewingMode = "darkness"
+  }
+}
+
+function scrollToTop() {
+  let element = document.documentElement
+
+  if ("scrollBehavior" in element.style) {
+    element.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    })
+  } else {
+    element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+  }
+
+  document.querySelector("nav").style.top = "0"
+}
+
+function smoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach((section) => {
+
+    // Skip timeline navigation links
+    // if (section.closest(".cd-horizontal-timeline")) {
+    //   return
+    // }
+
+    section.addEventListener("click", function (e) {
+      e.preventDefault()
+
+      let selection
+
+      try {
+        selection = document.querySelector(e.target.getAttribute("href"))
+        selection.scrollIntoView({behavior: "smooth"})
+      } catch (error) {
+        throw new Error("Sumink went rong: " + error)
+      }
+    })
+  })
+}
+
+function navbarHide() {
+  let prevScrollPos = window.scrollY
+  let isScrolling
+
+  document.addEventListener("scroll", () => {
+    let currentScrollPos = window.scrollY
+
+    if (prevScrollPos > currentScrollPos) {
+      document.querySelector("nav").style.top = "0"
+    } else {
+      document.querySelector("nav").style.top = "-5rem"
+    }
+
+    clearTimeout(isScrolling)
+    isScrolling = setTimeout(() => {
+      document.querySelector("nav").style.top = "0"
+    }, 2000)
+
+    prevScrollPos = currentScrollPos
+  })
+}
+
+function updateScrollProgress() {
+  const scrollProgress = document.querySelector("#scrollProgress")
+
+  // Calculate scroll percentage
+  const scrollTop = window.scrollY
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+  const scrollPercentage = (scrollTop / scrollHeight) * 100
+
+  // Apply transform
+  scrollProgress.style.transform = `scaleX(${scrollPercentage / 100})`
+}
+
+function initializeHamburger() {
+  const hamburger = document.querySelector(".hamburger-menu")
+  const mainMenu = document.querySelector("#mainMenu")
+  const topBar = hamburger.querySelector("span:first-child")
+  const middleBar = hamburger.querySelector("span:nth-child(2)")
+  const bottomBar = hamburger.querySelector("span:last-child")
+  const menuLinks = mainMenu.querySelectorAll('a[href^="#"]')
+
+  const topAnimation =
+    "group-hover:animate-[hamburgerCollapse_0.15s_ease-in-out_forwards,hamburgerCentre_0.15s_ease-in-out_0.15s_forwards,hamburgerDot_0.15s_ease-in-out_0.3s_forwards,hamburgerRotateUpper_0.15s_ease-in-out_0.45s_forwards,hamburgerExtendUpper_0.15s_ease-in-out_0.6s_forwards]"
+  const bottomAnimation =
+    "group-hover:animate-[hamburgerCollapse_0.15s_ease-in-out_forwards,hamburgerCentre_0.15s_ease-in-out_0.15s_forwards,hamburgerDot_0.15s_ease-in-out_0.3s_forwards,hamburgerRotateLower_0.15s_ease-in-out_0.45s_forwards,hamburgerExtendLower_0.15s_ease-in-out_0.6s_forwards]"
+
+  // Exit if not mobile view
+  if (window.innerWidth >= 650) return
+
+  // Add hover handlers for the hamburger menu
+  hamburger.addEventListener("mouseenter", () => {
+    // Reset animations by removing and re-adding classes
+    topBar.classList.remove(topAnimation)
+    bottomBar.classList.remove(bottomAnimation)
+
+    // Force reflow
+    void topBar.offsetWidth
+    void bottomBar.offsetWidth
+
+    // Re-add animations
+    topBar.classList.add(topAnimation)
+    bottomBar.classList.add(bottomAnimation)
+
+    mainMenu.classList.remove("hidden")
+    mainMenu.classList.add("flex")
+    setTimeout(() => {
+      mainMenu.style.transform = "translateX(0)"
+    }, 50)
+  })
+
+  // Function to handle menu closing
+  const closeMenu = () => {
+    mainMenu.style.transform = "translateX(-100%)"
+    setTimeout(() => {
+      mainMenu.classList.add("hidden")
+      mainMenu.classList.remove("flex")
+    }, 300)
+  }
+
+  // Add hover handlers for the menu itself
+  mainMenu.addEventListener("mouseenter", () => {
+    clearTimeout(mainMenu.timeoutId)
+  })
+
+  mainMenu.addEventListener("mouseleave", () => {
+    closeMenu()
+  })
+
+  hamburger.addEventListener("mouseleave", () => {
+    // Delay to allow mouse movement to menu
+    mainMenu.timeoutId = setTimeout(() => {
+      if (!mainMenu.matches(":hover")) {
+        closeMenu()
+      }
+    }, 100)
+
+    // Reset hamburger animation classes
+    topBar.classList.remove(topAnimation)
+    bottomBar.classList.remove(bottomAnimation)
+    middleBar.classList.remove("opacity-0")
+
+    // Reset transforms
+    topBar.style.transform = "translateY(-0.5rem)"
+    bottomBar.style.transform = "translateY(0.5rem)"
+  })
+
+  menuLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth < 650) {
+        mainMenu.style.transform = "translateX(-100%)"
+        mainMenu.addEventListener(
+          "transitionend",
+          () => {
+            mainMenu.classList.add("hidden")
+          },
+          {once: true}
+        )
+      }
+    })
+  })
+}
+
+// CONCEPT: Add sound effect to animations
+// (eg: 'machinery whirring' at start of deploy/locks snapping shut at end of launch)
+// (1 to 1.5-second sound-bite/low-volume 2/5)
+function launchControl() {
+  // function launchControl() {
+  //   document.querySelector("#launchControl").style.display = "block"
+
+  //   const launchButton = document.querySelector("#launchControl button")
+  //   const buttonImage = launchButton.querySelector("img")
+  //   const isMedium = window.matchMedia("(min-width: 650px)").matches
+  //   const sections = document.querySelectorAll(".content-section")
+  //   let isLaunched = false
+
+  //   launchButton.addEventListener("click", function () {
+  //     const direction = isLaunched ? "reverse" : "normal"
+
+  //     buttonImage.animate([{transform: "rotate(0deg)"}, {transform: "rotate(180deg)"}], {
+  //       duration: 1500,
+  //       fill: "forwards",
+  //       direction: direction,
+  //     })
+
+  //     if (isLaunched) {
+  //       _deploySections()
+  //     } else {
+  //       _launchRocket()
+  //     }
+
+  //     isLaunched = !isLaunched
+  //   })
+
+  //   function _launchRocket() {
+  //     console.log("Launch initiated")
+  //     sections.forEach((section, index) => {
+  //       // Get and set the section height first
+  //       const height = section.offsetHeight
+  //       section.style.height = `${height}px`
+
+  //       const textBlock = section.querySelector(".text_block")
+  //       console.log(`Collapsing Text Block ${index + 1}`)
+
+  //       if (isMedium) {
+  //         const headerEl = section.querySelector(".parallax")
+  //         headerEl.classList.remove("bg-fixed")
+  //       }
+
+  //       textBlock.classList.add("collapsed")
+  //       textBlock.classList.remove("expanded")
+  //     })
+  //   }
+
+  //   function _deploySections() {
+  //     console.log("Deploy initiated")
+  //     sections.forEach((section, index) => {
+  //       const textBlock = section.querySelector(".text_block")
+  //       console.log(`Expanding Text Block ${index + 1}`)
+
+  //       textBlock.classList.remove("collapsed")
+  //       textBlock.classList.add("expanded")
+
+  //       if (isMedium) {
+  //         const headerEl = section.querySelector(".parallax")
+  //         setTimeout(() => {
+  //           headerEl.classList.add("bg-fixed")
+  //           section.style.height = "auto" // Restore natural height
+  //         }, 300)
+  //       }
+  //     })
+  //   }
+  // }
+  document.querySelector("#launchControl").style.display = "block"
+
+  const launchButton = document.querySelector("#launchControl button")
+  const buttonImage = launchButton.querySelector("img")
+  const isMedium = window.matchMedia("(min-width: 650px)").matches
+  const sections = document.querySelectorAll(".content-section")
+  let isLaunched = false
+
+  launchButton.addEventListener("click", function () {
+    const direction = isLaunched ? "reverse" : "normal"
+
+    buttonImage.animate([{transform: "rotate(0deg)"}, {transform: "rotate(180deg)"}], {
+      duration: 1500,
+      fill: "forwards",
+      direction: direction,
+    })
+
+    if (isLaunched) {
+      _deploySections()
+    } else {
+      _launchRocket()
+    }
+
+    isLaunched = !isLaunched
+  })
+
+  function _launchRocket() {}
+
+  function _deploySections() {}
+}
+
+function block2Setup() {
+  const output = document.querySelector("#animateMe")
+  const darkArray = ["red", "orange", "greenyellow", "limegreen", "#3399ff", "#e600e6"]
+  const lightArray = ["#e60000", "#e69500", "#ffff00", "#00cc00", "#0000ff", "#990099"]
+  let letters
+  let colourArray
+
+  // Array of letters drawn from HTML text
+  letters = [...output.innerHTML]
+
+  // Create span elements for each letter
+  output.innerHTML = letters.map((letter) => `<span class="letter">${letter}</span>`).join("")
+
+  if (viewingMode == "lightness") {
+    colourArray = lightArray
+  } else {
+    colourArray = darkArray
+  }
+
+  setInterval(() => {
+    // Select all letter spans and update their colors
+    document.querySelectorAll(".letter").forEach((letterSpan) => {
+      const colourIndex = Math.floor(Math.random() * colourArray.length)
+
+      letterSpan.style.color = colourArray[colourIndex]
+    })
+  }, 250)
+}
+
+function block3Setup() {
+  const diplomas = document.querySelector("#block3 ul")
+  const output = document.querySelector("#block3 #diploma-info")
+  const dipPositions = new Map()
+  const TARGET_DIMS = {
+    top: "9.25rem",
+    left: "2rem",
+    width: "22.69rem",
+    height: "31.25rem",
+  }
+
+  function _createAnimation(startPos, isReturn = false) {
+    const styleSheet = document.createElement("style")
+    const animation = isReturn ? "returnDiploma" : "moveDiploma"
+    const [from, to] = isReturn ? [TARGET_DIMS, startPos] : [startPos, TARGET_DIMS]
+
+    styleSheet.textContent = `
+      @keyframes ${animation} {
+        from {
+          top: ${typeof from.top === "number" ? from.top / 16 + "rem" : from.top}
+          left: ${typeof from.left === "number" ? from.left / 16 + "rem" : from.left}
+          width: ${typeof from.width === "number" ? from.width / 16 + "rem" : from.width}
+          height: ${typeof from.height === "number" ? from.height / 16 + "rem" : from.height}
+        }
+        to {
+          top: ${typeof to.top === "number" ? to.top / 16 + "rem" : to.top}
+          left: ${typeof to.left === "number" ? to.left / 16 + "rem" : to.left}
+          width: ${typeof to.width === "number" ? to.width / 16 + "rem" : to.width}
+          height: ${typeof to.height === "number" ? to.height / 16 + "rem" : to.height}
+        }
+      }
+    `
+    document.head.appendChild(styleSheet)
+  }
+
+  function _resetDiplomas() {
+    diplomas.querySelectorAll("li").forEach((diploma) => {
+      diploma.classList.remove("selected", "returning", "animate-fadeOut", "animate-fadeIn")
+    })
+    output.classList.remove("animate-fadeIn")
+    output.innerHTML = ""
+  }
+
+  // Store initial positions
+  diplomas.querySelectorAll("li").forEach((diploma) => {
+    const dipRect = diploma.getBoundingClientRect()
+    const sectionRect = diploma.closest("#block3").getBoundingClientRect()
+
+    dipPositions.set(diploma, {
+      top: dipRect.top - sectionRect.top,
+      left: dipRect.left - sectionRect.left,
+      width: dipRect.width,
+      height: dipRect.height,
+    })
+  })
+
+  diplomas.addEventListener("click", (e) => {
+    const selected = e.target.closest("LI")
+
+    if (!selected) return
+
+    if (!selected.classList.contains("selected")) {
+      _resetDiplomas()
+      const startPos = dipPositions.get(selected)
+      _createAnimation(startPos)
+
+      // Handle selected diploma
+      selected.classList.add("selected")
+
+      // Handle other diplomas
+      diplomas.querySelectorAll("li").forEach((diploma) => {
+        if (diploma !== selected) {
+          diploma.classList.add("animate-fadeOut")
+        }
+      })
+
+      // Wait for move animation to complete before showing info
+      selected.addEventListener(
+        "animationend",
+        () => {
+          const courseId = selected.getAttribute("data-course")
+          const courseInfo = document.querySelector(courseId).cloneNode(true)
+
+          courseInfo.style.display = "block"
+          output.classList.add("animate-fadeIn")
+          output.appendChild(courseInfo)
+        },
+        {once: true}
+      )
+    } else {
+      // Clear info immediately when returning
+      output.innerHTML = ""
+      output.classList.remove("animate-fadeIn")
+
+      const startPos = dipPositions.get(selected)
+
+      _createAnimation(startPos, true)
+      selected.classList.add("returning")
+      selected.addEventListener(
+        "animationend",
+        () => {
+          _resetDiplomas()
+        },
+        {once: true}
+      )
+
+      // Handle other diplomas
+      diplomas.querySelectorAll("li").forEach((diploma) => {
+        if (diploma !== selected) {
+          diploma.classList.remove("animate-fadeOut")
+          diploma.classList.add("animate-fadeIn")
+        }
+      })
+    }
+  })
+}
+
+function block4Setup() {
+  const postItItems = document.querySelectorAll("#postIt li")
+  const projectPanel = document.querySelector("#projectPanel")
+  const panelsContent = document.querySelector("#panels").innerHTML
+  const body = document.body
+
+  projectPanel.style.overflow = "hidden"
+
+  postItItems.forEach((item) => {
+    item.addEventListener("click", function (e) {
+      e.stopPropagation()
+      const projectId = item.getAttribute("data-project")
+
+      // Create temporary container to find target content
+      const temp = document.createElement("div")
+      temp.innerHTML = panelsContent
+      const targetPanel = temp.querySelector(projectId)
+
+      if (!targetPanel) {
+        return
+      }
+
+      // If panel is open, close it first and then open new one
+      if (!projectPanel.classList.contains("hidden")) {
+        projectPanel.classList.remove("panel-slide-in")
+        projectPanel.classList.add("panel-slide-out")
+
+        setTimeout(() => {
+          projectPanel.classList.add("hidden")
+          projectPanel.classList.remove("panel-slide-out")
+          _openPanel(targetPanel)
+        }, 1500)
+      } else {
+        _openPanel(targetPanel)
+      }
+    })
+  })
+
+  // Handle mouse over/leave for scroll control
+  projectPanel.addEventListener("mouseover", function () {
+    if (!projectPanel.classList.contains("hidden")) {
+      body.style.overflow = "hidden"
+      projectPanel.focus()
+      projectPanel.style.overflowX = "hidden"
+      projectPanel.style.overflowY = "auto"
+    }
+  })
+
+  projectPanel.addEventListener("mouseleave", function () {
+    if (!projectPanel.classList.contains("hidden")) {
+      body.style.overflow = "auto"
+      projectPanel.style.overflow = "hidden"
+    }
+  })
+
+  function _openPanel(targetPanel) {
+    const panelsContainer = projectPanel.querySelector("#panels")
+    if (!panelsContainer) {
+      return
+    }
+
+    panelsContainer.innerHTML = targetPanel.innerHTML
+    projectPanel.classList.remove("hidden")
+    projectPanel.classList.add("panel-slide-in")
+    projectPanel.scrollTop = 0
+
+    body.style.overflow = "auto"
+  }
+
+  // Close panel when clicking outside
+  body.addEventListener("click", function (e) {
+    if (
+      !projectPanel.classList.contains("hidden") &&
+      !projectPanel.contains(e.target) &&
+      !e.target.closest("#postIt")
+    ) {
+      projectPanel.classList.remove("panel-slide-in")
+      projectPanel.classList.add("panel-slide-out")
+
+      body.style.overflow = "auto"
+
+      setTimeout(() => {
+        projectPanel.classList.add("hidden")
+        projectPanel.classList.remove("panel-slide-out")
+      }, 1500)
+    }
+  })
+
+  // Handle panel scrolling
+  projectPanel.addEventListener(
+    "wheel",
+    function (e) {
+      if (projectPanel.classList.contains("hidden")) return
+
+      const atTop = this.scrollTop === 0
+      const atBottom = Math.abs(this.scrollHeight - this.scrollTop - this.clientHeight) < 1
+
+      // Allow scrolling within panel bounds
+      if (!atTop && !atBottom) {
+        e.stopPropagation()
+        return
+      }
+
+      // Prevent scrolling beyond panel bounds
+      if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    },
+    {passive: false}
+  )
+
+  projectPanel.addEventListener(
+    "touchmove",
+    function (e) {
+      if (projectPanel.classList.contains("hidden")) return
+
+      const atTop = this.scrollTop === 0
+      const atBottom = Math.abs(this.scrollHeight - this.scrollTop - this.clientHeight) < 1
+
+      if (!atTop && !atBottom) {
+        e.stopPropagation()
+        return
+      }
+
+      if ((atTop && e.touches[0].clientY > 0) || (atBottom && e.touches[0].clientY < 0)) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    },
+    {passive: false}
+  )
+}
+
+// function block5Setup() {
+//   const svgIcons = {
+//     left: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
+//     right: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
+//     stop: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><circle cx="12" cy="12" r="10" fill="none"/><line x1="4" y1="4" x2="20" y2="20"/></svg>`,
+//   }
+
+//   let currentIndex = 1
+//   let isAnimating = false
+
+//   function _setupDateMarkers() {
+//     const dateLinks = document.querySelectorAll("#dates a")
+
+//     dateLinks.forEach((link) => {
+//       if (link.textContent) {
+//         const marker = document.createElement("div")
+
+//         marker.className = "date-marker"
+//         link.insertBefore(marker, link.firstChild)
+//       }
+//     })
+//   }
+
+//   function _calculatePositions() {
+//     const dates = Array.from(document.querySelectorAll("#dates a"))
+//     const startDate = new Date(dates[0].dataset.date.split("/").reverse().join("-"))
+//     const endDate = new Date(dates[dates.length - 1].dataset.date.split("/").reverse().join("-"))
+//     const timespan = endDate - startDate
+
+//     return dates.map((date) => {
+//       const currentDate = new Date(date.dataset.date.split("/").reverse().join("-"))
+//       const position = ((currentDate - startDate) / timespan) * 400
+
+//       date.parentElement.style.left = `${position}%`
+
+//       return position
+//     })
+//   }
+
+//   function _updateUI(index) {
+//     if (isAnimating) return
+
+//     isAnimating = true
+
+//     const historyLine = document.querySelector("#historyLine")
+//     const prevBtn = document.querySelector(".prev")
+//     const nextBtn = document.querySelector(".next")
+
+//     // Get positions and move timeline
+//     const positions = _calculatePositions()
+//     const transform = -positions[index] + 50
+
+//     historyLine.style.transform = `translateX(${transform}%)`
+
+//     // Update markers and nav buttons
+//     document.querySelectorAll(".date-marker").forEach((m) => m.classList.remove("selected"))
+//     document.querySelector(`#event-${index} .date-marker`)?.classList.add("selected")
+//     prevBtn.innerHTML = index === 1 ? svgIcons.stop : svgIcons.left
+//     nextBtn.innerHTML = index === 9 ? svgIcons.stop : svgIcons.right
+//     prevBtn.disabled = index === 1
+//     nextBtn.disabled = index === 9
+
+//     setTimeout(() => (isAnimating = false), 500)
+//     currentIndex = index
+//   }
+
+//   function _setupEventListeners() {
+//     document.querySelector("#timeline").addEventListener("click", (e) => {
+//       const prevBtn = e.target.closest(".prev")
+//       const nextBtn = e.target.closest(".next")
+
+//       if (prevBtn && currentIndex > 1) {
+//         _updateUI(currentIndex - 1)
+//       } else if (nextBtn && currentIndex < 9) {
+//         _updateUI(currentIndex + 1)
+//       }
+//     })
+
+//     document.querySelector("#dates").addEventListener("click", (e) => {
+//       const dateLink = e.target.closest('a[href^="#event-"]')
+//       if (!dateLink) return
+
+//       e.preventDefault()
+//       const index = parseInt(dateLink.getAttribute("href").split("-")[1])
+
+//       if (index > 0 && index < 10) _updateUI(index)
+//     })
+//   }
+
+//   // Initialize
+//   _setupDateMarkers()
+//   _calculatePositions()
+//   _setupEventListeners()
+
+//   const startIndex = document.querySelector(".selected")?.id.split("-")[1] || 1
+
+//   _updateUI(parseInt(startIndex))
+// }
+
+
+function block5Setup() {
+  const svgIcons = {
+    left: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
+    right: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
+    stop: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><circle cx="12" cy="12" r="10" fill="none"/><line x1="4" y1="4" x2="20" y2="20"/></svg>`
+  }
+
+  let currentIndex = 1
+  let isAnimating = false
+
+  function _setupDateMarkers() {
+    const dateLinks = document.querySelectorAll('#block5 #dates a')
+
+    dateLinks.forEach(link => {
+      if (link.textContent) {
+        const marker = document.createElement('div')
+        marker.className = 'date-marker'
+
+        const label = document.createElement('span')
+        label.className = 'date-label'
+        label.textContent = link.textContent
+        link.textContent = ''
+        link.appendChild(label)
+        link.appendChild(marker)
+      }
+    })
+  }
+
+  function _calculatePositions() {
+    const dates = Array.from(document.querySelectorAll('#block5 #dates a'))
+    const startDate = new Date(dates[0].dataset.date.split('/').reverse().join('-'))
+    const endDate = new Date(dates[dates.length-1].dataset.date.split('/').reverse().join('-'))
+    const timespan = endDate - startDate
+
+    return dates.map(date => {
+      const currentDate = new Date(date.dataset.date.split('/').reverse().join('-'))
+      const position = ((currentDate - startDate) / timespan) * 400
+
+      date.parentElement.style.left = `${position}%`
+
+      return position
+    })
+  }
+
+  function _updateUI(index) {
+    if (isAnimating) return
+
+    isAnimating = true
+
+    const historyLine = document.querySelector('#block5 #historyLine')
+    const prevBtn = document.querySelector('#block5 .prev')
+    const nextBtn = document.querySelector('#block5 .next')
+    const positions = _calculatePositions()
+    const transform = -positions[index] + 50
+
+    historyLine.style.transform = `translateX(${transform}%)`
+    document.querySelectorAll('#block5 .date-marker').forEach(m => m.classList.remove('selected'))
+    document.querySelector(`#block5 #event-${index} .date-marker`)?.classList.add('selected')
+    document.querySelectorAll('#block5 .date-label').forEach(l => l.classList.remove('selected'))
+    document.querySelector(`#block5 #event-${index} .date-label`)?.classList.add('selected')
+    prevBtn.innerHTML = index === 1 ? svgIcons.stop : svgIcons.left
+    nextBtn.innerHTML = index === 9 ? svgIcons.stop : svgIcons.right
+    prevBtn.disabled = index === 1
+    nextBtn.disabled = index === 9
+
+    setTimeout(() => isAnimating = false, 500)
+    currentIndex = index
+  }
+
+  function _setupEventListeners() {
+    document.querySelector('#block5 #timeline').addEventListener('click', e => {
+      const prevBtn = e.target.closest('.prev')
+      const nextBtn = e.target.closest('.next')
+
+      if (prevBtn && currentIndex > 1) {
+        _updateUI(currentIndex - 1)
+        } else if (nextBtn && currentIndex < 9) {
+        _updateUI(currentIndex + 1)
+      }
+    })
+
+    document.querySelector('#block5 #dates').addEventListener('click', e => {
+      const dateLink = e.target.closest('a[href^="#event-"]')
+
+      if (!dateLink) return
+
+      e.preventDefault()
+      const index = parseInt(dateLink.getAttribute('href').split('-')[1])
+
+      if (index > 0 && index < 10) _updateUI(index)
+    })
+  }
+
+  function _adjustTimelineWidth() {
+    const timeline = document.querySelector("#block5 #timeline")
+    const prevBtn = document.querySelector("#block5 .prev")
+    const nextBtn = document.querySelector("#block5 .next")
+
+    // Get actual button widths
+    const prevWidth = prevBtn.offsetWidth
+    const nextWidth = nextBtn.offsetWidth
+    const totalButtonWidth = prevWidth + nextWidth
+
+    // Set timeline width and margins
+    timeline.style.width = `calc(100% - ${totalButtonWidth}px)`
+    timeline.style.margin = `0 ${prevWidth}px`
+  }
+
+  // Initialize
+  _setupDateMarkers()
+  _calculatePositions()
+  _setupEventListeners()
+  _adjustTimelineWidth()
+
+  const selectedElement = document.querySelector('#block5 #dates .selected')
+  const startIndex = selectedElement
+      ? parseInt(selectedElement.closest('a').getAttribute('href').split('-')[1]) 
+      : 1
+
+  _updateUI(parseInt(startIndex))
+}
+
+// Validation concept: Validate each field; highlight failing fields with border;
+// The SEND button starts with a red background which changes to green only when
+// all validations have passed.
+async function block6Setup() {
+  emailjs.init("uuJqWlCvuML_Trzm-")
+
+  document.querySelector(".contactForm").addEventListener("submit", async function (e) {
+    e.preventDefault()
+
+    const formData = new FormData(this)
+    const errors = _validateForm(formData)
+
+    if (errors.length > 0) {
+      alert(errors.join("\n"))
+      return
+    }
+
+    const sendCopy = formData.get("forward")
+
+    try {
+      // Send main email
+      const response = await emailjs.send("service_7pgphhl", "template_kmnam9c", {
+        from_name: formData.get("fullName"),
+        from_email: formData.get("email"),
+        message: formData.get("message"),
+      })
+
+      // If copy requested, send confirmation email
+      if (sendCopy) {
+        await emailjs.send("service_7pgphhl", "template_o26fij7", {
+          from_name: formData.get("fullName"),
+          from_email: formData.get("email"),
+          message: formData.get("message"),
+          to_email: formData.get("email"),
+        })
+      }
+
+      if (response.status === 200) {
+        alert("Message sent successfully!")
+        this.reset()
+      }
+    } catch (error) {
+      console.error("EmailJS Error:", error)
+      alert("Failed to send message")
+    }
+  })
+
+  // Form Validation
+  function _validateForm(formData) {
+    const errors = []
+    const name = formData.get("fullName")
+    const email = formData.get("email")
+    const message = formData.get("message")
+
+    // Name validation (only letters, spaces, hyphens and apostrophes)
+    if (!name || name.trim() === "") {
+      errors.push("Name is required")
+    } else if (!/^[A-Za-z\s'-]+$/.test(name)) {
+      errors.push("Name can only contain letters, spaces, hyphens and apostrophes")
+    }
+
+    // Email validation
+    if (!email || email.trim() === "") {
+      errors.push("Email address is required")
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.push("Please enter a valid email address")
+    }
+
+    // Message validation
+    if (!message || message.trim() === "") {
+      errors.push("Message is required")
+    } else if (message.length < 10) {
+      errors.push("Message must be at least 10 characters long")
+    } else if (message.length > 1000) {
+      errors.push("Message cannot exceed 1000 characters")
+    }
+
+    return errors
+  }
+
+  // Helper functions for displaying messages
+  function _clearMessages() {
+    document.querySelectorAll(".form-message").forEach((msg) => msg.remove())
+  }
+
+  function _displaySuccessMessage(message) {
+    const successDiv = document.createElement("div")
+
+    successDiv.className = "form-message success-message"
+    successDiv.textContent = message
+    successDiv.style.color = "green"
+    successDiv.style.marginBottom = "1rem"
+
+    const form = document.querySelector(".contactForm")
+
+    form.insertBefore(successDiv, form.firstChild)
+    setTimeout(() => successDiv.remove(), 5000)
+  }
+
+  function _displayErrorMessage(message) {
+    const errorDiv = document.createElement("div")
+
+    errorDiv.className = "form-message error-message"
+    errorDiv.textContent = message
+    errorDiv.style.color = "red"
+    errorDiv.style.marginBottom = "1rem"
+
+    const form = document.querySelector(".contactForm")
+
+    form.insertBefore(errorDiv, form.firstChild)
+    setTimeout(() => errorDiv.remove(), 5000)
+  }
+}
+
+function footerDate() {
+  const currentYear = new Date().getFullYear()
+
+  document.querySelector("#copyDate").innerHTML = "&copySteve Schrader " + currentYear
+}
+
+function init() {
+  /*
+    TO-DO LIST
+    - Implement Employment timeline functionality                       2d
+    - Implement Launch Control animations                               4h
+    - Re-visit parallax titles. They should be fixed to images          2h
+    - Validation of Contact form inputs. Hide animated version          2d
+      (!! confirm email functionality is still working !!)
+    - Add scroll-based animations as backdrops to text blocks           3d
+    - Re-visit tooltips (timeline, projectPanel, About, nav)            4h
+    - Check hamburger menu links (not working ??)                       2h
+    - Check all colours used are defined for light/dark modes           6h
+      (consolidate colours where possible. ie: panelProject and timeline eventCards)
+    - Confirm full responsiveness for all functionality                 2d
+    - Ask Maria to test it !!
+  */
+  setViewingMode()
+  initializeHamburger()
+
+  if (!window.matchMedia(`(prefers-reduced-motion: reduce)`).matches) {
+    scrollToTop()
+    smoothScroll()
+    navbarHide()
+    launchControl()
+    block2Setup()
+    block3Setup()
+    block4Setup()
+    block5Setup()
+  }
+
+  block6Setup()
+  footerDate()
+  window.addEventListener("scroll", updateScrollProgress)
+  updateScrollProgress()
+}
+
+window.onload = init
