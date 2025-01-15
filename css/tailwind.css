@@ -111,18 +111,20 @@
 
 /* || Section Dividers */
 .parallaxContainer {
-  @apply relative w-full h-[50vh] md:h-screen overflow-hidden;
+  @apply relative w-full h-screen md:h-screen;
+  @apply sticky top-0;
 }
 
 .parallax {
-  @apply w-full h-full absolute top-0 left-0;
-  @apply bg-fixed bg-center bg-no-repeat bg-cover md:bg-[length:min(120%,5000px)];
+  @apply w-full h-full absolute left-0;
+  @apply bg-center bg-no-repeat bg-cover md:bg-[length:min(150%,5000px)];
 }
 
 .parallax .title {
   @apply font-linkFont font-bold tracking-[0.55rem] text-light-textColour dark:text-dark-textColour sm:text-2xl md:text-4xl lg:text-6xl xl:text-8xl;
-  @apply absolute opacity-65 text-shadow-parallaxShadow z-[500];
-  @apply left-1/4 top-1/3 -translate-x-[50%] -translate-y-[50%];
+  @apply absolute opacity-65 text-shadow-parallaxShadow;
+  @apply top-1/4 -translate-y-[50%] pl-32;
+  @apply pointer-events-none;
 }
 
 #parallax1 {
@@ -150,25 +152,29 @@
 }
 
 #parallax6 .title {
-  @apply text-[#e68a00] text-shadow-parallaxShadowAlt;
+  @apply text-[#e68a00];
 }
 
 .text_block {
-  @apply relative mt-[3%] mb-[5%] md:mx-[10%] p-[5%] z-[100] text-justify;
+  @apply relative mt-[3%] md:mx-[10%] p-[5%] z-[100] text-justify;
   @apply text-[0.9] md:text-base lg:text-[1.1rem] xl:text-[1.2rem];
   @apply bg-light-sectionBackColour dark:bg-dark-sectionBackColour;
   @apply text-light-textColour dark:text-dark-textColour;
-  @apply origin-top;
+  @apply origin-top -top-64 shadow-dropShadowLight dark:shadow-dropShadowDark;
   text-justify: inter-word;
   overflow: hidden;
 }
 
-.text_block p:not(p:first-of-type) {
+.text_block p {
   @apply mt-[2%];
 }
 
 .blockEnd {
-  @apply mb-[4rem];
+  @apply md:mb-[14rem];
+}
+
+main {
+  @apply mb-0;
 }
 
 /* || SVG section footer curve */
@@ -241,7 +247,7 @@
   position: absolute !important;
   transform-origin: top left;
   animation: moveDiploma 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: top, left, width, height; /* ?? */
+  will-change: top, left, width, height;
 }
 
 #block3 .returning {
@@ -290,7 +296,7 @@
 
 /* || Employment Timeline */
 #block5 #timelineWrapper {
-  @apply relative h-[8rem] flex items-center;
+  @apply relative h-[38rem] flex items-center -mb-32;
 }
 
 #block5 #timeline {
@@ -298,18 +304,90 @@
 }
 
 #block5 #timeline:after {
-  @apply content-[''] absolute top-[85%] left-0 right-0 h-[2px] -translate-y-1/2;
+  @apply content-[''] absolute top-[85%] left-0 right-0 h-[2px] max-w-[96%] mx-auto -translate-y-1/2;
   @apply bg-light-alertColour dark:bg-dark-alertColour;
+  @apply z-[100];
 }
 
 #block5 #historyLine {
-  @apply absolute top-14 left-0;
+  @apply absolute top-[3.9rem] left-0 z-[150];
   @apply w-full h-[10%];
   transition: transform 0.5s ease-in-out;
 }
 
-#block5 #eventsContainer {
-  @apply hidden;
+#block5 #eventCardContainer {
+  @apply absolute w-[70%] max-w-[600px] top-12 z-[200] pointer-events-none;
+  @apply left-1/2 -translate-x-1/2;
+  @apply list-none;
+}
+
+#block5 #eventCardContainer li {
+  @apply absolute left-1/2 p-4 w-[95%];
+  @apply bg-light-panelBackColour dark:bg-dark-panelBackColour;
+  @apply border-2 border-light-panelBorderColour dark:border-dark-panelBorderColour;
+  @apply text-sm rounded-lg;
+  @apply shadow-dropShadowLight dark:shadow-dropShadowDark;
+  @apply focus:outline-none;
+  @apply transform -translate-x-[150%];
+}
+
+#block5 #eventCardContainer .content {
+  @apply w-full;
+}
+
+#block5 #eventCardContainer .content h2 {
+  @apply text-xl font-bold mb-1;
+  @apply text-light-colour1 dark:text-dark-colour1;
+}
+
+#block5 #eventCardContainer .content em {
+  @apply text-sm italic block mb-2;
+  @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+}
+
+#block5 #eventCardContainer .content p {
+  @apply text-base mb-3;
+  @apply text-light-colour1 dark:text-dark-colour1;
+}
+
+#block5 #eventCardContainer .content ul {
+  @apply list-none pl-4 w-full text-sm;
+  @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+}
+
+#block5 #eventCardContainer .content ul li {
+  @apply static block w-full p-0 mb-1;
+  @apply border-0 shadow-none;
+  position: static !important;
+  transform: none !important;
+}
+
+.card-enter {
+  animation: slideIn 1s ease-in-out forwards;
+}
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translate(-150%, -4rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -4rem);
+  }
+}
+
+.card-exit {
+  animation: slideOut 1s ease-in-out forwards;
+}
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -4rem);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(150%, -4rem);
+  }
 }
 
 #block5 #dates {
@@ -332,20 +410,15 @@
   transition: transform 0.3s ease-out, font-size 0.3s ease-out;
 }
 
-#block5 .date-label.selected {
-  @apply text-sm font-medium scale-110;
-}
-
 #block5 .date-marker {
-  @apply w-[0.65rem] h-[0.65rem] rounded-full;
+  @apply w-[0.65rem] h-[0.65rem] rounded-full z-[350];
   @apply bg-light-colour2 dark:bg-dark-colour1;
   @apply border border-light-colour1 dark:border-dark-colour2;
   transition: transform 0.3s ease-out;
 }
 
 #block5 .date-marker.selected {
-  @apply scale-[120%];
-  @apply bg-light-alertColour dark:bg-dark-alertColour;
+  @apply bg-light-highlightColour2 dark:bg-dark-highlightColour1;
   @apply border-light-colour1 dark:border-dark-colour2;
 }
 
@@ -353,7 +426,7 @@
 #block5 .next {
   @apply absolute p-2 rounded-full top-[60%] z-[400] outline-none;
   @apply text-light-alertColour dark:text-dark-alertColour;
-  @apply hover:scale-[120%] disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply hover:scale-110 disabled:opacity-50;
   @apply transition-colors duration-200 pointer-events-auto;
 }
 
@@ -499,16 +572,8 @@
   @apply fill-light-signatureColour dark:fill-dark-signatureColour;
 }
 
-/* || Footer */
-footer {
-  @apply grid bottom-0;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr auto 1fr;
+#copyDate {
+  @apply text-light-textColour dark:text-dark-textColour pb-[5%];
+  @apply text-xs md:text-sm lg:text-base xl:text-lg font-normal text-right;
 }
 
-footer #copyDate {
-  @apply text-light-textColour dark:text-dark-textColour pt-[5%] px-[2%] pb-[2%];
-  @apply text-xs md:text-sm lg:text-base xl:text-lg font-normal text-right;
-  grid-row: 1 / 1;
-  grid-column: 3 / 3;
-}

@@ -48,13 +48,11 @@ function scrollToTop() {
 
 function smoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach((section) => {
-
-    // Skip timeline navigation links
-    // if (section.closest(".cd-horizontal-timeline")) {
-    //   return
-    // }
-
     section.addEventListener("click", function (e) {
+      if (section.getAttribute("href").startsWith("#event-")) {
+        return
+      }
+
       e.preventDefault()
 
       let selection
@@ -195,79 +193,16 @@ function initializeHamburger() {
 // CONCEPT: Add sound effect to animations
 // (eg: 'machinery whirring' at start of deploy/locks snapping shut at end of launch)
 // (1 to 1.5-second sound-bite/low-volume 2/5)
+// || Launch Control - activate in code
+// .parallax .title,
+// .text_block {
+//   @apply hidden;
+// }
 function launchControl() {
-  // function launchControl() {
-  //   document.querySelector("#launchControl").style.display = "block"
-
-  //   const launchButton = document.querySelector("#launchControl button")
-  //   const buttonImage = launchButton.querySelector("img")
-  //   const isMedium = window.matchMedia("(min-width: 650px)").matches
-  //   const sections = document.querySelectorAll(".content-section")
-  //   let isLaunched = false
-
-  //   launchButton.addEventListener("click", function () {
-  //     const direction = isLaunched ? "reverse" : "normal"
-
-  //     buttonImage.animate([{transform: "rotate(0deg)"}, {transform: "rotate(180deg)"}], {
-  //       duration: 1500,
-  //       fill: "forwards",
-  //       direction: direction,
-  //     })
-
-  //     if (isLaunched) {
-  //       _deploySections()
-  //     } else {
-  //       _launchRocket()
-  //     }
-
-  //     isLaunched = !isLaunched
-  //   })
-
-  //   function _launchRocket() {
-  //     console.log("Launch initiated")
-  //     sections.forEach((section, index) => {
-  //       // Get and set the section height first
-  //       const height = section.offsetHeight
-  //       section.style.height = `${height}px`
-
-  //       const textBlock = section.querySelector(".text_block")
-  //       console.log(`Collapsing Text Block ${index + 1}`)
-
-  //       if (isMedium) {
-  //         const headerEl = section.querySelector(".parallax")
-  //         headerEl.classList.remove("bg-fixed")
-  //       }
-
-  //       textBlock.classList.add("collapsed")
-  //       textBlock.classList.remove("expanded")
-  //     })
-  //   }
-
-  //   function _deploySections() {
-  //     console.log("Deploy initiated")
-  //     sections.forEach((section, index) => {
-  //       const textBlock = section.querySelector(".text_block")
-  //       console.log(`Expanding Text Block ${index + 1}`)
-
-  //       textBlock.classList.remove("collapsed")
-  //       textBlock.classList.add("expanded")
-
-  //       if (isMedium) {
-  //         const headerEl = section.querySelector(".parallax")
-  //         setTimeout(() => {
-  //           headerEl.classList.add("bg-fixed")
-  //           section.style.height = "auto" // Restore natural height
-  //         }, 300)
-  //       }
-  //     })
-  //   }
-  // }
   document.querySelector("#launchControl").style.display = "block"
 
   const launchButton = document.querySelector("#launchControl button")
   const buttonImage = launchButton.querySelector("img")
-  const isMedium = window.matchMedia("(min-width: 650px)").matches
-  const sections = document.querySelectorAll(".content-section")
   let isLaunched = false
 
   launchButton.addEventListener("click", function () {
@@ -322,6 +257,7 @@ function block2Setup() {
   }, 250)
 }
 
+// Re-write using Promise to control order of events in animations
 function block3Setup() {
   const diplomas = document.querySelector("#block3 ul")
   const output = document.querySelector("#block3 #diploma-info")
@@ -573,128 +509,74 @@ function block4Setup() {
   )
 }
 
-// function block5Setup() {
-//   const svgIcons = {
-//     left: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
-//     right: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
-//     stop: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><circle cx="12" cy="12" r="10" fill="none"/><line x1="4" y1="4" x2="20" y2="20"/></svg>`,
-//   }
-
-//   let currentIndex = 1
-//   let isAnimating = false
-
-//   function _setupDateMarkers() {
-//     const dateLinks = document.querySelectorAll("#dates a")
-
-//     dateLinks.forEach((link) => {
-//       if (link.textContent) {
-//         const marker = document.createElement("div")
-
-//         marker.className = "date-marker"
-//         link.insertBefore(marker, link.firstChild)
-//       }
-//     })
-//   }
-
-//   function _calculatePositions() {
-//     const dates = Array.from(document.querySelectorAll("#dates a"))
-//     const startDate = new Date(dates[0].dataset.date.split("/").reverse().join("-"))
-//     const endDate = new Date(dates[dates.length - 1].dataset.date.split("/").reverse().join("-"))
-//     const timespan = endDate - startDate
-
-//     return dates.map((date) => {
-//       const currentDate = new Date(date.dataset.date.split("/").reverse().join("-"))
-//       const position = ((currentDate - startDate) / timespan) * 400
-
-//       date.parentElement.style.left = `${position}%`
-
-//       return position
-//     })
-//   }
-
-//   function _updateUI(index) {
-//     if (isAnimating) return
-
-//     isAnimating = true
-
-//     const historyLine = document.querySelector("#historyLine")
-//     const prevBtn = document.querySelector(".prev")
-//     const nextBtn = document.querySelector(".next")
-
-//     // Get positions and move timeline
-//     const positions = _calculatePositions()
-//     const transform = -positions[index] + 50
-
-//     historyLine.style.transform = `translateX(${transform}%)`
-
-//     // Update markers and nav buttons
-//     document.querySelectorAll(".date-marker").forEach((m) => m.classList.remove("selected"))
-//     document.querySelector(`#event-${index} .date-marker`)?.classList.add("selected")
-//     prevBtn.innerHTML = index === 1 ? svgIcons.stop : svgIcons.left
-//     nextBtn.innerHTML = index === 9 ? svgIcons.stop : svgIcons.right
-//     prevBtn.disabled = index === 1
-//     nextBtn.disabled = index === 9
-
-//     setTimeout(() => (isAnimating = false), 500)
-//     currentIndex = index
-//   }
-
-//   function _setupEventListeners() {
-//     document.querySelector("#timeline").addEventListener("click", (e) => {
-//       const prevBtn = e.target.closest(".prev")
-//       const nextBtn = e.target.closest(".next")
-
-//       if (prevBtn && currentIndex > 1) {
-//         _updateUI(currentIndex - 1)
-//       } else if (nextBtn && currentIndex < 9) {
-//         _updateUI(currentIndex + 1)
-//       }
-//     })
-
-//     document.querySelector("#dates").addEventListener("click", (e) => {
-//       const dateLink = e.target.closest('a[href^="#event-"]')
-//       if (!dateLink) return
-
-//       e.preventDefault()
-//       const index = parseInt(dateLink.getAttribute("href").split("-")[1])
-
-//       if (index > 0 && index < 10) _updateUI(index)
-//     })
-//   }
-
-//   // Initialize
-//   _setupDateMarkers()
-//   _calculatePositions()
-//   _setupEventListeners()
-
-//   const startIndex = document.querySelector(".selected")?.id.split("-")[1] || 1
-
-//   _updateUI(parseInt(startIndex))
-// }
-
-
 function block5Setup() {
-  const svgIcons = {
-    left: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
-    right: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
-    stop: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour"><circle cx="12" cy="12" r="10" fill="none"/><line x1="4" y1="4" x2="20" y2="20"/></svg>`
-  }
-
   let currentIndex = 1
   let isAnimating = false
+  let currentCard = null
+
+  const selectedElement = document.querySelector("#block5 #dates .selected")
+
+  const startIndex = selectedElement
+    ? parseInt(selectedElement.closest("a").getAttribute("href").split("-")[1])
+    : 1
+
+  const svgIcons = {
+    left: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
+    right: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
+  }
+
+  // Initialize
+  _setupDateMarkers()
+  _calculatePositions()
+  _setupEventListeners()
+  _adjustTimelineWidth()
+  _updateUI(parseInt(startIndex))
+  _initializeEventCard()
+
+function _handleEventCardAnimation(index) {
+  const eventTemplate = document.querySelector(`#block5 #eventsContainer #event-${index}`)
+  const cardContainer = document.querySelector("#block5 #eventCardContainer")
+
+  if (!eventTemplate) return
+
+  const newCard = eventTemplate.cloneNode(true)
+  if (currentCard?.dataset?.date === newCard.dataset.date) return
+
+  const animateSequence = async () => {
+    // Exit animation for current card if it exists
+    if (currentCard) {
+      currentCard.classList.remove("card-enter")
+      currentCard.classList.add("card-exit")
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      currentCard.remove()
+    }
+
+    // Enter animation for new card
+    cardContainer.appendChild(newCard)
+    newCard.classList.add("card-enter")
+    currentCard = newCard
+  }
+
+  animateSequence()
+}
 
   function _setupDateMarkers() {
-    const dateLinks = document.querySelectorAll('#block5 #dates a')
+    const dateLinks = document.querySelectorAll("#block5 #dates a")
 
-    dateLinks.forEach(link => {
+    dateLinks.forEach((link) => {
       if (link.textContent) {
-        const marker = document.createElement('div')
-        marker.className = 'date-marker'
+        const marker = document.createElement("div")
+        const label = document.createElement("span")
 
-        const label = document.createElement('span')
-        label.className = 'date-label'
+        marker.className = link.classList.contains("selected")
+          ? "date-marker selected"
+          : "date-marker"
+        label.className = link.classList.contains("selected")
+          ? "date-label selected"
+          : "date-label"
+
         label.textContent = link.textContent
-        link.textContent = ''
+        link.textContent = ""
         link.appendChild(label)
         link.appendChild(marker)
       }
@@ -702,13 +584,13 @@ function block5Setup() {
   }
 
   function _calculatePositions() {
-    const dates = Array.from(document.querySelectorAll('#block5 #dates a'))
-    const startDate = new Date(dates[0].dataset.date.split('/').reverse().join('-'))
-    const endDate = new Date(dates[dates.length-1].dataset.date.split('/').reverse().join('-'))
+    const dates = Array.from(document.querySelectorAll("#block5 #dates a"))
+    const startDate = new Date(dates[0].dataset.date.split("/").reverse().join("-"))
+    const endDate = new Date(dates[dates.length - 1].dataset.date.split("/").reverse().join("-"))
     const timespan = endDate - startDate
 
-    return dates.map(date => {
-      const currentDate = new Date(date.dataset.date.split('/').reverse().join('-'))
+    return dates.map((date) => {
+      const currentDate = new Date(date.dataset.date.split("/").reverse().join("-"))
       const position = ((currentDate - startDate) / timespan) * 400
 
       date.parentElement.style.left = `${position}%`
@@ -717,52 +599,30 @@ function block5Setup() {
     })
   }
 
-  function _updateUI(index) {
-    if (isAnimating) return
-
-    isAnimating = true
-
-    const historyLine = document.querySelector('#block5 #historyLine')
-    const prevBtn = document.querySelector('#block5 .prev')
-    const nextBtn = document.querySelector('#block5 .next')
-    const positions = _calculatePositions()
-    const transform = -positions[index] + 50
-
-    historyLine.style.transform = `translateX(${transform}%)`
-    document.querySelectorAll('#block5 .date-marker').forEach(m => m.classList.remove('selected'))
-    document.querySelector(`#block5 #event-${index} .date-marker`)?.classList.add('selected')
-    document.querySelectorAll('#block5 .date-label').forEach(l => l.classList.remove('selected'))
-    document.querySelector(`#block5 #event-${index} .date-label`)?.classList.add('selected')
-    prevBtn.innerHTML = index === 1 ? svgIcons.stop : svgIcons.left
-    nextBtn.innerHTML = index === 9 ? svgIcons.stop : svgIcons.right
-    prevBtn.disabled = index === 1
-    nextBtn.disabled = index === 9
-
-    setTimeout(() => isAnimating = false, 500)
-    currentIndex = index
-  }
-
   function _setupEventListeners() {
-    document.querySelector('#block5 #timeline').addEventListener('click', e => {
-      const prevBtn = e.target.closest('.prev')
-      const nextBtn = e.target.closest('.next')
+    document.querySelector("#block5 #timeline").addEventListener("click", (e) => {
+      const prevBtn = e.target.closest(".prev")
+      const nextBtn = e.target.closest(".next")
 
       if (prevBtn && currentIndex > 1) {
-        _updateUI(currentIndex - 1)
-        } else if (nextBtn && currentIndex < 9) {
-        _updateUI(currentIndex + 1)
+        _updateUI(currentIndex - 1, "navigation")
+      } else if (nextBtn && currentIndex < 9) {
+        _updateUI(currentIndex + 1, "navigation")
       }
     })
 
-    document.querySelector('#block5 #dates').addEventListener('click', e => {
+    document.querySelector("#block5 #dates").addEventListener("click", (e) => {
       const dateLink = e.target.closest('a[href^="#event-"]')
 
       if (!dateLink) return
 
       e.preventDefault()
-      const index = parseInt(dateLink.getAttribute('href').split('-')[1])
+      const index = parseInt(dateLink.getAttribute("href").split("-")[1])
 
-      if (index > 0 && index < 10) _updateUI(index)
+      if (index > 0 && index < 10) {
+        _updateUI(index, "dateClick")
+        _handleEventCardAnimation(index)
+      }
     })
   }
 
@@ -771,28 +631,62 @@ function block5Setup() {
     const prevBtn = document.querySelector("#block5 .prev")
     const nextBtn = document.querySelector("#block5 .next")
 
-    // Get actual button widths
     const prevWidth = prevBtn.offsetWidth
     const nextWidth = nextBtn.offsetWidth
     const totalButtonWidth = prevWidth + nextWidth
 
-    // Set timeline width and margins
     timeline.style.width = `calc(100% - ${totalButtonWidth}px)`
     timeline.style.margin = `0 ${prevWidth}px`
   }
 
-  // Initialize
-  _setupDateMarkers()
-  _calculatePositions()
-  _setupEventListeners()
-  _adjustTimelineWidth()
+  function _updateUI(index, source = "init") {
+    if (isAnimating) return
 
-  const selectedElement = document.querySelector('#block5 #dates .selected')
-  const startIndex = selectedElement
-      ? parseInt(selectedElement.closest('a').getAttribute('href').split('-')[1]) 
-      : 1
+    isAnimating = true
 
-  _updateUI(parseInt(startIndex))
+    const historyLine = document.querySelector("#block5 #historyLine")
+    const prevBtn = document.querySelector("#block5 .prev")
+    const nextBtn = document.querySelector("#block5 .next")
+    const positions = _calculatePositions()
+    const transform = -positions[index] + 50
+
+    // Move the timeline
+    historyLine.style.transform = `translateX(${transform}%)`
+
+    // Only update selected states for date clicks or initialization
+    if (source !== "navigation") {
+      document
+        .querySelectorAll("#block5 #dates .date-marker")
+        .forEach((dm) => dm.classList.remove("selected"))
+      document
+        .querySelector(`#block5 #dates li:nth-child(${index + 1}) .date-marker`)
+        ?.classList.add("selected")
+
+      document
+        .querySelectorAll("#block5 #dates .date-label")
+        .forEach((dl) => dl.classList.remove("selected"))
+      document
+        .querySelector(`#block5 #dates li:nth-child(${index + 1}) .date-label`)
+        ?.classList.add("selected")
+    }
+
+    // Update navigation buttons
+    prevBtn.innerHTML = index === 1 ? "" : svgIcons.left
+    nextBtn.innerHTML = index === 9 ? "" : svgIcons.right
+    prevBtn.disabled = index === 1
+    nextBtn.disabled = index === 9
+
+    setTimeout(() => (isAnimating = false), 500)
+    currentIndex = index
+  }
+
+  function _initializeEventCard() {
+    const selectedDateLink = document.querySelector("#block5 #dates .selected")
+    if (!selectedDateLink) return
+
+    const index = parseInt(selectedDateLink.closest("a").getAttribute("href").split("-")[1])
+    _handleEventCardAnimation(index)
+  }
 }
 
 // Validation concept: Validate each field; highlight failing fields with border;
@@ -918,17 +812,16 @@ function footerDate() {
 function init() {
   /*
     TO-DO LIST
-    - Implement Employment timeline functionality                       2d
-    - Implement Launch Control animations                               4h
-    - Re-visit parallax titles. They should be fixed to images          2h
+    - Implement Launch Control animations                               1d
     - Validation of Contact form inputs. Hide animated version          2d
       (!! confirm email functionality is still working !!)
     - Add scroll-based animations as backdrops to text blocks           3d
     - Re-visit tooltips (timeline, projectPanel, About, nav)            4h
-    - Check hamburger menu links (not working ??)                       2h
     - Check all colours used are defined for light/dark modes           6h
       (consolidate colours where possible. ie: panelProject and timeline eventCards)
     - Confirm full responsiveness for all functionality                 2d
+    - Check problem with diploma cards                                  1d
+    - Re-write Overview text                                            1h
     - Ask Maria to test it !!
   */
   setViewingMode()

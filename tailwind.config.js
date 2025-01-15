@@ -52,6 +52,8 @@ module.exports = {
         sidebarTextColour: "#0000cc",
         sidebarBackgroundColour: "#e8e8e8",
         sidebarBorderColour: "#33cc33",
+        eventCardBorder: "#ff1493", // hot pink
+        eventCardBackground: "#98ff98", // light mint green
         signatureColour: "#ff0000",
         alertColour: "#ff1a1a",
         successColour: "#69cf9d",
@@ -69,8 +71,8 @@ module.exports = {
         menuTextHoverColour: "#f5f5f5",
         hamburgerButtonColour: "#82827d",
         titleColour: "#0e0cf3",
-        colour1: "#000000",
-        colour2: "#ffffff",
+        colour1: "#ffffff",
+        colour2: "#000000",
         scrollTrackColour: "#757270",
         scrollThumbColour: "#0a2647",
         scrollThumbHoverColour: "#153a6a",
@@ -103,6 +105,8 @@ module.exports = {
         sidebarTextColour: "#000000",
         sidebarBackgroundColour: "#8f8b8a",
         sidebarBorderColour: "#0e0cf3",
+        eventCardBorder: "#990052", // hot pink
+        eventCardBackground: "#00b300", // light mint green
         signatureColour: "#b30000",
         alertColour: "#b30000",
         successColour: "#29a329",
@@ -125,7 +129,7 @@ module.exports = {
         dropShadowLight:
           "-4px 4px 8px rgba(128, 128, 128, 0.7), -8px 8px 16px rgba(128, 128, 128, 0.5), -16px 16px 32px rgba(128, 128, 128, 0.3)",
         dropShadowDark:
-          "-4px 4px 8px rgba(169, 169, 169, 0.7), -8px 8px 16px rgba(169, 169, 169, 0.5), -16px 16px 32px rgba(169, 169, 169, 0.3)",
+          "-4px 4px 8px rgba(169, 169, 169, 0.2), -8px 8px 16px rgba(169, 169, 169, 0.2), -16px 16px 32px rgba(169, 169, 169, 0.3)",
       },
       textShadow: {
         parallaxShadow: "-4px 4px gray, -3px -3px 25px #4d4dff, -1px -1px 5px darkblue",
@@ -145,11 +149,9 @@ module.exports = {
         hamburgerRotateLower: "hamburgerRotateLower 0.15s ease-in-out forwards", // used for hamburger
         hamburgerExtendUpper: "hamburgerExtendUpper 0.15s ease-in-out forwards", // used for hamburger
         hamburgerExtendLower: "hamburgerExtendLower 0.15s ease-in-out forwards", // used for hamburger
+        //cardEnter: "cardEnter 2s ease-in-out forwards", // for Employment
+        //cardExit: "cardExit 2s ease-in-out forwards", // for Employment
         floatUp: "floatUp 3s ease-out forwards", // for Employment
-
-        timelineSlide: "timelineSlide 0.5s ease-in-out forwards",
-        markerPop: "markerPop 0.3s ease-out forwards",
-        dateFloat: "dateFloat 0.3s ease-out forwards",
       },
       keyframes: {
         menuBounce: {
@@ -158,6 +160,7 @@ module.exports = {
           "100%": {transform: "scaleY(1.0)"},
         },
         parallaxFade: {
+          from: {scale: 0, opacity: 0},
           to: {scale: 1.0, opacity: 1.0},
         },
         fadeIn: {
@@ -204,32 +207,20 @@ module.exports = {
           "0%": {transform: "translateY(0) scaleX(0.1) rotate(-45deg)"},
           "100%": {transform: "translateY(0) scaleX(1) rotate(-45deg)"},
         },
+        // cardEnter: {
+        //   "0%": {opacity: "0", transform: "translate(-150%, -4rem)", visibility: "visible"},
+        //   "100%": {opacity: "1", transform: "translate(-50%, -4rem)", visibility: "visible"},
+        // },
+        // cardExit: {
+        //   "0%": {opacity: "1", transform: "translate(-50%, -4rem)", visibility: "visible"},
+        //   "100%": {opacity: "0", transform: "translate(150%, -4rem)", visibility: "hidden"},
+        // },
         floatUp: {
           "0%": {opacity: 0, transform: "translateY(-60px)"},
           "10%": {opacity: 1},
           "80%": {opacity: 1},
           "100%": {opacity: 0, transform: "translateY(-240px)"},
         },
-
-
-
-        timelineSlide: {
-          "0%": {transform: "translateX(var(--slide-from))"},
-          "100%": {transform: "translateX(var(--slide-to))"},
-        },
-        markerPop: {
-          "0%": {transform: "scale(1)"},
-          "50%": {transform: "scale(1.2)"},
-          "100%": {transform: "scale(1)"},
-        },
-        dateFloat: {
-          "0%": {opacity: "0", transform: "translateY(10px)"},
-          "100%": {opacity: "1", transform: "translateY(0)"},
-        },
-
-
-
-        
       },
     },
   },
