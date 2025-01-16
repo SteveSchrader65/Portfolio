@@ -190,20 +190,27 @@ function initializeHamburger() {
   })
 }
 
-// CONCEPT: Add sound effect to animations
-// (eg: 'machinery whirring' at start of deploy/locks snapping shut at end of launch)
-// (1 to 1.5-second sound-bite/low-volume 2/5)
-// || Launch Control - activate in code
-// .parallax .title,
-// .text_block {
-//   @apply hidden;
-// }
 function launchControl() {
-  document.querySelector("#launchControl").style.display = "block"
-
   const launchButton = document.querySelector("#launchControl button")
+  const titles = document.querySelectorAll(".content-section .parallax .title")
   const buttonImage = launchButton.querySelector("img")
   let isLaunched = false
+  let audioContext
+  let openSound
+  let closeSound
+
+  document.querySelector("#launchControl").style.display = "block"
+  launchButton.setAttribute("aria-expanded", "true")
+
+  // One-time mousemove listener for audio initialization
+  launchButton.addEventListener("mousemove", async function audioInit() {
+    if (!audioContext) {
+      await _initAudio()
+
+      // Remove the listener after initialization
+      launchButton.removeEventListener("mousemove", audioInit)
+    }
+  })
 
   launchButton.addEventListener("click", function () {
     const direction = isLaunched ? "reverse" : "normal"
@@ -214,6 +221,8 @@ function launchControl() {
       direction: direction,
     })
 
+    launchButton.setAttribute("aria-expanded", !isLaunched)
+
     if (isLaunched) {
       _deploySections()
     } else {
@@ -223,9 +232,91 @@ function launchControl() {
     isLaunched = !isLaunched
   })
 
-  function _launchRocket() {}
+  function _launchRocket() {
+    const textBlocks = document.querySelectorAll(".text_block")
 
-  function _deploySections() {}
+    // Hide titles
+    titles.forEach((heading) => {
+      heading.innerHTML = ""
+    })
+
+    // Replace title3
+    titles[2].innerHTML = "Lift-Off ..."
+
+    textBlocks.forEach((block, index) => {
+      setTimeout(() => {
+        block.classList.add("collapsed")
+        _playSound(closeSound)
+      }, index * 900)
+    })
+  }
+
+  function _deploySections() {
+    const textBlocks = document.querySelectorAll(".text_block")
+
+    // Restore all titles
+    titles.forEach((title, index) => {
+      switch (index) {
+        case 0:
+          title.innerHTML = "Overview"
+          break
+        case 1:
+          title.innerHTML = "About"
+          break
+        case 2:
+          title.innerHTML = "Studies"
+          break
+        case 3:
+          title.innerHTML = "Projects"
+          break
+        case 4:
+          title.innerHTML = "Employment"
+          break
+        case 5:
+          title.innerHTML = "Contact"
+          break
+      }
+    })
+
+    Array.from(textBlocks).reverse().forEach((block, index) => {
+      setTimeout(() => {
+        block.classList.remove("collapsed")
+        _playSound(openSound)
+      }, index * 900)
+    })
+  }
+
+  async function _initAudio() {
+    audioContext = new AudioContext()
+
+    try {
+      const [openResponse, closeResponse] = await Promise.all([
+        fetch("../sounds/openPanels.mp3"),
+        fetch("../sounds/closePanels.mp3"),
+      ])
+
+      const openBuffer = await openResponse.arrayBuffer()
+      const closeBuffer = await closeResponse.arrayBuffer()
+
+      openSound = await audioContext.decodeAudioData(openBuffer)
+      closeSound = await audioContext.decodeAudioData(closeBuffer)
+    } catch (error) {
+      console.log("Error loading sound:", error)
+    }
+  }
+
+  function _playSound(soundBuffer) {
+    if (audioContext && soundBuffer) {
+      const source = audioContext.createBufferSource()
+      const gainNode = audioContext.createGain()
+
+      source.buffer = soundBuffer
+      gainNode.gain.value = 0.05
+      source.connect(gainNode)
+      gainNode.connect(audioContext.destination)
+      source.start(0)
+    }
+  }
 }
 
 function block2Setup() {
@@ -812,16 +903,16 @@ function footerDate() {
 function init() {
   /*
     TO-DO LIST
-    - Implement Launch Control animations                               1d
     - Validation of Contact form inputs. Hide animated version          2d
       (!! confirm email functionality is still working !!)
     - Add scroll-based animations as backdrops to text blocks           3d
     - Re-visit tooltips (timeline, projectPanel, About, nav)            4h
-    - Check all colours used are defined for light/dark modes           6h
+    - Check all colours used are defined for light/dark modes           4h
       (consolidate colours where possible. ie: panelProject and timeline eventCards)
-    - Confirm full responsiveness for all functionality                 2d
-    - Check problem with diploma cards                                  1d
+    - Confirm full responsiveness for all functionality                 1d
+    - Check problem with diploma cards                                  2d
     - Re-write Overview text                                            1h
+    - Check subscription to email.js                                    1h
     - Ask Maria to test it !!
   */
   setViewingMode()

@@ -163,10 +163,15 @@
   @apply origin-top -top-64 shadow-dropShadowLight dark:shadow-dropShadowDark;
   text-justify: inter-word;
   overflow: hidden;
+  transition: transform 1.5s ease-out;
 }
 
 .text_block p {
   @apply mt-[2%];
+}
+
+.text_block.collapsed {
+  transform: scaleY(0);
 }
 
 .blockEnd {

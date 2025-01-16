@@ -1516,10 +1516,15 @@ body:not(motion-reduce) {
 .text_block {
   text-justify: inter-word;
   overflow: hidden;
+  transition: transform 1.5s ease-out;
 }
 
 .text_block p {
   margin-top: 2%;
+}
+
+.text_block.collapsed {
+  transform: scaleY(0);
 }
 
 @media (min-width: 650px) {
