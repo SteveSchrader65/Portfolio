@@ -27,11 +27,10 @@
   }
 
   .tooltip {
-    @apply invisible group-hover:visible absolute px-2 py-[0.125rem] rounded shadow-lg whitespace-nowrap opacity-85 z-[2000];
+    @apply invisible group-hover:visible absolute rounded shadow-lg whitespace-nowrap opacity-85 z-[2000];
     @apply bg-light-tipBackgroundColour dark:bg-dark-tipBackgroundColour text-light-tipTextColour dark:text-dark-tipTextColour;
-    @apply sm:text-[0.5rem] md:text-[0.7rem] lg:text-[0.75] xl:text-[0.8rem];
-    /* To standardize location of tooltips */
-    @apply -top-2 -left-28 md:left-12;
+    @apply text-[0.7rem] md:text-[0.7rem] lg:text-[0.75rem] xl:text-[0.8rem];
+    @apply p-1 -top-4 left-12 md:-top-6;
   }
 
   #dropMenu li {
@@ -110,6 +109,10 @@
 }
 
 /* || Section Dividers */
+/* .content-section {
+  @apply mt-[-1px];
+} */
+
 .parallaxContainer {
   @apply relative w-full h-screen md:h-screen;
   @apply sticky top-0;
@@ -171,7 +174,10 @@
 }
 
 .text_block.collapsed {
+  opacity: 0;
   transform: scaleY(0);
+  height: 0;
+  opacity: 1;
 }
 
 .blockEnd {
@@ -198,74 +204,66 @@ main {
 }
 
 /* || Studies */
-#block3 .diploma-grid {
-  @apply flex-wrap justify-center items-start gap-4;
-  @apply md:flex md:justify-between md:items-start gap-2;
+#block3 {
+  @apply relative;
+}
+
+#block3 ul {
+  @apply flex list-none justify-center gap-[15%] flex-wrap;
 }
 
 #block3 li {
-  @apply opacity-100;
-}
-
-#block3 li:hover {
-  @apply cursor-pointer;
-}
-
-#block3 li.animate-fadeOut {
-  @apply opacity-0;
-  transition: opacity 1s;
+  @apply relative;
+  transition: all 0.85s ease-in-out;
 }
 
 #block3 li img {
-  @apply w-[170px] h-[234px];
   @apply border-[10px] border-solid [border-image:theme('colors.light.borderImage')_18_stretch] dark:[border-image:theme('colors.dark.borderImage')_18_stretch];
+  @apply p-1 mx-[2.5%] my-[5%] cursor-pointer;
 }
 
-#block3 li:nth-child(1) img,
-#block3 li:nth-child(4) img {
-  @apply w-[213px] h-[292px];
+#block3 #diploma-info {
+  @apply absolute hidden left-[45%] top-[12rem] w-1/2 p-[2%];
 }
 
-#block3 li:nth-child(1),
-#block3 li:nth-child(2),
-#block3 li:nth-child(3) {
-  @apply md:mb-8;
+#block3 #diploma-info.fade-in {
+  animation: fadeIn 0.85s ease-in forwards;
 }
 
-#block3 li:nth-child(4) {
-  @apply md:ml-[calc(33%-106.5px)];
-}
-
-#block3 li:nth-child(4).selected {
-  @apply md:ml-0;
-}
-
-#block3 li:nth-child(5) {
-  @apply md:mr-[8rem];
+#block3 li.selected {
+  @apply absolute z-10;
+  animation: moveDiploma 0.85s forwards;
 }
 
 #block3 li.selected img {
-  @apply w-full h-full object-contain;
+  @apply w-full h-full;
+  object-fit: contain;
 }
 
-#block3 .selected {
-  position: absolute !important;
-  transform-origin: top left;
-  animation: moveDiploma 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: top, left, width, height;
+#block3 li.returning {
+  animation: returnDiploma 0.85s forwards;
 }
 
-#block3 .returning {
-  position: absolute;
-  animation: returnDiploma 0.5s forwards;
+#block3 li.fade-out {
+  animation: fadeOut 0.85s forwards;
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
-#diploma-info {
-  position: absolute;
-  left: calc(22.69rem + 4rem);
-  right: 5%;
-  top: 9.25rem;
+#block3 li.fade-in {
+  animation: fadeIn 0.85s ease-in forwards;
 }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#block3 #outro {
+  @apply mt-[1rem] my-[2rem] mb-[3rem]
+}
+
 
 /* || Projects */
 #block4 #postIt li {

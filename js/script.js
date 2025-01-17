@@ -241,7 +241,7 @@ function launchControl() {
     })
 
     // Replace title3
-    titles[2].innerHTML = "Lift-Off ..."
+    titles[1].innerHTML = "Lift-Off ..."
 
     textBlocks.forEach((block, index) => {
       setTimeout(() => {
@@ -354,10 +354,10 @@ function block3Setup() {
   const output = document.querySelector("#block3 #diploma-info")
   const dipPositions = new Map()
   const TARGET_DIMS = {
-    top: "9.25rem",
+    top: "12rem",
     left: "2rem",
-    width: "22.69rem",
-    height: "31.25rem",
+    width: "363px",
+    height: "500px",
   }
 
   function _createAnimation(startPos, isReturn = false) {
@@ -368,16 +368,16 @@ function block3Setup() {
     styleSheet.textContent = `
       @keyframes ${animation} {
         from {
-          top: ${typeof from.top === "number" ? from.top / 16 + "rem" : from.top}
-          left: ${typeof from.left === "number" ? from.left / 16 + "rem" : from.left}
-          width: ${typeof from.width === "number" ? from.width / 16 + "rem" : from.width}
-          height: ${typeof from.height === "number" ? from.height / 16 + "rem" : from.height}
+          top: ${from.top}${typeof from.top === "number" ? "px" : ""};
+          left: ${from.left}${typeof from.left === "number" ? "px" : ""};
+          width: ${from.width}${typeof from.width === "number" ? "px" : ""};
+          height: ${to.height}${typeof from.height === "number" ? "px" : ""};
         }
         to {
-          top: ${typeof to.top === "number" ? to.top / 16 + "rem" : to.top}
-          left: ${typeof to.left === "number" ? to.left / 16 + "rem" : to.left}
-          width: ${typeof to.width === "number" ? to.width / 16 + "rem" : to.width}
-          height: ${typeof to.height === "number" ? to.height / 16 + "rem" : to.height}
+          top: ${to.top}${typeof to.top === "number" ? "px" : ""};
+          left: ${to.left}${typeof to.left === "number" ? "px" : ""};
+          width: ${to.width}${typeof to.width === "number" ? "px" : ""};
+          height: ${from.height}${typeof to.height === "number" ? "px" : ""};
         }
       }
     `
@@ -386,9 +386,9 @@ function block3Setup() {
 
   function _resetDiplomas() {
     diplomas.querySelectorAll("li").forEach((diploma) => {
-      diploma.classList.remove("selected", "returning", "animate-fadeOut", "animate-fadeIn")
+      diploma.classList.remove("selected", "returning", "fade-out", "fade-in")
     })
-    output.classList.remove("animate-fadeIn")
+    output.classList.remove("fade-in")
     output.innerHTML = ""
   }
 
@@ -407,11 +407,11 @@ function block3Setup() {
 
   diplomas.addEventListener("click", (e) => {
     const selected = e.target.closest("LI")
-
     if (!selected) return
 
     if (!selected.classList.contains("selected")) {
       _resetDiplomas()
+
       const startPos = dipPositions.get(selected)
       _createAnimation(startPos)
 
@@ -421,28 +421,19 @@ function block3Setup() {
       // Handle other diplomas
       diplomas.querySelectorAll("li").forEach((diploma) => {
         if (diploma !== selected) {
-          diploma.classList.add("animate-fadeOut")
+          diploma.classList.add("fade-out")
         }
       })
 
-      // Wait for move animation to complete before showing info
-      selected.addEventListener(
-        "animationend",
-        () => {
-          const courseId = selected.getAttribute("data-course")
-          const courseInfo = document.querySelector(courseId).cloneNode(true)
+      // Handle course info display
+      const courseId = selected.getAttribute("data-course")
+      const courseInfo = document.querySelector(courseId).cloneNode(true)
 
-          courseInfo.style.display = "block"
-          output.classList.add("animate-fadeIn")
-          output.appendChild(courseInfo)
-        },
-        {once: true}
-      )
+      // courseInfo.style.display = "block"
+      output.style.display = "block"
+      output.classList.add("fade-in")
+      output.appendChild(courseInfo)
     } else {
-      // Clear info immediately when returning
-      output.innerHTML = ""
-      output.classList.remove("animate-fadeIn")
-
       const startPos = dipPositions.get(selected)
 
       _createAnimation(startPos, true)
@@ -458,13 +449,14 @@ function block3Setup() {
       // Handle other diplomas
       diplomas.querySelectorAll("li").forEach((diploma) => {
         if (diploma !== selected) {
-          diploma.classList.remove("animate-fadeOut")
-          diploma.classList.add("animate-fadeIn")
+          diploma.classList.remove("fade-out")
+          diploma.classList.add("fade-in")
         }
       })
     }
   })
 }
+
 
 function block4Setup() {
   const postItItems = document.querySelectorAll("#postIt li")
@@ -783,6 +775,7 @@ function _handleEventCardAnimation(index) {
 // Validation concept: Validate each field; highlight failing fields with border;
 // The SEND button starts with a red background which changes to green only when
 // all validations have passed.
+// Modify SEND button tooltip
 async function block6Setup() {
   emailjs.init("uuJqWlCvuML_Trzm-")
 
@@ -904,15 +897,14 @@ function init() {
   /*
     TO-DO LIST
     - Validation of Contact form inputs. Hide animated version          2d
-      (!! confirm email functionality is still working !!)
+      (!! Confirm email functionality is still working !!)
     - Add scroll-based animations as backdrops to text blocks           3d
-    - Re-visit tooltips (timeline, projectPanel, About, nav)            4h
     - Check all colours used are defined for light/dark modes           4h
       (consolidate colours where possible. ie: panelProject and timeline eventCards)
-    - Confirm full responsiveness for all functionality                 1d
-    - Check problem with diploma cards                                  2d
+    - Confirm full responsiveness for all functionality                 3d
+      (Modify parallax settings for responsive sizing of Launch Control images)
+    - Implement new Diploma card animations                 						2d
     - Re-write Overview text                                            1h
-    - Check subscription to email.js                                    1h
     - Ask Maria to test it !!
   */
   setViewingMode()

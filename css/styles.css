@@ -586,10 +586,6 @@ body:not(motion-reduce) {
   z-index: 2000;
   white-space: nowrap;
   border-radius: 0.25rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-top: 0.125rem;
-  padding-bottom: 0.125rem;
   opacity: 0.85;
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
@@ -614,10 +610,8 @@ body:not(motion-reduce) {
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
-@media (min-width: 380px) {
-  .tooltip {
-    font-size: 0.5rem;
-  }
+.tooltip {
+  font-size: 0.7rem;
 }
 
 @media (min-width: 650px) {
@@ -628,7 +622,7 @@ body:not(motion-reduce) {
 
 @media (min-width: 976px) {
   .tooltip {
-    color: 0.75;
+    font-size: 0.75rem;
   }
 }
 
@@ -639,14 +633,14 @@ body:not(motion-reduce) {
 }
 
 .tooltip {
-  /* To standardize location of tooltips */
-  top: -0.5rem;
-  left: -7rem;
+  top: -1rem;
+  left: 3rem;
+  padding: 0.25rem;
 }
 
 @media (min-width: 650px) {
   .tooltip {
-    left: 3rem;
+    top: -1.5rem;
   }
 }
 
@@ -802,20 +796,20 @@ body:not(motion-reduce) {
   position: relative;
 }
 
-.-left-28 {
-  left: -7rem;
+.-left-24 {
+  left: -6rem;
 }
 
 .-right-\[60\%\] {
   right: -60%;
 }
 
-.-top-2 {
-  top: -0.5rem;
-}
-
 .bottom-0 {
   bottom: 0px;
+}
+
+.left-\[-7rem\] {
+  left: -7rem;
 }
 
 .right-10 {
@@ -908,6 +902,10 @@ body:not(motion-reduce) {
   margin-top: 2.5rem;
 }
 
+.mt-\[-1px\] {
+  margin-top: -1px;
+}
+
 .block {
   display: block;
 }
@@ -922,6 +920,10 @@ body:not(motion-reduce) {
 
 .grid {
   display: grid;
+}
+
+.contents {
+  display: contents;
 }
 
 .hidden {
@@ -1211,6 +1213,11 @@ body:not(motion-reduce) {
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
+.text-light-colour2 {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
 .text-light-navTextColour {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
@@ -1326,6 +1333,10 @@ body:not(motion-reduce) {
 */
 
 /* || Section Dividers */
+
+/* .content-section {
+  @apply mt-[-1px];
+} */
 
 .parallaxContainer {
   position: relative;
@@ -1525,6 +1536,8 @@ body:not(motion-reduce) {
 
 .text_block.collapsed {
   transform: scaleY(0);
+  height: 0;
+  opacity: 1;
 }
 
 @media (min-width: 650px) {
@@ -1567,37 +1580,24 @@ main {
 
 /* || Studies */
 
-#block3 .diploma-grid {
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 0.5rem;
+#block3 {
+  position: relative;
 }
 
-@media (min-width: 650px) {
-  #block3 .diploma-grid {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
+#block3 ul {
+  display: flex;
+  list-style-type: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15%;
 }
 
 #block3 li {
-  opacity: 1;
-}
-
-#block3 li:hover {
-  cursor: pointer;
-}
-
-#block3 li.animate-fadeOut {
-  opacity: 0;
-  transition: opacity 1s;
+  position: relative;
+  transition: all 0.85s ease-in-out;
 }
 
 #block3 li img {
-  height: 234px;
-  width: 170px;
   border-width: 10px;
   border-style: solid;
   -o-border-image: url('../images/border-dark.png') 18 stretch;
@@ -1609,30 +1609,32 @@ main {
      border-image: url('../images/border-light.png') 18 stretch;
 }
 
-#block3 li:nth-child(1) img,
-#block3 li:nth-child(4) img {
-  height: 292px;
-  width: 213px;
+#block3 li img {
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  cursor: pointer;
+  padding: 0.25rem;
 }
 
-@media (min-width: 650px) {
-  #block3 li:nth-child(1),
-#block3 li:nth-child(2),
-#block3 li:nth-child(3) {
-    margin-bottom: 2rem;
-  }
+#block3 #diploma-info {
+  position: absolute;
+  left: 45%;
+  top: 12rem;
+  display: none;
+  width: 50%;
+  padding: 2%;
+}
 
-  #block3 li:nth-child(4) {
-    margin-left: calc(33% - 106.5px);
-  }
+#block3 #diploma-info.fade-in {
+  animation: fadeIn 0.85s ease-in forwards;
+}
 
-  #block3 li:nth-child(4).selected {
-    margin-left: 0px;
-  }
-
-  #block3 li:nth-child(5) {
-    margin-right: 8rem;
-  }
+#block3 li.selected {
+  position: absolute;
+  z-index: 10;
+  animation: moveDiploma 0.85s forwards;
 }
 
 #block3 li.selected img {
@@ -1642,23 +1644,41 @@ main {
      object-fit: contain;
 }
 
-#block3 .selected {
-  position: absolute !important;
-  transform-origin: top left;
-  animation: moveDiploma 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: top, left, width, height;
+#block3 li.returning {
+  animation: returnDiploma 0.85s forwards;
 }
 
-#block3 .returning {
-  position: absolute;
-  animation: returnDiploma 0.5s forwards;
+#block3 li.fade-out {
+  animation: fadeOut 0.85s forwards;
 }
 
-#diploma-info {
-  position: absolute;
-  left: calc(22.69rem + 4rem);
-  right: 5%;
-  top: 9.25rem;
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+#block3 li.fade-in {
+  animation: fadeIn 0.85s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+#block3 #outro {
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
 
 /* || Projects */
@@ -2589,6 +2609,11 @@ main {
   color: rgb(38 38 38 / var(--tw-text-opacity, 1));
 }
 
+.dark\:text-dark-colour2:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
+}
+
 .dark\:text-dark-navTextColour:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(212 188 43 / var(--tw-text-opacity, 1));
@@ -2597,6 +2622,11 @@ main {
 .dark\:text-dark-textColour:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(204 204 204 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-dark-colour1:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
 .dark\:shadow-dropShadowDark:is(.dark *) {
@@ -2615,20 +2645,17 @@ main {
   color: rgb(33 0 0 / var(--tw-text-opacity, 1));
 }
 
-@media (min-width: 380px) {
-  .sm\:text-base {
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
-}
-
 @media (min-width: 650px) {
   .md\:static {
     position: static;
   }
 
-  .md\:left-12 {
-    left: 3rem;
+  .md\:-top-2 {
+    top: -0.5rem;
+  }
+
+  .md\:left-10 {
+    left: 2.5rem;
   }
 
   .md\:right-0 {
@@ -2705,11 +2732,6 @@ main {
     line-height: 1.5rem;
   }
 
-  .md\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-
   .md\:shadow-dropShadowLight {
     --tw-shadow: -4px 4px 8px rgba(128, 128, 128, 0.7), -8px 8px 16px rgba(128, 128, 128, 0.5), -16px 16px 32px rgba(128, 128, 128, 0.3);
     --tw-shadow-colored: -4px 4px 8px var(--tw-shadow-color), -8px 8px 16px var(--tw-shadow-color), -16px 16px 32px var(--tw-shadow-color);
@@ -2730,11 +2752,6 @@ main {
     margin-left: calc(1.75rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
-  .lg\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-
   .lg\:text-\[1\.35rem\]\/8 {
     font-size: 1.35rem;
     line-height: 2rem;
@@ -2742,11 +2759,6 @@ main {
 }
 
 @media (min-width: 1440px) {
-  .xl\:text-3xl {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-  }
-
   .xl\:text-\[1\.75rem\]\/10 {
     font-size: 1.75rem;
     line-height: 2.5rem;

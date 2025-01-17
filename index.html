@@ -32,9 +32,9 @@
           <div class="flex items-center order-2 ml-auto md:ml-0">
 
             <!-- Launch Control -->
-            <div id="launchControl" class="hidden relative group border-none outline-none min-w-6 -mr-2 md:mr-1 px-2 pt-1 order-1 md:order-2 sm:text-base md:text-xl lg:text-2xl xl:text-3xl bg-light-navBarColour dark:bg-dark-navBarColour text-light-textColour dark:text-dark-textColour">
+            <div id="launchControl" class="hidden relative group border-none outline-none min-w-6 -mr-2 md:mr-1 px-2 pt-1 order-1 md:order-2 bg-light-navBarColour dark:bg-dark-navBarColour text-light-textColour dark:text-dark-textColour">
               <button><img src="images/downArrow.png" width="30" height="30" class="outline-none border-none" alt="Button to open and close panels">
-                <span class="tooltip top-0 -left-28 md:left-12">Activate Launch Control</span>
+                <span class="tooltip top-0 left-[-7rem] md:left-10">Activate Launch Control</span>
               </button>
             </div>
 
@@ -42,13 +42,13 @@
             <div id="viewingMode" class="m-2 order-2 md:order-1">
               <button id="darkMode" class="hidden dark:block relative group">
                 <img src="images/lightModeButton.png" width="40" height="20" alt="Set light viewing mode">
-                <span class="tooltip -top-2 -left-28 md:left-12">
+                <span class="tooltip -left-24 md:left-10 md:-top-2">
                   Select light-mode
                 </span>
               </button>
               <button id="lightMode" class="block dark:hidden relative group">
                 <img src="images/darkModeButton.png" width="40" height="20" alt="Set dark viewing mode">
-                <span class="tooltip -top-2 -left-28 md:left-12">
+                <span class="tooltip -left-24 md:left-10 md:-top-2">
                   Select dark-mode
                 </span>
               </button>
@@ -63,12 +63,12 @@
     md:static md:flex md:flex-row md:w-auto md:translate-x-0
     md:space-x-4 lg:space-x-7 text-sm/4 md:text-[1.0625rem]/6 lg:text-[1.35rem]/8 xl:text-[1.75rem]/10
     font-linkFont">
-          <li><a href="#parallax1">Overview</a></li>
-          <li><a href="#parallax2">About</a></li>
-          <li><a href="#parallax3">Studies</a></li>
-          <li><a href="#parallax4">Projects</a></li>
-          <li><a href="#parallax5">Employment</a></li>
-          <li><a href="#parallax6">Contact</a></li>
+          <li><a href="#content1">Overview</a></li>
+          <li><a href="#content2">About</a></li>
+          <li><a href="#content3">Studies</a></li>
+          <li><a href="#content4">Projects</a></li>
+          <li><a href="#content5">Employment</a></li>
+          <li><a href="#content6">Contact</a></li>
           <li id="dropMenuTrigger" class="relative group hover:bg-light-menuBackgroundColour dark:hover:bg-dark-menuBackgroundColour">Links
             <ul id="dropMenu" class="absolute hidden group-hover:block top-full min-w-[200px] right-10 md:right-0
             bg-light-menuBackgroundColour dark:bg-dark-menuBackgroundColour text-light-navTextColour dark:text-dark-backColour hover:bg-light-menuBackgroundColour dark:hover:bg-dark-menuBackgroundColour hover:text-light-menuTextColour dark:hover:text-dark-menuTextColour
@@ -90,24 +90,27 @@
     <main>
 
       <!-- Overview Section -->
-      <section class="content-section">
+      <section class="content-section" id="content1">
         <div class="parallaxContainer">
           <div class="parallax" id="parallax1">
             <span class="title">Overview</span>
           </div>
         </div>
         <div class="text_block" id="block1">
-          <p>Originally created in 2021 as a platform for academic projects, this site has evolved alongside my web development journey.</p>
-          <p>Over the summer of 2023/24, the platform was re-built to showcase my work and projects to potential employers and clients.</p>
-          <p>At the end of 2024, having completed studies, I looked to apply learned lessons by re-examing my UI.</p>
-          <p>From foundational web technologies to advanced frameworks such as NextJS and NodeJS, each section reflects my commitment
-            to continuous learning and professional growth. As I explore new technologies to expand my skillset, this
-            portfolio serves as both a testament to my journey and a dynamic showcase of my web developer projects.</p>
-          <p>This portfolio aims to demonstrate my growing expertise in modern web technologies, featuring projects that highlight my
-            skills in front-end development, programming, and database management. Through my work and studies, I have strived to develop
-            proficiency in creating practical, user-centered solutions.</p>
-          <p>(My current plan is to re-do this site in React, once I gain more proficiency with that JavaScript framework - in its' present
-            state, the site uses vanilla JS to perform DOM manipulation for the animations.)</p>
+          <p>Welcome to my digital workspace !! </p>
+          <p>It is my hope that this portfolio serves to demonstrate my developing capabilities across modern web technologies; from clean front-end implementations to robust database solutions.</p>
+          <p>Since its inception in 2021, this platform has evolved from a simple list of links placed against a backdrop, into the fully-fledged portfolio site you are seeing today.</p>
+          <ul class="text-light-colour2 dark:text-dark-colour1">
+            <li>2021 - The site began as a basic landing page, with links to assessments for my lecturers</li>
+            <li>2022 - 1st major iteration expanded functionality with a centralized hub linking to academic work</li>
+            <li>2024 - 2nd iteration introduced the current site architecture, laying the foundation for future growth</li>
+            <li>2025 - 3rd iteration embraced modern development practices through TailwindCSS implementation, enhanced parallax effects, and new interactive features</li>
+            <li>Future - A further complete rebuild is planned using React to further advance functionality and performance</li>
+          </ul>
+          <!-- Should also mention contents of website -->
+          <p>As it has evolved, sections and features were added until the design became as it is today.</p>
+          <p></p>
+          <p></p>
           <p>3 ... 2 ... 1 ...</p>
           <p>Let's go !!</p>
           <div class="blockEnd"></div>
@@ -117,18 +120,12 @@
               <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
               <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0C951.2,90,886,95.24,827.93,77.22c-53.08-23.16-106.56-44.03-165.56-35.4-43.38,6.34-84.61,18.82-127.61,26.46C314.09,71.32,149.93,59,0,5.63Z" class="shape-fill"></path>
             </svg>
-            <!-- Original curve SVG -->
-            <!-- <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-              <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
-              <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
-              <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
-            </svg> -->
           </div>
         </div>
       </section>
 
       <!-- About Section -->
-      <section class="content-section">
+      <section class="content-section" id="content2">
         <div class="parallaxContainer">
           <div class="parallax" id="parallax2">
             <span class="title">About</span>
@@ -138,7 +135,7 @@
           <p>Hi !! I'm
             <span class="relative group">
               <span id="animateMe" class="font-bold">Steve ...</span>
-                <span class="tooltip top-0 -left-28 md:left-12">Just a little JS wizardry</span>
+                <span class="tooltip">Just a little JS wizardry</span>
             </span>
           </p>
           <p>Hello and thank you for visiting my online portfolio, where innovation meets practical experience in web development and programming. I am excited to showcase the skills and projects that I have developed since making the life-changing decision to return to full-time studies.</p>
@@ -161,7 +158,7 @@
       </section>
 
       <!-- Studies Section -->
-      <section class="content-section">
+      <section class="content-section" id="content3">
         <div class="parallaxContainer">
           <div class="parallax" id="parallax3">
             <span class="title">Studies</span>
@@ -170,7 +167,7 @@
         <div class="text_block" id="block3">
           <p>In 2019, I made the decision to re-skill in software development. Over the ensuing four (and a bit)-year period of full-time study, I worked to grow my knowledge base from programming fundamentals through to advanced web development.</p>
           <p style="margin-bottom: 1rem;">Select a diploma for further information:</p>
-          <ul class="diploma-grid flex flex-wrap justify-center items-center">
+          <ul class="diploma-grid flex flex-wrap justify-center">
             <li data-course="#course1">
               <img src="images/DipProg.jpg" alt="Diploma of Advanced Programming" width="213" height="292">
             </li>
@@ -237,7 +234,7 @@
       </section>
 
       <!-- Projects Section -->
-      <section class="content-section">
+      <section class="content-section mt-[-1px]" id="content4">
         <div class="parallaxContainer">
           <div class="parallax" id="parallax4">
             <span class="title">Projects</span>
@@ -361,7 +358,7 @@
                   <img src="images/shopper3.png" width="1920" height="1080" alt="Deleting item from shopping list">
                   <p>The app maintains data persistence through local storage, ensuring that shopping lists survive browser refreshes. Users can add new items with their desired pantry quantities, modify existing entries, and delete items as needed. A running total at the bottom of the screen provides quick insight into list size.</p>
                   <img src="images/shopper4.png" width="1920" height="1080" alt="Re-ordering items on shopping list">
-                  <p>The printing functionality, implemented using the useReactToPrint hook, converts the dynamic web interface into a shopping-friendly printed format through custom CSS styling. This feature bridges the gap between digital organization and practical shopping use.</p>
+                  <p>The print functionality, implemented using the useReactToPrint hook, converts the dynamic web interface into a shopping-friendly printed format through custom CSS styling. This feature bridges the gap between digital organization and practical shopping use.</p>
                   <img src="images/shopper5.png" width="1920" height="1080" alt="Printing your shopping list">
                   <p>While seemingly straightforward, this project served as a crucial learning experience in React development, covering essential concepts like component lifecycle, state management, user interaction, and DOM manipulation. It demonstrates how fundamental React principles can be applied to create practical, user-friendly applications.</p>
                 </li>
@@ -394,7 +391,7 @@
       </section>
 
       <!-- Employment Section -->
-      <section class="content-section">
+      <section class="content-section mt-[-1px]" id="content5">
         <div class="parallaxContainer">
           <div class="parallax" id="parallax5">
             <span class="title">Employment</span>
@@ -503,7 +500,7 @@
                   </p>
                   <ul>
                     <li>• Coordinated fleet of 50+ drivers to optimize delivery routes and timing</li>
-                    <li>• Managed real-time dispatch using Hub system to meet urgent delivery requirements</li>
+                    <li>• Managed real-time despatch using Hub system to meet critical delivery requirements</li>
                     <li>• Handled customer service including booking processing and status updates</li>
                     <li>• Continually monitored driver locations and schedules to ensure on-time deliveries</li>
                   </ul>
@@ -557,9 +554,7 @@
               <li data-date="31/01/2025" id="event-10"></li>
             </ul>
             <div id="timeline">
-              <button href="#prev" class="prev">
-                <span class="tooltip -top-2 -left-28 md:left-12" data-tooltip="Back in Time"></span>
-              </button>
+              <button href="#prev" class="prev"></button>
               <div id="historyLine">
                 <ul id="dates">
                   <li><a href="#event-0" data-date="01/12/1981"></a></li>
@@ -575,9 +570,7 @@
                   <li><a href="#event-10" data-date="01/02/2025"></a></li>
                 </ul>
               </div>
-              <button href="#next" class="next">
-                <span class="tooltip -top-2 -left-28 md:left-12" data-tooltip="Advance Time"></span>
-              </button>
+              <button href="#next" class="next"></button>
             </div>
           </div>
           <p>
@@ -602,7 +595,7 @@
       </section>
 
       <!-- Contact Section -->
-      <section class="content-section">
+      <section class="content-section" id="content6">
         <div class="parallaxContainer">
           <div class="parallax" id="parallax6">
             <span class="title">Contact</span>
@@ -630,7 +623,6 @@
               <label for="contactMessage">Message:</label>
               <textarea id="contactMessage" name="message" cols="141" rows="10" maxlength="1000"
                 placeholder="Type your message here ..." required></textarea>
-              <!-- <span class="tooltip" data-tooltip="Check to forward a copy of this e-mail to your in-box"></span> -->
               <div id="checkboxContainer">
                 <input type="checkbox" id="contactForward" name="forward" checked>
                 <label for="contactForward">cc: e-mail</label>
