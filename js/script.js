@@ -362,9 +362,13 @@ function block3Setup() {
   let isAnimating = false
 
   function _createAnimation(startPos, isReturn = false) {
-    const styleSheet = document.createElement("style")
+    document.querySelectorAll("style[data-animation]").forEach((style) => style.remove())
+
     const animation = isReturn ? "returnDiploma" : "moveDiploma"
     const [from, to] = isReturn ? [TARGET_DIMS, startPos] : [startPos, TARGET_DIMS]
+    const styleSheet = document.createElement("style")
+
+    styleSheet.setAttribute("data-animation", "diploma")
 
     styleSheet.textContent = `
       @keyframes ${animation} {
@@ -372,13 +376,13 @@ function block3Setup() {
           top: ${from.top}${typeof from.top === "number" ? "px" : ""};
           left: ${from.left}${typeof from.left === "number" ? "px" : ""};
           width: ${from.width}${typeof from.width === "number" ? "px" : ""};
-          height: ${to.height}${typeof from.height === "number" ? "px" : ""};
+          height: ${from.height}${typeof from.height === "number" ? "px" : ""};
         }
         to {
           top: ${to.top}${typeof to.top === "number" ? "px" : ""};
           left: ${to.left}${typeof to.left === "number" ? "px" : ""};
           width: ${to.width}${typeof to.width === "number" ? "px" : ""};
-          height: ${from.height}${typeof to.height === "number" ? "px" : ""};
+          height: ${to.height}${typeof to.height === "number" ? "px" : ""};
         }
       }
     `
@@ -386,61 +390,98 @@ function block3Setup() {
   }
 
   function _resetDiplomas() {
+    const clone = document.querySelector("#block3 .diploma-clone")
+    if (clone) clone.remove()
+
     diplomas.querySelectorAll("li").forEach((diploma) => {
-      diploma.classList.remove("selected", "returning", "fade-out", "fade-in")
+      diploma.classList.remove("fade-out", "fade-in")
+      diploma.style.visibility = ""
     })
+
     output.style.display = "none"
-    output.classList.remove("fade-in")
+    output.classList.remove("fade-in", "fade-out")
     output.innerHTML = ""
   }
 
-  function _fadeOutOtherDiplomas(selected) {
-    const others = [...diplomas.querySelectorAll("li")].filter((diploma) => diploma !== selected)
+  function _createClone(selected, startPos) {
+    const clone = selected.cloneNode(true)
 
-    others.forEach((diploma) => diploma.classList.add("fade-out"))
+    clone.classList.add("diploma-clone", "selected")
+    clone.style.position = "absolute"
+    clone.style.top = `${startPos.top}px`
+    clone.style.left = `${startPos.left}px`
+    clone.style.width = `${startPos.width}px`
+    clone.style.height = `${startPos.height}px`
 
+    return clone
+  }
+
+  function _fadeOutDiplomas() {
     return new Promise((resolve) => {
-      setTimeout(resolve, 850)
+      diplomas.querySelectorAll("li:not(.diploma-clone)").forEach((diploma) => {
+        diploma.classList.add("fade-out")
+      })
+
+      setTimeout(resolve, 425)
     })
   }
 
-  function _moveSelectedDiploma(selected, startPos) {
+  function _moveClone(clone, startPos) {
     return new Promise((resolve) => {
       _createAnimation(startPos)
-      selected.classList.add("selected")
-      selected.addEventListener("animationend", resolve, {once: true})
+      clone.addEventListener("animationend", resolve, {once: true})
     })
   }
 
   function _showDiplomaInfo(courseId) {
-    const courseInfo = document.querySelector(courseId).cloneNode(true)
-    output.style.display = "block"
-    output.appendChild(courseInfo)
+    return new Promise((resolve) => {
+      const courseInfo = document.querySelector(courseId).cloneNode(true)
+
+      output.style.display = "block"
+      output.classList.add("fade-in")
+      output.appendChild(courseInfo)
+      setTimeout(resolve, 500)
+    })
   }
 
-  function _returnSequence(selected, startPos) {
+  function _hideDiplomaInfo() {
     return new Promise((resolve) => {
-      output.style.display = "none"
-      output.innerHTML = ""
+      output.classList.remove("fade-in")
+      output.classList.add("fade-out")
 
+      setTimeout(() => {
+        output.style.display = "none"
+        output.innerHTML = ""
+        output.classList.remove("fade-out")
+        resolve()
+      }, 500)
+    })
+  }
+
+  function _returnClone(clone, startPos) {
+    return new Promise((resolve) => {
+      clone.classList.remove("selected")
+      clone.classList.add("returning")
       _createAnimation(startPos, true)
-      selected.classList.add("returning")
-
-      diplomas.querySelectorAll("li").forEach((diploma) => {
-        if (diploma !== selected) {
-          diploma.classList.remove("fade-out")
-          diploma.classList.add("fade-in")
-        }
-      })
-
-      selected.addEventListener(
+      clone.addEventListener(
         "animationend",
         () => {
-          _resetDiplomas()
+          clone.remove()
           resolve()
         },
         {once: true}
       )
+    })
+  }
+
+  function _revealOriginals() {
+    return new Promise((resolve) => {
+      diplomas.querySelectorAll("li:not(.diploma-clone)").forEach((diploma) => {
+        diploma.classList.remove("fade-out")
+        diploma.classList.add("fade-in")
+        diploma.style.visibility = "visible"
+      })
+      setTimeout(resolve, 425)
     })
   }
 
@@ -457,26 +498,37 @@ function block3Setup() {
   })
 
   diplomas.addEventListener("click", async (e) => {
-    const selected = e.target.closest("LI")
-    if (!selected || isAnimating) return
+    const clicked = e.target.closest("LI")
+    if (!clicked || isAnimating) return
 
-    if (!selected.classList.contains("selected")) {
+    if (!clicked.classList.contains("diploma-clone")) {
       isAnimating = true
       _resetDiplomas()
-      const startPos = dipPositions.get(selected)
-      const courseId = selected.getAttribute("data-course")
+
+      // Get position of clicked diploma and create clone
+      const startPos = dipPositions.get(clicked)
+      const courseId = clicked.getAttribute("data-course")
+      const clone = _createClone(clicked, startPos)
+
+      // Append clone to diplomas list
+      diplomas.appendChild(clone)
 
       try {
-        await _fadeOutOtherDiplomas(selected)
-        await _moveSelectedDiploma(selected, startPos)
-        _showDiplomaInfo(courseId)
+        await _fadeOutDiplomas()
+        await _moveClone(clone, startPos)
+        await _showDiplomaInfo(courseId)
       } finally {
         isAnimating = false
       }
     } else {
       isAnimating = true
       try {
-        await _returnSequence(selected, dipPositions.get(selected))
+        await _hideDiplomaInfo()
+        const originalDiploma = diplomas.querySelector(
+          `li[data-course="${clicked.getAttribute("data-course")}"]`
+        )
+        await _returnClone(clicked, dipPositions.get(originalDiploma))
+        await _revealOriginals()
       } finally {
         isAnimating = false
       }
@@ -802,6 +854,117 @@ function _handleEventCardAnimation(index) {
 // The SEND button starts with a red background which changes to green only when
 // all validations have passed.
 // Modify SEND button tooltip
+// async function block6Setup() {
+//   emailjs.init("uuJqWlCvuML_Trzm-")
+
+//   document.querySelector(".contactForm").addEventListener("submit", async function (e) {
+//     e.preventDefault()
+
+//     const formData = new FormData(this)
+//     const errors = _validateForm(formData)
+
+//     if (errors.length > 0) {
+//       alert(errors.join("\n"))
+//       return
+//     }
+
+//     const sendCopy = formData.get("forward")
+
+//     try {
+//       // Send main email
+//       const response = await emailjs.send("service_7pgphhl", "template_kmnam9c", {
+//         from_name: formData.get("fullName"),
+//         from_email: formData.get("email"),
+//         message: formData.get("message"),
+//       })
+
+//       // If copy requested, send confirmation email
+//       if (sendCopy) {
+//         await emailjs.send("service_7pgphhl", "template_o26fij7", {
+//           from_name: formData.get("fullName"),
+//           from_email: formData.get("email"),
+//           message: formData.get("message"),
+//           to_email: formData.get("email"),
+//         })
+//       }
+
+//       if (response.status === 200) {
+//         alert("Message sent successfully!")
+//         this.reset()
+//       }
+//     } catch (error) {
+//       console.error("EmailJS Error:", error)
+//       alert("Failed to send message")
+//     }
+//   })
+
+//   // Form Validation
+//   function _validateForm(formData) {
+//     const errors = []
+//     const name = formData.get("fullName")
+//     const email = formData.get("email")
+//     const message = formData.get("message")
+
+//     // Name validation (only letters, spaces, hyphens and apostrophes)
+//     if (!name || name.trim() === "") {
+//       errors.push("Name is required")
+//     } else if (!/^[A-Za-z\s'-]+$/.test(name)) {
+//       errors.push("Name can only contain letters, spaces, hyphens and apostrophes")
+//     }
+
+//     // Email validation
+//     if (!email || email.trim() === "") {
+//       errors.push("Email address is required")
+//     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+//       errors.push("Please enter a valid email address")
+//     }
+
+//     // Message validation
+//     if (!message || message.trim() === "") {
+//       errors.push("Message is required")
+//     } else if (message.length < 10) {
+//       errors.push("Message must be at least 10 characters long")
+//     } else if (message.length > 1000) {
+//       errors.push("Message cannot exceed 1000 characters")
+//     }
+
+//     return errors
+//   }
+
+//   // Helper functions for displaying messages
+//   function _clearMessages() {
+//     document.querySelectorAll(".form-message").forEach((msg) => msg.remove())
+//   }
+
+//   function _displaySuccessMessage(message) {
+//     const successDiv = document.createElement("div")
+
+//     successDiv.className = "form-message success-message"
+//     successDiv.textContent = message
+//     successDiv.style.color = "green"
+//     successDiv.style.marginBottom = "1rem"
+
+//     const form = document.querySelector(".contactForm")
+
+//     form.insertBefore(successDiv, form.firstChild)
+//     setTimeout(() => successDiv.remove(), 5000)
+//   }
+
+//   function _displayErrorMessage(message) {
+//     const errorDiv = document.createElement("div")
+
+//     errorDiv.className = "form-message error-message"
+//     errorDiv.textContent = message
+//     errorDiv.style.color = "red"
+//     errorDiv.style.marginBottom = "1rem"
+
+//     const form = document.querySelector(".contactForm")
+
+//     form.insertBefore(errorDiv, form.firstChild)
+//     setTimeout(() => errorDiv.remove(), 5000)
+//   }
+// }
+
 async function block6Setup() {
   emailjs.init("uuJqWlCvuML_Trzm-")
 
@@ -878,40 +1041,10 @@ async function block6Setup() {
 
     return errors
   }
-
-  // Helper functions for displaying messages
-  function _clearMessages() {
-    document.querySelectorAll(".form-message").forEach((msg) => msg.remove())
-  }
-
-  function _displaySuccessMessage(message) {
-    const successDiv = document.createElement("div")
-
-    successDiv.className = "form-message success-message"
-    successDiv.textContent = message
-    successDiv.style.color = "green"
-    successDiv.style.marginBottom = "1rem"
-
-    const form = document.querySelector(".contactForm")
-
-    form.insertBefore(successDiv, form.firstChild)
-    setTimeout(() => successDiv.remove(), 5000)
-  }
-
-  function _displayErrorMessage(message) {
-    const errorDiv = document.createElement("div")
-
-    errorDiv.className = "form-message error-message"
-    errorDiv.textContent = message
-    errorDiv.style.color = "red"
-    errorDiv.style.marginBottom = "1rem"
-
-    const form = document.querySelector(".contactForm")
-
-    form.insertBefore(errorDiv, form.firstChild)
-    setTimeout(() => errorDiv.remove(), 5000)
-  }
 }
+
+
+
 
 function footerDate() {
   const currentYear = new Date().getFullYear()
