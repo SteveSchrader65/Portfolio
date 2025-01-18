@@ -348,7 +348,6 @@ function block2Setup() {
   }, 250)
 }
 
-// Re-write using Promise to control order of events in animations
 function block3Setup() {
   const diplomas = document.querySelector("#block3 ul")
   const output = document.querySelector("#block3 #diploma-info")
@@ -359,6 +358,8 @@ function block3Setup() {
     width: "363px",
     height: "500px",
   }
+
+  let isAnimating = false
 
   function _createAnimation(startPos, isReturn = false) {
     const styleSheet = document.createElement("style")
@@ -388,11 +389,61 @@ function block3Setup() {
     diplomas.querySelectorAll("li").forEach((diploma) => {
       diploma.classList.remove("selected", "returning", "fade-out", "fade-in")
     })
+    output.style.display = "none"
     output.classList.remove("fade-in")
     output.innerHTML = ""
   }
 
-  // Store initial positions
+  function _fadeOutOtherDiplomas(selected) {
+    const others = [...diplomas.querySelectorAll("li")].filter((diploma) => diploma !== selected)
+
+    others.forEach((diploma) => diploma.classList.add("fade-out"))
+
+    return new Promise((resolve) => {
+      setTimeout(resolve, 850)
+    })
+  }
+
+  function _moveSelectedDiploma(selected, startPos) {
+    return new Promise((resolve) => {
+      _createAnimation(startPos)
+      selected.classList.add("selected")
+      selected.addEventListener("animationend", resolve, {once: true})
+    })
+  }
+
+  function _showDiplomaInfo(courseId) {
+    const courseInfo = document.querySelector(courseId).cloneNode(true)
+    output.style.display = "block"
+    output.appendChild(courseInfo)
+  }
+
+  function _returnSequence(selected, startPos) {
+    return new Promise((resolve) => {
+      output.style.display = "none"
+      output.innerHTML = ""
+
+      _createAnimation(startPos, true)
+      selected.classList.add("returning")
+
+      diplomas.querySelectorAll("li").forEach((diploma) => {
+        if (diploma !== selected) {
+          diploma.classList.remove("fade-out")
+          diploma.classList.add("fade-in")
+        }
+      })
+
+      selected.addEventListener(
+        "animationend",
+        () => {
+          _resetDiplomas()
+          resolve()
+        },
+        {once: true}
+      )
+    })
+  }
+
   diplomas.querySelectorAll("li").forEach((diploma) => {
     const dipRect = diploma.getBoundingClientRect()
     const sectionRect = diploma.closest("#block3").getBoundingClientRect()
@@ -405,58 +456,33 @@ function block3Setup() {
     })
   })
 
-  diplomas.addEventListener("click", (e) => {
+  diplomas.addEventListener("click", async (e) => {
     const selected = e.target.closest("LI")
-    if (!selected) return
+    if (!selected || isAnimating) return
 
     if (!selected.classList.contains("selected")) {
+      isAnimating = true
       _resetDiplomas()
-
       const startPos = dipPositions.get(selected)
-      _createAnimation(startPos)
-
-      // Handle selected diploma
-      selected.classList.add("selected")
-
-      // Handle other diplomas
-      diplomas.querySelectorAll("li").forEach((diploma) => {
-        if (diploma !== selected) {
-          diploma.classList.add("fade-out")
-        }
-      })
-
-      // Handle course info display
       const courseId = selected.getAttribute("data-course")
-      const courseInfo = document.querySelector(courseId).cloneNode(true)
 
-      // courseInfo.style.display = "block"
-      output.style.display = "block"
-      output.classList.add("fade-in")
-      output.appendChild(courseInfo)
+      try {
+        await _fadeOutOtherDiplomas(selected)
+        await _moveSelectedDiploma(selected, startPos)
+        _showDiplomaInfo(courseId)
+      } finally {
+        isAnimating = false
+      }
     } else {
-      const startPos = dipPositions.get(selected)
-
-      _createAnimation(startPos, true)
-      selected.classList.add("returning")
-      selected.addEventListener(
-        "animationend",
-        () => {
-          _resetDiplomas()
-        },
-        {once: true}
-      )
-
-      // Handle other diplomas
-      diplomas.querySelectorAll("li").forEach((diploma) => {
-        if (diploma !== selected) {
-          diploma.classList.remove("fade-out")
-          diploma.classList.add("fade-in")
-        }
-      })
+      isAnimating = true
+      try {
+        await _returnSequence(selected, dipPositions.get(selected))
+      } finally {
+        isAnimating = false
+      }
     }
   })
 }
-
 
 function block4Setup() {
   const postItItems = document.querySelectorAll("#postIt li")
@@ -903,7 +929,6 @@ function init() {
       (consolidate colours where possible. ie: panelProject and timeline eventCards)
     - Confirm full responsiveness for all functionality                 3d
       (Modify parallax settings for responsive sizing of Launch Control images)
-    - Implement new Diploma card animations                 						2d
     - Ask Maria to test it !!
   */
   setViewingMode()
