@@ -886,12 +886,20 @@ body:not(motion-reduce) {
   margin-right: -0.5rem;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .mb-8 {
   margin-bottom: 2rem;
 }
 
 .ml-2 {
   margin-left: 0.5rem;
+}
+
+.ml-8 {
+  margin-left: 2rem;
 }
 
 .ml-auto {
@@ -920,10 +928,6 @@ body:not(motion-reduce) {
 
 .grid {
   display: grid;
-}
-
-.contents {
-  display: contents;
 }
 
 .hidden {
@@ -1213,11 +1217,6 @@ body:not(motion-reduce) {
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
-.text-light-colour2 {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
 .text-light-navTextColour {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
@@ -1237,14 +1236,6 @@ body:not(motion-reduce) {
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
-}
-
-.transition {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
 }
 
 .transition-\[top\] {
@@ -1576,6 +1567,27 @@ main {
 
 .curve .shape-fill:is(.dark *) {
   fill: #262626;
+}
+
+/* || Overview */
+
+#block1 p:last-of-type {
+  margin-top: 6rem;
+}
+
+#block1 ul {
+  margin-left: 2rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+#block1 ul:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(204 204 204 / var(--tw-text-opacity, 1));
+}
+
+#block1 ul {
+  list-style-type: square;
 }
 
 /* || Studies */
@@ -2609,11 +2621,6 @@ main {
   color: rgb(38 38 38 / var(--tw-text-opacity, 1));
 }
 
-.dark\:text-dark-colour2:is(.dark *) {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-}
-
 .dark\:text-dark-navTextColour:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(212 188 43 / var(--tw-text-opacity, 1));
@@ -2622,11 +2629,6 @@ main {
 .dark\:text-dark-textColour:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(204 204 204 / var(--tw-text-opacity, 1));
-}
-
-.dark\:text-dark-colour1:is(.dark *) {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
 .dark\:shadow-dropShadowDark:is(.dark *) {

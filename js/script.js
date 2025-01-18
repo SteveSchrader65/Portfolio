@@ -904,7 +904,6 @@ function init() {
     - Confirm full responsiveness for all functionality                 3d
       (Modify parallax settings for responsive sizing of Launch Control images)
     - Implement new Diploma card animations                 						2d
-    - Re-write Overview text                                            1h
     - Ask Maria to test it !!
   */
   setViewingMode()

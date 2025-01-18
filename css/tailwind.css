@@ -203,6 +203,16 @@ main {
   @apply fill-light-backColour dark:fill-dark-backColour;
 }
 
+/* || Overview */
+#block1 p:last-of-type {
+  @apply mt-24;
+}
+
+#block1 ul {
+  @apply ml-8 text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+  list-style-type: square;
+}
+
 /* || Studies */
 #block3 {
   @apply relative;
