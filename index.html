@@ -33,7 +33,7 @@
 
             <!-- Launch Control -->
             <div id="launchControl" class="hidden relative group border-none outline-none min-w-6 -mr-2 md:mr-1 px-2 pt-1 order-1 md:order-2 bg-light-navBarColour dark:bg-dark-navBarColour text-light-textColour dark:text-dark-textColour">
-              <button><img src="images/downArrow.png" width="30" height="30" class="outline-none border-none" alt="Button to open and close panels">
+              <button><img src="images/downArrow.png" width="20" height="20" class="outline-none border-none" alt="Button to open and close panels">
                 <span class="tooltip top-0 left-[-7rem] md:left-10">Activate Launch Control</span>
               </button>
             </div>
@@ -101,25 +101,25 @@
           <p>It is my hope that this portfolio serves to demonstrate my developing capabilities across modern web technologies; from clean front-end implementations to robust database solutions.</p>
           <p class="mb-4">Since its inception in 2021, this platform has evolved from a simple list of links placed against an image backdrop, into the fully-fledged portfolio site you are seeing today.</p>
           <ul class="ml-8">
-            <li>2021 - The site began as a basic landing page, with links to assessments for my lecturers</li>
-            <li>2022 - 1st major iteration expanded functionality with a centralized hub linking to academic work</li>
-            <li>2024 - 2nd iteration introduced the current site architecture, laying the foundation for future growth</li>
-            <li>2025 - 3rd iteration embraced modern development practices through TailwindCSS implementation, enhanced parallax effects, and new interactive features</li>
-            <li>Future - A further complete rebuild is planned using React to further advance functionality and performance</li>
+            <li>2021 - Development began with a minimalist landing page housing academic assessment links</li>
+            <li>2022 - First major redesign transformed the site into an organized hub for TAFE projects</li>
+            <li>2024 - Second iteration established the core architecture you see today, setting up for scalable growth</li>
+            <li>2025 - Third iteration embraced modern web practices with TailwindCSS integration, refined animations, and enhanced interactivity</li>
+            <li>Future - Planned rebuild in React will further optimize performance and expand functionality</li>
           </ul>
-          <p class="mb-4">As it has evolved, sections and features were added until the design became as it is currently:</p>
+          <p>As it has developed, sections and features were added until the design became as it is currently:</p>
           <ul class="ml-8">
-            <li>In the Studies section, please view my Diploma Wall and read further information by selecting an image.</li>
-            <li>In Projects, I have detailed a number of the more interesting assessments worked on over the course of my studies.</li>
-            <li>And the timeline in the Employment section gives a perspective on my working life to date.</li>
-            <li>Finally, drop me a line from the Contacts section.</li>
-            <li>(Oh, the explorers amongst you may also find my 'Launch Control' feature)</li>
+            <li>Explore my Diploma Wall and academic achievements in the Studies section</li>
+            <li>Discover featured Projects showcasing key skills developed during my studies</li>
+            <li>Review my professional journey through the Employment timeline</li>
+            <li>Connect with me through the Contact section</li>
+            <li>(For the adventurous: try the 'Launch Control' feature!)</li>
           </ul>
           <p>All of these are custom-built interactive features written in JavaScript !!</p>
           <br>
           <p>3 ... 2 ... 1 ...</p>
           <p>Let's go !!</p>
-          <p>(PS: This web-site is continually developing ... so check back again later)</p>
+          <p>(PS: This web-site is continually evolving ... so check back again later)</p>
           <div class="blockEnd"></div>
           <div class="curve">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -585,11 +585,18 @@
             download my resume.
           </p>
           <br>
-          <span>
-            <a href="images/resume.pdf" id="resumeDownloadButton" class="inline-block" download="resumeSteveSchrader.pdf" target="_blank">
-              <img src="images/pdf.png" class="w-[65px] h-[65px]" alt="Button image for resume PDF download">
-            </a>
-          </span>
+<span>
+    <a href="images/resume.pdf" 
+       id="resumeDownloadButton" 
+       class="inline-block" 
+       download="resumeSteveSchrader.pdf">
+        <img src="images/pdf.png" 
+            class="w-[65px] h-[65px]" 
+            alt="Button image for resume PDF download">
+    </a>
+</span>
+
+
           <div class="blockEnd"></div>
           <div class="curve">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -619,9 +626,9 @@
           </p>
           <p>
             Should you wish to get in touch with any questions -- or to offer that Dream Job -- you can
-            contact me directly by completing the Contact form below.
+            contact me directly by submitting the Contact form below.
           </p>
-          <div class="formContainer pt-4 pb-8 px-8 mt-10 cursor-none bg-light-contactBackgroundColour dark:bg-dark-contactBackgroundColour border-2 border-light-contactFormBorderColour dark:border-dark-contactFormBorderColour rounded-md shadow-dropShadowLight dark:shadow-dropShadowDark">
+          <div class="formContainer pt-4 pb-8 px-8 mt-10 cursor-pointer bg-light-contactBackgroundColour dark:bg-dark-contactBackgroundColour border-2 border-light-contactFormBorderColour dark:border-dark-contactFormBorderColour rounded-md shadow-dropShadowLight dark:shadow-dropShadowDark">
             <form method="POST" class="contactForm">
               <label for="contactName">Name:</label>
               <input type="text" id="contactName" name="fullName" placeholder="Please tell me your name ..." required>
@@ -630,9 +637,10 @@
               <label for="contactMessage">Message:</label>
               <textarea id="contactMessage" name="message" cols="141" rows="10" maxlength="1000"
                 placeholder="Type your message here ..." required></textarea>
-              <div id="checkboxContainer">
+              <div id="checkboxContainer" class="relative group flex items-center">
                 <input type="checkbox" id="contactForward" name="forward" checked>
                 <label for="contactForward">cc: e-mail</label>
+                <span class="tooltip -top-2 left-16">Receive a copy</span>
               </div>
               <button type="submit">Send</button>
             </form>

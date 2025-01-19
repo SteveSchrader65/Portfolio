@@ -29,9 +29,35 @@
   .tooltip {
     @apply invisible group-hover:visible absolute rounded shadow-lg whitespace-nowrap opacity-85 z-[2000];
     @apply bg-light-tipBackgroundColour dark:bg-dark-tipBackgroundColour text-light-tipTextColour dark:text-dark-tipTextColour;
-    @apply text-[0.7rem] md:text-[0.7rem] lg:text-[0.75rem] xl:text-[0.8rem];
+    @apply xs:text-[0.6rem] sm:text-[0.7rem] md:text-[0.7rem] lg:text-[0.75rem] xl:text-[0.8rem];
     @apply p-1 -top-4 left-12 md:-top-6;
   }
+
+  /* FROM live version */
+  /* .tooltip {
+    position: relative;
+    cursor: help;
+    font-weight: bold;
+    z-index: 700;
+  }
+
+  .tooltip:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -1.5rem;
+    left: 2.5rem;
+    padding: 0.4rem;
+    white-space: nowrap;
+    background-color: var(--tipBackgroundColour);
+    color: var(--tipTextColour);
+    border: 1px solid var(--tipBorderColour);
+    border-radius: 1em;
+    font-size: var(--tipFontSize); 
+    font-style: italic;
+    z-index: 700;
+  } */
+
+
 
   #dropMenu li {
     @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour md:p-2;
@@ -124,7 +150,7 @@
 }
 
 .parallax .title {
-  @apply font-linkFont font-bold tracking-[0.55rem] text-light-textColour dark:text-dark-textColour sm:text-2xl md:text-4xl lg:text-6xl xl:text-8xl;
+  @apply font-linkFont font-bold tracking-[0.55rem] text-dark-textColour dark:text-light-textColour sm:text-2xl md:text-4xl lg:text-6xl xl:text-8xl;
   @apply absolute opacity-65 text-shadow-parallaxShadow;
   @apply top-1/4 -translate-y-[50%] pl-32;
   @apply pointer-events-none;
@@ -204,13 +230,21 @@ main {
 }
 
 /* || Overview */
-#block1 p:last-of-type {
-  @apply mt-24;
-}
-
 #block1 ul {
   @apply ml-8 text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
   list-style-type: square;
+}
+
+#block1 p:nth-of-type(3) {
+  @apply -mt-2;
+}
+
+#block1 p:nth-of-type(4) {
+  @apply mt-12 mb-4;
+}
+
+#block1 p:last-of-type {
+  @apply mt-24;
 }
 
 /* || Studies */
@@ -451,6 +485,71 @@ main {
   @apply absolute -right-3;
 }
 
+#block5 #resumeDownloadButton {
+    cursor: pointer;
+    display: inline-block;
+    transition: opacity 0.2s ease;
+    position: relative;
+}
+
+#block5 #resumeDownloadButton:focus {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+}
+
+#block5 #resumeDownloadButton:hover {
+    opacity: 0.8;
+}
+
+#block5 .thank-you-bubble {
+    position: absolute;
+    left: 2%;
+    bottom: 0%;
+    padding: 10px 15px;
+    background: greenyellow;
+    color: var(--textColor);
+    border-radius: 15px;
+    border: 2px solid var(--textColor);
+    font-size: 1.2rem;
+    width: 18%;
+    pointer-events: none;
+    animation: floatUp 3s ease-out forwards;
+    z-index: 500;
+}
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translateY(-60px);
+    }
+    10% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-240px);
+    }
+}
+
+#block5 .thank-you-bubble::before {
+    content: '';
+    position: absolute;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid var(--bgColor);
+    z-index: 10;
+}
+
+#block5 .thank-you-bubble::after {
+    content: '';
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--textColor);
+}
+
 /* || Contact */
 #block6 .contactForm {
   @apply grid items-center place-items-start;
@@ -531,9 +630,7 @@ main {
   grid-column: 1 / 1;
 }
 
-
 #block6 #checkboxContainer {
-  @apply flex items-center;
   grid-row: 5 / 5;
   grid-column: 1 / 2;
 }
@@ -548,34 +645,54 @@ main {
 
 #block6 .contactForm button {
   @apply block font-linkFont font-bold leading-5 px-[1.25rem] py-[0.75rem] w-1/2 rounded-lg;
-  @apply text-light-contactButtonTextColour dark:text-dark-contactButtonTextColour bg-light-contactButtonColour dark:bg-dark-contactButtonColour border-2 border-light-colour2 dark:border-dark-colour2;
+  @apply text-light-contactButtonTextColour dark:text-dark-contactButtonTextColour bg-light-alertColour dark:bg-dark-alertColour border-2 border-light-colour2 dark:border-dark-colour2;
   grid-row: 5 / 5;
   grid-column: 2 / -1;
   transition: 0.5s all;
 }
 
-#block6 .contactForm button:hover {
-  @apply bg-light-contactButtonHoverColour dark:bg-dark-contactButtonHoverColour;
+#block6 .formContainer .contactForm .formContainer-field-valid {
+  @apply border-light-successColour dark:border-dark-successColour !important;
 }
 
-/*
-#block6 .contactFormAlert {
-  @apply hidden p-[0.75rem] mt-[0.75rem] rounded-lg text-base font-normal;
-  @apply text-light-alertColour dark:text-dark-alertColour;
+#block6 .formContainer .contactForm .formContainer-field-invalid {
+  @apply border-light-alertColour dark:border-dark-alertColour !important;
 }
 
-#block6 .contactFormAlert.visible {
-  @apply block;
+#block6 .formContainer .contactForm button.button-valid {
+  @apply bg-light-contactButtonColour dark:bg-dark-contactButtonColour !important;
 }
 
-#block6 .contactFormAlert.success {
-  @apply bg-light-successColour dark:bg-dark-successColour;
+#block6 .formContainer .contactForm button.button-invalid {
+  @apply bg-light-alertColour dark:bg-dark-alertColour !important;
 }
 
-#block6 .contactFormAlert.error {
-  @apply bg-light-alertColour dark:bg-dark-alertColour;
+#block6 .errorBubble {
+  @apply absolute -left-10 -top-20 z-[1000] rounded-lg p-2 whitespace-nowrap;
+  @apply bg-light-alertColour dark:bg-dark-alertColour opacity-60;
+  @apply text-light-tipTextColour dark:text-dark-tipTextColour;
+  @apply border-2 border-light-alertColour dark:border-dark-alertColour;
+  @apply xs:text-[0.6rem] sm:text-[0.7rem] md:text-[0.7rem] lg:text-[0.75rem] xl:text-[0.8rem];
+  @apply min-h-[2.5rem] max-w-fit;
 }
-*/
+
+#block6 .error-name {
+  @apply -top-6 left-0;
+  grid-row: 2 / 2;
+  grid-column: 1 / 1;
+}
+
+#block6 .error-email {
+  @apply -top-6 right-[10%];
+  grid-row: 2 / 2;
+  grid-column: 2 / 2;
+}
+
+#block6 .error-message {
+  @apply -top-6 right-0;
+  grid-row: 4 / 4;
+  grid-column: 1 / 1;
+}
 
 #block6 #signatureBlock {
   @apply -rotate-[15deg] scale-[0.3] -translate-x-[35%] -translate-y-[13%];

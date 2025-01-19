@@ -362,12 +362,13 @@ function block3Setup() {
   let isAnimating = false
 
   function _createAnimation(startPos, isReturn = false) {
-    document.querySelectorAll("style[data-animation]").forEach((style) => style.remove())
+    const styleSheet = document.createElement("style")
+
 
     const animation = isReturn ? "returnDiploma" : "moveDiploma"
     const [from, to] = isReturn ? [TARGET_DIMS, startPos] : [startPos, TARGET_DIMS]
-    const styleSheet = document.createElement("style")
 
+    document.querySelectorAll("style[data-animation]").forEach((style) => style.remove())
     styleSheet.setAttribute("data-animation", "diploma")
 
     styleSheet.textContent = `
@@ -391,11 +392,11 @@ function block3Setup() {
 
   function _resetDiplomas() {
     const clone = document.querySelector("#block3 .diploma-clone")
+
     if (clone) clone.remove()
 
     diplomas.querySelectorAll("li").forEach((diploma) => {
       diploma.classList.remove("fade-out", "fade-in")
-      diploma.style.visibility = ""
     })
 
     output.style.display = "none"
@@ -421,15 +422,33 @@ function block3Setup() {
       diplomas.querySelectorAll("li:not(.diploma-clone)").forEach((diploma) => {
         diploma.classList.add("fade-out")
       })
-
       setTimeout(resolve, 425)
     })
   }
 
   function _moveClone(clone, startPos) {
     return new Promise((resolve) => {
+      const styleSheet = document.createElement("style")
+
       _createAnimation(startPos)
-      clone.addEventListener("animationend", resolve, {once: true})
+      styleSheet.setAttribute("data-animation-speed", "diploma")
+
+      styleSheet.textContent = `
+        #block3 li.selected {
+          animation-duration: 0.765s;
+        }
+      `
+
+      document.head.appendChild(styleSheet)
+
+      clone.addEventListener(
+        "animationend",
+        () => {
+          document.querySelector('[data-animation-speed="diploma"]').remove()
+          resolve()
+        },
+        {once: true}
+      )
     })
   }
 
@@ -448,7 +467,6 @@ function block3Setup() {
     return new Promise((resolve) => {
       output.classList.remove("fade-in")
       output.classList.add("fade-out")
-
       setTimeout(() => {
         output.style.display = "none"
         output.innerHTML = ""
@@ -466,6 +484,12 @@ function block3Setup() {
       clone.addEventListener(
         "animationend",
         () => {
+          const originalId = clone.getAttribute("data-course")
+          const original = diplomas.querySelector(`li[data-course="${originalId}"]`)
+
+          original.classList.remove("fade-out")
+          original.classList.add("fade-in")
+
           clone.remove()
           resolve()
         },
@@ -474,17 +498,19 @@ function block3Setup() {
     })
   }
 
-  function _revealOriginals() {
+  function _revealOriginals(excludeDiplomaId = null) {
     return new Promise((resolve) => {
       diplomas.querySelectorAll("li:not(.diploma-clone)").forEach((diploma) => {
-        diploma.classList.remove("fade-out")
-        diploma.classList.add("fade-in")
-        diploma.style.visibility = "visible"
+        if (diploma.getAttribute("data-course") !== excludeDiplomaId) {
+          diploma.classList.remove("fade-out")
+          diploma.classList.add("fade-in")
+        }
       })
       setTimeout(resolve, 425)
     })
   }
 
+  // Store initial positions
   diplomas.querySelectorAll("li").forEach((diploma) => {
     const dipRect = diploma.getBoundingClientRect()
     const sectionRect = diploma.closest("#block3").getBoundingClientRect()
@@ -497,20 +523,21 @@ function block3Setup() {
     })
   })
 
+  // Main click handler
   diplomas.addEventListener("click", async (e) => {
     const clicked = e.target.closest("LI")
+
     if (!clicked || isAnimating) return
 
     if (!clicked.classList.contains("diploma-clone")) {
       isAnimating = true
+
       _resetDiplomas()
 
-      // Get position of clicked diploma and create clone
       const startPos = dipPositions.get(clicked)
       const courseId = clicked.getAttribute("data-course")
       const clone = _createClone(clicked, startPos)
 
-      // Append clone to diplomas list
       diplomas.appendChild(clone)
 
       try {
@@ -524,11 +551,13 @@ function block3Setup() {
       isAnimating = true
       try {
         await _hideDiplomaInfo()
-        const originalDiploma = diplomas.querySelector(
-          `li[data-course="${clicked.getAttribute("data-course")}"]`
+        await _revealOriginals(clicked.getAttribute("data-course"))
+        await _returnClone(
+          clicked,
+          dipPositions.get(
+            diplomas.querySelector(`li[data-course="${clicked.getAttribute("data-course")}"]`)
+          )
         )
-        await _returnClone(clicked, dipPositions.get(originalDiploma))
-        await _revealOriginals()
       } finally {
         isAnimating = false
       }
@@ -676,6 +705,7 @@ function block5Setup() {
   let currentCard = null
 
   const selectedElement = document.querySelector("#block5 #dates .selected")
+  const resumeButton = document.querySelector("#block5 #resumeDownloadButton")
 
   const startIndex = selectedElement
     ? parseInt(selectedElement.closest("a").getAttribute("href").split("-")[1])
@@ -687,6 +717,8 @@ function block5Setup() {
   }
 
   // Initialize
+  if (!resumeButton) return
+
   _setupDateMarkers()
   _calculatePositions()
   _setupEventListeners()
@@ -694,32 +726,61 @@ function block5Setup() {
   _updateUI(parseInt(startIndex))
   _initializeEventCard()
 
-function _handleEventCardAnimation(index) {
-  const eventTemplate = document.querySelector(`#block5 #eventsContainer #event-${index}`)
-  const cardContainer = document.querySelector("#block5 #eventCardContainer")
+  resumeButton.addEventListener("click", function (e) {
+    e.preventDefault()
 
-  if (!eventTemplate) return
+    // Prevent multiple clicks
+    if (this.dataset.downloading) return
 
-  const newCard = eventTemplate.cloneNode(true)
-  if (currentCard?.dataset?.date === newCard.dataset.date) return
+    this.dataset.downloading = "true"
+    _thankYouBubble(this)
 
-  const animateSequence = async () => {
-    // Exit animation for current card if it exists
-    if (currentCard) {
-      currentCard.classList.remove("card-enter")
-      currentCard.classList.add("card-exit")
-      await new Promise((resolve) => setTimeout(resolve, 500))
-      currentCard.remove()
+    // Create a direct download link
+    const link = document.createElement("a")
+
+    link.href = this.href
+    link.download = "resumeSteveSchrader.pdf"
+    link.style.display = "none"
+    document.body.appendChild(link)
+
+    setTimeout(() => {
+      try {
+        link.click()
+        document.body.removeChild(link)
+      } catch (error) {
+        window.open(this.href, "_blank")
+      } finally {
+        delete this.dataset.downloading
+      }
+    }, 1000)
+  })
+
+  function _handleEventCardAnimation(index) {
+    const eventTemplate = document.querySelector(`#block5 #eventsContainer #event-${index}`)
+    const cardContainer = document.querySelector("#block5 #eventCardContainer")
+
+    if (!eventTemplate) return
+
+    const newCard = eventTemplate.cloneNode(true)
+    if (currentCard?.dataset?.date === newCard.dataset.date) return
+
+    const animateSequence = async () => {
+      // Exit animation for current card if it exists
+      if (currentCard) {
+        currentCard.classList.remove("card-enter")
+        currentCard.classList.add("card-exit")
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        currentCard.remove()
+      }
+
+      // Enter animation for new card
+      cardContainer.appendChild(newCard)
+      newCard.classList.add("card-enter")
+      currentCard = newCard
     }
 
-    // Enter animation for new card
-    cardContainer.appendChild(newCard)
-    newCard.classList.add("card-enter")
-    currentCard = newCard
+    animateSequence()
   }
-
-  animateSequence()
-}
 
   function _setupDateMarkers() {
     const dateLinks = document.querySelectorAll("#block5 #dates a")
@@ -848,149 +909,91 @@ function _handleEventCardAnimation(index) {
     const index = parseInt(selectedDateLink.closest("a").getAttribute("href").split("-")[1])
     _handleEventCardAnimation(index)
   }
+
+function _thankYouBubble(buttonElement) {
+  const bubbleContainer = document.createElement("div")
+  const bubble = document.createElement("div")
+
+  bubbleContainer.style.position = "relative"
+  bubble.className = "thank-you-bubble"
+  bubble.textContent = "Thank You!"
+
+  buttonElement.parentNode.insertBefore(bubbleContainer, buttonElement.nextSibling)
+  bubbleContainer.appendChild(bubble)
+
+  bubble.addEventListener("animationend", () => bubbleContainer.remove())
 }
 
-// Validation concept: Validate each field; highlight failing fields with border;
-// The SEND button starts with a red background which changes to green only when
-// all validations have passed.
-// Modify SEND button tooltip
-// async function block6Setup() {
-//   emailjs.init("uuJqWlCvuML_Trzm-")
+  async function _fetchAndDownload(url) {
+    try {
+      const response = await fetch(url)
+      if (!response.ok) throw new Error("Download failed")
 
-//   document.querySelector(".contactForm").addEventListener("submit", async function (e) {
-//     e.preventDefault()
+      const blob = await response.blob()
+      const downloadUrl = window.URL.createObjectURL(blob)
+      const link = document.createElement("a")
 
-//     const formData = new FormData(this)
-//     const errors = _validateForm(formData)
-
-//     if (errors.length > 0) {
-//       alert(errors.join("\n"))
-//       return
-//     }
-
-//     const sendCopy = formData.get("forward")
-
-//     try {
-//       // Send main email
-//       const response = await emailjs.send("service_7pgphhl", "template_kmnam9c", {
-//         from_name: formData.get("fullName"),
-//         from_email: formData.get("email"),
-//         message: formData.get("message"),
-//       })
-
-//       // If copy requested, send confirmation email
-//       if (sendCopy) {
-//         await emailjs.send("service_7pgphhl", "template_o26fij7", {
-//           from_name: formData.get("fullName"),
-//           from_email: formData.get("email"),
-//           message: formData.get("message"),
-//           to_email: formData.get("email"),
-//         })
-//       }
-
-//       if (response.status === 200) {
-//         alert("Message sent successfully!")
-//         this.reset()
-//       }
-//     } catch (error) {
-//       console.error("EmailJS Error:", error)
-//       alert("Failed to send message")
-//     }
-//   })
-
-//   // Form Validation
-//   function _validateForm(formData) {
-//     const errors = []
-//     const name = formData.get("fullName")
-//     const email = formData.get("email")
-//     const message = formData.get("message")
-
-//     // Name validation (only letters, spaces, hyphens and apostrophes)
-//     if (!name || name.trim() === "") {
-//       errors.push("Name is required")
-//     } else if (!/^[A-Za-z\s'-]+$/.test(name)) {
-//       errors.push("Name can only contain letters, spaces, hyphens and apostrophes")
-//     }
-
-//     // Email validation
-//     if (!email || email.trim() === "") {
-//       errors.push("Email address is required")
-//     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-//       errors.push("Please enter a valid email address")
-//     }
-
-//     // Message validation
-//     if (!message || message.trim() === "") {
-//       errors.push("Message is required")
-//     } else if (message.length < 10) {
-//       errors.push("Message must be at least 10 characters long")
-//     } else if (message.length > 1000) {
-//       errors.push("Message cannot exceed 1000 characters")
-//     }
-
-//     return errors
-//   }
-
-//   // Helper functions for displaying messages
-//   function _clearMessages() {
-//     document.querySelectorAll(".form-message").forEach((msg) => msg.remove())
-//   }
-
-//   function _displaySuccessMessage(message) {
-//     const successDiv = document.createElement("div")
-
-//     successDiv.className = "form-message success-message"
-//     successDiv.textContent = message
-//     successDiv.style.color = "green"
-//     successDiv.style.marginBottom = "1rem"
-
-//     const form = document.querySelector(".contactForm")
-
-//     form.insertBefore(successDiv, form.firstChild)
-//     setTimeout(() => successDiv.remove(), 5000)
-//   }
-
-//   function _displayErrorMessage(message) {
-//     const errorDiv = document.createElement("div")
-
-//     errorDiv.className = "form-message error-message"
-//     errorDiv.textContent = message
-//     errorDiv.style.color = "red"
-//     errorDiv.style.marginBottom = "1rem"
-
-//     const form = document.querySelector(".contactForm")
-
-//     form.insertBefore(errorDiv, form.firstChild)
-//     setTimeout(() => errorDiv.remove(), 5000)
-//   }
-// }
+      link.download = "resumeSteveSchrader.pdf"
+      link.href = downloadUrl
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(downloadUrl)
+    } catch {
+      window.open(url, "_blank")
+    }
+  }
+}
 
 async function block6Setup() {
-  emailjs.init("uuJqWlCvuML_Trzm-")
+  const form = document.querySelector(".contactForm")
+  const inputFields = form.querySelectorAll('input[type="text"], input[type="email"], textarea')
+  const submitButton = form.querySelector('button[type="submit"]')
 
-  document.querySelector(".contactForm").addEventListener("submit", async function (e) {
+  emailjs.init("uuJqWlCvuML_Trzm-")
+  form.setAttribute("novalidate", true)
+
+  inputFields.forEach((field) => {
+    field.addEventListener("blur", () => {
+      const {isValid} = _validateField(field)
+
+      _updateFieldStyle(field, isValid)
+      _updateSubmitButton()
+    })
+  })
+
+  form.addEventListener("submit", async function (e) {
     e.preventDefault()
 
-    const formData = new FormData(this)
-    const errors = _validateForm(formData)
+    let hasErrors = false
 
-    if (errors.length > 0) {
-      alert(errors.join("\n"))
+    inputFields.forEach((field) => {
+      const {isValid, message} = _validateField(field)
+
+      if (!isValid) {
+        hasErrors = true
+        _updateFieldStyle(field, false)
+        _createMessageBubble(field, message)
+      }
+    })
+
+    if (hasErrors) {
+      _updateSubmitButton(false)
+
       return
     }
 
-    const sendCopy = formData.get("forward")
+    _updateSubmitButton(true)
+    const formData = new FormData(this)
 
     try {
-      // Send main email
       const response = await emailjs.send("service_7pgphhl", "template_kmnam9c", {
         from_name: formData.get("fullName"),
         from_email: formData.get("email"),
         message: formData.get("message"),
       })
 
-      // If copy requested, send confirmation email
-      if (sendCopy) {
+      if (formData.get("forward")) {
         await emailjs.send("service_7pgphhl", "template_o26fij7", {
           from_name: formData.get("fullName"),
           from_email: formData.get("email"),
@@ -1000,51 +1003,135 @@ async function block6Setup() {
       }
 
       if (response.status === 200) {
+        // Trigger 'Thank You' animation from Employment & remove next line
         alert("Message sent successfully!")
         this.reset()
+
+        inputFields.forEach((field) => {
+          field.classList.remove(
+            "border-light-successColour",
+            "dark:border-dark-successColour",
+            "border-light-alertColour",
+            "dark:border-dark-alertColour"
+          )
+        })
+
+        _updateSubmitButton(false)
       }
     } catch (error) {
       console.error("EmailJS Error:", error)
-      alert("Failed to send message")
     }
   })
 
-  // Form Validation
-  function _validateForm(formData) {
-    const errors = []
-    const name = formData.get("fullName")
-    const email = formData.get("email")
-    const message = formData.get("message")
+  function _validateField(field) {
+    const fieldType = field.type
+    const value = field.value.trim()
+    let isValid = true
+    let message = ""
 
-    // Name validation (only letters, spaces, hyphens and apostrophes)
-    if (!name || name.trim() === "") {
-      errors.push("Name is required")
-    } else if (!/^[A-Za-z\s'-]+$/.test(name)) {
-      errors.push("Name can only contain letters, spaces, hyphens and apostrophes")
+    switch (fieldType) {
+      case "text":
+        if (value === "") {
+          isValid = false
+          message = "Name is required"
+        } else if (/\d/.test(value) || !/^[A-Za-z\s'-]+$/.test(value)) {
+          isValid = false
+          message = "Name can only contain letters, spaces, hyphens and apostrophes"
+        }
+        break
+      case "email":
+        if (value === "") {
+          isValid = false
+          message = "Email address is required"
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          isValid = false
+          message = "Please enter a valid email address"
+        }
+        break
+      case "textarea":
+        if (value === "") {
+          isValid = false
+          message = "Message is required"
+        } else if (value.length < 8) {
+          isValid = false
+          message = "Message must be at least 8 characters long"
+        } else if (value.length > 1000) {
+          isValid = false
+          message = "Message cannot exceed 1000 characters"
+        }
+        break
     }
 
-    // Email validation
-    if (!email || email.trim() === "") {
-      errors.push("Email address is required")
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errors.push("Please enter a valid email address")
+    return {isValid, message}
+  }
+
+  function _updateFieldStyle(field, isValid) {
+    field.classList.remove("formContainer-field-valid", "formContainer-field-invalid")
+
+    if (field.value.trim() !== "") {
+      if (isValid) {
+        field.classList.add("formContainer-field-valid")
+      } else {
+        field.classList.add("formContainer-field-invalid")
+      }
+    }
+  }
+
+  function _updateSubmitButton() {
+    const allFieldsValid = Array.from(inputFields).every((field) => {
+      const value = field.value.trim()
+      const isValid = _validateField(field).isValid
+      return value !== "" && isValid
+    })
+
+    submitButton.classList.remove("button-valid", "button-invalid")
+
+    if (allFieldsValid) {
+      submitButton.classList.add("button-valid")
+    } else {
+      submitButton.classList.add("button-invalid")
+    }
+  }
+
+  function _createMessageBubble(field, message) {
+    const bubble = document.createElement("div")
+    let bubbleClass = "errorBubble animate-fadeIn"
+
+    bubble.textContent = message
+
+    // Add specific positioning based on field type/id
+    switch (field.id) {
+      case "contactName":
+        bubbleClass += " error-name" // Position for name field
+        break
+      case "contactEmail":
+        bubbleClass += " error-email" // Position for email field
+        break
+      case "contactMessage":
+        bubbleClass += " error-message" // Position for message field
+        break
     }
 
-    // Message validation
-    if (!message || message.trim() === "") {
-      errors.push("Message is required")
-    } else if (message.length < 10) {
-      errors.push("Message must be at least 10 characters long")
-    } else if (message.length > 1000) {
-      errors.push("Message cannot exceed 1000 characters")
-    }
+    bubble.className = bubbleClass
 
-    return errors
+    const container = document.createElement("div")
+
+    container.className = "relative w-full h-0"
+    field.parentNode.insertBefore(container, field)
+    container.appendChild(bubble)
+
+    setTimeout(() => {
+      bubble.classList.remove("animate-fadeIn")
+      bubble.classList.add("animate-fadeOut")
+      setTimeout(() => {
+        container.remove()
+        field.classList.remove("formContainer-field-invalid")
+        field.value = ""
+        _updateSubmitButton()
+      }, 850)
+    }, 2000)
   }
 }
-
-
-
 
 function footerDate() {
   const currentYear = new Date().getFullYear()
@@ -1055,13 +1142,12 @@ function footerDate() {
 function init() {
   /*
     TO-DO LIST
-    - Validation of Contact form inputs. Hide animated version          2d
-      (!! Confirm email functionality is still working !!)
-    - Add scroll-based animations as backdrops to text blocks           3d
+    - (POSITION AND STYLE MESSAGE BUBBLES)                              4h
     - Check all colours used are defined for light/dark modes           4h
       (consolidate colours where possible. ie: panelProject and timeline eventCards)
-    - Confirm full responsiveness for all functionality                 3d
+    - Confirm full responsiveness for all functionality                 2d
       (Modify parallax settings for responsive sizing of Launch Control images)
+    - NEXT UPDATE: Add scroll-based animations to text blocks           3d
     - Ask Maria to test it !!
   */
   setViewingMode()

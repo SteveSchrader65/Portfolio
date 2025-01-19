@@ -610,8 +610,16 @@ body:not(motion-reduce) {
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
-.tooltip {
-  font-size: 0.7rem;
+@media (max-width: 380px) {
+  .tooltip {
+    font-size: 0.6rem;
+  }
+}
+
+@media (min-width: 380px) {
+  .tooltip {
+    font-size: 0.7rem;
+  }
 }
 
 @media (min-width: 650px) {
@@ -643,6 +651,31 @@ body:not(motion-reduce) {
     top: -1.5rem;
   }
 }
+
+/* FROM live version */
+
+/* .tooltip {
+    position: relative;
+    cursor: help;
+    font-weight: bold;
+    z-index: 700;
+  }
+
+  .tooltip:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -1.5rem;
+    left: 2.5rem;
+    padding: 0.4rem;
+    white-space: nowrap;
+    background-color: var(--tipBackgroundColour);
+    color: var(--tipTextColour);
+    border: 1px solid var(--tipBorderColour);
+    border-radius: 1em;
+    font-size: var(--tipFontSize); 
+    font-style: italic;
+    z-index: 700;
+  } */
 
 #dropMenu li:hover {
   --tw-bg-opacity: 1;
@@ -804,8 +837,16 @@ body:not(motion-reduce) {
   right: -60%;
 }
 
+.-top-2 {
+  top: -0.5rem;
+}
+
 .bottom-0 {
   bottom: 0px;
+}
+
+.left-16 {
+  left: 4rem;
 }
 
 .left-\[-7rem\] {
@@ -1022,8 +1063,8 @@ body:not(motion-reduce) {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.cursor-none {
-  cursor: none;
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .list-none {
@@ -1367,12 +1408,12 @@ body:not(motion-reduce) {
   font-weight: 700;
   letter-spacing: 0.55rem;
   --tw-text-opacity: 1;
-  color: rgb(33 0 0 / var(--tw-text-opacity, 1));
+  color: rgb(204 204 204 / var(--tw-text-opacity, 1));
 }
 
 .parallax .title:is(.dark *) {
   --tw-text-opacity: 1;
-  color: rgb(204 204 204 / var(--tw-text-opacity, 1));
+  color: rgb(33 0 0 / var(--tw-text-opacity, 1));
 }
 
 @media (min-width: 380px) {
@@ -1571,10 +1612,6 @@ main {
 
 /* || Overview */
 
-#block1 p:last-of-type {
-  margin-top: 6rem;
-}
-
 #block1 ul {
   margin-left: 2rem;
   --tw-text-opacity: 1;
@@ -1588,6 +1625,19 @@ main {
 
 #block1 ul {
   list-style-type: square;
+}
+
+#block1 p:nth-of-type(3) {
+  margin-top: -0.5rem;
+}
+
+#block1 p:nth-of-type(4) {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+#block1 p:last-of-type {
+  margin-top: 6rem;
 }
 
 /* || Studies */
@@ -2119,6 +2169,75 @@ main {
   right: -0.75rem;
 }
 
+#block5 #resumeDownloadButton {
+  cursor: pointer;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+  position: relative;
+}
+
+#block5 #resumeDownloadButton:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+#block5 #resumeDownloadButton:hover {
+  opacity: 0.8;
+}
+
+#block5 .thank-you-bubble {
+  position: absolute;
+  left: 2%;
+  bottom: 0%;
+  padding: 10px 15px;
+  background: greenyellow;
+  color: var(--textColor);
+  border-radius: 15px;
+  border: 2px solid var(--textColor);
+  font-size: 1.2rem;
+  width: 18%;
+  pointer-events: none;
+  animation: floatUp 3s ease-out forwards;
+  z-index: 500;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-240px);
+  }
+}
+
+#block5 .thank-you-bubble::before {
+  content: '';
+  position: absolute;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--bgColor);
+  z-index: 10;
+}
+
+#block5 .thank-you-bubble::after {
+  content: '';
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--textColor);
+}
+
 /* || Contact */
 
 #block6 .contactForm {
@@ -2286,8 +2405,6 @@ main {
 }
 
 #block6 #checkboxContainer {
-  display: flex;
-  align-items: center;
   grid-row: 5 / 5;
   grid-column: 1 / 2;
 }
@@ -2328,7 +2445,7 @@ main {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(138 230 0 / var(--tw-bg-opacity, 1));
+  background-color: rgb(255 26 26 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
@@ -2337,7 +2454,7 @@ main {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(0 102 0 / var(--tw-bg-opacity, 1));
+  background-color: rgb(179 0 0 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
   color: rgb(140 140 140 / var(--tw-text-opacity, 1));
 }
@@ -2348,34 +2465,141 @@ main {
   transition: 0.5s all;
 }
 
-#block6 .contactForm button:hover {
+#block6 .formContainer .contactForm .formContainer-field-valid {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(105 207 157 / var(--tw-border-opacity, 1)) !important;
+}
+
+#block6 .formContainer .contactForm .formContainer-field-valid:is(.dark *) {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(41 163 41 / var(--tw-border-opacity, 1)) !important;
+}
+
+#block6 .formContainer .contactForm .formContainer-field-invalid {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(255 26 26 / var(--tw-border-opacity, 1)) !important;
+}
+
+#block6 .formContainer .contactForm .formContainer-field-invalid:is(.dark *) {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(179 0 0 / var(--tw-border-opacity, 1)) !important;
+}
+
+#block6 .formContainer .contactForm button.button-valid {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(138 230 0 / var(--tw-bg-opacity, 1)) !important;
+}
+
+#block6 .formContainer .contactForm button.button-valid:is(.dark *) {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(0 102 0 / var(--tw-bg-opacity, 1)) !important;
+}
+
+#block6 .formContainer .contactForm button.button-invalid {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(255 26 26 / var(--tw-bg-opacity, 1)) !important;
+}
+
+#block6 .formContainer .contactForm button.button-invalid:is(.dark *) {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(179 0 0 / var(--tw-bg-opacity, 1)) !important;
+}
+
+#block6 .errorBubble {
+  position: absolute;
+  left: -2.5rem;
+  top: -5rem;
+  z-index: 1000;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
   --tw-bg-opacity: 1;
-  background-color: rgb(153 255 0 / var(--tw-bg-opacity, 1));
+  background-color: rgb(255 26 26 / var(--tw-bg-opacity, 1));
+  opacity: 0.6;
 }
 
-#block6 .contactForm button:hover:is(.dark *) {
+#block6 .errorBubble:is(.dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 153 0 / var(--tw-bg-opacity, 1));
+  background-color: rgb(179 0 0 / var(--tw-bg-opacity, 1));
 }
 
-/*
-#block6 .contactFormAlert {
-  @apply hidden p-[0.75rem] mt-[0.75rem] rounded-lg text-base font-normal;
-  @apply text-light-alertColour dark:text-dark-alertColour;
+#block6 .errorBubble {
+  --tw-text-opacity: 1;
+  color: rgb(245 245 245 / var(--tw-text-opacity, 1));
 }
 
-#block6 .contactFormAlert.visible {
-  @apply block;
+#block6 .errorBubble:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
-#block6 .contactFormAlert.success {
-  @apply bg-light-successColour dark:bg-dark-successColour;
+#block6 .errorBubble {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(255 26 26 / var(--tw-border-opacity, 1));
 }
 
-#block6 .contactFormAlert.error {
-  @apply bg-light-alertColour dark:bg-dark-alertColour;
+#block6 .errorBubble:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(179 0 0 / var(--tw-border-opacity, 1));
 }
-*/
+
+@media (max-width: 380px) {
+  #block6 .errorBubble {
+    font-size: 0.6rem;
+  }
+}
+
+@media (min-width: 380px) {
+  #block6 .errorBubble {
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 650px) {
+  #block6 .errorBubble {
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 976px) {
+  #block6 .errorBubble {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  #block6 .errorBubble {
+    font-size: 0.8rem;
+  }
+}
+
+#block6 .errorBubble {
+  min-height: 2.5rem;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+}
+
+#block6 .error-name {
+  top: -1.5rem;
+  left: 0px;
+  grid-row: 2 / 2;
+  grid-column: 1 / 1;
+}
+
+#block6 .error-email {
+  top: -1.5rem;
+  right: 10%;
+  grid-row: 2 / 2;
+  grid-column: 2 / 2;
+}
+
+#block6 .error-message {
+  top: -1.5rem;
+  right: 0px;
+  grid-row: 4 / 4;
+  grid-column: 1 / 1;
+}
 
 #block6 #signatureBlock {
   --tw-translate-x: -35%;
