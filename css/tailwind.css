@@ -229,6 +229,37 @@ main {
   @apply fill-light-backColour dark:fill-dark-backColour;
 }
 
+.thank-you-bubble {
+  @apply absolute p-2 text-center rounded-xl bottom-5 min-w-[10rem] z-[500] whitespace-nowrap;
+  @apply bg-light-successColour dark:bg-dark-successColour;
+  @apply text-light-textColour dark:text-dark-textColour;
+  font-size: 1.2rem;
+  pointer-events: none;
+  @apply animate-floatUp;
+}
+
+.thank-you-bubble.thank-you-bubble-contact {
+  @apply left-1/2 -bottom-80;
+}
+
+.thank-you-bubble::before {
+  content: '';
+  position: absolute;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--bgColor);
+  z-index: 10;
+}
+
+.thank-you-bubble::after {
+  content: '';
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--textColor);
+}
+
+
 /* || Overview */
 #block1 ul {
   @apply ml-8 text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
@@ -501,55 +532,6 @@ main {
     opacity: 0.8;
 }
 
-#block5 .thank-you-bubble {
-    position: absolute;
-    left: 2%;
-    bottom: 0%;
-    padding: 10px 15px;
-    background: greenyellow;
-    color: var(--textColor);
-    border-radius: 15px;
-    border: 2px solid var(--textColor);
-    font-size: 1.2rem;
-    width: 18%;
-    pointer-events: none;
-    animation: floatUp 3s ease-out forwards;
-    z-index: 500;
-}
-@keyframes floatUp {
-    0% {
-        opacity: 0;
-        transform: translateY(-60px);
-    }
-    10% {
-        opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-240px);
-    }
-}
-
-#block5 .thank-you-bubble::before {
-    content: '';
-    position: absolute;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid var(--bgColor);
-    z-index: 10;
-}
-
-#block5 .thank-you-bubble::after {
-    content: '';
-    position: absolute;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid var(--textColor);
-}
-
 /* || Contact */
 #block6 .contactForm {
   @apply grid items-center place-items-start;
@@ -609,7 +591,7 @@ main {
 
 #block6 .contactForm input::-webkit-input-placeholder,
 #block6 .contactForm textarea::-webkit-input-placeholder {
-  @apply text-light-contactFieldPlaceholderColour dark:text-dark-contactFieldPlaceholderColour;
+  @apply text-dark-contactFieldPlaceholderColour;
 }
 
 #block6 .contactForm input:focus,
@@ -668,8 +650,8 @@ main {
 }
 
 #block6 .errorBubble {
-  @apply absolute -left-10 -top-20 z-[1000] rounded-lg p-2 whitespace-nowrap;
-  @apply bg-light-alertColour dark:bg-dark-alertColour opacity-60;
+  @apply relative z-[1000] rounded-lg p-2 -mb-16 flex-wrap text-right;
+  @apply bg-light-alertColour dark:bg-dark-alertColour opacity-85;
   @apply text-light-tipTextColour dark:text-dark-tipTextColour;
   @apply border-2 border-light-alertColour dark:border-dark-alertColour;
   @apply xs:text-[0.6rem] sm:text-[0.7rem] md:text-[0.7rem] lg:text-[0.75rem] xl:text-[0.8rem];
@@ -677,33 +659,32 @@ main {
 }
 
 #block6 .error-name {
-  @apply -top-6 left-0;
+  @apply -top-[5.5rem] -left-[25%];
   grid-row: 2 / 2;
   grid-column: 1 / 1;
 }
 
 #block6 .error-email {
-  @apply -top-6 right-[10%];
+  @apply -top-[27.73rem] -right-[220%];
   grid-row: 2 / 2;
   grid-column: 2 / 2;
 }
 
 #block6 .error-message {
-  @apply -top-6 right-0;
+  @apply -top-[21.6rem] -right-[69.5%];
   grid-row: 4 / 4;
   grid-column: 1 / 1;
 }
 
 #block6 #signatureBlock {
-  @apply -rotate-[15deg] scale-[0.3] -translate-x-[35%] -translate-y-[13%];
+  @apply -rotate-[15deg] scale-[0.3] -translate-x-[35%] translate-y-[5%];
 }
 
 #block6 #signatureBlock g {
   @apply fill-light-signatureColour dark:fill-dark-signatureColour;
 }
 
-#copyDate {
+#block6 #copyDate {
   @apply text-light-textColour dark:text-dark-textColour pb-[5%];
   @apply text-xs md:text-sm lg:text-base xl:text-lg font-normal text-right;
 }
-

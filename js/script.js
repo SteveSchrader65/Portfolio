@@ -581,6 +581,7 @@ function block4Setup() {
       // Create temporary container to find target content
       const temp = document.createElement("div")
       temp.innerHTML = panelsContent
+
       const targetPanel = temp.querySelector(projectId)
 
       if (!targetPanel) {
@@ -622,6 +623,7 @@ function block4Setup() {
 
   function _openPanel(targetPanel) {
     const panelsContainer = projectPanel.querySelector("#panels")
+
     if (!panelsContainer) {
       return
     }
@@ -716,9 +718,9 @@ function block5Setup() {
     right: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
   }
 
-  // Initialize
   if (!resumeButton) return
 
+  // Initialize
   _setupDateMarkers()
   _calculatePositions()
   _setupEventListeners()
@@ -762,6 +764,7 @@ function block5Setup() {
     if (!eventTemplate) return
 
     const newCard = eventTemplate.cloneNode(true)
+
     if (currentCard?.dataset?.date === newCard.dataset.date) return
 
     const animateSequence = async () => {
@@ -904,44 +907,11 @@ function block5Setup() {
 
   function _initializeEventCard() {
     const selectedDateLink = document.querySelector("#block5 #dates .selected")
+
     if (!selectedDateLink) return
 
     const index = parseInt(selectedDateLink.closest("a").getAttribute("href").split("-")[1])
     _handleEventCardAnimation(index)
-  }
-
-function _thankYouBubble(buttonElement) {
-  const bubbleContainer = document.createElement("div")
-  const bubble = document.createElement("div")
-
-  bubbleContainer.style.position = "relative"
-  bubble.className = "thank-you-bubble"
-  bubble.textContent = "Thank You!"
-
-  buttonElement.parentNode.insertBefore(bubbleContainer, buttonElement.nextSibling)
-  bubbleContainer.appendChild(bubble)
-
-  bubble.addEventListener("animationend", () => bubbleContainer.remove())
-}
-
-  async function _fetchAndDownload(url) {
-    try {
-      const response = await fetch(url)
-      if (!response.ok) throw new Error("Download failed")
-
-      const blob = await response.blob()
-      const downloadUrl = window.URL.createObjectURL(blob)
-      const link = document.createElement("a")
-
-      link.download = "resumeSteveSchrader.pdf"
-      link.href = downloadUrl
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      window.URL.revokeObjectURL(downloadUrl)
-    } catch {
-      window.open(url, "_blank")
-    }
   }
 }
 
@@ -949,6 +919,7 @@ async function block6Setup() {
   const form = document.querySelector(".contactForm")
   const inputFields = form.querySelectorAll('input[type="text"], input[type="email"], textarea')
   const submitButton = form.querySelector('button[type="submit"]')
+  let isShowingErrors = false
 
   emailjs.init("uuJqWlCvuML_Trzm-")
   form.setAttribute("novalidate", true)
@@ -965,6 +936,10 @@ async function block6Setup() {
   form.addEventListener("submit", async function (e) {
     e.preventDefault()
 
+    if (submitButton.disabled || isShowingErrors) return
+
+    submitButton.disabled = true
+
     let hasErrors = false
 
     inputFields.forEach((field) => {
@@ -978,8 +953,13 @@ async function block6Setup() {
     })
 
     if (hasErrors) {
+      isShowingErrors = true
       _updateSubmitButton(false)
+      submitButton.disabled = false
 
+      setTimeout(() => {
+        isShowingErrors = false
+      }, 3000)
       return
     }
 
@@ -1003,12 +983,14 @@ async function block6Setup() {
       }
 
       if (response.status === 200) {
-        // Trigger 'Thank You' animation from Employment & remove next line
-        alert("Message sent successfully!")
+        _thankYouBubble(submitButton, "block6")
+
         this.reset()
 
         inputFields.forEach((field) => {
           field.classList.remove(
+            "formContainer-field-valid",
+            "formContainer-field-invalid",
             "border-light-successColour",
             "dark:border-dark-successColour",
             "border-light-alertColour",
@@ -1017,9 +999,14 @@ async function block6Setup() {
         })
 
         _updateSubmitButton(false)
+
+        setTimeout(() => {
+          submitButton.disabled = false
+        }, 3000)
       }
     } catch (error) {
       console.error("EmailJS Error:", error)
+      submitButton.disabled = false
     }
   })
 
@@ -1036,7 +1023,7 @@ async function block6Setup() {
           message = "Name is required"
         } else if (/\d/.test(value) || !/^[A-Za-z\s'-]+$/.test(value)) {
           isValid = false
-          message = "Name can only contain letters, spaces, hyphens and apostrophes"
+          message = "Name cannot contain numbers and characters"
         }
         break
       case "email":
@@ -1097,6 +1084,7 @@ async function block6Setup() {
     const bubble = document.createElement("div")
     let bubbleClass = "errorBubble animate-fadeIn"
 
+    field.parentElement.style.position = "relative"
     bubble.textContent = message
 
     // Add specific positioning based on field type/id
@@ -1133,6 +1121,31 @@ async function block6Setup() {
   }
 }
 
+function _thankYouBubble(buttonElement, source="block5") {
+  const bubbleContainer = document.createElement("div")
+  const bubble = document.createElement("div")
+
+  bubbleContainer.style.position = "relative"
+
+  if (source == "block5") {
+    bubbleContainer.style.left = "50%"
+    bubbleContainer.style.transform = "translateX(-50%)"
+  }
+
+  bubble.className = "thank-you-bubble"
+
+  if (source == "block6") {
+    bubble.classList.add("thank-you-bubble-contact")
+  }
+
+  bubble.textContent = "Thank You!"
+
+  buttonElement.parentNode.insertBefore(bubbleContainer, buttonElement.nextSibling)
+  bubbleContainer.appendChild(bubble)
+
+  bubble.addEventListener("animationend", () => bubbleContainer.remove())
+}
+
 function footerDate() {
   const currentYear = new Date().getFullYear()
 
@@ -1142,12 +1155,12 @@ function footerDate() {
 function init() {
   /*
     TO-DO LIST
-    - (POSITION AND STYLE MESSAGE BUBBLES)                              4h
     - Check all colours used are defined for light/dark modes           4h
       (consolidate colours where possible. ie: panelProject and timeline eventCards)
     - Confirm full responsiveness for all functionality                 2d
       (Modify parallax settings for responsive sizing of Launch Control images)
     - NEXT UPDATE: Add scroll-based animations to text blocks           3d
+      (or only for section1)
     - Ask Maria to test it !!
   */
   setViewingMode()
