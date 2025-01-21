@@ -1354,7 +1354,7 @@ body:not(motion-reduce) {
 
 /*
   May become necessary to apply different styles to parallax images.
-  (one set for sm: and one set for md: and above)
+  (one set for xs: and one set for md: and above)
 
   Could remove parallax styles for launchControl animation, to produce a full
   and scrollable joined image of the rocket.
@@ -1362,9 +1362,9 @@ body:not(motion-reduce) {
 
 /* || Section Dividers */
 
-/* .content-section {
-  @apply mt-[-1px];
-} */
+.content-section {
+  margin-top: -1px;
+}
 
 .parallaxContainer {
   position: relative;
@@ -1401,6 +1401,8 @@ body:not(motion-reduce) {
 
 .parallax .title {
   font-family: Tektur, sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
   font-weight: 700;
   letter-spacing: 0.55rem;
   --tw-text-opacity: 1;
@@ -1478,6 +1480,16 @@ body:not(motion-reduce) {
 #parallax6 .title {
   --tw-text-opacity: 1;
   color: rgb(230 138 0 / var(--tw-text-opacity, 1));
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .parallaxContainer {
+    margin-bottom: -1.75rem;
+  }
+
+  .parallax {
+    height: calc(100% + 1.75rem);
+  }
 }
 
 .text_block {
@@ -2263,11 +2275,184 @@ main {
 /* || Contact */
 
 #block6 .contactForm {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   place-items: start;
   align-items: center;
-  grid-template-rows: repeat(2, 6%) 10% 70% 8%;
-  grid-template-columns: 35% 65%;
+  gap: 1rem;
+}
+
+@media (min-width: 650px) {
+  #block6 .contactForm {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+#block6 .contactForm #nameWrapper {
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 650px) {
+  #block6 .contactForm #nameWrapper {
+    display: grid;
+    width: 35%;
+  }
+}
+
+#block6 .contactForm #nameWrapper {
+  grid-template-rows: repeat(2, 50%);
+  grid-template-columns: 30% 70%;
+}
+
+#block6 .contactForm #emailWrapper {
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 650px) {
+  #block6 .contactForm #emailWrapper {
+    margin-left: 7.5%;
+    display: grid;
+    width: 55%;
+  }
+}
+
+#block6 .contactForm #emailWrapper {
+  grid-template-rows: repeat(2, 50%);
+  grid-template-columns: 40% 60%;
+}
+
+#block6 .contactForm #messageWrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+@media (min-width: 650px) {
+  #block6 .contactForm #messageWrapper {
+    display: grid;
+  }
+}
+
+#block6 .contactForm #messageWrapper {
+  grid-template-rows: 10% 90%;
+  grid-template-columns: 20% 80%;
+}
+
+#block6 .contactForm #bottomWrapper {
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 650px) {
+  #block6 .contactForm #bottomWrapper {
+    display: grid;
+  }
+}
+
+#block6 .contactForm #bottomWrapper {
+  grid-template-rows: 100%;
+  grid-template-columns: 33% 67%;
+}
+
+#block6 .contactForm #nameWrapper label {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+#block6 .contactForm #nameWrapper .error-name {
+  grid-row: 1 / 1;
+  grid-column: 2 / 2;
+}
+
+#block6 .contactForm #nameWrapper input {
+  margin-top: -0.5rem;
+  grid-row: 2 / 2;
+  grid-column: 1 / -1;
+}
+
+#block6 .contactForm #emailWrapper label {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+#block6 .contactForm #emailWrapper .error-email {
+  grid-row: 1 / 1;
+  grid-column: 2 / 2;
+}
+
+#block6 .contactForm #emailWrapper input {
+  margin-top: -0.25rem;
+  grid-row: 2 / 2;
+  grid-column: 1 / -1;
+}
+
+#block6 .contactForm #messageWrapper label {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+#block6 .contactForm #messageWrapper .error-message {
+  grid-row: 1 / 1;
+  grid-column: 2 / 2;
+}
+
+#block6 .contactForm #messageWrapper textarea {
+  margin-top: 0px;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 650px) {
+  #block6 .contactForm #messageWrapper textarea {
+    margin-top: 0.5rem;
+  }
+}
+
+#block6 .contactForm #messageWrapper textarea {
+  grid-row: 2 / -1;
+  grid-column: 1 / -1;
+  resize: none;
+}
+
+#block6 .contactForm #bottomWrapper #checkboxContainer {
+  grid-column: 1 / 1;
+}
+
+#block6 .contactForm #bottomWrapper button {
+  display: block;
+  width: 50%;
+  border-radius: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-family: Tektur, sans-serif;
+  font-weight: 700;
+  line-height: 1.25rem;
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 26 26 / var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
+}
+
+#block6 .contactForm #bottomWrapper button:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
+  --tw-bg-opacity: 1;
+  background-color: rgb(179 0 0 / var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(140 140 140 / var(--tw-text-opacity, 1));
+}
+
+#block6 .contactForm #bottomWrapper button {
+  grid-column: 2 / 2;
+  transition: 0.5s all;
 }
 
 #block6 .contactForm label {
@@ -2287,49 +2472,8 @@ main {
   color: rgb(13 13 13 / var(--tw-text-opacity, 1));
 }
 
-#block6 .contactForm label:nth-of-type(1) {
-  grid-row: 1 / 1;
-  grid-column: 1 / 1;
-}
-
-#block6 .contactForm label:nth-of-type(2) {
-  margin-left: 10%;
-  grid-row: 1 / 1;
-  grid-column: 2 / 2;
-}
-
-#block6 .contactForm label:nth-of-type(3) {
-  margin-top: 2rem;
-  margin-bottom: -1.75rem;
-  align-self: flex-end;
-  grid-row: 3 / 3;
-  grid-column: 1 / 1;
-}
-
-#block6 #contactName {
-  height: 5vh;
-  width: 100%;
-  grid-row: 2 / 2;
-  grid-column: 1 / 1;
-}
-
-#block6 #contactEmail {
-  margin-left: 10%;
-  height: 5vh;
-  width: 90%;
-  grid-row: 2 / 2;
-  grid-column: 2 / 2;
-}
-
 #block6 .contactForm input {
   margin-bottom: 1.5%;
-}
-
-#block6 .contactForm textarea {
-  width: 100%;
-  resize: none;
-  grid-row: 4 / 4;
-  grid-column: 1 / -1;
 }
 
 #block6 .contactForm input,
@@ -2416,17 +2560,7 @@ main {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
 
-#block6 .contactForm > span {
-  grid-row: 5 / 5;
-  grid-column: 1 / 1;
-}
-
-#block6 #checkboxContainer {
-  grid-row: 5 / 5;
-  grid-column: 1 / 2;
-}
-
-#block6 #checkboxContainer label {
+#block6 .contactForm #checkboxContainer label {
   margin-bottom: 0px;
   margin-left: 0.5rem;
   font-size: 1rem;
@@ -2447,83 +2581,50 @@ main {
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
-#block6 .contactForm button {
-  display: block;
-  width: 50%;
-  border-radius: 0.5rem;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  font-family: Tektur, sans-serif;
-  font-weight: 700;
-  line-height: 1.25rem;
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 26 26 / var(--tw-bg-opacity, 1));
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-}
-
-#block6 .contactForm button:is(.dark *) {
-  --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
-  --tw-bg-opacity: 1;
-  background-color: rgb(179 0 0 / var(--tw-bg-opacity, 1));
-  --tw-text-opacity: 1;
-  color: rgb(140 140 140 / var(--tw-text-opacity, 1));
-}
-
-#block6 .contactForm button {
-  grid-row: 5 / 5;
-  grid-column: 2 / -1;
-  transition: 0.5s all;
-}
-
-#block6 .formContainer .contactForm .formContainer-field-valid {
+#block6 .contactForm .formContainer-field-valid {
   --tw-border-opacity: 1 !important;
   border-color: rgb(105 207 157 / var(--tw-border-opacity, 1)) !important;
 }
 
-#block6 .formContainer .contactForm .formContainer-field-valid:is(.dark *) {
+#block6 .contactForm .formContainer-field-valid:is(.dark *) {
   --tw-border-opacity: 1 !important;
   border-color: rgb(41 163 41 / var(--tw-border-opacity, 1)) !important;
 }
 
-#block6 .formContainer .contactForm .formContainer-field-invalid {
+#block6 .contactForm .formContainer-field-invalid {
   --tw-border-opacity: 1 !important;
   border-color: rgb(255 26 26 / var(--tw-border-opacity, 1)) !important;
 }
 
-#block6 .formContainer .contactForm .formContainer-field-invalid:is(.dark *) {
+#block6 .contactForm .formContainer-field-invalid:is(.dark *) {
   --tw-border-opacity: 1 !important;
   border-color: rgb(179 0 0 / var(--tw-border-opacity, 1)) !important;
 }
 
-#block6 .formContainer .contactForm button.button-valid {
+#block6 .contactForm button.button-valid {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(138 230 0 / var(--tw-bg-opacity, 1)) !important;
 }
 
-#block6 .formContainer .contactForm button.button-valid:is(.dark *) {
+#block6 .contactForm button.button-valid:is(.dark *) {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(0 102 0 / var(--tw-bg-opacity, 1)) !important;
 }
 
-#block6 .formContainer .contactForm button.button-invalid {
+#block6 .contactForm button.button-invalid {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(255 26 26 / var(--tw-bg-opacity, 1)) !important;
 }
 
-#block6 .formContainer .contactForm button.button-invalid:is(.dark *) {
+#block6 .contactForm button.button-invalid:is(.dark *) {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(179 0 0 / var(--tw-bg-opacity, 1)) !important;
 }
 
 #block6 .errorBubble {
-  position: relative;
+  position: absolute;
+  top: 3.5rem;
+  right: 2.5rem;
   z-index: 1000;
   margin-bottom: -4rem;
   flex-wrap: wrap;
@@ -2595,27 +2696,8 @@ main {
   min-height: 2.5rem;
   max-width: -moz-fit-content;
   max-width: fit-content;
-}
-
-#block6 .error-name {
-  top: -5.5rem;
-  left: -25%;
-  grid-row: 2 / 2;
-  grid-column: 1 / 1;
-}
-
-#block6 .error-email {
-  top: -27.73rem;
-  right: -220%;
-  grid-row: 2 / 2;
-  grid-column: 2 / 2;
-}
-
-#block6 .error-message {
-  top: -21.6rem;
-  right: -69.5%;
-  grid-row: 4 / 4;
-  grid-column: 1 / 1;
+  --tw-translate-y: -100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 #block6 #signatureBlock {

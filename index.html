@@ -624,19 +624,27 @@
           </p>
           <div class="formContainer pt-4 pb-8 px-8 mt-10 cursor-normal bg-light-contactBackgroundColour dark:bg-dark-contactBackgroundColour border-2 border-light-contactFormBorderColour dark:border-dark-contactFormBorderColour rounded-md shadow-dropShadowLight dark:shadow-dropShadowDark">
             <form method="POST" class="contactForm">
-              <label for="contactName">Name:</label>
-              <input type="text" id="contactName" name="fullName" placeholder="Please tell me your name ..." required>
-              <label for="contactEmail">E-mail Address:</label>
-              <input type="email" id="contactEmail" name="email" placeholder="Enter your e-mail address here ..." required>
-              <label for="contactMessage">Message:</label>
-              <textarea id="contactMessage" name="message" cols="141" rows="10" maxlength="1000"
-                placeholder="Type your message here ..." required></textarea>
-              <div id="checkboxContainer" class="relative group flex items-center">
-                <input type="checkbox" id="contactForward" name="forward" checked>
-                <label for="contactForward">cc: e-mail</label>
-                <span class="tooltip -top-2 left-16">Receive a copy</span>
+              <div id="nameWrapper">
+                <label for="contactName">Name:</label>
+                <input type="text" id="contactName" name="fullName" placeholder="Please tell me your name ..." required>
               </div>
-              <button type="submit">Send</button>
+              <div id="emailWrapper">
+                <label for="contactEmail">E-mail Address:</label>
+                <input type="email" id="contactEmail" name="email" placeholder="Enter your e-mail address here ..." required>
+              </div>
+              <div id="messageWrapper">
+                <label for="contactMessage">Message:</label>
+                <textarea id="contactMessage" name="message" rows="10" maxlength="1000"
+                  placeholder="Type your message here ..." required></textarea>
+              </div>
+              <div id="bottomWrapper">
+                <div id="checkboxContainer" class="relative group flex items-center">
+                  <input type="checkbox" id="contactForward" name="forward" checked>
+                  <label for="contactForward">cc: e-mail</label>
+                  <span class="tooltip -top-2 left-16">Receive a copy</span>
+                </div>
+                <button type="submit">Send</button>
+              </div>
             </form>
           </div>
           <div id="signatureBlock">

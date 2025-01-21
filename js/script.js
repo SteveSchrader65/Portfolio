@@ -1084,35 +1084,32 @@ async function block6Setup() {
     const bubble = document.createElement("div")
     let bubbleClass = "errorBubble animate-fadeIn"
 
-    field.parentElement.style.position = "relative"
     bubble.textContent = message
 
     // Add specific positioning based on field type/id
     switch (field.id) {
       case "contactName":
-        bubbleClass += " error-name" // Position for name field
+        bubbleClass += " error-name"
         break
       case "contactEmail":
-        bubbleClass += " error-email" // Position for email field
+        bubbleClass += " error-email"
         break
       case "contactMessage":
-        bubbleClass += " error-message" // Position for message field
+        bubbleClass += " error-message"
         break
     }
 
     bubble.className = bubbleClass
 
-    const container = document.createElement("div")
+    const wrapper = field.closest('div[id$="Wrapper"]')
 
-    container.className = "relative w-full h-0"
-    field.parentNode.insertBefore(container, field)
-    container.appendChild(bubble)
+    wrapper.insertBefore(bubble, field)
 
     setTimeout(() => {
       bubble.classList.remove("animate-fadeIn")
       bubble.classList.add("animate-fadeOut")
       setTimeout(() => {
-        container.remove()
+        bubble.remove()
         field.classList.remove("formContainer-field-invalid")
         field.value = ""
         _updateSubmitButton()
@@ -1158,7 +1155,6 @@ function init() {
     - Check all colours used are defined for light/dark modes           4h
       (consolidate colours where possible. ie: panelProject and timeline eventCards)
     - Confirm full responsiveness for all functionality                 2d
-      (Modify parallax settings for responsive sizing of Launch Control images)
     - NEXT UPDATE: Add scroll-based animations to text blocks           3d
       (or only for section1)
     - Ask Maria to test it !!
