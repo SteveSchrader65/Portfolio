@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personal portfolio and project launch platform">
+    <meta name="author" content="Steve Schrader">
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Tektur&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <title>Portfolio</title>
+  </head>
+  <body class="overflow-x-hidden overflow-y-scroll">
+    <header>
+
+      <!-- Navigation  -->
+      <nav class="bg-light-navBarColour text-light-navTextColour dark:bg-dark-navBarColour dark:text-dark-navTextColour flex justify-between items-center fixed top-0 w-full z-[1000] transition-[top] ease-in-out duration-500">
+        <div class="flex items-center w-full md:w-auto" id="hamburgerNav">
+
+          <!-- Hamburger Menu-->
+          <button class="hamburger-menu group order-1 md:hidden p-2 ml-2 my-4 relative w-6 h-6" aria-label="Menu">
+            <span class="absolute w-full h-0.5 bg-light-hamburgerButtonColour dark:bg-dark-hamburgerButtonColour transition-all duration-300 [--ty:-0.5rem] translate-y-[-0.5rem] origin-center group-hover:animate-[hamburgerCollapse_0.15s_ease-in-out_forwards,hamburgerCentre_0.15s_ease-in-out_0.15s_forwards,hamburgerDot_0.15s_ease-in-out_0.3s_forwards,hamburgerRotateUpper_0.15s_ease-in-out_0.45s_forwards,hamburgerExtendUpper_0.15s_ease-in-out_0.6s_forwards]"></span>
+            <span class="absolute w-full h-0.5 bg-light-hamburgerButtonColour dark:bg-dark-hamburgerButtonColour transition-all duration-300 group-hover:opacity-0"></span>
+            <span class="absolute w-full h-0.5 bg-light-hamburgerButtonColour dark:bg-dark-hamburgerButtonColour transition-all duration-300 [--ty:0.5rem] translate-y-[0.5rem] origin-center group-hover:animate-[hamburgerCollapse_0.15s_ease-in-out_forwards,hamburgerCentre_0.15s_ease-in-out_0.15s_forwards,hamburgerDot_0.15s_ease-in-out_0.3s_forwards,hamburgerRotateLower_0.15s_ease-in-out_0.45s_forwards,hamburgerExtendLower_0.15s_ease-in-out_0.6s_forwards]">
+            </span>
+          </button>
+
+          <!-- Re-order icons based on screen size -->
+          <div class="flex items-center order-2 ml-auto md:ml-0">
+
+            <!-- Launch Control -->
+            <div id="launchControl" class="hidden relative group border-none outline-none min-w-6 -mr-2 md:mr-1 px-2 pt-1 order-1 md:order-2 bg-light-navBarColour dark:bg-dark-navBarColour text-light-textColour dark:text-dark-textColour">
+              <button>
+                <img src="images/downArrow.png" class="outline-none border-none" width="20" height="20" alt="Button to open and close panels">
+                <span class="tooltip top-0 -left-[7rem] md:left-10">Activate Launch Control</span>
+              </button>
+            </div>
+
+            <!-- Dark/Light mode toggle -->
+            <div id="viewingMode" class="m-2 order-2 md:order-1">
+              <button id="darkMode" class="hidden dark:block relative group">
+                <img src="images/lightModeButton.png" width="40" height="20" alt="Set light viewing mode">
+                <span class="tooltip -left-24 md:left-10 md:-top-2">Select light-mode</span>
+              </button>
+              <button id="lightMode" class="block dark:hidden relative group">
+                <img src="images/darkModeButton.png" width="40" height="20" alt="Set dark viewing mode">
+                <span class="tooltip -left-24 md:left-10 md:-top-2">Select dark-mode</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <ul id="mainMenu" class="hidden flex-col fixed top-[48px] pr-2 md:pr-4 w-[200px] -translate-x-full transition-transform duration-300 ease-in-out
+    text-light-navTextColour dark:text-dark-navTextColour z-[1200] md:static md:flex md:flex-row md:w-auto md:translate-x-0 md:space-x-4
+    lg:space-x-7 text-sm/4 md:text-[1.0625rem]/6 lg:text-[1.35rem]/8 xl:text-[2.3rem]/10 font-linkFont">
+          <li><a href="#content1">Overview</a></li>
+          <li><a href="#content2">About</a></li>
+          <li><a href="#content3">Studies</a></li>
+          <li><a href="#content4">Projects</a></li>
+          <li><a href="#content5">Employment</a></li>
+          <li><a href="#content6">Contact</a></li>
+          <li id="dropMenuTrigger" class="relative group hover:bg-light-menuBackgroundColour dark:hover:bg-dark-menuBackgroundColour">Links
+            <ul id="dropMenu" class="absolute hidden group-hover:block top-full min-w-[200px] right-10 md:right-0
+            bg-light-menuBackgroundColour dark:bg-dark-menuBackgroundColour text-light-navTextColour dark:text-dark-backColour hover:bg-light-menuBackgroundColour dark:hover:bg-dark-menuBackgroundColour hover:text-light-menuTextColour dark:hover:text-dark-menuTextColour
+            md:shadow-dropShadowLight md:dark:shadow-dropShadowDark md:animate-menuBounce origin-top">
+              <li><a href="links/toyshop/index.html" target="_blank">Toy Shop</a></li>
+              <li><a href="links/captainsteve" target="_blank">CaptainSteve</a></li>
+              <li><a href="links/georges/index.html" target="_blank">Georges</a></li>
+              <li><a href="links/shopper2/index.html" target="_blank">Shopper2</a></li>
+              <li><a href="links/onering/" target="_blank">One Ring</a></li>
+              <li><a href="links/studioone/index.html" target="_blank">Studio One</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- Scroll progress indicator -->
+        <div id="scrollProgress" class="w-full h-0.5 absolute z-[1000] bottom-0 flex-row origin-left bg-light-progressColour dark:bg-dark-progressColour"></div>
+      </nav>
+    </header>
+    <main>
+
+      <!-- Overview Section -->
+      <section class="content-section" id="content1">
+        <div class="parallaxContainer">
+          <div class="parallax bg-[url(../images/rocket1.jpg)]" id="parallax1">
+            <h1 class="title">Overview</h1>
+          </div>
+        </div>
+        <div class="text_block" id="block1">
+
+
+          <div class="blockEnd"></div>
+          <div class="curve">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+              <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+              <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0C951.2,90,886,95.24,827.93,77.22c-53.08-23.16-106.56-44.03-165.56-35.4-43.38,6.34-84.61,18.82-127.61,26.46C314.09,71.32,149.93,59,0,5.63Z" class="shape-fill"></path>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section class="content-section" id="content2">
+        <div class="parallaxContainer">
+          <div class="parallax bg-[url(../images/rocket2.jpg)]" id="parallax2">
+            <h1 class="title">About</h1>
+          </div>
+        </div>
+        <div class="text_block" id="block2">
+
+
+          <div class="blockEnd"></div>
+          <div class="curve">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+              <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+              <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0C951.2,90,886,95.24,827.93,77.22c-53.08-23.16-106.56-44.03-165.56-35.4-43.38,6.34-84.61,18.82-127.61,26.46C314.09,71.32,149.93,59,0,5.63Z" class="shape-fill"></path>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Studies Section -->
+      <section class="content-section" id="content3">
+        <div class="parallaxContainer">
+          <div class="parallax bg-[url(../images/rocket3.jpg)]" id="parallax3">
+            <h1 class="title">Studies</h1>
+            <h2 class="hidden">Lift Off ...</h2>
+          </div>
+        </div>
+        <div class="text_block" id="block3">
+
+
+          <div class="blockEnd"></div>
+          <div class="curve">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+              <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+              <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0C951.2,90,886,95.24,827.93,77.22c-53.08-23.16-106.56-44.03-165.56-35.4-43.38,6.34-84.61,18.82-127.61,26.46C314.09,71.32,149.93,59,0,5.63Z" class="shape-fill"></path>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section class="content-section" id="content4">
+        <div class="parallaxContainer">
+          <div class="parallax bg-[url(../images/rocket4.jpg)]" id="parallax4">
+            <h1 class="title">Projects</h1>
+          </div>
+        </div>
+        <div class="text_block" id="block4">
+
+
+          <div class="blockEnd"></div>
+          <div class="curve">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+              <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+              <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0C951.2,90,886,95.24,827.93,77.22c-53.08-23.16-106.56-44.03-165.56-35.4-43.38,6.34-84.61,18.82-127.61,26.46C314.09,71.32,149.93,59,0,5.63Z" class="shape-fill"></path>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Employment Section -->
+      <section class="content-section" id="content5">
+        <div class="parallaxContainer">
+          <div class="parallax bg-[url(../images/rocket5.jpg)]" id="parallax5">
+            <h1 class="title">Employment</h1>
+          </div>
+        </div>
+        <div class="text_block" id="block5">
+
+
+          <div class="blockEnd"></div>
+          <div class="curve">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+              <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+              <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0C951.2,90,886,95.24,827.93,77.22c-53.08-23.16-106.56-44.03-165.56-35.4-43.38,6.34-84.61,18.82-127.61,26.46C314.09,71.32,149.93,59,0,5.63Z" class="shape-fill"></path>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="content-section" id="content6">
+        <div class="parallaxContainer">
+          <div class="parallax bg-[url(../images/rocket6.jpg)]" id="parallax6">
+            <h1 class="title">Contact</h1>
+          </div>
+        </div>
+        <div class="text_block" id="block6">
+          <p>
+            Thank you for taking the time to read a little about me.
+          </p>
+          <p>
+            I am now eager to apply my newly learned skills - coupled with a proven work ethic - to contribute
+            effectively for a forward-thinking employer. I am excited at the prospect of gaining practical
+            experience, honing my skills, and making meaningful contributions to your company.
+          </p>
+          <p>
+            Should you wish to get in touch with any questions -- or to offer that Dream Job -- you can
+            contact me directly by submitting the Contact form below.
+          </p>
+          <div class="formContainer pt-4 pb-8 px-8 mt-10 cursor-normal bg-light-contactBackgroundColour dark:bg-dark-contactBackgroundColour border-2 border-light-contactFormBorderColour dark:border-dark-contactFormBorderColour rounded-md shadow-dropShadowLight dark:shadow-dropShadowDark">
+            <form method="POST" class="contactForm">
+              <div id="nameWrapper">
+                <label for="contactName">Name:</label>
+                <input type="text" id="contactName" name="fullName" placeholder="Please tell me your name ..." required>
+              </div>
+              <div id="emailWrapper">
+                <label for="contactEmail">E-mail Address:</label>
+                <input type="email" id="contactEmail" name="email" placeholder="Enter your e-mail address here ..." required>
+              </div>
+              <div id="messageWrapper">
+                <label for="contactMessage">Message:</label>
+                <textarea id="contactMessage" name="message" rows="10" maxlength="1000"
+                  placeholder="Type your message here ..." required></textarea>
+              </div>
+              <div id="bottomWrapper">
+                <div id="checkboxContainer" class="relative group flex items-center">
+                  <input type="checkbox" id="contactForward" name="forward" checked>
+                  <label for="contactForward">cc: e-mail</label>
+                  <span class="tooltip -top-2 left-16">Receive a copy</span>
+                </div>
+                <button type="submit">Send</button>
+              </div>
+            </form>
+          </div>
+          <div id="signatureBlock">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 12.199999809265137 94.80000305175781 34.456756591796875" data-asc="0.9">
+              <g fill="#ff0000" transform="translate(0, 0)">
+                <path d="M12.75 46.65Q11.10 46.70 9.10 46.38Q7.10 46.05 5.20 45.25Q3.30 44.45 1.90 43.15Q0.50 41.85 0 39.95Q1.80 41.55 4.90 42.27Q8 43 11.20 43Q15.45 43 18.60 42.05Q19.50 41.80 20.70 41.23Q21.90 40.65 23.05 39.88Q24.20 39.10 24.98 38.15Q25.75 37.20 25.75 36.20Q25.75 35.50 25.30 34.85Q24.85 34.20 23.85 33.55Q23.25 33.20 22.13 32.77Q21 32.35 19.70 31.77Q18.40 31.20 17.25 30.42Q16.10 29.65 15.43 28.57Q14.75 27.50 14.90 26.10Q15.15 24.05 16.77 22.02Q18.40 20 20.88 18.22Q23.35 16.45 26.23 15.10Q29.10 13.75 31.88 12.98Q34.65 12.20 36.80 12.20Q39 12.20 40.58 13.05Q42.15 13.90 41.90 15.95Q41.80 16.85 40.68 18.10Q39.55 19.35 38 20.85Q36.45 22.35 34.92 24Q33.40 25.65 32.43 27.35Q31.45 29.05 31.55 30.65Q30.75 30 30.38 29.20Q30 28.40 30 27.55Q30 26.35 30.50 25.10Q31 23.85 31.75 22.72Q32.50 21.60 33.15 20.80Q34.30 19.40 35.75 18.15Q37.20 16.90 38.70 15.85Q38.25 15.20 37.15 15.20Q36 15.20 34.58 15.70Q33.15 16.20 31.93 16.77Q30.70 17.35 30.20 17.65Q28.05 18.80 25.88 20.25Q23.70 21.70 21.88 23.20Q20.05 24.70 18.93 25.97Q17.80 27.25 17.70 28.10Q17.60 29.15 18.60 29.88Q19.60 30.60 21.20 31.20Q22.80 31.80 24.35 32.60Q26.45 33.65 27.40 35Q28.35 36.35 28.35 37.80Q28.35 39.60 27 41.33Q25.65 43.05 23.35 44.20Q21.30 45.20 19.07 45.75Q16.85 46.30 15.13 46.48Q13.40 46.65 12.75 46.65ZM33.20 45.85Q31.60 45.85 30.75 44.90Q29.90 43.95 29.90 42.25Q29.90 40.65 30.75 38.50L30.85 38.25L29.95 39.10Q29.75 39.30 29.50 39.30Q29.25 39.30 29.25 39.10Q29.25 38.85 29.60 38.50Q30.90 37.35 32.27 36.08Q33.65 34.80 34.60 33.65Q34.25 33.80 33.85 33.80Q33.45 33.80 33.25 33.60Q32.90 33.35 32.90 32.70Q32.90 32.15 33.42 31.55Q33.95 30.95 35.60 30.50Q35.95 30.40 36.33 30.35Q36.70 30.30 37.05 30.25Q38.65 28 39.85 26.07Q41.05 24.15 41.75 23.50Q42.05 23.15 42.83 22.90Q43.60 22.65 44.48 22.50Q45.35 22.35 45.85 22.35Q47.50 22.35 47.50 22.65Q47.50 22.85 46.75 23.60Q45.50 24.80 43.83 26.57Q42.15 28.35 40.40 30.40Q41.85 30.60 43.08 31.15Q44.30 31.70 44.85 32.55Q45.05 32.80 45.05 33.15Q45.05 33.55 44.80 33.55Q44.60 33.55 44.35 33.30Q43.30 32.25 40.85 32.25Q40.35 32.25 39.83 32.30Q39.30 32.35 38.75 32.45Q37.05 34.65 35.65 36.85Q34.25 39.05 33.65 40.95Q33.35 41.85 33.35 42.60Q33.35 43.35 33.70 43.83Q34.05 44.30 34.75 44.30Q35.20 44.30 35.85 44.05Q36.80 43.70 38.05 42.88Q39.30 42.05 40.58 41Q41.85 39.95 42.98 38.95Q44.10 37.95 44.85 37.25Q45.60 36.55 45.70 36.45Q45.85 36.30 45.95 36.30Q46.15 36.30 46.15 36.60Q46.15 36.95 45.85 37.25Q45.35 37.75 44.33 38.75Q43.30 39.75 41.98 40.98Q40.65 42.20 39.15 43.30Q37.65 44.40 36.13 45.13Q34.60 45.85 33.20 45.85ZM48.65 45.50Q46.45 45.50 44.97 44.42Q43.50 43.35 43.50 41.30Q43.50 39.10 44.55 37.20Q45.60 35.30 47.35 33.88Q49.10 32.45 51.17 31.65Q53.25 30.85 55.30 30.85Q57.35 30.85 58.35 31.57Q59.35 32.30 59.35 33.35Q59.35 34.35 58.42 35.48Q57.50 36.60 55.75 37.45Q54.65 37.95 53.22 38.33Q51.80 38.70 50.75 38.70Q49.95 38.70 49.95 38.45Q49.95 38.25 50.65 38.25Q51.30 38.25 52.67 37.88Q54.05 37.50 55.35 36.85Q56.80 36.05 57.40 35.25Q58 34.45 58 33.80Q58 33.20 57.52 32.80Q57.05 32.40 56.20 32.40Q55.40 32.40 54.40 32.85Q52.95 33.50 51.42 34.98Q49.90 36.45 48.90 38.20Q47.90 39.95 47.90 41.55Q47.90 42.65 48.52 43.40Q49.15 44.15 50.40 44.15Q51.70 44.15 53.40 43.33Q55.10 42.50 56.85 41.27Q58.60 40.05 60.10 38.80Q61.60 37.55 62.50 36.70Q62.80 36.40 62.95 36.40Q63.10 36.40 63.10 36.65Q63.10 37 62.80 37.25Q60.90 39 58.67 40.90Q56.45 42.80 53.92 44.13Q51.40 45.45 48.65 45.50ZM62.90 45Q62.35 45 62.05 44.85Q62.75 43.85 63.38 42.20Q64 40.55 64.50 38.85Q65 37.15 65.27 35.92Q65.55 34.70 65.55 34.60L63.45 36.70Q62.80 37.35 62.05 38.05Q61.30 38.75 60.55 39.35Q60.35 39.50 60.17 39.63Q60 39.75 59.85 39.75Q59.65 39.75 59.65 39.55Q59.65 39.25 60.10 38.85Q61.50 37.60 63.17 36.05Q64.85 34.50 65.65 32.80Q65.90 32.20 65.90 31.70Q65.90 31.05 65.65 30.90Q65.45 30.75 65.45 30.50Q65.45 30.05 65.90 30.05Q66.20 30.05 66.67 30.32Q67.15 30.60 67.40 30.85Q68 31.45 68.17 32.35Q68.35 33.25 68.35 34.20Q68.35 35.60 68.08 37.35Q67.80 39.10 67.30 40.73Q66.80 42.35 66.05 43.50L65.95 43.65Q66.25 43.45 66.47 43.27Q66.70 43.10 66.80 43Q68.30 41.50 69.40 39.63Q70.50 37.75 71.45 35.77Q72.40 33.80 73.40 32.05Q74.40 30.30 75.70 29.05Q76.45 28.30 77.65 28.30Q78.30 28.30 78.95 28.68Q79.60 29.05 79.90 29.80Q80 30 79.83 30.05Q79.65 30.10 79.55 29.90Q79.25 29.15 78.60 29.15Q77.95 29.15 76.90 30.10Q75.10 31.85 73.65 34.17Q72.20 36.50 70.72 38.88Q69.25 41.25 67.30 43.20Q66.50 44 65.20 44.50Q63.90 45 62.90 45ZM80.35 45.50Q78.15 45.50 76.67 44.42Q75.20 43.35 75.20 41.30Q75.20 39.10 76.25 37.20Q77.30 35.30 79.05 33.88Q80.80 32.45 82.88 31.65Q84.95 30.85 87 30.85Q89.05 30.85 90.05 31.57Q91.05 32.30 91.05 33.35Q91.05 34.35 90.13 35.48Q89.20 36.60 87.45 37.45Q86.35 37.95 84.92 38.33Q83.50 38.70 82.45 38.70Q81.65 38.70 81.65 38.45Q81.65 38.25 82.35 38.25Q83 38.25 84.38 37.88Q85.75 37.50 87.05 36.85Q88.50 36.05 89.10 35.25Q89.70 34.45 89.70 33.80Q89.70 33.20 89.22 32.80Q88.75 32.40 87.90 32.40Q87.10 32.40 86.10 32.85Q84.65 33.50 83.13 34.98Q81.60 36.45 80.60 38.20Q79.60 39.95 79.60 41.55Q79.60 42.65 80.22 43.40Q80.85 44.15 82.10 44.15Q83.40 44.15 85.10 43.33Q86.80 42.50 88.55 41.27Q90.30 40.05 91.80 38.80Q93.30 37.55 94.20 36.70Q94.50 36.40 94.65 36.40Q94.80 36.40 94.80 36.65Q94.80 37 94.50 37.25Q92.60 39 90.38 40.90Q88.15 42.80 85.63 44.13Q83.10 45.45 80.35 45.50Z"/>
+              </g>
+              <g fill="#ff0000" transform="translate(0, 6.75)">
+                <path d=""/>
+              </g>
+            </svg>
+          </div>
+          <div id="copyDate"></div>
+          <div class="curve">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+              <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+              <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0C951.2,90,886,95.24,827.93,77.22c-53.08-23.16-106.56-44.03-165.56-35.4-43.38,6.34-84.61,18.82-127.61,26.46C314.09,71.32,149.93,59,0,5.63Z" class="shape-fill"></path>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
