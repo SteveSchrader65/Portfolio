@@ -88,7 +88,7 @@ module.exports = {
       },
     },
     screens: {
-      xs: {raw: "(max-width: 350px)"},
+      xs: {raw: "(max-width: 349px)"},
       sm: {raw: "(min-width: 350px)"},
       md: {raw: "(min-width: 650px)"},
       lg: {raw: "(min-width: 950px)"},

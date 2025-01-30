@@ -72,17 +72,27 @@ function navbarHide() {
   document.addEventListener("scroll", () => {
     let currentScrollPos = window.scrollY
 
-    // if (prevScrollPos > currentScrollPos) {
     if (prevScrollPos == currentScrollPos) {
       document.querySelector("nav").style.top = "0"
     } else {
       document.querySelector("nav").style.top = "-5rem"
+
+      if (window.innerWidth < 650) {
+        const mainMenu = document.querySelector("#mainMenu")
+        mainMenu.style.visibility = ""
+        mainMenu.style.transform = ""
+      }
+
+      const dropMenu = document.querySelector("#dropMenu")
+      dropMenu.style.display = "none"
+      document.querySelector("#dropMenu").style.display = "none"
     }
 
     clearTimeout(isScrolling)
 
     isScrolling = setTimeout(() => {
       document.querySelector("nav").style.top = "0"
+      document.querySelector("#dropMenu").style.display = ""
     }, 1200)
 
     prevScrollPos = currentScrollPos
@@ -193,13 +203,11 @@ function initGlitching() {
   }
 
   function _startGlitch(element) {
-    let count = 0
-
     const intervalId = setInterval(() => {
       animationFrameId = requestAnimationFrame(() => {
         const elementRect = element.getBoundingClientRect()
         const maxSkew = Math.min(20, elementRect.width / 20)
-        const skew = Math.random() * maxSkew - maxSkew / 2
+        const skew = Math.random() * maxSkew - maxSkew / 1.5
         const top1 = Math.random() * 100
         const btm1 = Math.random() * 100
         const top2 = Math.random() * 100
@@ -215,23 +223,11 @@ function initGlitching() {
         if (before && after) {
           before.style.clipPath = `polygon(0 ${top1}%, 100% ${top1}%, 100% ${btm1}%, 0 ${btm1}%)`
           before.style.transform = `translate(${translateAmount}em, ${translateAmount}em)`
-
           after.style.clipPath = `polygon(0 ${top2}%, 100% ${top2}%, 100% ${btm2}%, 0 ${btm2}%)`
           after.style.transform = `translate(-${translateAmount}em, -${translateAmount}em)`
         }
-
-        count++
-        if (count % 15 === 0) {
-          const bigSkew = Math.random() * 180 - 90
-
-          element.style.transform = `skew(${bigSkew}deg) scale(${scale})`
-        }
-        if (count % 30 === 0) {
-          scale = 1 + Math.random() / 2
-          element.style.transform = `skew(${skew}deg) scale(${scale})`
-        }
       })
-    }, 100)
+    }, 125)
 
     element.dataset.glitchInterval = intervalId
 
@@ -410,6 +406,28 @@ function launchControl() {
 }
 
 function block2Setup() {
+  const output = document.querySelector("#animateMe")
+  const darkArray = ["red", "orange", "greenyellow", "limegreen", "#3399ff", "#e600e6"]
+  const lightArray = ["#e60000", "#e69500", "#ffff00", "#00cc00", "#0000ff", "#990099"]
+  let colourArray
+  let letters
+
+  letters = [...output.innerHTML]
+  output.innerHTML = letters.map((letter) => `<span class="letter">${letter}</span>`).join("")
+
+  if (viewingMode == "lightness") {
+    colourArray = lightArray
+  } else {
+    colourArray = darkArray
+  }
+
+  setInterval(() => {
+    document.querySelectorAll(".letter").forEach((letterSpan) => {
+      const colourIndex = Math.floor(Math.random() * colourArray.length)
+
+      letterSpan.style.color = colourArray[colourIndex]
+    })
+  }, 250)
 }
 
 function block3Setup() {
@@ -659,7 +677,12 @@ function _thankYouBubble(buttonElement, source = "block5") {
 
 /*
   TO-DO LIST:
-    - Add sections back in. Focus on xs: sizing and up
+    - Re-introduce sections. Focus on xs: sizing and up before moving to next
+      : Overview
+      : Studies
+      : Projects
+      : Employment
+
     - TextShadows have been removed. Revisit wavy bottoms to text_blocks.
     - !! Come up with a concept for Overview section !!
 */
@@ -673,7 +696,7 @@ function init() {
     scrollToTop()
     initGlitching()
     launchControl()
-    // block2Setup()
+    block2Setup()
     // block3Setup()
     // block4Setup()
     // block5Setup()
