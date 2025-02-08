@@ -44,13 +44,8 @@ function scrollToTop() {
 }
 
 function smoothScroll() {
-  // document.querySelectorAll('a[href^="#"]').forEach((section) => {
   document.querySelectorAll('a[href^="#content"]').forEach((section) => {
     section.addEventListener("click", function (e) {
-      // if (section.getAttribute("href").startsWith("#event-")) {
-      //   return
-      // }
-
       e.preventDefault()
 
       let selection
@@ -182,7 +177,7 @@ function initHamburger() {
   }
 }
 
-function initGlitching() {
+function initGlitch() {
   const titles = document.querySelectorAll(".title")
   const resizeObservers = new Map()
   let animationFrameId = null
@@ -205,29 +200,28 @@ function initGlitching() {
   function _startGlitch(element) {
     const intervalId = setInterval(() => {
       animationFrameId = requestAnimationFrame(() => {
-        const elementRect = element.getBoundingClientRect()
-        const maxSkew = Math.min(20, elementRect.width / 20)
-        const skew = Math.random() * maxSkew - maxSkew / 1.5
+        const skew = Math.random() * 20 - 10
         const top1 = Math.random() * 100
         const btm1 = Math.random() * 100
         const top2 = Math.random() * 100
         const btm2 = Math.random() * 100
-        let scale = 1
-
-        const translateAmount = Math.min(0.025, elementRect.width / 1000)
         const before = element.querySelector(".glitch-before")
         const after = element.querySelector(".glitch-after")
+        // let scale = 1
 
-        element.style.transform = `skew(${skew}deg) scale(${scale})`
+        element.style.transform = `skew(${skew}deg)`
 
         if (before && after) {
           before.style.clipPath = `polygon(0 ${top1}%, 100% ${top1}%, 100% ${btm1}%, 0 ${btm1}%)`
-          before.style.transform = `translate(${translateAmount}em, ${translateAmount}em)`
           after.style.clipPath = `polygon(0 ${top2}%, 100% ${top2}%, 100% ${btm2}%, 0 ${btm2}%)`
-          after.style.transform = `translate(-${translateAmount}em, -${translateAmount}em)`
+        }
+
+        if (Math.random() > 0.95) {
+          element.style.transform = "skew(45deg)"
+          element.style.transform = "translateX(30%)"
         }
       })
-    }, 125)
+    }, 130)
 
     element.dataset.glitchInterval = intervalId
 
@@ -282,6 +276,9 @@ function initGlitching() {
   })
 }
 
+// Check if bottom of parallax image == top of next parallax image
+// If not, move image below upwards to bottom of previous
+// ---- Reverse for deploySections ----
 function launchControl() {
   const launchButton = document.querySelector("#launchControl button")
   const titles = document.querySelectorAll(".content-section .parallax .title")
@@ -439,8 +436,304 @@ function block4Setup() {
 }
 
 function block5Setup() {
-  // Get screenwidth and adapt widget display to match
-  // Can use vertical timeline for mobile displays
+  const selectedElement = document.querySelector("#block5 #dates .selected")
+  const startIndex = selectedElement
+    ? parseInt(selectedElement.closest("a").getAttribute("href").split("-")[1])
+    : 1
+
+  const svgIcons = {
+    left: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
+    right: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
+  }
+
+  const mediaQuery = window.matchMedia("(max-width: 649px)")
+  const resumeButton = document.querySelector("#block5 #resumeDownloadButton")
+  let currentIndex = 1
+  let isAnimating = false
+  let currentCard = null
+
+  if (!resumeButton) return
+
+  _handleScreenChange(mediaQuery)
+  mediaQuery.addEventListener("change", _handleScreenChange)
+
+  function _handleScreenChange(e) {
+    const isSmallScreen = e.matches
+
+    _cleanupCurrentSetup()
+
+    if (isSmallScreen) {
+      _setupSmallScreenTimeline()
+    } else {
+      _setupLargeScreenTimeline()
+    }
+  }
+
+  function _cleanupCurrentSetup() {
+    // Remove any existing observers
+    if (window.timelineObserver) {
+      window.timelineObserver.disconnect()
+      window.timelineObserver = null
+    }
+
+    // Remove any animation classes
+    const eventCards = document.querySelectorAll("#block5 #eventsContainer li")
+    eventCards.forEach((card) => {
+      card.classList.remove("enter-left", "enter-right", "exit-left", "exit-right")
+    })
+  }
+
+  function _setupSmallScreenTimeline() {
+    // Remove hidden class from container
+    document.querySelector("#block5 #eventsContainer").classList.remove("hidden")
+
+    // Set up the basic structure
+    _setupDateMarkers()
+
+    const eventCards = document.querySelectorAll("#block5 #eventsContainer li")
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.1,
+    }
+
+    window.timelineObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        const eventCard = entry.target
+
+        if (entry.isIntersecting) {
+          eventCard.classList.remove("exit-left")
+          eventCard.classList.add("enter-left")
+        } else {
+          eventCard.classList.remove("enter-left")
+          eventCard.classList.add("exit-left")
+        }
+      })
+    }, options)
+
+    // Observe all valid event cards
+    eventCards.forEach((card) => {
+      if (card.id !== "event-0" && card.id !== "event-10") {
+        window.timelineObserver.observe(card)
+      }
+    })
+
+    // Add fade transition to markers
+    const dateMarkers = document.querySelectorAll("#block5 .date-marker")
+
+    dateMarkers.forEach((marker) => {
+      marker.classList.add("date-marker-fade")
+    })
+  }
+
+  function _setupLargeScreenTimeline() {
+    // Call all existing setup functions for large screen
+    _setupDateMarkers()
+    _calculatePositions()
+    _setupEventListeners()
+    _adjustTimelineWidth()
+    _updateUI(parseInt(startIndex))
+    _initializeEventCard()
+  }
+
+  function _handleEventCardAnimation(index) {
+    const eventTemplate = document.querySelector(`#block5 #eventsContainer #event-${index}`)
+    const cardContainer = document.querySelector("#block5 #eventCardContainer")
+
+    if (!eventTemplate) return
+
+    const newCard = eventTemplate.cloneNode(true)
+
+    if (currentCard?.dataset?.date === newCard.dataset.date) return
+
+    const animateSequence = async () => {
+      // Exit animation for current card if it exists
+
+      if (currentCard) {
+        currentCard.classList.remove("card-enter")
+        currentCard.classList.add("card-exit")
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        currentCard.remove()
+      }
+
+      // Enter animation for new card
+      cardContainer.appendChild(newCard)
+      newCard.classList.add("card-enter")
+      currentCard = newCard
+    }
+
+    animateSequence()
+  }
+
+  function _setupDateMarkers() {
+    const dateLinks = document.querySelectorAll("#block5 #dates a")
+
+    dateLinks.forEach((link) => {
+      if (link.textContent) {
+        const marker = document.createElement("div")
+        const label = document.createElement("span")
+
+        marker.className = link.classList.contains("selected")
+          ? "date-marker selected"
+          : "date-marker"
+        label.className = link.classList.contains("selected") ? "date-label selected" : "date-label"
+        label.textContent = link.textContent
+        link.textContent = ""
+        link.appendChild(label)
+        link.appendChild(marker)
+      }
+    })
+  }
+
+  function _calculatePositions() {
+    const dates = Array.from(document.querySelectorAll("#block5 #dates a"))
+    const startDate = new Date(dates[0].dataset.date.split("/").reverse().join("-"))
+    const endDate = new Date(dates[dates.length - 1].dataset.date.split("/").reverse().join("-"))
+    const timespan = endDate - startDate
+    const isSmallScreen = mediaQuery.matches
+
+    return dates.map((date) => {
+      const currentDate = new Date(date.dataset.date.split("/").reverse().join("-"))
+      const position = ((currentDate - startDate) / timespan) * (isSmallScreen ? 100 : 400)
+
+      if (isSmallScreen) {
+        date.parentElement.style.top = `${position}%`
+        date.parentElement.style.left = "50%"
+      } else {
+        date.parentElement.style.left = `${position}%`
+        date.parentElement.style.top = ""
+      }
+
+      return position
+    })
+  }
+
+  function _setupEventListeners() {
+    document.querySelector("#block5 #timeline").addEventListener("click", (e) => {
+      const prevBtn = e.target.closest(".prev")
+      const nextBtn = e.target.closest(".next")
+
+      if (prevBtn && currentIndex > 1) {
+        _updateUI(currentIndex - 1, "navigation")
+      } else if (nextBtn && currentIndex < 9) {
+        _updateUI(currentIndex + 1, "navigation")
+      }
+    })
+
+    document.querySelector("#block5 #dates").addEventListener("click", (e) => {
+      const dateLink = e.target.closest('a[href^="#event-"]')
+
+      if (!dateLink) return
+
+      e.preventDefault()
+
+      const index = parseInt(dateLink.getAttribute("href").split("-")[1])
+
+      if (index > 0 && index < 10) {
+        _updateUI(index, "dateClick")
+        _handleEventCardAnimation(index)
+      }
+    })
+
+    resumeButton.addEventListener("click", function (e) {
+      e.preventDefault()
+      if (this.dataset.downloading) return
+
+      // this.dataset.downloading = "true"
+      // _thankYouBubble(this)
+
+      const link = document.createElement("a")
+
+      link.href = this.href
+      link.download = "resumeSteveSchrader.pdf"
+      this.dataset.downloading = "true"
+      link.style.display = "none"
+      document.body.appendChild(link)
+
+      setTimeout(() => {
+        try {
+          link.click()
+          document.body.removeChild(link)
+        } catch (error) {
+          window.open(this.href, "_blank")
+        } finally {
+          delete this.dataset.downloading
+        }
+      }, 1000)
+
+      _thankYouBubble(this)
+    })
+  }
+
+  function _adjustTimelineWidth() {
+    const timeline = document.querySelector("#block5 #timeline")
+    const prevBtn = document.querySelector("#block5 .prev")
+    const nextBtn = document.querySelector("#block5 .next")
+    const prevWidth = prevBtn.offsetWidth
+    const nextWidth = nextBtn.offsetWidth
+    const totalButtonWidth = prevWidth + nextWidth
+
+    timeline.style.width = `calc(100% - ${totalButtonWidth}px)`
+    timeline.style.margin = `0 ${prevWidth}px`
+  }
+
+  function _updateUI(index, source = "init") {
+    if (isAnimating) return
+
+    const historyLine = document.querySelector("#block5 #historyLine")
+    const prevBtn = document.querySelector("#block5 .prev")
+    const nextBtn = document.querySelector("#block5 .next")
+    const positions = _calculatePositions()
+    const transform = -positions[index] + 50
+
+    isAnimating = true
+
+    // Move the timeline based on screen size
+    if (!mediaQuery.matches) {
+      // Large screen
+      historyLine.style.transform = `translateX(${transform}%)`
+    } else {
+      // Small screen
+      historyLine.style.transform = "none"
+    }
+
+    // Only update selected states for date clicks or initialization
+    if (source !== "navigation") {
+      document
+        .querySelectorAll("#block5 #dates .date-marker")
+        .forEach((dm) => dm.classList.remove("selected"))
+      document
+        .querySelector(`#block5 #dates li:nth-child(${index + 1}) .date-marker`)
+        ?.classList.add("selected")
+      document
+        .querySelectorAll("#block5 #dates .date-label")
+        .forEach((dl) => dl.classList.remove("selected"))
+      document
+        .querySelector(`#block5 #dates li:nth-child(${index + 1}) .date-label`)
+        ?.classList.add("selected")
+    }
+
+    // Update navigation buttons - only for large screens
+    if (!mediaQuery.matches) {
+      prevBtn.innerHTML = index === 1 ? "" : svgIcons.left
+      nextBtn.innerHTML = index === 9 ? "" : svgIcons.right
+      prevBtn.disabled = index === 1
+      nextBtn.disabled = index === 9
+    }
+
+    setTimeout(() => (isAnimating = false), 500)
+    currentIndex = index
+  }
+
+  function _initializeEventCard() {
+    const selectedDateLink = document.querySelector("#block5 #dates .selected")
+
+    if (!selectedDateLink) return
+
+    const index = parseInt(selectedDateLink.closest("a").getAttribute("href").split("-")[1])
+
+    _handleEventCardAnimation(index)
+  }
 }
 
 async function block6Setup() {
@@ -681,6 +974,7 @@ function _thankYouBubble(buttonElement, source = "block5") {
       : Overview
       : Studies
       : Projects
+
       : Employment
 
     - TextShadows have been removed. Revisit wavy bottoms to text_blocks.
@@ -694,12 +988,12 @@ function init() {
     smoothScroll()
     navbarHide()
     scrollToTop()
-    initGlitching()
+    initGlitch()
     launchControl()
     block2Setup()
     // block3Setup()
     // block4Setup()
-    // block5Setup()
+    block5Setup()
   }
 
   block6Setup()

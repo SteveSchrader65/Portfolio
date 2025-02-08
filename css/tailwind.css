@@ -26,17 +26,21 @@
     @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour md:p-2;
   }
 
-  @media screen and (min-width: 650px) {
-    #mainMenu {
-      @apply bg-none -left-1/2;
+  @media screen and (max-width: 349px) {
+    #block5 #eventsContainer li .content ul {
+      @apply hidden;
     }
+  }
 
-    #mainMenu > li:not(#dropMenuTrigger) {
-      @apply transition duration-200 ease-out;
+  @media screen and (min-width: 350px) {
+    #block5 #eventsContainer li .content ul {
+      @apply visible;
     }
+  }
 
-    #mainMenu > li:not(#dropMenuTrigger):hover {
-      @apply scale-x-[1.15];
+  @media screen and (min-width: 350px) and (max-width: 500px) {
+    #block5 #eventsContainer li .content ul li {
+      @apply truncate;
     }
   }
 
@@ -64,6 +68,193 @@
 
     .hamburger-menu.hover-active span:last-child {
       @apply animate-hamburgerBottom;
+    }
+
+    /* Small device styles for (vertical) Timeline go here */
+    #block5 #timelineWrapper {
+      @apply pr-2 m-0;
+    }
+
+    #block5 #timeline {
+      @apply w-[4px] h-full ml-auto mr-2;
+    }
+
+    #block5 #historyLine {
+      @apply absolute w-[4px] h-full right-2 left-auto top-0;
+      @apply bg-light-alertColour dark:bg-dark-alertColour;
+      transform: none !important;
+    }
+
+    #block5 #timeline:after {
+      @apply hidden;
+    }
+
+    #block5 #eventsContainer {
+      @apply relative block w-[90%] h-full sm:pr-8;
+    }
+
+    #block5 #eventsContainer .content {
+      @apply border-2 border-light-panelBorderColour dark:border-dark-panelBorderColour;
+      @apply m-0 rounded-lg;
+    }
+
+    #block5 #eventsContainer li {
+      @apply relative mx-auto w-[90%];
+      @apply bg-light-panelBackColour dark:bg-dark-panelBackColour;
+      transition: all 0.5s ease-out;
+    }
+
+    #block5 #eventsContainer li .content h2 {
+      @apply text-lg font-bold -mb-1;
+      @apply text-light-colour1 dark:text-dark-colour1;
+    }
+
+    #block5 #eventsContainer li .content em {
+      @apply text-xs italic block mb-[0.125rem];
+      @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+    }
+
+    #block5 #eventsContainer li .content p {
+      @apply text-xs leading-4 mb-[0.125rem];
+      @apply text-light-colour1 dark:text-dark-colour1;
+    }
+
+    #block5 #eventsContainer li .content ul {
+      @apply text-xs list-none pl-1;
+      @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+    }
+
+    #block5 #eventsContainer li .content ul li {
+      @apply ml-[0.5rem];
+    }
+
+    #block5 #eventCardContainer .content {
+      @apply w-full opacity-0;
+      transform: scale(0.8);
+      transition: all 0.5s ease-out;
+    }
+
+    #block5 #eventCardContainer .content.reveal {
+      @apply opacity-100;
+      transform: scale(1);
+    }
+
+    #block5 #dates {
+      @apply absolute h-full w-[4px] left-auto right-2;
+      transform: translateX(-50%);
+    }
+
+    #block5 #dates li {
+      @apply absolute flex;
+      transform: translateY(-50%);
+    }
+
+    #block5 .date-marker {
+      @apply w-3 h-3 rounded-full;
+      @apply bg-light-colour2 dark:bg-dark-colour1;
+      @apply border border-light-colour1 dark:border-dark-colour2;
+    }
+
+    #block5 .date-label {
+      @apply relative text-sm ml-4 opacity-100;
+      @apply text-light-textColour dark:text-dark-textColour;
+    }
+
+    #block5 .prev,
+    #block5 .next {
+      @apply hidden;
+    }
+
+    .enter-left {
+      animation: enterLeft 2000ms ease-in-out forwards;
+    }
+    .exit-left {
+      animation: enterLeft 2000ms ease-in-out reverse;
+    }
+    @keyframes enterLeft {
+      0% {
+        @apply opacity-0;
+        transform: translateX(-110%);
+      }
+      100% {
+        @apply opacity-100;
+        transform: translateX(0);
+      }
+    }
+
+    .date-marker-fade {
+      transition: opacity 200ms ease-in-out;
+    }
+  }
+
+  @media screen and (min-width: 650px) {
+    #mainMenu {
+      @apply bg-none -left-1/2;
+    }
+
+    #mainMenu > li:not(#dropMenuTrigger) {
+      @apply transition duration-200 ease-out;
+    }
+
+    #mainMenu > li:not(#dropMenuTrigger):hover {
+      @apply scale-x-[1.15];
+    }
+
+    /* Large device styles for horizontal Timeline */
+    #block5 #timelineWrapper {
+      @apply md:min-h-[50rem] lg:min-h-[38rem] md:-mb-72 lg:-mb-28 xl:-mb-16;
+    }
+
+    #block5 #timeline {
+      @apply mt-[4rem] h-[5rem] overflow-hidden;
+    }
+
+    #block5 .date-label {
+      @apply -top-4;
+    }
+
+    #block5 .prev,
+    #block5 .next {
+      @apply top-[60%];
+      @apply hover:scale-[120%] disabled:opacity-50;
+    }
+
+    #block5 .prev {
+      @apply -left-2;
+    }
+
+    #block5 .next {
+      @apply -right-2;
+    }
+
+    .card-enter {
+      animation: slideIn 1s ease-in-out forwards;
+    }
+
+    .card-exit {
+      animation: slideOut 1s ease-in-out forwards;
+    }
+
+    @keyframes slideIn {
+      0% {
+        opacity: 0;
+        transform: translate(-150%, -4rem);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -4rem);
+      }
+    }
+
+    @keyframes slideOut {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -4rem);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(150%, -4rem);
+      }
     }
   }
 }
@@ -140,7 +331,7 @@
   .parallax {
     @apply w-full h-full absolute left-0;
     @apply bg-center bg-no-repeat;
-    @apply bg-[size:auto_100%] md:bg-[size:auto_101%];
+    @apply bg-[size:auto_100%] md:bg-[size:auto_101%]; /* <--- NOT THIS !! */
   }
 
   .parallax .title,
@@ -148,7 +339,7 @@
     @apply font-linkFont font-bold tracking-[0.55rem] text-light-textColour dark:text-light-textColour;
     @apply opacity-65 pointer-events-none text-shadow-parallaxShadow;
     @apply text-3xl sm:text-4xl md:text-4xl lg:text-6xl xl:text-8xl;
-    @apply top-[38%] left-[10.5%];
+    @apply top-[38%] left-[6%] md:left-[10.5%];
     @apply relative transition-transform duration-100 w-full;
   }
 
@@ -168,13 +359,13 @@
   }
 
   .text_block {
-    @apply relative mt-[3%] mx-[5%] md:mx-[10%] p-[5%] z-[100] text-justify overflow-hidden;
+    @apply relative mt-[3%] mx-[5%] md:mx-[10%] p-[5%] z-[100] text-justify overflow-x-hidden;
     @apply text-[0.8rem] sm:text-[0.9rem] md:text-base lg:text-[1.1rem] xl:text-[1.8rem];
     @apply leading-[1.1rem] sm:leading-[1.2rem] md:leading-[1.4rem] lg:leading-[1.5rem] xl:leading-[2.4rem];
     @apply bg-light-sectionBackColour dark:bg-dark-sectionBackColour;
     @apply text-light-textColour dark:text-dark-textColour;
     @apply text-start md:text-justify transition-transform duration-1000 ease-out;
-    @apply origin-top -top-52 min-h-[5vh];
+    @apply origin-top -top-64 md:-top-80 lg:-top-72;
   }
 
   .text_block p {
@@ -245,9 +436,130 @@
 
 /* || Studies */
 
+
 /* || Projects */
 
-/* || Employment */
+
+/* || Employment Timeline */
+#block5 #timelineWrapper {
+  @apply relative flex items-center;
+}
+
+#block5 #timeline {
+  @apply relative flex-grow;
+}
+
+#block5 #timeline:after {
+  @apply content-[''] absolute top-[85%] left-0 right-0 h-[2px] max-w-[96%] mx-auto -translate-y-1/2;
+  @apply bg-light-alertColour dark:bg-dark-alertColour;
+  @apply z-[100];
+}
+
+#block5 #historyLine {
+  @apply absolute top-[3.9rem] left-0 z-[150];
+  @apply w-full;
+  transition: transform 0.5s ease-in-out;
+}
+
+#block5 #eventCardContainer {
+  @apply absolute top-12 w-[70%] max-w-[600px] z-[200] pointer-events-none;
+  @apply left-1/2 -translate-x-1/2;
+  @apply list-none;
+}
+
+#block5 #eventCardContainer li {
+  @apply absolute left-1/2 p-4 w-[95%];
+  @apply bg-light-panelBackColour dark:bg-dark-panelBackColour;
+  @apply border-2 border-light-panelBorderColour dark:border-dark-panelBorderColour;
+  @apply text-sm rounded-lg;
+  @apply focus:outline-none;
+  @apply transform -translate-x-[150%];
+}
+
+#block5 #eventCardContainer .content {
+  @apply w-full;
+}
+
+#block5 #eventCardContainer .content h2 {
+  @apply text-xl font-bold mb-1;
+  @apply text-light-colour1 dark:text-dark-colour1;
+}
+
+#block5 #eventCardContainer .content em {
+  @apply text-sm italic block mb-2;
+  @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+}
+
+#block5 #eventCardContainer .content p {
+  @apply text-base mb-3;
+  @apply text-light-colour1 dark:text-dark-colour1;
+}
+
+#block5 #eventCardContainer .content ul {
+  @apply list-none pl-4 w-full text-sm;
+  @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+}
+
+#block5 #eventCardContainer .content ul li {
+  @apply static block w-full p-0 mb-1;
+  @apply border-0 shadow-none;
+  position: static !important;
+  transform: none !important;
+}
+
+#block5 .prev,
+#block5 .next {
+  @apply absolute p-2 rounded-full z-[400] outline-none;
+  @apply text-light-alertColour dark:text-dark-alertColour;
+  @apply transition-colors duration-200 pointer-events-auto;
+}
+
+#block5 #dates {
+  @apply relative w-full h-full;
+}
+
+#block5 #dates li {
+  @apply absolute flex flex-col items-center;
+}
+
+#block5 #dates a {
+  @apply flex flex-col items-center no-underline;
+  @apply text-light-textColour dark:text-dark-textColour;
+}
+
+#block5 .date-label {
+  @apply text-xs absolute w-20 text-center;
+  @apply text-light-textColour dark:text-dark-textColour;
+  transition: transform 0.3s ease-out, font-size 0.3s ease-out;
+}
+
+#block5 .date-marker {
+  @apply w-[0.65rem] h-[0.65rem] rounded-full z-[350];
+  @apply bg-light-colour2 dark:bg-dark-colour1;
+  @apply border border-light-colour1 dark:border-dark-colour2;
+  transition: transform 0.3s ease-out;
+}
+
+#block5 .date-marker.selected {
+  @apply bg-light-highlightColour2 dark:bg-dark-highlightColour1;
+  @apply border-light-colour1 dark:border-dark-colour2;
+}
+
+#block5 #resumeDownloadButton {
+  cursor: pointer;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+  position: relative;
+}
+
+#block5 #resumeDownloadButton:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+#block5 #resumeDownloadButton:hover {
+  opacity: 0.8;
+}
 
 /* || Contact */
 #block6 .formContainer {
@@ -305,7 +617,7 @@
 }
 
 #block6 .contactForm #messageWrapper label {
-  @apply row-[1] col-[1] lg:mb-0;
+  @apply row-[1] col-[1] lg:mb-16;
 }
 
 #block6 .contactForm #messageWrapper textarea {
@@ -409,6 +721,6 @@
 
 #block6 #copyDate {
   @apply text-light-textColour dark:text-dark-textColour;
-  @apply mb-[3%] md:mb-[5%] xs:pt-[10%] md:pt-[4%] lg:pt-[7%];
+  @apply mb-[3%] md:mb-[5%] xs:pt-[10%] md:pt-[4%] lg:mb-[-1rem] lg:pt-[7%];
   @apply text-xs md:text-sm lg:text-xl xl:text-3xl font-normal text-right;
 }
