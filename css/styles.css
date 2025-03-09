@@ -657,24 +657,28 @@ body {
 }
 
 @media screen and (max-width: 349px) {
-  #block5 #eventsContainer li .content ul {
-    display: none;
+  #block5 #eventsContainer li .content ul li {
+    display: none !important;
   }
 }
 
 @media screen and (min-width: 350px) {
-  #block5 #eventsContainer li .content ul {
-    visibility: visible;
+  #block5 #eventsContainer li .content ul li {
+    visibility: visible !important;
   }
 }
 
 @media screen and (min-width: 350px) and (max-width: 500px) {
   #block5 #eventsContainer li .content ul li {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
   }
 }
+
+/* #block5 #eventsContainer li .content ul {
+    @apply xs:hidden md:block;
+  } */
 
 @media screen and (max-width: 649px) {
   #mainMenu,
@@ -837,27 +841,28 @@ body {
     animation: hamburgerCollapse 0.15s ease-in-out forwards, hamburgerCentre 0.15s ease-in-out 0.15s forwards, hamburgerDot 0.15s ease-in-out 0.3s forwards, hamburgerRotateLower 0.15s ease-in-out 0.45s forwards, hamburgerExtendLower 0.15s ease-in-out 0.6s forwards;
   }
 
-  /* Small device styles for (vertical) Timeline go here */
+  /* Small device styles for vertical timeline */
 
   #block5 #timelineWrapper {
-    margin: 0px;
-    padding-right: 0.5rem;
+    position: relative;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 250vh;
   }
 
   #block5 #timeline {
-    margin-left: auto;
-    margin-right: 0.5rem;
+    position: absolute;
+    right: 2rem;
     height: 100%;
-    width: 4px;
+    width: 2px;
   }
 
   #block5 #historyLine {
     position: absolute;
-    right: 0.5rem;
-    left: auto;
-    top: 0px;
     height: 100%;
-    width: 4px;
+    width: 2px;
     --tw-bg-opacity: 1;
     background-color: rgb(255 26 26 / var(--tw-bg-opacity));
   }
@@ -867,25 +872,14 @@ body {
     background-color: rgb(179 0 0 / var(--tw-bg-opacity));
   }
 
-  #block5 #historyLine {
-    transform: none !important;
-  }
-
   #block5 #timeline:after {
     display: none;
   }
 
   #block5 #eventsContainer {
-    position: relative;
-    display: block;
-    height: 100%;
-    width: 90%;
-  }
-
-  @media (min-width: 350px) {
-    #block5 #eventsContainer {
-      padding-right: 2rem;
-    }
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
   }
 
   #block5 #eventsContainer .content {
@@ -900,26 +894,19 @@ body {
   }
 
   #block5 #eventsContainer .content {
-    margin: 0px;
-    border-radius: 0.5rem;
-  }
-
-  #block5 #eventsContainer li {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
     --tw-bg-opacity: 1;
     background-color: rgb(151 184 227 / var(--tw-bg-opacity));
   }
 
-  :is(.dark #block5 #eventsContainer li) {
+  :is(.dark #block5 #eventsContainer .content) {
     --tw-bg-opacity: 1;
     background-color: rgb(32 94 164 / var(--tw-bg-opacity));
   }
 
-  #block5 #eventsContainer li {
-    transition: all 0.5s ease-out;
+  #block5 #eventsContainer .content {
+    margin: 0px;
+    margin-left: 2rem;
+    border-radius: 0.5rem;
   }
 
   #block5 #eventsContainer li .content h2 {
@@ -996,22 +983,23 @@ body {
 
   #block5 #dates {
     position: absolute;
-    left: auto;
-    right: 0.5rem;
+    right: 2rem;
     height: 100%;
-    width: 4px;
-    transform: translateX(-50%);
   }
 
   #block5 #dates li {
+    pointer-events: none;
     position: absolute;
     display: flex;
-    transform: translateY(-50%);
+    --tw-translate-y: -50%;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
   #block5 .date-marker {
     height: 0.75rem;
     width: 0.75rem;
+    --tw-translate-x: 50%;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     border-radius: 9999px;
     --tw-bg-opacity: 1;
     background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -1033,12 +1021,11 @@ body {
     border-color: rgb(0 0 0 / var(--tw-border-opacity));
   }
 
+  #block5 .date-marker {
+    transition: transform 0.3s;
+  }
+
   #block5 .date-label {
-    position: relative;
-    margin-left: 1rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    opacity: 1;
     --tw-text-opacity: 1;
     color: rgb(33 0 0 / var(--tw-text-opacity));
   }
@@ -1046,6 +1033,14 @@ body {
   :is(.dark #block5 .date-label) {
     --tw-text-opacity: 1;
     color: rgb(204 204 204 / var(--tw-text-opacity));
+  }
+
+  #block5 .date-label {
+    position: relative;
+    margin-left: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    opacity: 1;
   }
 
   #block5 .prev,
@@ -1100,7 +1095,7 @@ body {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
-  /* Large device styles for horizontal Timeline */
+  /* Large device styles for horizontal timeline */
 
   @media (min-width: 650px) {
     #block5 #timelineWrapper {
@@ -1111,14 +1106,14 @@ body {
 
   @media (min-width: 950px) {
     #block5 #timelineWrapper {
-      margin-bottom: -7rem;
+      margin-bottom: -12rem;
       min-height: 38rem;
     }
   }
 
   @media (min-width: 1400px) {
     #block5 #timelineWrapper {
-      margin-bottom: -4rem;
+      margin-bottom: -9rem;
     }
   }
 
@@ -1134,7 +1129,7 @@ body {
 
   #block5 .prev,
     #block5 .next {
-    top: 60%;
+    top: 55%;
   }
 
   #block5 .prev:hover,
@@ -1142,11 +1137,6 @@ body {
     --tw-scale-x: 120%;
     --tw-scale-y: 120%;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  }
-
-  #block5 .prev:disabled,
-    #block5 .next:disabled {
-    opacity: 0.5;
   }
 
   #block5 .prev {
@@ -1992,7 +1982,7 @@ img:not([width]),
   margin-left: auto;
   margin-right: auto;
   height: 2px;
-  max-width: 96%;
+  max-width: 98%;
   --tw-translate-y: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-content: '';
@@ -2207,6 +2197,7 @@ img:not([width]),
   text-align: center;
   font-size: 0.75rem;
   line-height: 1rem;
+  font-weight: 700;
   --tw-text-opacity: 1;
   color: rgb(33 0 0 / var(--tw-text-opacity));
 }

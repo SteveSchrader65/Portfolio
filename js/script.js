@@ -435,139 +435,70 @@ function block4Setup() {
   // Get screenwidth and adapt widget display to match
 }
 
+// function _adjustTimelineWidth() {
+//   const prevWidth = prevBtn.offsetWidth
+//   const nextWidth = nextBtn.offsetWidth
+//   const totalButtonWidth = prevWidth + nextWidth
+
+//   timeline.style.width = `calc(100% - ${totalButtonWidth}px)`
+//   timeline.style.margin = `0 ${prevWidth}px`
+// }
 function block5Setup() {
+  const timeline = document.querySelector("#block5 #timeline")
+  const historyLine = document.querySelector("#block5 #historyLine")
+  const prevBtn = document.querySelector("#block5 .prev")
+  const nextBtn = document.querySelector("#block5 .next")
+  const dateLinks = document.querySelectorAll("#block5 #dates a")
+  const datesContainer = document.querySelector("#block5 #dates")
+  const eventsContainer = document.querySelector("#block5 #eventsContainer")
   const selectedElement = document.querySelector("#block5 #dates .selected")
+  const resumeButton = document.querySelector("#block5 #resumeDownloadButton")
+
   const startIndex = selectedElement
     ? parseInt(selectedElement.closest("a").getAttribute("href").split("-")[1])
     : 1
 
   const svgIcons = {
-    left: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
-    right: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
+    left: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M20 9l-7 7 7 7M13 9l-7 7 7 7"/></svg>`,
+    right: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M14 9l7 7-7 7M21 9l7 7-7 7"/></svg>`,
   }
 
-  const mediaQuery = window.matchMedia("(max-width: 649px)")
-  const resumeButton = document.querySelector("#block5 #resumeDownloadButton")
+  let isMobile = window.innerWidth < 650
   let currentIndex = 1
   let isAnimating = false
   let currentCard = null
+  let markers = null
+  let positions = null
+  let events = null
 
-  if (!resumeButton) return
+  _initializeTimeline()
+  window.addEventListener("resize", _debounce(_handleScreenChange, 250))
 
-  _handleScreenChange(mediaQuery)
-  mediaQuery.addEventListener("change", _handleScreenChange)
-
-  function _handleScreenChange(e) {
-    const isSmallScreen = e.matches
-
-    _cleanupCurrentSetup()
-
-    if (isSmallScreen) {
-      _setupSmallScreenTimeline()
-    } else {
-      _setupLargeScreenTimeline()
-    }
-  }
-
-  function _cleanupCurrentSetup() {
-    // Remove any existing observers
+  function _initializeTimeline() {
     if (window.timelineObserver) {
       window.timelineObserver.disconnect()
       window.timelineObserver = null
     }
 
-    // Remove any animation classes
     const eventCards = document.querySelectorAll("#block5 #eventsContainer li")
+
     eventCards.forEach((card) => {
       card.classList.remove("enter-left", "enter-right", "exit-left", "exit-right")
     })
-  }
 
-  function _setupSmallScreenTimeline() {
-    // Remove hidden class from container
-    document.querySelector("#block5 #eventsContainer").classList.remove("hidden")
-
-    // Set up the basic structure
-    _setupDateMarkers()
-
-    const eventCards = document.querySelectorAll("#block5 #eventsContainer li")
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.1,
-    }
-
-    window.timelineObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        const eventCard = entry.target
-
-        if (entry.isIntersecting) {
-          eventCard.classList.remove("exit-left")
-          eventCard.classList.add("enter-left")
-        } else {
-          eventCard.classList.remove("enter-left")
-          eventCard.classList.add("exit-left")
-        }
-      })
-    }, options)
-
-    // Observe all valid event cards
-    eventCards.forEach((card) => {
-      if (card.id !== "event-0" && card.id !== "event-10") {
-        window.timelineObserver.observe(card)
-      }
-    })
-
-    // Add fade transition to markers
-    const dateMarkers = document.querySelectorAll("#block5 .date-marker")
-
-    dateMarkers.forEach((marker) => {
-      marker.classList.add("date-marker-fade")
-    })
-  }
-
-  function _setupLargeScreenTimeline() {
-    // Call all existing setup functions for large screen
     _setupDateMarkers()
     _calculatePositions()
-    _setupEventListeners()
-    _adjustTimelineWidth()
-    _updateUI(parseInt(startIndex))
-    _initializeEventCard()
-  }
 
-  function _handleEventCardAnimation(index) {
-    const eventTemplate = document.querySelector(`#block5 #eventsContainer #event-${index}`)
-    const cardContainer = document.querySelector("#block5 #eventCardContainer")
+    events = Array.from(eventsContainer.querySelectorAll("li[data-date]")).slice(1, -1)
 
-    if (!eventTemplate) return
-
-    const newCard = eventTemplate.cloneNode(true)
-
-    if (currentCard?.dataset?.date === newCard.dataset.date) return
-
-    const animateSequence = async () => {
-      // Exit animation for current card if it exists
-
-      if (currentCard) {
-        currentCard.classList.remove("card-enter")
-        currentCard.classList.add("card-exit")
-        await new Promise((resolve) => setTimeout(resolve, 500))
-        currentCard.remove()
-      }
-
-      // Enter animation for new card
-      cardContainer.appendChild(newCard)
-      newCard.classList.add("card-enter")
-      currentCard = newCard
+    if (isMobile) {
+      _displayVerticalTimeline()
+    } else {
+      _displayHorizontalTimeline()
     }
-
-    animateSequence()
   }
 
   function _setupDateMarkers() {
-    const dateLinks = document.querySelectorAll("#block5 #dates a")
-
     dateLinks.forEach((link) => {
       if (link.textContent) {
         const marker = document.createElement("div")
@@ -583,113 +514,141 @@ function block5Setup() {
         link.appendChild(marker)
       }
     })
+
+    markers = document.querySelectorAll("#block5 .date-marker")
+
+    return markers
   }
 
   function _calculatePositions() {
-    const dates = Array.from(document.querySelectorAll("#block5 #dates a"))
+    const dates = Array.from(dateLinks)
     const startDate = new Date(dates[0].dataset.date.split("/").reverse().join("-"))
     const endDate = new Date(dates[dates.length - 1].dataset.date.split("/").reverse().join("-"))
     const timespan = endDate - startDate
-    const isSmallScreen = mediaQuery.matches
 
-    return dates.map((date) => {
+    positions = dates.map((date) => {
       const currentDate = new Date(date.dataset.date.split("/").reverse().join("-"))
-      const position = ((currentDate - startDate) / timespan) * (isSmallScreen ? 100 : 400)
+      const position = ((currentDate - startDate) / timespan) * (isMobile ? 90 : 400)
 
-      if (isSmallScreen) {
+      if (isMobile) {
         date.parentElement.style.top = `${position}%`
-        date.parentElement.style.left = "50%"
+        date.parentElement.style.left = ""
+        date.parentElement.style.right = "-2rem"
+
+        const label = date.querySelector(".date-label")
+
+        if (label) {
+          label.style.top = "100%"
+          label.style.left = "-2.5rem"
+          label.style.marginTop = "0.25rem"
+          label.style.transform = "none"
+        }
       } else {
         date.parentElement.style.left = `${position}%`
         date.parentElement.style.top = ""
+        date.parentElement.style.right = ""
       }
 
       return position
     })
+
+    return positions
   }
 
-  function _setupEventListeners() {
-    document.querySelector("#block5 #timeline").addEventListener("click", (e) => {
-      const prevBtn = e.target.closest(".prev")
-      const nextBtn = e.target.closest(".next")
+  function _displayVerticalTimeline() {
+    eventsContainer.classList.remove("hidden")
 
-      if (prevBtn && currentIndex > 1) {
-        _updateUI(currentIndex - 1, "navigation")
-      } else if (nextBtn && currentIndex < 9) {
-        _updateUI(currentIndex + 1, "navigation")
+    events.forEach((event, index) => {
+      const marker = markers[index]
+
+      if (!marker) return
+
+      const markerTop = marker.closest("li").style.top
+
+      event.style.cssText = `
+        position: absolute !important;
+        top: ${markerTop} !important;
+        left: 80px !important;
+        width: calc(100% - 100px) !important;
+        display: block !important;
+        z-index: 100 !important;
+      `
+      const content = event.querySelector(".content");
+
+      if (content) {
+        content.style.cssText = `
+          opacity: 1 !important;
+          transform: none !important;
+          display: block !important;
+          max-width: 100% !important;
+        `;
       }
+
+      console.log(`Setting event ${index} to match marker position ${markerTop}`)
     })
 
-    document.querySelector("#block5 #dates").addEventListener("click", (e) => {
-      const dateLink = e.target.closest('a[href^="#event-"]')
+    const observerOptions = {
+      root: null,
+      threshold: 0.9,
+      rootMargin: "-40% 0px -40% 0px",
+    }
 
-      if (!dateLink) return
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const markerIndex = Array.from(markers).indexOf(entry.target)
+        const event = events[markerIndex]
 
-      e.preventDefault()
+        if (!event) return
 
-      const index = parseInt(dateLink.getAttribute("href").split("-")[1])
+        const eventCard = event.querySelector(".content")
 
-      if (index > 0 && index < 10) {
-        _updateUI(index, "dateClick")
-        _handleEventCardAnimation(index)
-      }
-    })
-
-    resumeButton.addEventListener("click", function (e) {
-      e.preventDefault()
-      if (this.dataset.downloading) return
-
-      // this.dataset.downloading = "true"
-      // _thankYouBubble(this)
-
-      const link = document.createElement("a")
-
-      link.href = this.href
-      link.download = "resumeSteveSchrader.pdf"
-      this.dataset.downloading = "true"
-      link.style.display = "none"
-      document.body.appendChild(link)
-
-      setTimeout(() => {
-        try {
-          link.click()
-          document.body.removeChild(link)
-        } catch (error) {
-          window.open(this.href, "_blank")
-        } finally {
-          delete this.dataset.downloading
+        if (entry.isIntersecting) {
+          eventCard.classList.remove("exit-left")
+          eventCard.classList.add("enter-left")
+        } else {
+          eventCard.classList.remove("enter-left")
+          eventCard.classList.add("exit-left")
         }
-      }, 1000)
+      })
+    }, observerOptions)
 
-      _thankYouBubble(this)
+    window.timelineObserver = observer
+
+    markers.forEach((marker) => {
+      observer.observe(marker)
     })
+
+    const resizeHandler = _debounce(() => {
+      if (window.innerWidth >= 650) {
+        eventsContainer.classList.add("hidden")
+        // Reset inline styles when switching to horizontal
+        events.forEach((event) => {
+          event.style.cssText = ""
+          const content = event.querySelector(".content")
+          if (content) {
+            content.style.cssText = ""
+          }
+        })
+      }
+    }, 250)
+
+    window.addEventListener("resize", resizeHandler)
   }
 
-  function _adjustTimelineWidth() {
-    const timeline = document.querySelector("#block5 #timeline")
-    const prevBtn = document.querySelector("#block5 .prev")
-    const nextBtn = document.querySelector("#block5 .next")
-    const prevWidth = prevBtn.offsetWidth
-    const nextWidth = nextBtn.offsetWidth
-    const totalButtonWidth = prevWidth + nextWidth
-
-    timeline.style.width = `calc(100% - ${totalButtonWidth}px)`
-    timeline.style.margin = `0 ${prevWidth}px`
+  function _displayHorizontalTimeline() {
+    _setupEventListeners()
+    _updateUI(parseInt(startIndex))
+    _initializeEventCard()
   }
 
   function _updateUI(index, source = "init") {
     if (isAnimating) return
 
-    const historyLine = document.querySelector("#block5 #historyLine")
-    const prevBtn = document.querySelector("#block5 .prev")
-    const nextBtn = document.querySelector("#block5 .next")
-    const positions = _calculatePositions()
     const transform = -positions[index] + 50
 
     isAnimating = true
 
-    // Move the timeline based on screen size
-    if (!mediaQuery.matches) {
+    if (!isMobile) {
       // Large screen
       historyLine.style.transform = `translateX(${transform}%)`
     } else {
@@ -697,7 +656,6 @@ function block5Setup() {
       historyLine.style.transform = "none"
     }
 
-    // Only update selected states for date clicks or initialization
     if (source !== "navigation") {
       document
         .querySelectorAll("#block5 #dates .date-marker")
@@ -713,8 +671,7 @@ function block5Setup() {
         ?.classList.add("selected")
     }
 
-    // Update navigation buttons - only for large screens
-    if (!mediaQuery.matches) {
+    if (!isMobile) {
       prevBtn.innerHTML = index === 1 ? "" : svgIcons.left
       nextBtn.innerHTML = index === 9 ? "" : svgIcons.right
       prevBtn.disabled = index === 1
@@ -723,6 +680,32 @@ function block5Setup() {
 
     setTimeout(() => (isAnimating = false), 500)
     currentIndex = index
+  }
+
+  function _handleEventCardAnimation(index) {
+    const eventTemplate = document.querySelector(`#block5 #eventsContainer #event-${index}`)
+    const cardContainer = document.querySelector("#block5 #eventCardContainer")
+
+    if (!eventTemplate) return
+
+    const newCard = eventTemplate.cloneNode(true)
+
+    if (currentCard?.dataset?.date === newCard.dataset.date) return
+
+    const animateSequence = async () => {
+      if (currentCard) {
+        currentCard.classList.remove("card-enter")
+        currentCard.classList.add("card-exit")
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        currentCard.remove()
+      }
+
+      cardContainer.appendChild(newCard)
+      newCard.classList.add("card-enter")
+      currentCard = newCard
+    }
+
+    animateSequence()
   }
 
   function _initializeEventCard() {
@@ -734,10 +717,85 @@ function block5Setup() {
 
     _handleEventCardAnimation(index)
   }
+
+  function _setupEventListeners() {
+    timeline.addEventListener("click", (e) => {
+      const prevBtn = e.target.closest(".prev")
+      const nextBtn = e.target.closest(".next")
+
+      if (prevBtn && currentIndex > 1) {
+        _updateUI(currentIndex - 1, "navigation")
+      } else if (nextBtn && currentIndex < 9) {
+        _updateUI(currentIndex + 1, "navigation")
+      }
+    })
+
+    datesContainer.addEventListener("click", (e) => {
+      const dateLink = e.target.closest('a[href^="#event-"]')
+
+      if (!dateLink) return
+
+      e.preventDefault()
+
+      const index = parseInt(dateLink.getAttribute("href").split("-")[1])
+
+      if (index > 0 && index < 10) {
+        _updateUI(index, "dateClick")
+        _handleEventCardAnimation(index)
+      }
+    })
+  }
+
+  function _handleScreenChange() {
+    isMobile = window.innerWidth < 650
+    _initializeTimeline()
+  }
+
+  function _debounce(func, delay) {
+    let timeout
+
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout)
+        func(...args)
+      }
+
+      clearTimeout(timeout)
+      timeout = setTimeout(later, delay)
+    }
+  }
+
+  resumeButton.addEventListener("click", function (e) {
+    e.preventDefault()
+    if (this.dataset.downloading) return
+
+    // this.dataset.downloading = "true"
+    // _thankYouBubble(this)
+
+    const link = document.createElement("a")
+
+    link.href = this.href
+    link.download = "resumeSteveSchrader.pdf"
+    this.dataset.downloading = "true"
+    link.style.display = "none"
+    document.body.appendChild(link)
+
+    setTimeout(() => {
+      try {
+        link.click()
+        document.body.removeChild(link)
+      } catch (error) {
+        window.open(this.href, "_blank")
+      } finally {
+        delete this.dataset.downloading
+      }
+    }, 1000)
+
+    _thankYouBubble(this)
+  })
 }
 
 async function block6Setup() {
-  // Default functionality required for non-JS browsers
   const form = document.querySelector(".contactForm")
   const inputFields = form.querySelectorAll('input[type="text"], input[type="email"], textarea')
   const submitButton = form.querySelector('button[type="submit"]')
@@ -943,6 +1001,7 @@ async function block6Setup() {
   document.querySelector("#copyDate").innerHTML = "&copySteve Schrader " + currentYear
 }
 
+// Check for appearance of bubble over different-sized devices
 function _thankYouBubble(buttonElement, source = "block5") {
   const bubbleContainer = document.createElement("div")
   const bubble = document.createElement("div")
