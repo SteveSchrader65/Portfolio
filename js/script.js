@@ -207,7 +207,6 @@ function initGlitch() {
         const btm2 = Math.random() * 100
         const before = element.querySelector(".glitch-before")
         const after = element.querySelector(".glitch-after")
-        // let scale = 1
 
         element.style.transform = `skew(${skew}deg)`
 
@@ -428,50 +427,379 @@ function block2Setup() {
 }
 
 function block3Setup() {
-  // Get screenwidth and adapt widget display to match
+  const diplomas = document.querySelector("#block3 ul")
+  const output = document.querySelector("#block3 #diploma-info")
+  const instructionLine = document.querySelector("#block3 #diplomaInstruction")
+  const dipPositions = new Map()
+  const TARGET_DIMS = {
+    top: "12rem",
+    left: "2rem",
+    width: "363px",
+    height: "500px",
+  }
+
+  let isAnimating = false
+
+  function _createAnimation(startPos, isReturn = false) {
+    const styleSheet = document.createElement("style")
+
+    const animation = isReturn ? "returnDiploma" : "moveDiploma"
+    const [from, to] = isReturn ? [TARGET_DIMS, startPos] : [startPos, TARGET_DIMS]
+
+    document.querySelectorAll("style[data-animation]").forEach((style) => style.remove())
+    styleSheet.setAttribute("data-animation", "diploma")
+
+    styleSheet.textContent = `
+      @keyframes ${animation} {
+        from {
+          top: ${from.top}${typeof from.top === "number" ? "px" : ""};
+          left: ${from.left}${typeof from.left === "number" ? "px" : ""};
+          width: ${from.width}${typeof from.width === "number" ? "px" : ""};
+          height: ${from.height}${typeof from.height === "number" ? "px" : ""};
+        }
+        to {
+          top: ${to.top}${typeof to.top === "number" ? "px" : ""};
+          left: ${to.left}${typeof to.left === "number" ? "px" : ""};
+          width: ${to.width}${typeof to.width === "number" ? "px" : ""};
+          height: ${to.height}${typeof to.height === "number" ? "px" : ""};
+        }
+      }
+    `
+    document.head.appendChild(styleSheet)
+  }
+
+  function _resetDiplomas() {
+    const clone = document.querySelector("#block3 .diploma-clone")
+
+    if (clone) clone.remove()
+
+    diplomas.querySelectorAll("li").forEach((diploma) => {
+      diploma.classList.remove("fade-out", "fade-in")
+    })
+
+    output.style.display = "none"
+    output.classList.remove("fade-in", "fade-out")
+    output.innerHTML = ""
+  }
+
+  function _createClone(selected, startPos) {
+    const clone = selected.cloneNode(true)
+
+    clone.classList.add("diploma-clone", "selected")
+    clone.style.position = "absolute"
+    clone.style.top = `${startPos.top}px`
+    clone.style.left = `${startPos.left}px`
+    clone.style.width = `${startPos.width}px`
+    clone.style.height = `${startPos.height}px`
+
+    return clone
+  }
+
+  function _fadeOutDiplomas() {
+    return new Promise((resolve) => {
+      diplomas.querySelectorAll("li:not(.diploma-clone)").forEach((diploma) => {
+        diploma.classList.add("fade-out")
+      })
+      setTimeout(resolve, 425)
+    })
+  }
+
+  function _moveClone(clone, startPos) {
+    return new Promise((resolve) => {
+      const styleSheet = document.createElement("style")
+
+      _createAnimation(startPos)
+      styleSheet.setAttribute("data-animation-speed", "diploma")
+
+      styleSheet.textContent = `
+        #block3 li.selected {
+          animation-duration: 0.765s;
+        }
+      `
+
+      document.head.appendChild(styleSheet)
+
+      clone.addEventListener(
+        "animationend",
+        () => {
+          document.querySelector('[data-animation-speed="diploma"]').remove()
+          resolve()
+        },
+        {once: true}
+      )
+    })
+  }
+
+  function _showDiplomaInfo(courseId) {
+    return new Promise((resolve) => {
+      const courseInfo = document.querySelector(courseId).cloneNode(true)
+
+      instructionLine.innerHTML = "Click diploma to return to Diploma Wall:"
+      output.style.display = "block"
+      output.classList.add("fade-in")
+      output.appendChild(courseInfo)
+      setTimeout(resolve, 500)
+    })
+  }
+
+  function _hideDiplomaInfo() {
+    return new Promise((resolve) => {
+      output.classList.remove("fade-in")
+      output.classList.add("fade-out")
+      setTimeout(() => {
+        output.style.display = "none"
+        output.innerHTML = ""
+        output.classList.remove("fade-out")
+        resolve()
+      }, 500)
+    })
+  }
+
+  function _returnClone(clone, startPos) {
+    return new Promise((resolve) => {
+      clone.classList.remove("selected")
+      clone.classList.add("returning")
+      _createAnimation(startPos, true)
+      clone.addEventListener(
+        "animationend",
+        () => {
+          const originalId = clone.getAttribute("data-course")
+          const original = diplomas.querySelector(`li[data-course="${originalId}"]`)
+
+          original.classList.remove("fade-out")
+          original.classList.add("fade-in")
+
+          clone.remove()
+          instructionLine.innerHTML = "Select a diploma for further information:"
+          resolve()
+        },
+        {once: true}
+      )
+    })
+  }
+
+  function _revealOriginals(excludeDiplomaId = null) {
+    return new Promise((resolve) => {
+      diplomas.querySelectorAll("li:not(.diploma-clone)").forEach((diploma) => {
+        if (diploma.getAttribute("data-course") !== excludeDiplomaId) {
+          diploma.classList.remove("fade-out")
+          diploma.classList.add("fade-in")
+        }
+      })
+      setTimeout(resolve, 425)
+    })
+  }
+
+  // Store initial positions
+  diplomas.querySelectorAll("li").forEach((diploma) => {
+    const dipRect = diploma.getBoundingClientRect()
+    const sectionRect = diploma.closest("#block3").getBoundingClientRect()
+
+    dipPositions.set(diploma, {
+      top: dipRect.top - sectionRect.top,
+      left: dipRect.left - sectionRect.left,
+      width: dipRect.width,
+      height: dipRect.height,
+    })
+  })
+
+  // Main click handler
+  diplomas.addEventListener("click", async (e) => {
+    const clicked = e.target.closest("LI")
+
+    if (!clicked || isAnimating) return
+
+    if (!clicked.classList.contains("diploma-clone")) {
+      isAnimating = true
+
+      _resetDiplomas()
+
+      const startPos = dipPositions.get(clicked)
+      const courseId = clicked.getAttribute("data-course")
+      const clone = _createClone(clicked, startPos)
+
+      diplomas.appendChild(clone)
+
+      try {
+        await _fadeOutDiplomas()
+        await _moveClone(clone, startPos)
+        await _showDiplomaInfo(courseId)
+      } finally {
+        isAnimating = false
+      }
+    } else {
+      isAnimating = true
+      try {
+        await _hideDiplomaInfo()
+        await _revealOriginals(clicked.getAttribute("data-course"))
+        await _returnClone(
+          clicked,
+          dipPositions.get(
+            diplomas.querySelector(`li[data-course="${clicked.getAttribute("data-course")}"]`)
+          )
+        )
+      } finally {
+        isAnimating = false
+      }
+    }
+  })
 }
 
 function block4Setup() {
-  // Get screenwidth and adapt widget display to match
+  const postItItems = document.querySelectorAll("#postIt li")
+  const projectPanel = document.querySelector("#projectPanel")
+  const panelsContent = document.querySelector("#panels").innerHTML
+  const body = document.body
+
+  projectPanel.style.overflow = "hidden"
+
+  postItItems.forEach((item) => {
+    item.addEventListener("click", function (e) {
+      e.stopPropagation()
+      const projectId = item.getAttribute("data-project")
+
+      // Create temporary container to find target content
+      const temp = document.createElement("div")
+      temp.innerHTML = panelsContent
+
+      const targetPanel = temp.querySelector(projectId)
+
+      if (!targetPanel) {
+        return
+      }
+
+      // If panel is open, close it first and then open new one
+      if (!projectPanel.classList.contains("hidden")) {
+        projectPanel.classList.remove("panel-slide-in")
+        projectPanel.classList.add("panel-slide-out")
+
+        setTimeout(() => {
+          projectPanel.classList.add("hidden")
+          projectPanel.classList.remove("panel-slide-out")
+          _openPanel(targetPanel)
+        }, 1500)
+      } else {
+        _openPanel(targetPanel)
+      }
+    })
+  })
+
+  // Handle mouse over/leave for scroll control
+  projectPanel.addEventListener("mouseover", function () {
+    if (!projectPanel.classList.contains("hidden")) {
+      body.style.overflow = "hidden"
+      projectPanel.focus()
+      projectPanel.style.overflowX = "hidden"
+      projectPanel.style.overflowY = "auto"
+    }
+  })
+
+  projectPanel.addEventListener("mouseleave", function () {
+    if (!projectPanel.classList.contains("hidden")) {
+      body.style.overflow = "auto"
+      projectPanel.style.overflow = "hidden"
+    }
+  })
+
+  function _openPanel(targetPanel) {
+    const panelsContainer = projectPanel.querySelector("#panels")
+
+    if (!panelsContainer) {
+      return
+    }
+
+    panelsContainer.innerHTML = targetPanel.innerHTML
+    projectPanel.classList.remove("hidden")
+    projectPanel.classList.add("panel-slide-in")
+    projectPanel.scrollTop = 0
+
+    body.style.overflow = "auto"
+  }
+
+  // Close panel when clicking outside
+  body.addEventListener("click", function (e) {
+    if (
+      !projectPanel.classList.contains("hidden") &&
+      !projectPanel.contains(e.target) &&
+      !e.target.closest("#postIt")
+    ) {
+      projectPanel.classList.remove("panel-slide-in")
+      projectPanel.classList.add("panel-slide-out")
+
+      body.style.overflow = "auto"
+
+      setTimeout(() => {
+        projectPanel.classList.add("hidden")
+        projectPanel.classList.remove("panel-slide-out")
+      }, 1500)
+    }
+  })
+
+  // Handle panel scrolling
+  projectPanel.addEventListener(
+    "wheel",
+    function (e) {
+      if (projectPanel.classList.contains("hidden")) return
+
+      const atTop = this.scrollTop === 0
+      const atBottom = Math.abs(this.scrollHeight - this.scrollTop - this.clientHeight) < 1
+
+      // Allow scrolling within panel bounds
+      if (!atTop && !atBottom) {
+        e.stopPropagation()
+        return
+      }
+
+      // Prevent scrolling beyond panel bounds
+      if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    },
+    {passive: false}
+  )
+
+  projectPanel.addEventListener(
+    "touchmove",
+    function (e) {
+      if (projectPanel.classList.contains("hidden")) return
+
+      const atTop = this.scrollTop === 0
+      const atBottom = Math.abs(this.scrollHeight - this.scrollTop - this.clientHeight) < 1
+
+      if (!atTop && !atBottom) {
+        e.stopPropagation()
+        return
+      }
+
+      if ((atTop && e.touches[0].clientY > 0) || (atBottom && e.touches[0].clientY < 0)) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    },
+    {passive: false}
+  )
 }
 
-// function _adjustTimelineWidth() {
-//   const prevWidth = prevBtn.offsetWidth
-//   const nextWidth = nextBtn.offsetWidth
-//   const totalButtonWidth = prevWidth + nextWidth
-
-//   timeline.style.width = `calc(100% - ${totalButtonWidth}px)`
-//   timeline.style.margin = `0 ${prevWidth}px`
-// }
 function block5Setup() {
-  const timeline = document.querySelector("#block5 #timeline")
-  const historyLine = document.querySelector("#block5 #historyLine")
-  const prevBtn = document.querySelector("#block5 .prev")
-  const nextBtn = document.querySelector("#block5 .next")
-  const dateLinks = document.querySelectorAll("#block5 #dates a")
-  const datesContainer = document.querySelector("#block5 #dates")
-  const eventsContainer = document.querySelector("#block5 #eventsContainer")
-  const selectedElement = document.querySelector("#block5 #dates .selected")
+  const eventsList = document.querySelector("#block5 #timelineWrapper #eventsList")
+  const prevBtn = document.querySelector("#block5 #timelineWrapper #timeline #prevBtn")
+  const nextBtn = document.querySelector("#block5 #timelineWrapper #timeline #nextBtn")
   const resumeButton = document.querySelector("#block5 #resumeDownloadButton")
-
-  const startIndex = selectedElement
-    ? parseInt(selectedElement.closest("a").getAttribute("href").split("-")[1])
-    : 1
+  let currentIndex = 0
+  let isAnimating = false
+  let isMobile = window.innerWidth < 650
+  let markers
+  let positions = []
+  let events = []
 
   const svgIcons = {
     left: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M20 9l-7 7 7 7M13 9l-7 7 7 7"/></svg>`,
     right: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M14 9l7 7-7 7M21 9l7 7-7 7"/></svg>`,
   }
 
-  let isMobile = window.innerWidth < 650
-  let currentIndex = 1
-  let isAnimating = false
-  let currentCard = null
-  let markers = null
-  let positions = null
-  let events = null
-
   _initializeTimeline()
+
   window.addEventListener("resize", _debounce(_handleScreenChange, 250))
 
   function _initializeTimeline() {
@@ -480,112 +808,106 @@ function block5Setup() {
       window.timelineObserver = null
     }
 
-    const eventCards = document.querySelectorAll("#block5 #eventsContainer li")
+    events = Array.from(eventsList.querySelectorAll(".event")).slice(1, -1)
+    markers = _setupMarkers()
+    positions = _calculatePositions()
 
-    eventCards.forEach((card) => {
-      card.classList.remove("enter-left", "enter-right", "exit-left", "exit-right")
+    events.forEach((event) => {
+      event.classList.remove("enter-left", "exit-left", "card-enter", "card-exit")
     })
 
-    _setupDateMarkers()
-    _calculatePositions()
-
-    events = Array.from(eventsContainer.querySelectorAll("li[data-date]")).slice(1, -1)
+    currentIndex = events.findIndex((event) => event.classList.contains("selected"))
+    events[currentIndex].classList.add("selected")
 
     if (isMobile) {
       _displayVerticalTimeline()
     } else {
       _displayHorizontalTimeline()
+
+          // Center the selected item on initial load
+      if (positions && positions.length > 0) {
+        const selectedPos = parseFloat(events[currentIndex].style.left)
+        const centerOffset = 50 - selectedPos
+
+        events.forEach((event) => {
+          const marker = event.querySelector(".dateMarker")
+          const label = event.querySelector(".dateLabel")
+          const currentPos = parseFloat(event.style.left)
+          const newPos = currentPos + centerOffset
+
+          if (marker) marker.style.left = `${newPos}%`
+          if (label) label.style.left = `${newPos}%`
+
+          event.style.left = `${newPos}%`
+        })
+      }
     }
   }
 
-  function _setupDateMarkers() {
-    dateLinks.forEach((link) => {
-      if (link.textContent) {
+  function _setupMarkers() {
+    const dates = events.filter(e => e.dataset.date)
+
+    dates.forEach((date) => {
+      if (date.querySelector(".eventDate")) {
         const marker = document.createElement("div")
         const label = document.createElement("span")
 
-        marker.className = link.classList.contains("selected")
-          ? "date-marker selected"
-          : "date-marker"
-        label.className = link.classList.contains("selected") ? "date-label selected" : "date-label"
-        label.textContent = link.textContent
-        link.textContent = ""
-        link.appendChild(label)
-        link.appendChild(marker)
+        date.querySelector(".eventDate").classList.add('hidden')
+
+        marker.className = date.classList.contains("selected")
+          ? "dateMarker selected"
+          : "dateMarker"
+
+        label.className = date.classList.contains("selected") ? "dateLabel selected" : "dateLabel"
+        label.textContent = date.querySelector(".eventDate").textContent
+        date.appendChild(marker)
+        date.appendChild(label)
       }
     })
 
-    markers = document.querySelectorAll("#block5 .date-marker")
-
-    return markers
+    return document.querySelectorAll(".dateMarker")
   }
 
   function _calculatePositions() {
-    const dates = Array.from(dateLinks)
-    const startDate = new Date(dates[0].dataset.date.split("/").reverse().join("-"))
-    const endDate = new Date(dates[dates.length - 1].dataset.date.split("/").reverse().join("-"))
-    const timespan = endDate - startDate
+    const validEvents = events.filter(e => e.dataset.date)
 
-    positions = dates.map((date) => {
-      const currentDate = new Date(date.dataset.date.split("/").reverse().join("-"))
-      const position = ((currentDate - startDate) / timespan) * (isMobile ? 90 : 400)
+    if (validEvents.length < 2) return null
+
+    const parsedEvents = validEvents.map(
+      (event) => new Date(event.dataset.date.split("/").reverse().join("-"))
+    )
+
+    const startDate = parsedEvents[0]
+    const endDate = parsedEvents[parsedEvents.length - 1]
+
+    positions = parsedEvents.map(event => {
+      if (isMobile) return (event - startDate) / (endDate - startDate) * 170
+      if (!isMobile) return (event - startDate) / (endDate - startDate) * 250
+    })
+
+    validEvents.forEach((event, index) => {
+      const marker = event.querySelector(".dateMarker")
+      const label = event.querySelector(".dateLabel")
 
       if (isMobile) {
-        date.parentElement.style.top = `${position}%`
-        date.parentElement.style.left = ""
-        date.parentElement.style.right = "-2rem"
+        if (marker) marker.style.marginTop = `${positions[index]}%`
+        if (label) label.style.marginTop = `${positions[index]}%`
 
-        const label = date.querySelector(".date-label")
-
-        if (label) {
-          label.style.top = "100%"
-          label.style.left = "-2.5rem"
-          label.style.marginTop = "0.25rem"
-          label.style.transform = "none"
-        }
+        event.style.marginTop = `${positions[index]}%`
       } else {
-        date.parentElement.style.left = `${position}%`
-        date.parentElement.style.top = ""
-        date.parentElement.style.right = ""
-      }
+        if (marker) marker.style.left = `${positions[index]}%`
+        if (label) label.style.left = `${positions[index]}%`
 
-      return position
+        event.style.left = `${positions[index]}%`
+      }
     })
 
     return positions
   }
 
   function _displayVerticalTimeline() {
-    eventsContainer.classList.remove("hidden")
-
-    events.forEach((event, index) => {
-      const marker = markers[index]
-
-      if (!marker) return
-
-      const markerTop = marker.closest("li").style.top
-
-      event.style.cssText = `
-        position: absolute !important;
-        top: ${markerTop} !important;
-        left: 80px !important;
-        width: calc(100% - 100px) !important;
-        display: block !important;
-        z-index: 100 !important;
-      `
-      const content = event.querySelector(".content");
-
-      if (content) {
-        content.style.cssText = `
-          opacity: 1 !important;
-          transform: none !important;
-          display: block !important;
-          max-width: 100% !important;
-        `;
-      }
-
-      console.log(`Setting event ${index} to match marker position ${markerTop}`)
-    })
+    if (prevBtn) prevBtn.style.display = "none"
+    if (nextBtn) nextBtn.style.display = "none"
 
     const observerOptions = {
       root: null,
@@ -593,14 +915,22 @@ function block5Setup() {
       rootMargin: "-40% 0px -40% 0px",
     }
 
+    events.forEach((event, index) => {
+      const marker = markers[index]
+
+      event.style.top = `${marker.offsetTop - 64}px`
+    })
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const markerIndex = Array.from(markers).indexOf(entry.target)
         const event = events[markerIndex]
-
-        if (!event) return
-
+        // console.log(event)
         const eventCard = event.querySelector(".content")
+
+        eventCard.style.animation = "none"
+        eventCard.offsetHeight
+        eventCard.style.animation = null
 
         if (entry.isIntersecting) {
           eventCard.classList.remove("exit-left")
@@ -612,165 +942,218 @@ function block5Setup() {
       })
     }, observerOptions)
 
-    window.timelineObserver = observer
-
     markers.forEach((marker) => {
       observer.observe(marker)
     })
-
-    const resizeHandler = _debounce(() => {
-      if (window.innerWidth >= 650) {
-        eventsContainer.classList.add("hidden")
-        // Reset inline styles when switching to horizontal
-        events.forEach((event) => {
-          event.style.cssText = ""
-          const content = event.querySelector(".content")
-          if (content) {
-            content.style.cssText = ""
-          }
-        })
-      }
-    }, 250)
-
-    window.addEventListener("resize", resizeHandler)
   }
 
   function _displayHorizontalTimeline() {
-    _setupEventListeners()
-    _updateUI(parseInt(startIndex))
-    _initializeEventCard()
-  }
-
-  function _updateUI(index, source = "init") {
-    if (isAnimating) return
-
-    const transform = -positions[index] + 50
-
-    isAnimating = true
-
-    if (!isMobile) {
-      // Large screen
-      historyLine.style.transform = `translateX(${transform}%)`
-    } else {
-      // Small screen
-      historyLine.style.transform = "none"
+    if (prevBtn) {
+      prevBtn.style.display = "block"
+      prevBtn.innerHTML = currentIndex === 0 ? "" : svgIcons.left
+      prevBtn.disabled = currentIndex === 0
     }
 
-    if (source !== "navigation") {
-      document
-        .querySelectorAll("#block5 #dates .date-marker")
-        .forEach((dm) => dm.classList.remove("selected"))
-      document
-        .querySelector(`#block5 #dates li:nth-child(${index + 1}) .date-marker`)
-        ?.classList.add("selected")
-      document
-        .querySelectorAll("#block5 #dates .date-label")
-        .forEach((dl) => dl.classList.remove("selected"))
-      document
-        .querySelector(`#block5 #dates li:nth-child(${index + 1}) .date-label`)
-        ?.classList.add("selected")
+    if (nextBtn) {
+      nextBtn.style.display = "block"
+      nextBtn.innerHTML = currentIndex === events.length - 1 ? "" : svgIcons.right
+      nextBtn.disabled = currentIndex === events.length - 1
     }
 
-    if (!isMobile) {
-      prevBtn.innerHTML = index === 1 ? "" : svgIcons.left
-      nextBtn.innerHTML = index === 9 ? "" : svgIcons.right
-      prevBtn.disabled = index === 1
-      nextBtn.disabled = index === 9
-    }
+    events.forEach((event, index) => {
+      const marker = event.querySelector(".dateMarker")
+      const label = event.querySelector(".dateLabel")
+      const content = event.querySelector(".content")
 
-    setTimeout(() => (isAnimating = false), 500)
-    currentIndex = index
-  }
-
-  function _handleEventCardAnimation(index) {
-    const eventTemplate = document.querySelector(`#block5 #eventsContainer #event-${index}`)
-    const cardContainer = document.querySelector("#block5 #eventCardContainer")
-
-    if (!eventTemplate) return
-
-    const newCard = eventTemplate.cloneNode(true)
-
-    if (currentCard?.dataset?.date === newCard.dataset.date) return
-
-    const animateSequence = async () => {
-      if (currentCard) {
-        currentCard.classList.remove("card-enter")
-        currentCard.classList.add("card-exit")
-        await new Promise((resolve) => setTimeout(resolve, 500))
-        currentCard.remove()
+      if (content) {
+        content.classList.remove("card-enter", "card-exit")
+        content.style.opacity = index === currentIndex ? "1" : "0"
+        content.style.pointerEvents = index === currentIndex ? "auto" : "none"
       }
 
-      cardContainer.appendChild(newCard)
-      newCard.classList.add("card-enter")
-      currentCard = newCard
-    }
+      if (index === currentIndex) {
+        event.classList.add("selected")
 
-    animateSequence()
-  }
+        if (marker) marker.classList.add("selected")
+        if (label) label.classList.add("selected")
 
-  function _initializeEventCard() {
-    const selectedDateLink = document.querySelector("#block5 #dates .selected")
+        if (content) {
+          content.classList.add("card-enter")
+        }
+      } else {
+        event.classList.remove("selected")
 
-    if (!selectedDateLink) return
-
-    const index = parseInt(selectedDateLink.closest("a").getAttribute("href").split("-")[1])
-
-    _handleEventCardAnimation(index)
-  }
-
-  function _setupEventListeners() {
-    timeline.addEventListener("click", (e) => {
-      const prevBtn = e.target.closest(".prev")
-      const nextBtn = e.target.closest(".next")
-
-      if (prevBtn && currentIndex > 1) {
-        _updateUI(currentIndex - 1, "navigation")
-      } else if (nextBtn && currentIndex < 9) {
-        _updateUI(currentIndex + 1, "navigation")
+        if (marker) marker.classList.remove("selected")
+        if (label) label.classList.remove("selected")
       }
     })
 
-    datesContainer.addEventListener("click", (e) => {
-      const dateLink = e.target.closest('a[href^="#event-"]')
+    setTimeout(() => {
+      const selectedEvent = events[currentIndex]
 
-      if (!dateLink) return
+      if (selectedEvent) {
+        const content = selectedEvent.querySelector(".content")
 
-      e.preventDefault()
-
-      const index = parseInt(dateLink.getAttribute("href").split("-")[1])
-
-      if (index > 0 && index < 10) {
-        _updateUI(index, "dateClick")
-        _handleEventCardAnimation(index)
+        if (content) {
+          content.classList.remove("card-enter")
+        }
       }
+    }, 1000)
+
+    _setupListeners()
+  }
+
+  function _setupListeners() {
+    prevBtn.addEventListener("click", () => {
+      if (!isAnimating && currentIndex > 0) {
+        _navigateTimeline(currentIndex - 1, false)
+      }
+    })
+
+    nextBtn.addEventListener("click", () => {
+      if (!isAnimating && currentIndex < events.length - 1) {
+        _navigateTimeline(currentIndex + 1, false)
+      }
+    })
+
+    events.forEach((event, index) => {
+      const marker = event.querySelector(".dateMarker")
+
+      if (marker) {
+        marker.addEventListener("click", () => {
+          if (!isAnimating) {
+            _navigateTimeline(index, true)
+          }
+        })
+      }
+    })
+  }
+
+  function _navigateTimeline(targetIndex, selectEvent) {
+    if (selectEvent && events[targetIndex].classList.contains("selected")) return
+    if (targetIndex < 0 || targetIndex >= events.length) return
+    if (isAnimating) return
+
+    isAnimating = true
+
+    const currentEvent = events[currentIndex]
+    const targetEvent = events[targetIndex]
+    const targetPos = parseFloat(targetEvent.style.left)
+    const centerOffset = 50 - targetPos
+
+    if (selectEvent) {
+      const currentContent = currentEvent.querySelector(".content")
+      const targetContent = targetEvent.querySelector(".content")
+
+      if (currentContent) {
+        currentContent.classList.remove("card-enter")
+        currentContent.classList.add("card-exit")
+      }
+
+      setTimeout(() => {
+        events.forEach(event => {
+          const eventMarker = event.querySelector(".dateMarker")
+          const eventLabel = event.querySelector(".dateLabel")
+          const eventContent = event.querySelector(".content")
+
+          event.classList.remove("selected")
+
+        if (eventMarker) eventMarker.classList.remove("selected")
+        if (eventLabel) eventLabel.classList.remove("selected")
+
+        if (eventContent && event !== targetEvent) {
+          eventContent.style.opacity = "0"
+          eventContent.style.pointerEvents = "none"
+        }
+      }, 500)
+
+      targetEvent.classList.add("selected")
+      targetEvent.querySelector(".dateMarker")?.classList.add("selected")
+      targetEvent.querySelector(".dateLabel")?.classList.add("selected")
+
+      if (targetContent) {
+        targetContent.style.opacity = "1"
+        targetContent.style.pointerEvents = "auto"
+        targetContent.classList.add("card-enter")
+        targetContent.classList.remove("card-exit")
+      }}
+    )}
+
+    const timelineTransition = "left 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)"
+
+    requestAnimationFrame(() => {
+      events.forEach((event) => {
+        const marker = event.querySelector(".dateMarker")
+        const label = event.querySelector(".dateLabel")
+        const currentPos = parseFloat(event.style.left)
+        const newPos = currentPos + centerOffset
+
+        event.style.transition = timelineTransition
+
+        if (marker) marker.style.transition = timelineTransition
+        if (label) label.style.transition = timelineTransition
+
+        requestAnimationFrame(() => {
+          event.style.left = `${newPos}%`
+
+          if (marker) marker.style.left = `${newPos}%`
+          if (label) label.style.left = `${newPos}%`
+        })
+      })
+
+      currentIndex = targetIndex
+      prevBtn.innerHTML = currentIndex === 0 ? "" : svgIcons.left
+      nextBtn.innerHTML = currentIndex === events.length - 1 ? "" : svgIcons.right
+      prevBtn.disabled = currentIndex === 0
+      nextBtn.disabled = currentIndex === events.length - 1
+
+      setTimeout(() => {
+        events.forEach((event) => {
+          const marker = event.querySelector(".dateMarker")
+          const label = event.querySelector(".dateLabel")
+          const content = event.querySelector(".content")
+
+          event.style.transition = ""
+
+          if (marker) marker.style.transition = ""
+          if (label) label.style.transition = ""
+
+          if (content) {
+            content.classList.remove("card-exit")
+
+            if (!event.classList.contains("selected")) {
+              content.classList.remove("card-enter")
+            }
+          }
+        })
+
+        isAnimating = false
+      }, 1000)
     })
   }
 
   function _handleScreenChange() {
-    isMobile = window.innerWidth < 650
-    _initializeTimeline()
+    const newIsMobile = window.innerWidth < 650
+
+    if (newIsMobile !== isMobile) {
+      isMobile = newIsMobile
+      _initializeTimeline()
+    }
   }
 
   function _debounce(func, delay) {
     let timeout
 
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout)
-        func(...args)
-      }
-
+    return function (...args) {
+      const context = this
       clearTimeout(timeout)
-      timeout = setTimeout(later, delay)
+      timeout = setTimeout(() => func.apply(context, args), delay)
     }
   }
 
   resumeButton.addEventListener("click", function (e) {
     e.preventDefault()
     if (this.dataset.downloading) return
-
-    // this.dataset.downloading = "true"
-    // _thankYouBubble(this)
 
     const link = document.createElement("a")
 
@@ -1001,7 +1384,6 @@ async function block6Setup() {
   document.querySelector("#copyDate").innerHTML = "&copySteve Schrader " + currentYear
 }
 
-// Check for appearance of bubble over different-sized devices
 function _thankYouBubble(buttonElement, source = "block5") {
   const bubbleContainer = document.createElement("div")
   const bubble = document.createElement("div")
@@ -1031,13 +1413,16 @@ function _thankYouBubble(buttonElement, source = "block5") {
   TO-DO LIST:
     - Re-introduce sections. Focus on xs: sizing and up before moving to next
       : Overview
+      : About
       : Studies
       : Projects
-
       : Employment
 
-    - TextShadows have been removed. Revisit wavy bottoms to text_blocks.
+    - !!! Conflict between event listeners for Projects,
+      and event listeners for Employment
+    - thankYou bubble not displaying on resume download
     - !! Come up with a concept for Overview section !!
+    - !! Optimize all images !!
 */
 function init() {
   setViewingMode()
@@ -1050,8 +1435,8 @@ function init() {
     initGlitch()
     launchControl()
     block2Setup()
-    // block3Setup()
-    // block4Setup()
+    block3Setup()
+    block4Setup()
     block5Setup()
   }
 

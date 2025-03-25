@@ -8,13 +8,15 @@
   }
 
   body {
-    @apply [&:not(motion-reduce)]:animate-fadeIn;
     @apply w-full !important;
+  }
+
+  main {
+    @apply [&:not(motion-reduce)]:animate-parallaxFade;
   }
 }
 
 @layer components {
-  /* !important applied to CSS rules in Components */
   .tooltip {
     @apply invisible group-hover:visible absolute rounded shadow-lg whitespace-nowrap opacity-85 z-[2000];
     @apply bg-light-tipBackgroundColour dark:bg-dark-tipBackgroundColour text-light-tipTextColour dark:text-dark-tipTextColour;
@@ -26,13 +28,13 @@
     @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour md:p-2;
   }
 
-  @media screen and (max-width: 349px) {
+  /* @media screen and (max-width: 349px) {
     #block5 #eventsContainer li .content ul li {
       @apply hidden !important;
     }
-  }
+  } */
 
-  @media screen and (min-width: 350px) {
+  /* @media screen and (min-width: 350px) {
     #block5 #eventsContainer li .content ul li {
       @apply visible !important;
     }
@@ -42,10 +44,6 @@
     #block5 #eventsContainer li .content ul li {
       @apply truncate !important;
     }
-  }
-
-  /* #block5 #eventsContainer li .content ul {
-    @apply xs:hidden md:block;
   } */
 
   @media screen and (max-width: 649px) {
@@ -76,100 +74,72 @@
 
     /* Small device styles for vertical timeline */
     #block5 #timelineWrapper {
-      @apply relative flex flex-col items-start top-0;
-      @apply min-h-[250vh];
+      @apply min-h-[170vh];
     }
 
-    #block5 #timeline {
-      @apply absolute h-full w-[2px] right-8;
+    #block5 #timelineWrapper #timeline {
+      @apply min-h-[170vh] flex-col;
     }
 
-    #block5 #historyLine {
-      @apply absolute h-full w-[2px];
-      @apply bg-light-alertColour dark:bg-dark-alertColour;
+    #block5 #timelineWrapper #timeline #timelineTrack {
+      @apply w-[2px] min-h-[170vh] h-full xs:ml-[90%] sm:ml-[93%];
+      flex: 1 0 auto;
     }
 
-    #block5 #timeline:after {
-      @apply hidden;
+    #block5 #timelineWrapper #eventsList {
+      @apply relative;
     }
 
-    #block5 #eventsContainer {
-      @apply relative block w-full !important;
+    #block5 #timelineWrapper #eventsList li {
+      @apply absolute;
     }
 
-    #block5 #eventsContainer .content {
-      @apply border-2 border-light-panelBorderColour dark:border-dark-panelBorderColour;
-      @apply bg-light-panelBackColour dark:bg-dark-panelBackColour;
-      @apply m-0 rounded-lg ml-8;
+    #block5 #timelineWrapper #eventsList .event .content {
+      @apply w-[90%] -translate-x-[200%];
     }
 
-    #block5 #eventsContainer li .content h2 {
-      @apply text-lg font-bold -mb-1;
-      @apply text-light-colour1 dark:text-dark-colour1;
+    #block5 #timelineWrapper #eventsList .event .content h2 {
+      @apply xs:text-base;
     }
 
-    #block5 #eventsContainer li .content em {
-      @apply text-xs italic block mb-[0.125rem];
-      @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+    #block5 #timelineWrapper #eventsList .event .content em {
+      @apply xs:text-xs;
     }
 
-    #block5 #eventsContainer li .content p {
-      @apply text-xs leading-4 mb-[0.125rem];
-      @apply text-light-colour1 dark:text-dark-colour1;
+    #block5 #timelineWrapper #eventsList .event .content p {
+      @apply xs:text-xs mb-[0.125rem];
     }
 
-    #block5 #eventsContainer li .content ul {
-      @apply text-xs list-none pl-1;
-      @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+    #block5 #timelineWrapper #eventsList .event .content ul {
+      @apply xs:hidden sm:hidden md:block;
     }
 
-    #block5 #eventsContainer li .content ul li {
-      @apply ml-[0.5rem];
+    #block5 #timelineWrapper #eventsList .event .content ul li {
+      @apply xs:text-xs ml-[0.5rem];
     }
 
-    #block5 #eventCardContainer .content {
-      @apply w-full opacity-0;
-      transform: scale(0.8);
-      transition: all 0.5s ease-out;
+    #block5 #timelineWrapper #eventsList .event .dateMarker {
+      @apply absolute w-3 h-3 rounded-full;
+      @apply left-1/2 -translate-x-1/2;
     }
 
-    #block5 #eventCardContainer .content.reveal {
-      @apply opacity-100;
-      transform: scale(1);
+    #block5 #timelineWrapper #eventsList .event .dateLabel {
+      @apply relative xs:text-xs;
+      @apply xs:translate-x-[-65%] sm:translate-x-[-60%] -translate-y-full;
     }
 
-    #block5 #dates {
-      @apply absolute h-full right-8;
-    }
-
-    #block5 #dates li {
-      @apply absolute flex pointer-events-none -translate-y-1/2;
-    }
-
-    #block5 .date-marker {
-      @apply w-3 h-3 rounded-full translate-x-1/2;
-      @apply bg-light-colour2 dark:bg-dark-colour1;
-      @apply border border-light-colour1 dark:border-dark-colour2;
-      transition: transform 0.3s;
-    }
-
-    #block5 .date-label {
-      @apply text-light-textColour dark:text-dark-textColour;
-      @apply relative text-sm ml-4 opacity-100;
-    }
-
-    #block5 .prev,
-    #block5 .next {
+    #block5 #timelineWrapper #timeline #prevBtn,
+    #block5 #timelineWrapper #timeline #nextBtn {
       @apply hidden;
     }
 
     .enter-left {
-      animation: enterLeft 2000ms ease-in-out forwards;
+      animation: verticalAnimation 2000ms ease-in-out forwards;
     }
     .exit-left {
-      animation: enterLeft 2000ms ease-in-out reverse;
+      animation: verticalAnimation 2000ms ease-in-out reverse;
     }
-    @keyframes enterLeft {
+    @keyframes verticalAnimation {
       0% {
         @apply opacity-0;
         transform: translateX(-110%);
@@ -178,10 +148,6 @@
         @apply opacity-100;
         transform: translateX(0);
       }
-    }
-
-    .date-marker-fade {
-      transition: opacity 200ms ease-in-out;
     }
   }
 
@@ -200,59 +166,100 @@
 
     /* Large device styles for horizontal timeline */
     #block5 #timelineWrapper {
-      @apply md:min-h-[50rem] lg:min-h-[38rem] md:-mb-72 lg:-mb-48 xl:-mb-36;
+      @apply relative w-full overflow-hidden mt-4;
+      /* @apply md:min-h-[50rem] lg:min-h-[38rem] md:-mb-72 lg:-mb-48 xl:-mb-36; */
     }
 
-    #block5 #timeline {
-      @apply mt-[4rem] h-[5rem] overflow-hidden;
+    /* Area between red timeline and top of container needs to be flexible */
+    #block5 #timelineWrapper #timeline {
+      @apply justify-between w-[97.5%] mx-auto z-[300];
+      @apply translate-y-[70%] items-center;
+      @apply min-h-96 max-h-[30rem];
     }
 
-    #block5 .date-label {
-      @apply -top-4;
+    #block5 #timelineWrapper #timeline #timelineTrack {
+      @apply flex-grow md:h-[2px] xl:h-[4px];
     }
 
-    #block5 .prev,
-    #block5 .next {
-      @apply top-[55%];
-      @apply hover:scale-[120%];
+    #block5 #timelineWrapper #eventsList {
+      @apply list-none p-0 m-0;
     }
 
-    #block5 .prev {
-      @apply -left-2;
+    #block5 #timelineWrapper #eventsList .event {
+      transition-property: left, opacity;
+      transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
-    #block5 .next {
-      @apply -right-2;
+    #block5 #timelineWrapper #eventsList .event .content {
+      @apply md:w-[60%] lg:w-[65%] xl:w-[70%] opacity-100 pointer-events-auto z-[450];
+      @apply absolute left-1/2 -translate-x-1/2 top-0;
+    }
+
+    #block5 #timelineWrapper #eventsList .event .content h2 {
+      @apply text-xl;
+    }
+
+    #block5 #timelineWrapper #eventsList .event .content em {
+      @apply text-sm;
+    }
+
+    #block5 #timelineWrapper #eventsList .content p {
+      @apply text-base;
+    }
+
+    #block5 #timelineWrapper #eventsList .content ul {
+      @apply block text-sm;
+    }
+
+    #block5 #timelineWrapper #eventsList .event .dateMarker {
+      @apply absolute md:w-2 md:h-2 lg:w-3 lg:h-3 xl:w-4 xl:h-4;
+      @apply cursor-pointer z-[400] -translate-x-1/2 translate-y-1/2;
+      bottom: calc(30% - 1px);
+      transition: all 0.5s ease-in-out;
+    }
+
+    #block5 #timelineWrapper #eventsList .event .dateLabel {
+      @apply absolute -translate-x-1/2 whitespace-nowrap;
+      @apply md:text-[0.7rem] xl:text-[0.9rem] font-bold;
+      bottom: calc(30% - 2rem);
+    }
+
+    #block5 #timelineWrapper #eventsList .dateLabel.selected {
+      @apply font-bold;
+    }
+
+    #block5 #timelineWrapper #timeline #prevBtn,
+    #block5 #timelineWrapper #timeline #nextBtn {
+      @apply absolute outline-none bg-none cursor-pointer;
+      @apply -translate-y-1/2 hover:scale-[120%];
+      @apply xs:w-5 xs:h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 xl:w-9 xl:h-9;
+      @apply text-light-alertColour dark:text-dark-alertColour;
+    }
+
+    #block5 #timelineWrapper #timeline #prevBtn {
+      @apply -left-3;
+    }
+
+    #block5 #timelineWrapper #timeline #nextBtn {
+      @apply -right-3;
     }
 
     .card-enter {
-      animation: slideIn 1s ease-in-out forwards;
+      animation: horizontalIn 1s ease-in-out forwards;
     }
 
     .card-exit {
-      animation: slideOut 1s ease-in-out forwards;
+      animation: horizontalOut 1s ease-in-out forwards;
     }
 
-    @keyframes slideIn {
-      0% {
-        opacity: 0;
-        transform: translate(-150%, -4rem);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(-50%, -4rem);
-      }
+    @keyframes horizontalIn {
+      0% { transform: translateX(-100%) translateX(-50%); }
+      100% { transform: translateX(0%) translateX(-50%); }
     }
 
-    @keyframes slideOut {
-      0% {
-        opacity: 1;
-        transform: translate(-50%, -4rem);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(150%, -4rem);
-      }
+    @keyframes horizontalOut {
+      0% { transform: translateX(0%) translateX(-50%); }
+      100% { transform: translateX(100%) translateX(-50%); }
     }
   }
 }
@@ -411,8 +418,8 @@
     position: absolute;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-top: 8px solid var(--bgColor);
-    z-index: 10;
+    /* border-top: 8px solid var(--bgColor); */
+    /* z-index: 10; */
   }
 
   .thank-you-bubble::after {
@@ -420,12 +427,27 @@
     position: absolute;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 10px solid var(--textColor);
+    /* border-top: 10px solid var(--textColor); */
   }
 }
 
 /* || Overview */
+#block1 ul {
+  @apply ml-8 text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
+  list-style-type: square;
+}
 
+#block1 p:nth-of-type(3) {
+  @apply -mt-2;
+}
+
+#block1 p:nth-of-type(4) {
+  @apply mt-12 mb-4;
+}
+
+#block1 p:last-of-type {
+  @apply mt-24;
+}
 
 /* || About */
 #block2 {
@@ -433,114 +455,148 @@
 }
 
 /* || Studies */
+#block3 {
+  @apply relative;
+}
 
+#block3 ul {
+  @apply flex list-none justify-center gap-[8rem] flex-wrap;
+}
+
+#block3 li {
+  @apply relative;
+  transition: all 0.85s ease-in-out;
+}
+
+#block3 li img {
+  @apply border-[10px] border-solid [border-image:theme('colors.light.borderImage')_18_stretch] dark:[border-image:theme('colors.dark.borderImage')_18_stretch];
+  @apply p-1 mx-[2.5%] my-[5%] cursor-pointer;
+}
+
+#block3 #diploma-info {
+  @apply absolute hidden left-[45%] top-[12rem] w-1/2 p-[2%];
+}
+
+#block3 #diploma-info.fade-in {
+  animation: fadeIn 0.85s ease-in forwards;
+}
+
+#block3 li.selected {
+  @apply absolute z-10;
+  animation: moveDiploma 0.85s forwards;
+}
+
+#block3 li.selected img {
+  @apply w-full h-full;
+  object-fit: contain;
+}
+
+#block3 li.returning {
+  animation: returnDiploma 0.85s forwards;
+}
+
+#block3 li.fade-out {
+  animation: fadeOut 0.85s forwards;
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+#block3 li.fade-in {
+  animation: fadeIn 0.85s ease-in forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#block3 #outro {
+  @apply mt-[1rem] my-[2rem] mb-[3rem]
+}
 
 /* || Projects */
-
-
-/* || Employment Timeline */
-#block5 #timelineWrapper {
-  @apply relative flex items-center;
+#block4 #postIt li {
+  @apply ml-[8%];
+  background-color: transparent;
 }
 
-#block5 #timeline {
-  @apply relative flex-grow;
+#block4 #postIt li:hover {
+  /* @apply cursor-pointer font-bold text-light-postItTextColour; */
+  background-color: transparent;
 }
 
-#block5 #timeline:after {
-  @apply content-[''] absolute top-[85%] left-0 right-0 h-[2px] max-w-[98%] mx-auto -translate-y-1/2;
+#block4 #projectPanel img {
+  @apply max-w-full h-auto mx-0 my-4;
+}
+
+#block4 .panel-slide-in {
+  animation: panelIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes panelIn {
+  0% { transform: translateX(0); }
+  90% { transform: translateX(-105%); }
+  100% { transform: translateX(-100%); }
+}
+
+#block4 .panel-slide-out {
+  animation: panelOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes panelOut {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+
+/* || Employment */
+#block5 #timelineWrapper #timeline #timelineTrack {
   @apply bg-light-alertColour dark:bg-dark-alertColour;
-  @apply z-[100];
 }
 
-#block5 #historyLine {
-  @apply absolute top-[3.9rem] left-0 z-[150];
-  @apply w-full;
-  transition: transform 0.5s ease-in-out;
-}
-
-#block5 #eventCardContainer {
-  @apply absolute top-12 w-[70%] max-w-[600px] z-[200] pointer-events-none;
-  @apply left-1/2 -translate-x-1/2;
-  @apply list-none;
-}
-
-#block5 #eventCardContainer li {
-  @apply absolute left-1/2 p-4 w-[95%];
+#block5 #timelineWrapper #eventsList .event .content {
+  @apply absolute p-1 rounded-lg;
   @apply bg-light-panelBackColour dark:bg-dark-panelBackColour;
   @apply border-2 border-light-panelBorderColour dark:border-dark-panelBorderColour;
-  @apply text-sm rounded-lg;
-  @apply focus:outline-none;
-  @apply transform -translate-x-[150%];
 }
 
-#block5 #eventCardContainer .content {
-  @apply w-full;
-}
-
-#block5 #eventCardContainer .content h2 {
-  @apply text-xl font-bold mb-1;
+#block5 #timelineWrapper #eventsList .event .content h2 {
+  @apply font-bold mb-1;
   @apply text-light-colour1 dark:text-dark-colour1;
 }
 
-#block5 #eventCardContainer .content em {
-  @apply text-sm italic block mb-2;
+#block5 #timelineWrapper #eventsList .event .content em {
+  @apply italic block mb-2;
   @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
 }
 
-#block5 #eventCardContainer .content p {
-  @apply text-base mb-3;
+#block5 #timelineWrapper #eventsList .event .content p {
+  @apply mb-2;
   @apply text-light-colour1 dark:text-dark-colour1;
 }
 
-#block5 #eventCardContainer .content ul {
-  @apply list-none pl-4 w-full text-sm;
+#block5 #timelineWrapper #eventsList .event .content ul {
+  @apply list-none pl-2 w-full;
   @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
 }
 
-#block5 #eventCardContainer .content ul li {
-  @apply static block w-full p-0 mb-1;
-  @apply border-0 shadow-none;
-  position: static !important;
-  transform: none !important;
+#block5 #timelineWrapper #eventsList .event .dateMarker,
+#block5 #timelineWrapper #eventsList .event .dateLabel {
+  transition-property: left, opacity;
+  transition-duration: 0.5s;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-#block5 .prev,
-#block5 .next {
-  @apply absolute p-2 rounded-full z-[400] outline-none;
-  @apply text-light-alertColour dark:text-dark-alertColour;
-  @apply transition-colors duration-200 pointer-events-auto;
-}
-
-#block5 #dates {
-  @apply relative w-full h-full;
-}
-
-#block5 #dates li {
-  @apply absolute flex flex-col items-center;
-}
-
-#block5 #dates a {
-  @apply flex flex-col items-center no-underline;
-  @apply text-light-textColour dark:text-dark-textColour;
-}
-
-#block5 .date-label {
-  @apply text-xs absolute w-20 text-center font-bold;
-  @apply text-light-textColour dark:text-dark-textColour;
-  transition: transform 0.3s ease-out, font-size 0.3s ease-out;
-}
-
-#block5 .date-marker {
-  @apply w-[0.65rem] h-[0.65rem] rounded-full z-[350];
-  @apply bg-light-colour2 dark:bg-dark-colour1;
+#block5 #timelineWrapper #eventsList .event .dateMarker {
+  @apply bg-light-colour2 dark:bg-dark-colour1 rounded-full;
   @apply border border-light-colour1 dark:border-dark-colour2;
-  transition: transform 0.3s ease-out;
 }
 
-#block5 .date-marker.selected {
-  @apply bg-light-highlightColour2 dark:bg-dark-highlightColour1;
-  @apply border-light-colour1 dark:border-dark-colour2;
+#block5 #timelineWrapper #eventsList .event .dateMarker.selected {
+  @apply bg-light-panelBorderColour dark:bg-dark-panelBorderColour;
+  @apply border border-light-colour1 dark:border-dark-colour2;
+}
+
+#block5 #timelineWrapper #eventsList .event .dateLabel {
+  @apply text-light-textColour dark:text-dark-textColour;
 }
 
 #block5 #resumeDownloadButton {
