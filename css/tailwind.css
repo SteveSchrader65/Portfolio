@@ -28,24 +28,6 @@
     @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour md:p-2;
   }
 
-  /* @media screen and (max-width: 349px) {
-    #block5 #eventsContainer li .content ul li {
-      @apply hidden !important;
-    }
-  } */
-
-  /* @media screen and (min-width: 350px) {
-    #block5 #eventsContainer li .content ul li {
-      @apply visible !important;
-    }
-  }
-
-  @media screen and (min-width: 350px) and (max-width: 500px) {
-    #block5 #eventsContainer li .content ul li {
-      @apply truncate !important;
-    }
-  } */
-
   @media screen and (max-width: 649px) {
     #mainMenu,
     #dropMenu {
@@ -82,32 +64,36 @@
     }
 
     #block5 #timelineWrapper #timeline #timelineTrack {
-      @apply w-[2px] min-h-[170vh] h-full xs:ml-[90%] sm:ml-[93%];
+      @apply w-[2px] min-h-[170vh] ml-[95%];
       flex: 1 0 auto;
     }
 
     #block5 #timelineWrapper #eventsList {
-      @apply relative;
+      @apply relative mt-36;
     }
 
     #block5 #timelineWrapper #eventsList li {
       @apply absolute;
     }
 
+    #block5 #timelineWrapper #eventsList .event {
+      @apply w-full;
+    }
+
     #block5 #timelineWrapper #eventsList .event .content {
-      @apply w-[90%] -translate-x-[200%];
+      @apply w-[70%] -translate-x-[200%];
     }
 
     #block5 #timelineWrapper #eventsList .event .content h2 {
-      @apply xs:text-base;
+      @apply xs:text-[0.7rem];
     }
 
     #block5 #timelineWrapper #eventsList .event .content em {
-      @apply xs:text-xs;
+      @apply xs:text-[0.4rem];
     }
 
     #block5 #timelineWrapper #eventsList .event .content p {
-      @apply xs:text-xs mb-[0.125rem];
+      @apply xs:text-[0.5rem] mb-[0.125rem];
     }
 
     #block5 #timelineWrapper #eventsList .event .content ul {
@@ -115,17 +101,18 @@
     }
 
     #block5 #timelineWrapper #eventsList .event .content ul li {
-      @apply xs:text-xs ml-[0.5rem];
+      @apply xs:text-[0.5rem] ml-[0.5rem];
     }
 
     #block5 #timelineWrapper #eventsList .event .dateMarker {
-      @apply absolute w-3 h-3 rounded-full;
-      @apply left-1/2 -translate-x-1/2;
+      @apply absolute xs:w-[0.35rem] xs:h-[0.35rem] sm:w-3 sm:h-3 rounded-full;
+      @apply left-[95%];
+      @apply -translate-x-1/4;
     }
 
     #block5 #timelineWrapper #eventsList .event .dateLabel {
-      @apply relative xs:text-xs;
-      @apply xs:translate-x-[-65%] sm:translate-x-[-60%] -translate-y-full;
+      @apply relative xs:text-[0.5rem];
+      @apply left-[95%];
     }
 
     #block5 #timelineWrapper #timeline #prevBtn,
@@ -134,10 +121,10 @@
     }
 
     .enter-left {
-      animation: verticalAnimation 2000ms ease-in-out forwards;
+      animation: verticalAnimation 500ms linear forwards;
     }
     .exit-left {
-      animation: verticalAnimation 2000ms ease-in-out reverse;
+      animation: verticalAnimation 800ms ease-in-out reverse;
     }
     @keyframes verticalAnimation {
       0% {
@@ -146,7 +133,7 @@
       }
       100% {
         @apply opacity-100;
-        transform: translateX(0);
+        transform: translateX(20%);
       }
     }
   }
@@ -182,7 +169,7 @@
     }
 
     #block5 #timelineWrapper #eventsList {
-      @apply list-none p-0 m-0;
+      @apply p-0 m-0;
     }
 
     #block5 #timelineWrapper #eventsList .event {
@@ -191,7 +178,7 @@
     }
 
     #block5 #timelineWrapper #eventsList .event .content {
-      @apply md:w-[60%] lg:w-[65%] xl:w-[70%] opacity-100 pointer-events-auto z-[450];
+      @apply md:w-[60%] lg:w-[65%] xl:w-[75%] opacity-100 pointer-events-auto z-[450];
       @apply absolute left-1/2 -translate-x-1/2 top-0;
     }
 
@@ -211,6 +198,13 @@
       @apply block text-sm;
     }
 
+    #block5 #timelineWrapper #eventsList .event .dateMarker,
+    #block5 #timelineWrapper #eventsList .event .dateLabel {
+      transition-property: left, opacity;
+      transition-duration: 0.5s;
+      transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
     #block5 #timelineWrapper #eventsList .event .dateMarker {
       @apply absolute md:w-2 md:h-2 lg:w-3 lg:h-3 xl:w-4 xl:h-4;
       @apply cursor-pointer z-[400] -translate-x-1/2 translate-y-1/2;
@@ -220,7 +214,7 @@
 
     #block5 #timelineWrapper #eventsList .event .dateLabel {
       @apply absolute -translate-x-1/2 whitespace-nowrap;
-      @apply md:text-[0.7rem] xl:text-[0.9rem] font-bold;
+      @apply md:text-[0.7rem] xl:text-[0.9rem];
       bottom: calc(30% - 2rem);
     }
 
@@ -365,8 +359,8 @@
 
   .text_block {
     @apply relative mt-[3%] mx-[5%] md:mx-[10%] p-[5%] z-[100] text-justify overflow-x-hidden;
-    @apply text-[0.8rem] sm:text-[0.9rem] md:text-base lg:text-[1.1rem] xl:text-[1.8rem];
-    @apply leading-[1.1rem] sm:leading-[1.2rem] md:leading-[1.4rem] lg:leading-[1.5rem] xl:leading-[2.4rem];
+    @apply xs:text-[0.7rem] sm:text-[0.8rem] md:text-base lg:text-[1.2rem] xl:text-[1.6rem];
+    @apply xs:leading-[0.7rem] sm:leading-[1rem] md:leading-[1.25rem] lg:leading-[1.4rem] xl:leading-[1.8rem];
     @apply bg-light-sectionBackColour dark:bg-dark-sectionBackColour;
     @apply text-light-textColour dark:text-dark-textColour;
     @apply text-start md:text-justify transition-transform duration-1000 ease-out;
@@ -522,8 +516,7 @@
 }
 
 #block4 #postIt li:hover {
-  /* @apply cursor-pointer font-bold text-light-postItTextColour; */
-  background-color: transparent;
+  @apply cursor-pointer font-bold bg-none text-light-postItHighlightColour dark:text-dark-postItHighlightColour;
 }
 
 #block4 #projectPanel img {
@@ -552,6 +545,10 @@
   @apply bg-light-alertColour dark:bg-dark-alertColour;
 }
 
+#block5 #timelineWrapper #eventsList {
+  @apply list-none;
+}
+
 #block5 #timelineWrapper #eventsList .event .content {
   @apply absolute p-1 rounded-lg;
   @apply bg-light-panelBackColour dark:bg-dark-panelBackColour;
@@ -578,13 +575,6 @@
   @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
 }
 
-#block5 #timelineWrapper #eventsList .event .dateMarker,
-#block5 #timelineWrapper #eventsList .event .dateLabel {
-  transition-property: left, opacity;
-  transition-duration: 0.5s;
-  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
 #block5 #timelineWrapper #eventsList .event .dateMarker {
   @apply bg-light-colour2 dark:bg-dark-colour1 rounded-full;
   @apply border border-light-colour1 dark:border-dark-colour2;
@@ -596,7 +586,7 @@
 }
 
 #block5 #timelineWrapper #eventsList .event .dateLabel {
-  @apply text-light-textColour dark:text-dark-textColour;
+  @apply font-bold text-light-textColour dark:text-dark-textColour;
 }
 
 #block5 #resumeDownloadButton {
@@ -629,6 +619,10 @@
 #block6 .contactForm #emailWrapper,
 #block6 .contactForm #messageWrapper {
   @apply mt-2 w-[105%];
+}
+
+#block6 .contactForm div label {
+  @apply xs:text-base sm:text-lg;
 }
 
 #block6 .contactForm #nameWrapper {
@@ -693,7 +687,7 @@
 }
 
 #block6 .contactForm #bottomWrapper button {
-  @apply block font-linkFont font-bold leading-5 rounded-lg;
+  @apply block font-linkFont font-bold rounded-lg xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-[1.4rem];
   @apply mx-auto mt-[5%] py-[5%] xs:w-[90%] sm:w-[80%] md:w-[50%] lg:w-[40%] xl:w-[33%];
   @apply text-light-contactButtonTextColour dark:text-dark-contactButtonTextColour bg-light-alertColour dark:bg-dark-alertColour border-2 border-light-colour2 dark:border-dark-colour2;
   @apply transition-all duration-500;
@@ -716,7 +710,7 @@
 
 #block6 .contactForm input::-webkit-input-placeholder,
 #block6 .contactForm textarea::-webkit-input-placeholder {
-  @apply text-dark-contactFieldPlaceholderColour;
+  @apply text-dark-contactFieldPlaceholderColour xs:text-sm sm:text-base md:text-lg lg:text-xl;
 }
 
 #block6 .contactForm input:focus,
@@ -776,5 +770,5 @@
 #block6 #copyDate {
   @apply text-light-textColour dark:text-dark-textColour;
   @apply mb-[3%] md:mb-[5%] xs:pt-[10%] md:pt-[4%] lg:mb-[-1rem] lg:pt-[7%];
-  @apply text-xs md:text-sm lg:text-xl xl:text-3xl font-normal text-right;
+  @apply xs:text-[0.5rem] sm:text-xs md:text-sm lg:text-xl xl:text-3xl font-normal text-right;
 }

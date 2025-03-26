@@ -179,7 +179,6 @@ function initHamburger() {
 
 function initGlitch() {
   const titles = document.querySelectorAll(".title")
-  const resizeObservers = new Map()
   let animationFrameId = null
   let hasScrolled = false
 
@@ -223,24 +222,6 @@ function initGlitch() {
     }, 130)
 
     element.dataset.glitchInterval = intervalId
-
-    let resizeTimeout
-    const resizeObserver = new ResizeObserver(() => {
-      if (resizeTimeout) {
-        clearTimeout(resizeTimeout)
-      }
-      resizeTimeout = setTimeout(() => {
-        const currentInterval = element.dataset.glitchInterval
-
-        if (currentInterval) {
-          clearInterval(currentInterval)
-        }
-        _startGlitch(element)
-      }, 250)
-    })
-
-    resizeObserver.observe(element)
-    resizeObservers.set(element, resizeObserver)
   }
 
   window.addEventListener(
@@ -267,11 +248,6 @@ function initGlitch() {
         clearInterval(title.dataset.glitchInterval)
       }
     })
-
-    resizeObservers.clear()
-    if (animationFrameId) {
-      cancelAnimationFrame(animationFrameId)
-    }
   })
 }
 
@@ -824,7 +800,6 @@ function block5Setup() {
     } else {
       _displayHorizontalTimeline()
 
-          // Center the selected item on initial load
       if (positions && positions.length > 0) {
         const selectedPos = parseFloat(events[currentIndex].style.left)
         const centerOffset = 50 - selectedPos
@@ -925,7 +900,6 @@ function block5Setup() {
       entries.forEach((entry) => {
         const markerIndex = Array.from(markers).indexOf(entry.target)
         const event = events[markerIndex]
-        // console.log(event)
         const eventCard = event.querySelector(".content")
 
         eventCard.style.animation = "none"
@@ -1416,12 +1390,13 @@ function _thankYouBubble(buttonElement, source = "block5") {
       : About
       : Studies
       : Projects
-      : Employment
 
-    - !!! Conflict between event listeners for Projects,
-      and event listeners for Employment
-    - thankYou bubble not displaying on resume download
-    - !! Come up with a concept for Overview section !!
+      : Employment
+    - Align vertical timeline
+    - thankYou bubble not displaying for resume download
+    - !! Check Employment and Contact across ALL sizes !!
+
+    - !! Develop a concept for Overview section !!
     - !! Optimize all images !!
 */
 function init() {

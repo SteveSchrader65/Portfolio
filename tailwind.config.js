@@ -30,13 +30,11 @@ module.exports = {
         tipTextColour: "whitesmoke",
         sectionBackColour: "#6c9ee0",
         postItColour: "#fffcaa",
-
+        postItHighlightColour: "#33cc33",
         highlightColour1: "#3399ff",
         highlightColour2: "#0059b3",
         panelBackColour: "#97b8e3",
         panelBorderColour: "#164684",
-        // panelScrollTrackColour: "#b7d3f7",
-
         contactFormBorderColour: "#737373",
         contactLabelColour: "#000000",
         contactBackgroundColour: "#cceeff",
@@ -77,13 +75,11 @@ module.exports = {
         tipTextColour: "#000000",
         sectionBackColour: "#0d2d51",
         postItColour: "#fffcaa",
-
+        postItHighlightColour: "#29a329",
         highlightColour1: "#b3d9ff",
         highlightColour2: "#3399ff",
         panelBackColour: "#205ea4",
         panelBorderColour: "#0e3c70",
-        // panelScrollTrackColour: "#184e8c",
-
         contactFormBorderColour: "#0033cc",
         contactLabelColour: "#0d0d0d",
         contactBackgroundColour: "#4e4c4b",

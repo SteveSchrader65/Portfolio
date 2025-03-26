@@ -656,24 +656,6 @@ main:not(motion-reduce) {
   }
 }
 
-/* @media screen and (max-width: 349px) {
-    #block5 #eventsContainer li .content ul li {
-      @apply hidden !important;
-    }
-  } */
-
-/* @media screen and (min-width: 350px) {
-    #block5 #eventsContainer li .content ul li {
-      @apply visible !important;
-    }
-  }
-
-  @media screen and (min-width: 350px) and (max-width: 500px) {
-    #block5 #eventsContainer li .content ul li {
-      @apply truncate !important;
-    }
-  } */
-
 @media screen and (max-width: 649px) {
   #mainMenu,
     #dropMenu {
@@ -847,50 +829,38 @@ main:not(motion-reduce) {
   }
 
   #block5 #timelineWrapper #timeline #timelineTrack {
-    height: 100%;
+    margin-left: 95%;
     min-height: 170vh;
     width: 2px;
-  }
-
-  @media (max-width: 349px) {
-    #block5 #timelineWrapper #timeline #timelineTrack {
-      margin-left: 90%;
-    }
-  }
-
-  @media (min-width: 350px) {
-    #block5 #timelineWrapper #timeline #timelineTrack {
-      margin-left: 93%;
-    }
-  }
-
-  #block5 #timelineWrapper #timeline #timelineTrack {
     flex: 1 0 auto;
   }
 
   #block5 #timelineWrapper #eventsList {
     position: relative;
+    margin-top: 9rem;
   }
 
   #block5 #timelineWrapper #eventsList li {
     position: absolute;
   }
 
+  #block5 #timelineWrapper #eventsList .event {
+    width: 100%;
+  }
+
   #block5 #timelineWrapper #eventsList .event .content {
-    width: 90%;
+    width: 70%;
     --tw-translate-x: -200%;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
   @media (max-width: 349px) {
     #block5 #timelineWrapper #eventsList .event .content h2 {
-      font-size: 1rem;
-      line-height: 1.5rem;
+      font-size: 0.7rem;
     }
 
     #block5 #timelineWrapper #eventsList .event .content em {
-      font-size: 0.75rem;
-      line-height: 1rem;
+      font-size: 0.4rem;
     }
   }
 
@@ -900,8 +870,7 @@ main:not(motion-reduce) {
 
   @media (max-width: 349px) {
     #block5 #timelineWrapper #eventsList .event .content p {
-      font-size: 0.75rem;
-      line-height: 1rem;
+      font-size: 0.5rem;
     }
 
     #block5 #timelineWrapper #eventsList .event .content ul {
@@ -927,18 +896,32 @@ main:not(motion-reduce) {
 
   @media (max-width: 349px) {
     #block5 #timelineWrapper #eventsList .event .content ul li {
-      font-size: 0.75rem;
-      line-height: 1rem;
+      font-size: 0.5rem;
     }
   }
 
   #block5 #timelineWrapper #eventsList .event .dateMarker {
     position: absolute;
-    height: 0.75rem;
-    width: 0.75rem;
     border-radius: 9999px;
-    left: 50%;
-    --tw-translate-x: -50%;
+  }
+
+  @media (max-width: 349px) {
+    #block5 #timelineWrapper #eventsList .event .dateMarker {
+      height: 0.35rem;
+      width: 0.35rem;
+    }
+  }
+
+  @media (min-width: 350px) {
+    #block5 #timelineWrapper #eventsList .event .dateMarker {
+      height: 0.75rem;
+      width: 0.75rem;
+    }
+  }
+
+  #block5 #timelineWrapper #eventsList .event .dateMarker {
+    left: 95%;
+    --tw-translate-x: -25%;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
@@ -948,28 +931,12 @@ main:not(motion-reduce) {
 
   @media (max-width: 349px) {
     #block5 #timelineWrapper #eventsList .event .dateLabel {
-      font-size: 0.75rem;
-      line-height: 1rem;
+      font-size: 0.5rem;
     }
   }
 
   #block5 #timelineWrapper #eventsList .event .dateLabel {
-    --tw-translate-y: -100%;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  }
-
-  @media (max-width: 349px) {
-    #block5 #timelineWrapper #eventsList .event .dateLabel {
-      --tw-translate-x: -65%;
-      transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-    }
-  }
-
-  @media (min-width: 350px) {
-    #block5 #timelineWrapper #eventsList .event .dateLabel {
-      --tw-translate-x: -60%;
-      transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-    }
+    left: 95%;
   }
 
   #block5 #timelineWrapper #timeline #prevBtn,
@@ -978,11 +945,11 @@ main:not(motion-reduce) {
   }
 
   .enter-left {
-    animation: verticalAnimation 2000ms ease-in-out forwards;
+    animation: verticalAnimation 500ms linear forwards;
   }
 
   .exit-left {
-    animation: verticalAnimation 2000ms ease-in-out reverse;
+    animation: verticalAnimation 800ms ease-in-out reverse;
   }
 
   @keyframes verticalAnimation {
@@ -993,7 +960,7 @@ main:not(motion-reduce) {
 
     100% {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateX(20%);
     }
   }
 }
@@ -1063,7 +1030,6 @@ main:not(motion-reduce) {
 
   #block5 #timelineWrapper #eventsList {
     margin: 0px;
-    list-style-type: none;
     padding: 0px;
   }
 
@@ -1092,7 +1058,7 @@ main:not(motion-reduce) {
 
   @media (min-width: 1400px) {
     #block5 #timelineWrapper #eventsList .event .content {
-      width: 70%;
+      width: 75%;
     }
   }
 
@@ -1123,6 +1089,13 @@ main:not(motion-reduce) {
     display: block;
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  #block5 #timelineWrapper #eventsList .event .dateMarker,
+    #block5 #timelineWrapper #eventsList .event .dateLabel {
+    transition-property: left, opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 
   #block5 #timelineWrapper #eventsList .event .dateMarker {
@@ -1165,7 +1138,6 @@ main:not(motion-reduce) {
     --tw-translate-x: -50%;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     white-space: nowrap;
-    font-weight: 700;
   }
 
   @media (min-width: 650px) {
@@ -1393,18 +1365,6 @@ main:not(motion-reduce) {
   margin-bottom: 5%;
 }
 
-.-mr-2 {
-  margin-right: -0.5rem;
-}
-
-.ml-2 {
-  margin-left: 0.5rem;
-}
-
-.ml-auto {
-  margin-left: auto;
-}
-
 .-mb-10 {
   margin-bottom: -2.5rem;
 }
@@ -1413,12 +1373,24 @@ main:not(motion-reduce) {
   margin-bottom: -1.5rem;
 }
 
+.-mr-2 {
+  margin-right: -0.5rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .ml-8 {
   margin-left: 2rem;
+}
+
+.ml-auto {
+  margin-left: auto;
 }
 
 .mt-4 {
@@ -2027,13 +1999,15 @@ img:not([width]),
   }
 }
 
-.text_block {
-  font-size: 0.8rem;
+@media (max-width: 349px) {
+  .text_block {
+    font-size: 0.7rem;
+  }
 }
 
 @media (min-width: 350px) {
   .text_block {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -2046,41 +2020,43 @@ img:not([width]),
 
 @media (min-width: 950px) {
   .text_block {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
 }
 
 @media (min-width: 1400px) {
   .text_block {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 }
 
-.text_block {
-  line-height: 1.1rem;
+@media (max-width: 349px) {
+  .text_block {
+    line-height: 0.7rem;
+  }
 }
 
 @media (min-width: 350px) {
   .text_block {
-    line-height: 1.2rem;
+    line-height: 1rem;
   }
 }
 
 @media (min-width: 650px) {
   .text_block {
-    line-height: 1.4rem;
+    line-height: 1.25rem;
   }
 }
 
 @media (min-width: 950px) {
   .text_block {
-    line-height: 1.5rem;
+    line-height: 1.4rem;
   }
 }
 
 @media (min-width: 1400px) {
   .text_block {
-    line-height: 2.4rem;
+    line-height: 1.8rem;
   }
 }
 
@@ -2359,8 +2335,16 @@ img:not([width]),
 }
 
 #block4 #postIt li:hover {
-  /* @apply cursor-pointer font-bold text-light-postItTextColour; */
-  background-color: transparent;
+  cursor: pointer;
+  background-image: none;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(51 204 51 / var(--tw-text-opacity));
+}
+
+:is(.dark #block4 #postIt li:hover) {
+  --tw-text-opacity: 1;
+  color: rgb(41 163 41 / var(--tw-text-opacity));
 }
 
 #block4 #projectPanel img {
@@ -2414,6 +2398,10 @@ img:not([width]),
 :is(.dark #block5 #timelineWrapper #timeline #timelineTrack) {
   --tw-bg-opacity: 1;
   background-color: rgb(179 0 0 / var(--tw-bg-opacity));
+}
+
+#block5 #timelineWrapper #eventsList {
+  list-style-type: none;
 }
 
 #block5 #timelineWrapper #eventsList .event .content {
@@ -2489,13 +2477,6 @@ img:not([width]),
   color: rgb(204 204 204 / var(--tw-text-opacity));
 }
 
-#block5 #timelineWrapper #eventsList .event .dateMarker,
-#block5 #timelineWrapper #eventsList .event .dateLabel {
-  transition-property: left, opacity;
-  transition-duration: 0.5s;
-  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
 #block5 #timelineWrapper #eventsList .event .dateMarker {
   border-radius: 9999px;
   --tw-bg-opacity: 1;
@@ -2540,6 +2521,7 @@ img:not([width]),
 }
 
 #block5 #timelineWrapper #eventsList .event .dateLabel {
+  font-weight: 700;
   --tw-text-opacity: 1;
   color: rgb(33 0 0 / var(--tw-text-opacity));
 }
@@ -2597,6 +2579,20 @@ img:not([width]),
 #block6 .contactForm #messageWrapper {
   margin-top: 0.5rem;
   width: 105%;
+}
+
+@media (max-width: 349px) {
+  #block6 .contactForm div label {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (min-width: 350px) {
+  #block6 .contactForm div label {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
 }
 
 #block6 .contactForm #nameWrapper {
@@ -2809,7 +2805,43 @@ img:not([width]),
   border-radius: 0.5rem;
   font-family: Tektur, sans-serif;
   font-weight: 700;
-  line-height: 1.25rem;
+}
+
+@media (max-width: 349px) {
+  #block6 .contactForm #bottomWrapper button {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+
+@media (min-width: 350px) {
+  #block6 .contactForm #bottomWrapper button {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (min-width: 650px) {
+  #block6 .contactForm #bottomWrapper button {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 950px) {
+  #block6 .contactForm #bottomWrapper button {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  #block6 .contactForm #bottomWrapper button {
+    font-size: 1.4rem;
+  }
+}
+
+#block6 .contactForm #bottomWrapper button {
   margin-left: auto;
   margin-right: auto;
   margin-top: 5%;
@@ -2938,6 +2970,38 @@ img:not([width]),
 #block6 .contactForm input::-webkit-input-placeholder,
 #block6 .contactForm textarea::-webkit-input-placeholder {
   color: rgba(38, 38, 38, 0.6);
+}
+
+@media (max-width: 349px) {
+  #block6 .contactForm input::-webkit-input-placeholder,
+#block6 .contactForm textarea::-webkit-input-placeholder {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+
+@media (min-width: 350px) {
+  #block6 .contactForm input::-webkit-input-placeholder,
+#block6 .contactForm textarea::-webkit-input-placeholder {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (min-width: 650px) {
+  #block6 .contactForm input::-webkit-input-placeholder,
+#block6 .contactForm textarea::-webkit-input-placeholder {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 950px) {
+  #block6 .contactForm input::-webkit-input-placeholder,
+#block6 .contactForm textarea::-webkit-input-placeholder {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 }
 
 #block6 .contactForm input:focus,
@@ -3204,9 +3268,20 @@ img:not([width]),
 
 #block6 #copyDate {
   text-align: right;
-  font-size: 0.75rem;
-  line-height: 1rem;
   font-weight: 400;
+}
+
+@media (max-width: 349px) {
+  #block6 #copyDate {
+    font-size: 0.5rem;
+  }
+}
+
+@media (min-width: 350px) {
+  #block6 #copyDate {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
 }
 
 @media (min-width: 650px) {
@@ -3476,6 +3551,10 @@ img:not([width]),
     order: 2;
   }
 
+  .md\:-mb-10 {
+    margin-bottom: -2.5rem;
+  }
+
   .md\:ml-0 {
     margin-left: 0px;
   }
@@ -3486,10 +3565,6 @@ img:not([width]),
 
   .md\:mt-8 {
     margin-top: 2rem;
-  }
-
-  .md\:-mb-10 {
-    margin-bottom: -2.5rem;
   }
 
   .md\:inline-block {
