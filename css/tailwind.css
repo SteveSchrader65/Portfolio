@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
   html {
     @apply scroll-smooth;
   }
@@ -17,6 +21,53 @@
 }
 
 @layer components {
+  nav {
+    @apply flex justify-between items-center fixed top-0 w-full z-[1000] transition-[top] ease-in-out duration-500;
+    @apply bg-light-navBarColour text-light-navTextColour dark:bg-dark-navBarColour dark:text-dark-navTextColour;
+  }
+
+  nav #hamburgerNav {
+    @apply flex items-center;
+  }
+
+  nav .hamburger-menu {
+    @apply relative;
+  }
+
+  nav .hamburger-menu span {
+    @apply absolute w-full h-0.5 bg-light-hamburgerButtonColour dark:bg-dark-hamburgerButtonColour;
+    @apply transition-all duration-300;
+  }
+
+  nav #mainMenu {
+    @apply text-light-navTextColour dark:text-dark-navTextColour font-linkFont z-[1200];
+    @apply transition-transform duration-300 ease-in-out;
+  }
+
+  nav #dropMenuTrigger {
+    @apply relative;
+  }
+
+  nav #dropMenu {
+    @apply bg-light-menuBackgroundColour dark:bg-dark-menuBackgroundColour text-light-navTextColour dark:text-dark-backColour hover:bg-light-menuBackgroundColour dark:hover:bg-dark-menuBackgroundColour hover:text-light-menuTextColour dark:hover:text-dark-menuTextColour;
+  }
+
+  nav #dropMenu li {
+    @apply py-[0.05rem];
+    @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour;
+    @apply hover:text-light-menuTextColour dark:hover:text-dark-menuTextColour;
+  }
+
+  nav #launchControl {
+    @apply hidden relative border-none outline-none min-w-6;
+    @apply bg-light-navBarColour dark:bg-dark-navBarColour text-light-textColour dark:text-dark-textColour;
+  }
+
+  nav #scrollProgress {
+    @apply w-full h-0.5 absolute z-[1000] bottom-0 flex-row origin-left;
+    @apply bg-light-progressColour dark:bg-dark-progressColour;
+  }
+
   .tooltip {
     @apply invisible group-hover:visible absolute rounded shadow-lg whitespace-nowrap opacity-85 z-[2000];
     @apply bg-light-tipBackgroundColour dark:bg-dark-tipBackgroundColour text-light-tipTextColour dark:text-dark-tipTextColour;
@@ -24,52 +75,79 @@
     @apply p-1 -top-4 left-12 md:-top-6;
   }
 
-  #dropMenu li {
-    @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour md:p-2;
-  }
-
-  @media screen and (max-width: 649px) {
-    #mainMenu,
-    #dropMenu {
-      @apply min-w-14 max-w-28;
+  @media screen and (max-width: 550px) {
+    nav #hamburgerNav {
+      @apply w-full;
     }
 
-    #dropMenu {
-      @apply w-[200px] translate-x-[80%];
+    nav .hamburger-menu {
+      @apply order-1 p-2 ml-2 my-4 w-6 h-6;
     }
 
-    #mainMenu li,
-    #dropMenu li {
-      @apply py-[3%] pr-0 pl-[10%];
+    nav .hamburger-menu span:first-child {
+      @apply [--ty:-0.5rem] translate-y-[-0.5rem] origin-center;
+      @apply group-hover:animate-[hamburgerCollapse_0.15s_ease-in-out_forwards,hamburgerCentre_0.15s_ease-in-out_0.15s_forwards,hamburgerDot_0.15s_ease-in-out_0.3s_forwards,hamburgerRotateUpper_0.15s_ease-in-out_0.45s_forwards,hamburgerExtendUpper_0.15s_ease-in-out_0.6s_forwards];
+    }
+
+    nav .hamburger-menu span:nth-child(2) {
+      @apply group-hover:opacity-0;
+    }
+
+    nav .hamburger-menu span:last-child {
+      @apply [--ty:0.5rem] translate-y-[0.5rem] origin-center;
+      @apply group-hover:animate-[hamburgerCollapse_0.15s_ease-in-out_forwards,hamburgerCentre_0.15s_ease-in-out_0.15s_forwards,hamburgerDot_0.15s_ease-in-out_0.3s_forwards,hamburgerRotateLower_0.15s_ease-in-out_0.45s_forwards,hamburgerExtendLower_0.15s_ease-in-out_0.6s_forwards];
+    }
+
+    nav #mainMenu,
+    nav #dropMenu {
+      @apply xxs:w-[8rem] xs:w-[8.5rem];
+    }
+
+    nav #dropMenu {
+      @apply translate-x-[80%];
+    }
+
+    nav #mainMenu li,
+    nav #dropMenu li {
+      @apply pl-[5%];
       @apply bg-light-menuBackgroundColour dark:bg-dark-menuBackgroundColour;
       @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour;
       @apply hover:text-light-menuTextColour dark:hover:text-dark-menuTextColour;
     }
 
-    .hamburger-menu.hover-active span:first-child {
+    nav .hamburger-menu.hover-active span:first-child {
       @apply animate-hamburgerTop;
     }
 
-    .hamburger-menu.hover-active span:last-child {
+    nav .hamburger-menu.hover-active span:last-child {
       @apply animate-hamburgerBottom;
     }
 
-    /* Small device styles for vertical timeline */
+    nav #launchControl {
+      @apply -mr-2 order-1;
+    }
+
+    nav #viewingMode {
+      @apply order-2;
+    }
+
     #block5 #timelineWrapper {
-      @apply min-h-[170vh];
+      @apply xxs:max-h-[140vh] xs:max-h-[150vh] sm:max-h-[170vh];
+      @apply relative overflow-hidden;
     }
 
     #block5 #timelineWrapper #timeline {
-      @apply min-h-[170vh] flex-col;
+      @apply flex-col xxs:min-h-[150vh] xs:min-h-[150vh] sm:min-h-[170vh];
     }
 
     #block5 #timelineWrapper #timeline #timelineTrack {
-      @apply w-[2px] min-h-[170vh] ml-[95%];
+      @apply xxs:w-[2px] xs:w-[2px] sm:w-[2px] xxs:ml-[90%] xs:ml-[90%] sm:ml-[90%] xs:-mb-60 sm:-mb-20;
+      @apply xxs:min-h-[150vh] xs:min-h-[150vh] sm:min-h-[170vh];
       flex: 1 0 auto;
     }
 
     #block5 #timelineWrapper #eventsList {
-      @apply relative mt-36;
+      @apply relative mt-4;
     }
 
     #block5 #timelineWrapper #eventsList li {
@@ -81,38 +159,38 @@
     }
 
     #block5 #timelineWrapper #eventsList .event .content {
-      @apply w-[70%] -translate-x-[200%];
+      @apply xxs:w-[55%] xs:w-[60%] sm:w-[65%] -translate-x-[200%];
     }
 
     #block5 #timelineWrapper #eventsList .event .content h2 {
-      @apply xs:text-[0.7rem];
+      @apply xxs:text-[0.6rem] xs:text-[0.7rem] sm:text-[0.8rem];
     }
 
     #block5 #timelineWrapper #eventsList .event .content em {
-      @apply xs:text-[0.4rem];
+      @apply xxs:text-[0.3rem] xs:text-[0.4rem] sm:text-[0.5rem];
     }
 
     #block5 #timelineWrapper #eventsList .event .content p {
-      @apply xs:text-[0.5rem] mb-[0.125rem];
+      @apply xxs:text-[0.5rem] xs:text-[0.6rem] sm:text-[0.7rem];
     }
 
     #block5 #timelineWrapper #eventsList .event .content ul {
-      @apply xs:hidden sm:hidden md:block;
+      @apply xxs:hidden xs:hidden sm:hidden;
     }
 
     #block5 #timelineWrapper #eventsList .event .content ul li {
-      @apply xs:text-[0.5rem] ml-[0.5rem];
+      @apply xxs:text-[0.4rem] xs:text-[0.5rem] sm:text-[] ml-[0.5rem];
     }
 
-    #block5 #timelineWrapper #eventsList .event .dateMarker {
-      @apply absolute xs:w-[0.35rem] xs:h-[0.35rem] sm:w-3 sm:h-3 rounded-full;
-      @apply left-[95%];
+    #block5 #timelineWrapper #eventsList .event .eventMarker {
+      @apply absolute rounded-full;
+      @apply xxs:left-[90%] xs:left-[90%] sm:left-[90%];
+      @apply xxs:w-[0.3rem] xxs:h-[0.3rem] xs:w-[0.35rem] xs:h-[0.35rem] sm:w-2 sm:h-2;
       @apply -translate-x-1/4;
     }
 
-    #block5 #timelineWrapper #eventsList .event .dateLabel {
-      @apply relative xs:text-[0.5rem];
-      @apply left-[95%];
+    #block5 #timelineWrapper #eventsList .event .eventLabel {
+      @apply relative xxs:text-[0.4rem] xs:text-[0.5rem] sm:text-[0.6rem];
     }
 
     #block5 #timelineWrapper #timeline #prevBtn,
@@ -138,34 +216,54 @@
     }
   }
 
-  @media screen and (min-width: 650px) {
-    #mainMenu {
-      @apply bg-none -left-1/2;
+  @media screen and (min-width: 551px) {
+    nav #hamburgerNav,
+    nav .hamburger-menu {
+      @apply w-auto;
     }
 
-    #mainMenu > li:not(#dropMenuTrigger) {
+    nav #mainMenu {
+      @apply bg-none mr-2;
+      @apply md:static md:flex md:flex-row md:translate-x-0 md:space-x-4 lg:space-x-7;
+      @apply font-linkFont xxs:text-f3 xs:text-f3 sm:text-f4 md:text-f4 tb:text-f5 lg:text-f6 xl:text-f7 xxl:text-f8;
+    }
+
+    nav #mainMenu > li:not(#dropMenuTrigger) {
       @apply transition duration-200 ease-out;
     }
 
-    #mainMenu > li:not(#dropMenuTrigger):hover {
+    nav #mainMenu > li:not(#dropMenuTrigger):hover {
       @apply scale-x-[1.15];
     }
 
-    /* Large device styles for horizontal timeline */
-    #block5 #timelineWrapper {
-      @apply relative w-full overflow-hidden mt-4;
-      /* @apply md:min-h-[50rem] lg:min-h-[38rem] md:-mb-72 lg:-mb-48 xl:-mb-36; */
+    nav #dropMenu {
+      @apply pl-2 mr-2 md:-right-2;
+      @apply md:w-[8.5rem] tb:w-[9.5rem] lg:w-[11rem] xl:w-[12rem] xxl:w-[14rem];
     }
 
-    /* Area between red timeline and top of container needs to be flexible */
+    nav #launchControl {
+      @apply mr-1 order-2;
+    }
+
+    nav #viewingMode {
+      @apply order-1;
+    }
+
+    #block5 #timelineWrapper {
+      @apply relative /*w-full*/ overflow-hidden mt-4;
+    }
+
     #block5 #timelineWrapper #timeline {
-      @apply justify-between w-[97.5%] mx-auto z-[300];
-      @apply translate-y-[70%] items-center;
-      @apply min-h-96 max-h-[30rem];
+      @apply justify-between w-[97.5%] items-center mx-auto z-[300];
+      @apply md:translate-y-[70%] tb:translate-y-[70%] lg:translate-y-[70%];
+      @apply xl:translate-y-[70%] xxl:translate-y-[70%];
+      /* @apply md:min-h-96 md:max-h-[30rem] tb:min-h-96 tb:max-h-[30rem]; */
+      /* @apply lg:min-h-96 lg:max-h-[30rem] xl:min-h-96 xl:max-h-[30rem]; */
+      /* @apply lg:min-h-96 lg:max-h-[30rem] xxl:min-h-96 xxl:max-h-[30rem]; */
     }
 
     #block5 #timelineWrapper #timeline #timelineTrack {
-      @apply flex-grow md:h-[2px] xl:h-[4px];
+      @apply flex-grow md:h-[3px] tb:h-[3px] lg:h-[5px] xl:h-[7px] xxl:h-[8px];
     }
 
     #block5 #timelineWrapper #eventsList {
@@ -178,47 +276,48 @@
     }
 
     #block5 #timelineWrapper #eventsList .event .content {
-      @apply md:w-[60%] lg:w-[65%] xl:w-[75%] opacity-100 pointer-events-auto z-[450];
+      @apply md:w-[45%] tb:w-[50%] lg:w-[55%] xl:w-[60%] xxl:w-[65%];
+      @apply opacity-100 pointer-events-auto z-[450];
       @apply absolute left-1/2 -translate-x-1/2 top-0;
     }
 
     #block5 #timelineWrapper #eventsList .event .content h2 {
-      @apply text-xl;
+      @apply md:text-f6 tb:text-f6 lg:text-f6 xl:text-f6 xxl:text-f6;
     }
 
     #block5 #timelineWrapper #eventsList .event .content em {
-      @apply text-sm;
+      @apply md:text-f2 tb:text-f2 lg:text-f2 xl:text-f2 xxl:text-f2;
     }
 
     #block5 #timelineWrapper #eventsList .content p {
-      @apply text-base;
+      @apply md:text-f4 tb:text-f4 lg:text-f4 xl:text-f4 xxl:text-f4;
     }
 
-    #block5 #timelineWrapper #eventsList .content ul {
-      @apply block text-sm;
+    #block5 #timelineWrapper #eventsList .event .content ul {
+      @apply md:block md:text-f2 tb:text-f2 lg:text-f2 xl:text-f2 xxl:text-f2;
     }
 
-    #block5 #timelineWrapper #eventsList .event .dateMarker,
-    #block5 #timelineWrapper #eventsList .event .dateLabel {
+    #block5 #timelineWrapper #eventsList .event .eventMarker,
+    #block5 #timelineWrapper #eventsList .event .eventLabel {
       transition-property: left, opacity;
       transition-duration: 0.5s;
       transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
-    #block5 #timelineWrapper #eventsList .event .dateMarker {
-      @apply absolute md:w-2 md:h-2 lg:w-3 lg:h-3 xl:w-4 xl:h-4;
+    #block5 #timelineWrapper #eventsList .event .eventMarker {
+      @apply absolute md:w-2 md:h-2 tb:w-2 tb:h-2 lg:w-3 lg:h-3 xl:w-4 xl:h-4 xxl:w-5 xxl:h-5;
       @apply cursor-pointer z-[400] -translate-x-1/2 translate-y-1/2;
       bottom: calc(30% - 1px);
       transition: all 0.5s ease-in-out;
     }
 
-    #block5 #timelineWrapper #eventsList .event .dateLabel {
+    #block5 #timelineWrapper #eventsList .event .eventLabel {
       @apply absolute -translate-x-1/2 whitespace-nowrap;
-      @apply md:text-[0.7rem] xl:text-[0.9rem];
+      @apply md:text-[0.7rem] tb:text-[0.8rem] xl:text-[0.9rem] xxl:text-[1.1rem];
       bottom: calc(30% - 2rem);
     }
 
-    #block5 #timelineWrapper #eventsList .dateLabel.selected {
+    #block5 #timelineWrapper #eventsList .eventLabel.selected {
       @apply font-bold;
     }
 
@@ -226,7 +325,7 @@
     #block5 #timelineWrapper #timeline #nextBtn {
       @apply absolute outline-none bg-none cursor-pointer;
       @apply -translate-y-1/2 hover:scale-[120%];
-      @apply xs:w-5 xs:h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 xl:w-9 xl:h-9;
+      @apply md:w-4 md:h-4 tb:w-6 tb:h-6 lg:w-8 lg:h-8 xl:w-9 xl:h-9 xxl:w-10 xxl:h-10;
       @apply text-light-alertColour dark:text-dark-alertColour;
     }
 
@@ -259,15 +358,13 @@
 }
 
 @layer utilities {
-  /* Checks all images to ensure tags have been included */
   img:not([width]),
   img:not([height]),
   img:not([alt]) {
     @apply border-[5px] border-dashed border-light-alertColour dark:border-dark-alertColour;
   }
 
-  /* || Scrollbars - for medium-sized and above devices */
-  @media screen and (min-width: 650px) {
+  @media screen and (min-width: 551px) {
     html:not(.dark) ::-webkit-scrollbar {
       @apply w-[0.6rem] bg-light-scrollTrackColour;
     }
@@ -337,7 +434,7 @@
   #parallax3 h2 {
     @apply font-linkFont font-bold tracking-[0.55rem] text-light-textColour dark:text-light-textColour;
     @apply opacity-65 pointer-events-none text-shadow-parallaxShadow;
-    @apply text-3xl sm:text-4xl md:text-4xl lg:text-6xl xl:text-8xl;
+    @apply xxs:text-f6 xs:text-f7 sm:text-f7 md:text-f8 tb:text-t1 lg:text-t2 xl:text-t3 xxl:text-t4;
     @apply top-[38%] left-[6%] md:left-[10.5%];
     @apply relative transition-transform duration-100 w-full;
   }
@@ -359,8 +456,7 @@
 
   .text_block {
     @apply relative mt-[3%] mx-[5%] md:mx-[10%] p-[5%] z-[100] text-justify overflow-x-hidden;
-    @apply xs:text-[0.7rem] sm:text-[0.8rem] md:text-base lg:text-[1.2rem] xl:text-[1.6rem];
-    @apply xs:leading-[0.7rem] sm:leading-[1rem] md:leading-[1.25rem] lg:leading-[1.4rem] xl:leading-[1.8rem];
+    @apply xxs:text-f2 xs:text-f2 sm:text-f3 md:text-f3 tb:text-f4 lg:text-f4 xl:text-f5 xxl:text-f5;
     @apply bg-light-sectionBackColour dark:bg-dark-sectionBackColour;
     @apply text-light-textColour dark:text-dark-textColour;
     @apply text-start md:text-justify transition-transform duration-1000 ease-out;
@@ -550,13 +646,13 @@
 }
 
 #block5 #timelineWrapper #eventsList .event .content {
-  @apply absolute p-1 rounded-lg;
+  @apply absolute p-1 rounded-lg border-2;
   @apply bg-light-panelBackColour dark:bg-dark-panelBackColour;
-  @apply border-2 border-light-panelBorderColour dark:border-dark-panelBorderColour;
+  @apply border-light-panelBorderColour dark:border-dark-panelBorderColour;
 }
 
 #block5 #timelineWrapper #eventsList .event .content h2 {
-  @apply font-bold mb-1;
+  @apply mb-1 font-bold;
   @apply text-light-colour1 dark:text-dark-colour1;
 }
 
@@ -575,17 +671,17 @@
   @apply text-light-colour2 dark:text-dark-menuBackgroundHoverColour;
 }
 
-#block5 #timelineWrapper #eventsList .event .dateMarker {
+#block5 #timelineWrapper #eventsList .event .eventMarker {
   @apply bg-light-colour2 dark:bg-dark-colour1 rounded-full;
   @apply border border-light-colour1 dark:border-dark-colour2;
 }
 
-#block5 #timelineWrapper #eventsList .event .dateMarker.selected {
+#block5 #timelineWrapper #eventsList .event .eventMarker.selected {
   @apply bg-light-panelBorderColour dark:bg-dark-panelBorderColour;
   @apply border border-light-colour1 dark:border-dark-colour2;
 }
 
-#block5 #timelineWrapper #eventsList .event .dateLabel {
+#block5 #timelineWrapper #eventsList .event .eventLabel {
   @apply font-bold text-light-textColour dark:text-dark-textColour;
 }
 
@@ -615,14 +711,21 @@
   @apply md:flex-row md:flex-wrap;
 }
 
+#block6 .contactForm label {
+  @apply block font-linkFont font-bold text-light-contactLabelColour dark:text-dark-contactLabelColour;
+  @apply xxs:text-f4 sm:text-f5 md:text-f6 xl:text-f7 md:mb-0;
+}
+
+#block6 .contactForm input,
+#block6 .contactForm textarea {
+  @apply border-2 border-light-contactFormBorderColour dark:border-dark-contactFormBorderColour bg-light-contactFieldBackgroundColour dark:bg-dark-contactFieldBackgroundColour;
+  @apply outline-none rounded-lg xxs:text-f3 xs:text-f4 md:text-f5 xl:text-f6;
+}
+
 #block6 .contactForm #nameWrapper,
 #block6 .contactForm #emailWrapper,
 #block6 .contactForm #messageWrapper {
   @apply mt-2 w-[105%];
-}
-
-#block6 .contactForm div label {
-  @apply xs:text-base sm:text-lg;
 }
 
 #block6 .contactForm #nameWrapper {
@@ -631,7 +734,7 @@
 }
 
 #block6 .contactForm #nameWrapper label {
-  @apply row-[1] col-[1] lg:mb-0;
+  @apply row-[1] col-[1] mb-0;
 }
 
 #block6 .contactForm #nameWrapper input {
@@ -648,7 +751,7 @@
 }
 
 #block6 .contactForm #emailWrapper label {
-  @apply row-[1] col-[1] lg:mb-0;
+  @apply row-[1] col-[1];
 }
 
 #block6 .contactForm #emailWrapper input {
@@ -661,15 +764,15 @@
 
 #block6 .contactForm #messageWrapper {
   @apply relative md:grid overflow-hidden;
-  @apply grid-rows-[10%_90%] grid-cols-[40%_60%] md:grid-cols-[20%_80%]
+  @apply grid-rows-[10%_90%] grid-cols-[40%_60%] md:grid-cols-[20%_80%];
 }
 
 #block6 .contactForm #messageWrapper label {
-  @apply row-[1] col-[1] lg:mb-16;
+  @apply row-[1] col-[1];
 }
 
 #block6 .contactForm #messageWrapper textarea {
-  @apply w-full max-w-full mt-0 md:mt-2 resize-none;
+  @apply w-full max-w-full resize-none;
   @apply row-[2/-1] col-span-full;
 }
 
@@ -677,40 +780,10 @@
   @apply row-[1] col-[2];
 }
 
-#block6 .contactForm #bottomWrapper {
-  @apply relative w-full mt-5 md:grid;
-  @apply grid-rows-1 grid-cols-[33%_67%];
-}
-
-#block6 .contactForm #bottomWrapper #checkboxContainer {
-  @apply sm:flex sm:items-center row-[1];
-}
-
-#block6 .contactForm #bottomWrapper button {
-  @apply block font-linkFont font-bold rounded-lg xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-[1.4rem];
-  @apply mx-auto mt-[5%] py-[5%] xs:w-[90%] sm:w-[80%] md:w-[50%] lg:w-[40%] xl:w-[33%];
-  @apply text-light-contactButtonTextColour dark:text-dark-contactButtonTextColour bg-light-alertColour dark:bg-dark-alertColour border-2 border-light-colour2 dark:border-dark-colour2;
-  @apply transition-all duration-500;
-  @apply col-[2];
-}
-
-#block6 .contactForm label {
-  @apply block font-linkFont font-bold text-xl md:my-4 text-light-contactLabelColour dark:text-dark-contactLabelColour;
-}
-
-#block6 .contactForm input {
-  @apply md:mb-[1.5%];
-}
-
-#block6 .contactForm input,
-#block6 .contactForm textarea {
-  @apply text-base md:px-[1%] md:py-[0.5%] outline-none rounded-lg border-2;
-  @apply border-light-contactFormBorderColour dark:border-dark-contactFormBorderColour bg-light-contactFieldBackgroundColour dark:bg-dark-contactFieldBackgroundColour;
-}
-
 #block6 .contactForm input::-webkit-input-placeholder,
 #block6 .contactForm textarea::-webkit-input-placeholder {
-  @apply text-dark-contactFieldPlaceholderColour xs:text-sm sm:text-base md:text-lg lg:text-xl;
+  @apply text-dark-contactFieldPlaceholderColour;
+  @apply xxs:text-f2 xs:text-f3 md:text-f4 xl:text-f5;
 }
 
 #block6 .contactForm input:focus,
@@ -727,11 +800,12 @@
 }
 
 #block6 .contactForm #checkboxContainer label {
-  @apply mb-0 md:ml-2 text-base font-normal;
+  @apply mb-0 font-normal;
+  @apply xxs:text-f2 xs:text-f2 sm:text-f3 md:text-f3 tb:text-f4 lg:text-f4 xl:text-f5 xxl:text-f5;
 }
 
 #block6 .contactForm #contactForward {
-  @apply mr-[0.25rem] md:mt-4 md:mb-0 text-light-colour1 dark:text-dark-colour2;
+  @apply mr-[0.25rem] text-light-colour1 dark:text-dark-colour2;
 }
 
 #block6 .contactForm .formContainer-field-valid {
@@ -740,6 +814,24 @@
 
 #block6 .contactForm .formContainer-field-invalid {
   @apply border-light-alertColour dark:border-dark-alertColour !important;
+}
+
+#block6 .contactForm #bottomWrapper {
+  @apply relative w-full md:grid;
+  @apply grid-rows-1 grid-cols-[33%_67%];
+}
+
+#block6 .contactForm #bottomWrapper #checkboxContainer {
+  @apply sm:flex sm:items-center row-[1];
+  @apply xxs:mt-[5%] xs:mt-[7%] sm:mt-[8%] md:mt-0;
+}
+
+#block6 .contactForm #bottomWrapper button {
+  @apply block col-[2] font-linkFont font-bold rounded-lg;
+  @apply mx-auto mt-[8%] py-[2%] xxs:w-[90%] xs:w-[90%] sm:w-[80%] md:w-[65%] lg:w-[40%] xl:w-[33%];
+  @apply xxs:text-f4 md:text-f6 xl:text-f8;
+  @apply text-light-contactButtonTextColour dark:text-dark-contactButtonTextColour bg-light-alertColour dark:bg-dark-alertColour border-2 border-light-colour2 dark:border-dark-colour2;
+  @apply transition-all duration-500;
 }
 
 #block6 .contactForm button.button-valid {
@@ -755,6 +847,7 @@
   @apply bg-light-alertColour dark:bg-dark-alertColour opacity-85;
   @apply text-light-tipTextColour dark:text-dark-tipTextColour;
   @apply border-2 border-light-alertColour dark:border-dark-alertColour;
+  /* HERE */
   @apply xs:text-[0.6rem] sm:text-[0.7rem] md:text-[0.7rem] lg:text-[0.75rem] xl:text-[0.8rem];
   @apply min-h-[2.5rem] max-w-fit -translate-y-full;
 }
@@ -768,7 +861,8 @@
 }
 
 #block6 #copyDate {
-  @apply text-light-textColour dark:text-dark-textColour;
-  @apply mb-[3%] md:mb-[5%] xs:pt-[10%] md:pt-[4%] lg:mb-[-1rem] lg:pt-[7%];
-  @apply xs:text-[0.5rem] sm:text-xs md:text-sm lg:text-xl xl:text-3xl font-normal text-right;
+  @apply text-light-textColour dark:text-dark-textColour font-normal text-right;
+  @apply xxs:text-f1 xs:text-f2 sm:text-f2 tb:text-f3 lg:text-f4 xxl:text-f5;
+  @apply xxs:mb-[1.5%] sm:mb-[2%] md:mb-[4%] tb:mb-[1%] xl:mb-[-3.5%] xxl:mb-[-4.5%];
+  @apply pt-[10%];
 }

@@ -16,22 +16,21 @@
     <header>
 
       <!-- Navigation  -->
-      <nav class="bg-light-navBarColour text-light-navTextColour dark:bg-dark-navBarColour dark:text-dark-navTextColour flex justify-between items-center fixed top-0 w-full z-[1000] transition-[top] ease-in-out duration-500">
-        <div class="flex items-center w-full md:w-auto" id="hamburgerNav">
+      <nav>
+        <div id="hamburgerNav">
 
           <!-- Hamburger Menu-->
-          <button class="hamburger-menu group order-1 md:hidden p-2 ml-2 my-4 relative w-6 h-6" aria-label="Menu">
-            <span class="absolute w-full h-0.5 bg-light-hamburgerButtonColour dark:bg-dark-hamburgerButtonColour transition-all duration-300 [--ty:-0.5rem] translate-y-[-0.5rem] origin-center group-hover:animate-[hamburgerCollapse_0.15s_ease-in-out_forwards,hamburgerCentre_0.15s_ease-in-out_0.15s_forwards,hamburgerDot_0.15s_ease-in-out_0.3s_forwards,hamburgerRotateUpper_0.15s_ease-in-out_0.45s_forwards,hamburgerExtendUpper_0.15s_ease-in-out_0.6s_forwards]"></span>
-            <span class="absolute w-full h-0.5 bg-light-hamburgerButtonColour dark:bg-dark-hamburgerButtonColour transition-all duration-300 group-hover:opacity-0"></span>
-            <span class="absolute w-full h-0.5 bg-light-hamburgerButtonColour dark:bg-dark-hamburgerButtonColour transition-all duration-300 [--ty:0.5rem] translate-y-[0.5rem] origin-center group-hover:animate-[hamburgerCollapse_0.15s_ease-in-out_forwards,hamburgerCentre_0.15s_ease-in-out_0.15s_forwards,hamburgerDot_0.15s_ease-in-out_0.3s_forwards,hamburgerRotateLower_0.15s_ease-in-out_0.45s_forwards,hamburgerExtendLower_0.15s_ease-in-out_0.6s_forwards]">
-            </span>
+          <button class="hamburger-menu group" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
           </button>
 
           <!-- Re-order icons based on screen size -->
           <div class="flex items-center order-2 ml-auto md:ml-0">
 
             <!-- Launch Control -->
-            <div id="launchControl" class="hidden relative group border-none outline-none min-w-6 -mr-2 md:mr-1 px-2 pt-1 order-1 md:order-2 bg-light-navBarColour dark:bg-dark-navBarColour text-light-textColour dark:text-dark-textColour">
+            <div id="launchControl" class="group">
               <button>
                 <img src="images/downArrow.png" class="outline-none border-none" width="20" height="20" alt="Button to open and close panels">
                 <span class="tooltip top-0 -left-[7rem] md:left-10">Activate Launch Control</span>
@@ -53,9 +52,7 @@
         </div>
 
         <!-- Navigation Menu -->
-        <ul id="mainMenu" class="hidden flex-col fixed top-[48px] pr-2 md:pr-4 w-[200px] -translate-x-full transition-transform duration-300 ease-in-out
-    text-light-navTextColour dark:text-dark-navTextColour z-[1200] md:static md:flex md:flex-row md:w-auto md:translate-x-0 md:space-x-4
-    lg:space-x-7 text-sm/4 md:text-[1.0625rem]/6 lg:text-[1.35rem]/8 xl:text-[2.3rem]/10 font-linkFont">
+        <ul id="mainMenu" class="hidden flex-col fixed top-[48px]">
           <li><a href="#content1">Overview</a></li>
           <li><a href="#content2">About</a></li>
           <li><a href="#content3">Studies</a></li>
@@ -63,9 +60,7 @@
           <li><a href="#content5">Employment</a></li>
           <li><a href="#content6">Contact</a></li>
           <li id="dropMenuTrigger" class="relative group hover:bg-light-menuBackgroundColour dark:hover:bg-dark-menuBackgroundColour">Links
-            <ul id="dropMenu" class="absolute hidden group-hover:block top-full min-w-[200px] right-10 md:right-0
-            bg-light-menuBackgroundColour dark:bg-dark-menuBackgroundColour text-light-navTextColour dark:text-dark-backColour hover:bg-light-menuBackgroundColour dark:hover:bg-dark-menuBackgroundColour hover:text-light-menuTextColour dark:hover:text-dark-menuTextColour
-            md:animate-menuBounce origin-top">
+            <ul id="dropMenu" class="absolute hidden group-hover:block top-full right-10 md:animate-menuBounce origin-top">
               <li><a href="links/toyshop/index.html" target="_blank">Toy Shop</a></li>
               <li><a href="links/captainsteve" target="_blank">CaptainSteve</a></li>
               <li><a href="links/georges/index.html" target="_blank">Georges</a></li>
@@ -425,9 +420,8 @@
           </p>
           <div id="timelineWrapper">
             <ul id="eventsList">
-              <li data-date="01/12/1986" class="event" id="event-0"></li>
-              <li data-date="01/01/1990" class="event" id="event-1">
-                <span class="eventDate">Pre-1990</span>
+              <li class="event" data-date="01/12/1986" id="event-0"></li>
+              <li class="event" data-date="01/01/1990" data-label="Pre-1990" id="event-1">
                 <div class="content">
                   <h2>The Early Years</h2>
                   <em>prior to 1990</em>
@@ -442,8 +436,7 @@
                   </ul>
                 </div>
               </li>
-              <li data-date="01/04/1994" class="event" id="event-2">
-                <span class="eventDate">Apr 1994</span>
+              <li class="event" data-date="01/04/1994" data-label="Apr 1994" id="event-2">
                 <div class="content">
                   <h2>Skippers Transport</h2>
                   <em>April 1994 to November 2000</em>
@@ -458,8 +451,7 @@
                   </ul>
                 </div>
               </li>
-              <li data-date="01/10/1996" class="event" id="event-3">
-                <span class="eventDate">Oct 1996</span>
+              <li class="event" data-date="01/10/1996" data-label="Oct 1996" id="event-3">
                 <div class="content">
                   <h2>Skippers Transport</h2>
                   <em>October 1996 to November 2000</em>
@@ -474,8 +466,7 @@
                   </ul>
                 </div>
                 </li>
-                <li data-date="01/09/2005" class="event" id="event-4">
-                  <span class="eventDate">Sep 2005</span>
+                <li class="event" data-date="01/09/2005" data-label="Sep 2005" id="event-4">
                   <div class="content">
                   <h2>John Holland Rail</h2>
                   <em>September 2005 to July 2006</em>
@@ -490,8 +481,7 @@
                   </ul>
               </div>
               </li>
-              <li data-date="01/04/2007" class="event" id="event-5">
-                <span class="eventDate">Apr 2007</span>
+              <li class="event" data-date="01/04/2007" data-label="Apr 2007" id="event-5">
                 <div class="content">
                   <h2>Fasta Couriers</h2>
                   <em>April 2007 to June 2009</em>
@@ -506,8 +496,7 @@
                   </ul>
                 </div>
               </li>
-              <li data-date="01/07/2009" class="event" id="event-6">
-                <span class="eventDate">July 2009</span>
+              <li class="event" data-date="01/07/2009" data-label="July 2009" id="event-6">
                 <div class="content">
                   <h2>Fasta Couriers</h2>
                   <em>July 2009 to February 2019</em>
@@ -522,8 +511,7 @@
                   </ul>
                 </div>
               </li>
-              <li data-date="01/03/2015" class="event" id="event-7">
-                <span class="eventDate">Mar 2015</span>
+              <li class="event" data-date="01/03/2015" data-label="Mar 2015" id="event-7">
                 <div class="content">
                   <h2>SDD Driver</h2>
                   <em>March 2015 to Feb 2025</em>
@@ -538,8 +526,7 @@
                   </ul>
                 </div>
               </li>
-              <li data-date="01/06/2019" class="event selected" id="event-8">
-                <span class="eventDate">Jun 2019</span>
+              <li class="event selected" data-date="01/06/2019" data-label="Jun 2019" id="event-8">
                 <div class="content">
                   <h2>Career Transition</h2>
                   <em>June 2019 to December 2024</em>
@@ -554,8 +541,7 @@
                   </ul>
                 </div>
               </li>
-              <li class="event" data-date="01/01/2025" id="event-9">
-                <span class="eventDate">2025+</span>
+              <li class="event" data-date="01/01/2025" data-label="2025+" id="event-9">
                 <div class="content">
                   <h2>New Horizons</h2>
                   <em>2025 and beyond</em>
