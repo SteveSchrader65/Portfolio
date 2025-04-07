@@ -53,7 +53,7 @@
   }
 
   nav #dropMenu li {
-    @apply py-[0.05rem];
+    @apply py-[0.25rem];
     @apply hover:bg-light-menuBackgroundHoverColour dark:hover:bg-dark-menuBackgroundHoverColour;
     @apply hover:text-light-menuTextColour dark:hover:text-dark-menuTextColour;
   }
@@ -132,17 +132,17 @@
     }
 
     #block5 #timelineWrapper {
-      @apply xxs:max-h-[140vh] xs:max-h-[150vh] sm:max-h-[170vh];
+      @apply xxs:min-h-[110vh] xs:min-h-[140vh] sm:min-h-[150vh];
       @apply relative overflow-hidden;
     }
 
     #block5 #timelineWrapper #timeline {
-      @apply flex-col xxs:min-h-[150vh] xs:min-h-[150vh] sm:min-h-[170vh];
+      @apply flex-col xxs:min-h-[110vh] xs:min-h-[140vh] sm:min-h-[150vh];
     }
 
     #block5 #timelineWrapper #timeline #timelineTrack {
       @apply xxs:w-[2px] xs:w-[2px] sm:w-[2px] xxs:ml-[90%] xs:ml-[90%] sm:ml-[90%] xs:-mb-60 sm:-mb-20;
-      @apply xxs:min-h-[150vh] xs:min-h-[150vh] sm:min-h-[170vh];
+      @apply xxs:min-h-[110vh] xs:min-h-[140vh] sm:min-h-[150vh];
       flex: 1 0 auto;
     }
 
@@ -167,7 +167,7 @@
     }
 
     #block5 #timelineWrapper #eventsList .event .content em {
-      @apply xxs:text-[0.3rem] xs:text-[0.4rem] sm:text-[0.5rem];
+      @apply xxs:text-[0.4rem] xs:text-[0.5rem] sm:text-[0.6rem];
     }
 
     #block5 #timelineWrapper #eventsList .event .content p {
@@ -250,20 +250,20 @@
     }
 
     #block5 #timelineWrapper {
-      @apply relative /*w-full*/ overflow-hidden mt-4;
+      @apply relative w-full overflow-hidden mt-4;
+      /* @apply md:min-h-[50rem] lg:min-h-[38rem] md:-mb-72 lg:-mb-48 xl:-mb-36; */
     }
 
+    /* Area between red timeline and top of container needs to be flexible */
     #block5 #timelineWrapper #timeline {
-      @apply justify-between w-[97.5%] items-center mx-auto z-[300];
-      @apply md:translate-y-[70%] tb:translate-y-[70%] lg:translate-y-[70%];
-      @apply xl:translate-y-[70%] xxl:translate-y-[70%];
-      /* @apply md:min-h-96 md:max-h-[30rem] tb:min-h-96 tb:max-h-[30rem]; */
-      /* @apply lg:min-h-96 lg:max-h-[30rem] xl:min-h-96 xl:max-h-[30rem]; */
-      /* @apply lg:min-h-96 lg:max-h-[30rem] xxl:min-h-96 xxl:max-h-[30rem]; */
+      @apply justify-between w-[97.5%] mx-auto z-[300];
+      @apply translate-y-[70%] items-center;
+      @apply min-h-96 max-h-[30rem];
     }
 
     #block5 #timelineWrapper #timeline #timelineTrack {
-      @apply flex-grow md:h-[3px] tb:h-[3px] lg:h-[5px] xl:h-[7px] xxl:h-[8px];
+      /* @apply flex-grow md:h-[3px] tb:h-[3px] lg:h-[5px] xl:h-[7px] xxl:h-[8px]; */
+      @apply flex-grow md:h-[2px] tb:h-[2px] lg:h-[3px] xl:h-[4px] xxl:h-[4px];
     }
 
     #block5 #timelineWrapper #eventsList {
@@ -282,19 +282,19 @@
     }
 
     #block5 #timelineWrapper #eventsList .event .content h2 {
-      @apply md:text-f6 tb:text-f6 lg:text-f6 xl:text-f6 xxl:text-f6;
+      @apply md:text-f4 tb:text-f5 lg:text-f6 xl:text-f7 xxl:text-f8;
     }
 
     #block5 #timelineWrapper #eventsList .event .content em {
-      @apply md:text-f2 tb:text-f2 lg:text-f2 xl:text-f2 xxl:text-f2;
+      @apply md:text-f1 tb:text-f2 lg:text-f3 xl:text-f4 xxl:text-f5;
     }
 
     #block5 #timelineWrapper #eventsList .content p {
-      @apply md:text-f4 tb:text-f4 lg:text-f4 xl:text-f4 xxl:text-f4;
+      @apply md:text-f2 tb:text-f3 lg:text-f4 xl:text-f5 xxl:text-f6;
     }
 
     #block5 #timelineWrapper #eventsList .event .content ul {
-      @apply md:block md:text-f2 tb:text-f2 lg:text-f2 xl:text-f2 xxl:text-f2;
+      @apply md:block md:text-f2 tb:text-f3 lg:text-f4 xl:text-f5 xxl:text-f6;
     }
 
     #block5 #timelineWrapper #eventsList .event .eventMarker,

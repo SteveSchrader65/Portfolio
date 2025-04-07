@@ -742,15 +742,20 @@ function block4Setup() {
 // ver3: 412 lines of code
 function block5Setup() {
   const eventsList = document.querySelector("#block5 #timelineWrapper #eventsList")
-  const prevBtn = document.querySelector("#block5 #timelineWrapper #timeline #prevBtn")
-  const nextBtn = document.querySelector("#block5 #timelineWrapper #timeline #nextBtn")
+  let prevBtn = document.querySelector("#block5 #timelineWrapper #timeline #prevBtn")
+  let nextBtn = document.querySelector("#block5 #timelineWrapper #timeline #nextBtn")
   const resumeButton = document.querySelector("#block5 #resumeDownloadButton")
-  const mobileCheck = window.matchMedia('(max-width: 600px)')
+  const mobileCheck = window.matchMedia("(max-width: 600px)")
   let isMobile = mobileCheck.matches
   let isAnimating = false
   let currentIndex = 0
   let positions = []
   let events = []
+
+  const svgIcons = {
+    left: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M20 9l-7 7 7 7M13 9l-7 7 7 7"/></svg>`,
+    right: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M14 9l7 7-7 7M21 9l7 7-7 7"/></svg>`,
+  }
 
   mobileCheck.addEventListener("change", _debounce(_handleScreenChange, 250))
 
@@ -779,9 +784,6 @@ function block5Setup() {
   }
 
   function _setupMarkers() {
-    // const markers = eventsList.querySelectorAll(".eventMarker")
-    // markers.forEach((marker) => marker.remove())
-
     const dates = events.filter((e) => e.dataset.label)
 
     dates.forEach((date) => {
@@ -799,7 +801,7 @@ function block5Setup() {
   }
 
   function _calculatePositions() {
-    const validEvents = events.filter(e => e.dataset.date)
+    const validEvents = events.filter((e) => e.dataset.date)
 
     if (validEvents.length < 2) return null
 
@@ -810,9 +812,9 @@ function block5Setup() {
     const startDate = parsedEvents[0]
     const endDate = parsedEvents[parsedEvents.length - 1]
 
-    positions = parsedEvents.map(event => {
-      if (isMobile) return (event - startDate) / (endDate - startDate) * 100
-      if (!isMobile) return (event - startDate) / (endDate - startDate) * 250
+    positions = parsedEvents.map((event) => {
+      if (isMobile) return ((event - startDate) / (endDate - startDate)) * 170
+      if (!isMobile) return ((event - startDate) / (endDate - startDate)) * 250
     })
 
     return positions
@@ -829,7 +831,7 @@ function block5Setup() {
     const observerOptions = {
       root: null,
       threshold: 0.1,
-      rootMargin: "-45% 0px -45% 0px",
+      rootMargin: "-40% 0px -40% 0px",
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -873,219 +875,201 @@ function block5Setup() {
   }
 
   function _displayHorizontalTimeline() {
-    prevBtn.style.display = "block"
-    nextBtn.style.display = "block"
-
-    _setTimelineArrows()
-    _setTimelineListeners()
-
-    events.forEach((event, index) => {
-      event.style.marginTop = `${positions[index]}%`
-
-      event.addEventListener("click", () => {
-        if (!isAnimating) {
-          _navigateTimeline(index, true)
-        }
-      })
-    })
-
-    function _setTimelineArrows() {
-      const svgIcons = {
-        left: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M20 9l-7 7 7 7M13 9l-7 7 7 7"/></svg>`,
-        right: `<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" class="text-light-alertColour dark:text-dark-alertColour bg-light-sectionBackColour dark:bg-dark-sectionBackColour"><path d="M14 9l7 7-7 7M21 9l7 7-7 7"/></svg>`,
-      }
-
-      prevBtn.innerHTML = currentIndex === 0 ? "" : svgIcons.left
-      nextBtn.innerHTML = currentIndex === events.length - 1 ? "" : svgIcons.right
-      prevBtn.disabled = currentIndex === 0
-      nextBtn.disabled = currentIndex === events.length - 1
-    }
-
-    function _setTimelineListeners() {
-      const markers = document.querySelectorAll(".eventMarker")
+    if (prevBtn) {
+      prevBtn.style.display = "block"
+      prevBtn.replaceWith(prevBtn.cloneNode(true))
+      prevBtn = document.querySelector("#block5 #timelineWrapper #timeline #prevBtn")
 
       prevBtn.addEventListener("click", () => {
         if (!isAnimating && currentIndex > 0) {
           _navigateTimeline(currentIndex - 1, false)
         }
       })
+    }
+
+    if (nextBtn) {
+      nextBtn.style.display = "block"
+      nextBtn.replaceWith(nextBtn.cloneNode(true))
+      nextBtn = document.querySelector("#block5 #timelineWrapper #timeline #nextBtn")
 
       nextBtn.addEventListener("click", () => {
         if (!isAnimating && currentIndex < events.length - 1) {
           _navigateTimeline(currentIndex + 1, false)
         }
       })
-
-      eventsList.addEventListener("click", (event) => {
-        const marker = event.target.closest(".eventMarker")
-
-        if (!marker || isAnimating) return
-
-        const index = Array.from(markers).indexOf(marker)
-
-        _navigateTimeline(index, true)
-      })
-
-      eventsList.addEventListener("keydown", (event) => {
-        const marker = event.target.closest(".eventMarker")
-
-        if (!marker || isAnimating) return
-
-        if (event.key === "Enter" || event.key === " ") {
-          const index = Array.from(markers).indexOf(marker)
-
-          _navigateTimeline(index, true)
-        }
-      })
     }
 
-    // function _navigateTimeline(targetIndex, selectEvent) {
-    //   if (selectEvent && events[targetIndex].classList.contains("selected")) return
-    //   if (targetIndex < 0 || targetIndex >= events.length) return
-    //   if (isAnimating) return
+    _updateNavigationArrows()
 
-    //   isAnimating = true
+    currentIndex = events.findIndex((event) => event.classList.contains("selected"))
 
-    //   const trackWidth = eventsList.offsetWidth
-    //   const targetPosition = -positions[targetIndex] + trackWidth / 2
+    if (currentIndex === -1) currentIndex = 0
 
-    //   eventsList.style.transform = `translateX(${targetPosition}px)`
+    events.forEach((event, index) => {
+      const marker = event.querySelector(".eventMarker")
 
-    //   if (selectEvent) {
-    //     events.forEach((event) => {
-    //       const marker = event.querySelector(".eventMarker")
-    //       const label = event.querySelector(".eventLabel")
+      if (marker) {
+        const newMarker = marker.cloneNode(true)
 
-    //       event.classList.remove("selected")
-    //       marker?.classList.remove("selected")
-    //       label?.classList.remove("selected")
-    //     })
+        marker.parentNode.replaceChild(newMarker, marker)
 
-    //     const currentEvent = events[currentIndex]
-    //     const targetEvent = events[targetIndex]
-    //     const currentContent = currentEvent.querySelector(".content")
-    //     const targetContent = targetEvent.querySelector(".content")
-    //     const targetMarker = targetEvent.querySelector(".eventMarker")
-    //     const targetLabel = targetEvent.querySelector(".eventLabel")
-
-    //     currentContent.classList.remove("enter-left")
-    //     currentContent.classList.add("exit-left")
-    //     targetContent.classList.remove("exit-left")
-    //     targetContent.classList.add("enter-left")
-    //     targetEvent.classList.add("selected")
-    //     targetMarker?.classList.add("selected")
-    //     targetLabel?.classList.add("selected")
-    //     currentIndex = targetIndex
-    //   }
-
-    //   _setTimelineArrows()
-
-    //   setTimeout(() => {
-    //     isAnimating = false
-    //   }, 500)
-    // }
-    function _navigateTimeline(targetIndex, selectEvent) {
-      if (selectEvent && events[targetIndex].classList.contains("selected")) return
-      if (targetIndex < 0 || targetIndex >= events.length) return
-      if (isAnimating) return
-
-      isAnimating = true
-
-      const currentEvent = events[currentIndex]
-      const targetEvent = events[targetIndex]
-      const targetPos = parseFloat(targetEvent.style.left)
-      const centerOffset = 50 - targetPos
-
-      if (selectEvent) {
-        const currentContent = currentEvent.querySelector(".content")
-        const targetContent = targetEvent.querySelector(".content")
-
-        if (currentContent) {
-          currentContent.classList.remove("card-enter")
-          currentContent.classList.add("card-exit")
-        }
-
-        setTimeout(() => {
-          events.forEach((event) => {
-            const eventMarker = event.querySelector(".dateMarker")
-            const eventLabel = event.querySelector(".dateLabel")
-            const eventContent = event.querySelector(".content")
-
-            event.classList.remove("selected")
-
-            if (eventMarker) eventMarker.classList.remove("selected")
-            if (eventLabel) eventLabel.classList.remove("selected")
-
-            if (eventContent && event !== targetEvent) {
-              eventContent.style.opacity = "0"
-              eventContent.style.pointerEvents = "none"
-            }
-          }, 500)
-
-          targetEvent.classList.add("selected")
-          targetEvent.querySelector(".dateMarker")?.classList.add("selected")
-          targetEvent.querySelector(".dateLabel")?.classList.add("selected")
-
-          if (targetContent) {
-            targetContent.style.opacity = "1"
-            targetContent.style.pointerEvents = "auto"
-            targetContent.classList.add("card-enter")
-            targetContent.classList.remove("card-exit")
+        newMarker.addEventListener("click", () => {
+          if (!isAnimating && !event.classList.contains("selected")) {
+            _navigateTimeline(index, true)
           }
         })
       }
+    })
 
-      const timelineTransition = "left 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)"
+    events.forEach((event, index) => {
+      const marker = event.querySelector(".eventMarker")
+      const content = event.querySelector(".content")
 
-      requestAnimationFrame(() => {
-        events.forEach((event) => {
-          const marker = event.querySelector(".dateMarker")
-          const label = event.querySelector(".dateLabel")
-          const currentPos = parseFloat(event.style.left)
-          const newPos = currentPos + centerOffset
+      if (content) {
+        content.classList.remove("card-enter", "card-exit")
+        content.style.opacity = index === currentIndex ? "1" : "0"
+        content.style.pointerEvents = index === currentIndex ? "auto" : "none"
+      }
 
-          event.style.transition = timelineTransition
+      if (index === currentIndex) {
+        event.classList.add("selected")
 
-          if (marker) marker.style.transition = timelineTransition
-          if (label) label.style.transition = timelineTransition
+        if (marker) marker.classList.add("selected")
+      } else {
+        event.classList.remove("selected")
 
-          requestAnimationFrame(() => {
-            event.style.left = `${newPos}%`
+        if (marker) marker.classList.remove("selected")
+      }
+    })
 
-            if (marker) marker.style.left = `${newPos}%`
-            if (label) label.style.left = `${newPos}%`
-          })
-        })
+    if (positions && positions.length > 0) {
+      const validEvents = events.filter((e) => e.dataset.date)
+      const selectedEvent = events[currentIndex]
+      const selectedPos = positions[validEvents.indexOf(selectedEvent)] || 50
+      const centerOffset = 50 - selectedPos
 
-        currentIndex = targetIndex
-        prevBtn.innerHTML = currentIndex === 0 ? "" : svgIcons.left
-        nextBtn.innerHTML = currentIndex === events.length - 1 ? "" : svgIcons.right
-        prevBtn.disabled = currentIndex === 0
-        nextBtn.disabled = currentIndex === events.length - 1
+      validEvents.forEach((event, index) => {
+        const marker = event.querySelector(".eventMarker")
+        const newPos = positions[index] + centerOffset
+
+        event.style.left = `${newPos}%`
+        if (marker) marker.style.left = `${newPos}%`
+      })
+    }
+
+    const selectedEvent = events[currentIndex]
+    if (selectedEvent) {
+      const content = selectedEvent.querySelector(".content")
+      if (content) {
+        content.classList.add("card-enter")
 
         setTimeout(() => {
-          events.forEach((event) => {
-            const marker = event.querySelector(".dateMarker")
-            const label = event.querySelector(".dateLabel")
-            const content = event.querySelector(".content")
-
-            event.style.transition = ""
-
-            if (marker) marker.style.transition = ""
-            if (label) label.style.transition = ""
-
-            if (content) {
-              content.classList.remove("card-exit")
-
-              if (!event.classList.contains("selected")) {
-                content.classList.remove("card-enter")
-              }
-            }
-          })
-
-          isAnimating = false
+          content.classList.remove("card-enter")
         }, 1000)
+      }
+    }
+  }
+
+  function _navigateTimeline(targetIndex, selectEvent) {
+    if (targetIndex < 0 || targetIndex >= events.length) return
+    if (isAnimating) return
+    if (selectEvent && events[targetIndex].classList.contains("selected")) return
+
+    isAnimating = true
+
+    const currentEvent = events[currentIndex]
+    const targetEvent = events[targetIndex]
+    const validEvents = events.filter((e) => e.dataset.date)
+    const targetPos = positions[validEvents.indexOf(targetEvent)] || 50
+    const centerOffset = 50 - targetPos
+
+    if (selectEvent) {
+      const currentContent = currentEvent.querySelector(".content")
+      const targetContent = targetEvent.querySelector(".content")
+
+      if (currentContent) {
+        currentContent.classList.remove("card-enter")
+        currentContent.classList.add("card-exit")
+      }
+
+      events.forEach((event) => {
+        const eventMarker = event.querySelector(".eventMarker")
+        const eventContent = event.querySelector(".content")
+
+        event.classList.remove("selected")
+        if (eventMarker) eventMarker.classList.remove("selected")
+
+        if (eventContent && event !== targetEvent) {
+          eventContent.style.opacity = "0"
+          eventContent.style.pointerEvents = "none"
+        }
       })
+
+      targetEvent.classList.add("selected")
+
+      const targetMarker = targetEvent.querySelector(".eventMarker")
+
+      if (targetMarker) targetMarker.classList.add("selected")
+
+      if (targetContent) {
+        setTimeout(() => {
+          targetContent.style.opacity = "1"
+          targetContent.style.pointerEvents = "auto"
+          targetContent.classList.add("card-enter")
+          targetContent.classList.remove("card-exit")
+        }, 500)
+      }
+    }
+
+    const timelineTransition = "left 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)"
+
+    requestAnimationFrame(() => {
+      validEvents.forEach((event, index) => {
+        const marker = event.querySelector(".eventMarker")
+        const newPos = positions[index] + centerOffset
+
+        event.style.transition = timelineTransition
+        if (marker) marker.style.transition = timelineTransition
+
+        requestAnimationFrame(() => {
+          event.style.left = `${newPos}%`
+          if (marker) marker.style.left = `${newPos}%`
+        })
+      })
+
+      currentIndex = targetIndex
+      _updateNavigationArrows()
+
+      setTimeout(() => {
+        validEvents.forEach((event) => {
+          const marker = event.querySelector(".eventMarker")
+          const content = event.querySelector(".content")
+
+          event.style.transition = ""
+          if (marker) marker.style.transition = ""
+
+          if (content) {
+            content.classList.remove("card-exit")
+            if (!event.classList.contains("selected")) {
+              content.classList.remove("card-enter")
+            }
+          }
+        })
+
+        isAnimating = false
+      }, 600)
+    })
+  }
+
+  function _updateNavigationArrows() {
+    if (prevBtn) {
+      prevBtn.innerHTML = currentIndex === 0 ? "" : svgIcons.left
+      prevBtn.disabled = currentIndex === 0
+    }
+
+    if (nextBtn) {
+      nextBtn.innerHTML = currentIndex === events.length - 1 ? "" : svgIcons.right
+      nextBtn.disabled = currentIndex === events.length - 1
     }
   }
 
@@ -1383,6 +1367,7 @@ function _thankYouBubble(buttonElement, source = "block5") {
 
     - !! Apply new sizings to Employment section
     - !! Develop a concept for Overview section !!
+        (title plate similar to CaptSteve. Click on plate to view portfolio site)
     - !! Optimize all images !!
 */
 function init() {
