@@ -1345,7 +1345,7 @@ nav #scrollProgress {
 
   @media (min-width: 401px) {
     #block5 #timelineWrapper #eventsList .event .content ul li {
-      color: ;
+      font-size: 0.6rem;
     }
   }
 
@@ -1626,7 +1626,6 @@ nav #scrollProgress {
   }
 
   #block5 #timelineWrapper #timeline #timelineTrack {
-    /* @apply flex-grow md:h-[3px] tb:h-[3px] lg:h-[5px] xl:h-[7px] xxl:h-[8px]; */
     flex-grow: 1;
   }
 
@@ -1672,31 +1671,25 @@ nav #scrollProgress {
 
   @media (min-width: 551px) {
     #block5 #timelineWrapper #eventsList .event .content {
-      width: 45%;
+      width: 60%;
     }
   }
 
   @media (min-width: 751px) {
     #block5 #timelineWrapper #eventsList .event .content {
-      width: 50%;
+      width: 65%;
     }
   }
 
   @media (min-width: 1001px) {
     #block5 #timelineWrapper #eventsList .event .content {
-      width: 55%;
+      width: 70%;
     }
   }
 
   @media (min-width: 1301px) {
     #block5 #timelineWrapper #eventsList .event .content {
-      width: 60%;
-    }
-  }
-
-  @media (min-width: 1701px) {
-    #block5 #timelineWrapper #eventsList .event .content {
-      width: 65%;
+      width: 75%;
     }
   }
 
@@ -3863,10 +3856,6 @@ img:not([width]),
 :is(.dark #block6 .errorBubble) {
   --tw-border-opacity: 1;
   border-color: rgb(179 0 0 / var(--tw-border-opacity));
-}
-
-#block6 .errorBubble {
-  /* HERE */
 }
 
 @media (min-width: 301px) {

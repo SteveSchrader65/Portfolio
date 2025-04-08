@@ -179,7 +179,7 @@
     }
 
     #block5 #timelineWrapper #eventsList .event .content ul li {
-      @apply xxs:text-[0.4rem] xs:text-[0.5rem] sm:text-[] ml-[0.5rem];
+      @apply xxs:text-[0.4rem] xs:text-[0.5rem] sm:text-[0.6rem] ml-[0.5rem];
     }
 
     #block5 #timelineWrapper #eventsList .event .eventMarker {
@@ -250,20 +250,19 @@
     }
 
     #block5 #timelineWrapper {
-      @apply relative w-full overflow-hidden mt-4;
+      @apply /*absolute*/relative w-full overflow-hidden mt-4;
       /* @apply md:min-h-[50rem] lg:min-h-[38rem] md:-mb-72 lg:-mb-48 xl:-mb-36; */
     }
 
     /* Area between red timeline and top of container needs to be flexible */
     #block5 #timelineWrapper #timeline {
-      @apply justify-between w-[97.5%] mx-auto z-[300];
+      @apply /* relative */ justify-between w-[97.5%] mx-auto z-[300];
       @apply translate-y-[70%] items-center;
       @apply min-h-96 max-h-[30rem];
     }
 
     #block5 #timelineWrapper #timeline #timelineTrack {
-      /* @apply flex-grow md:h-[3px] tb:h-[3px] lg:h-[5px] xl:h-[7px] xxl:h-[8px]; */
-      @apply flex-grow md:h-[2px] tb:h-[2px] lg:h-[3px] xl:h-[4px] xxl:h-[4px];
+      @apply /*relative*/ flex-grow md:h-[2px] tb:h-[2px] lg:h-[3px] xl:h-[4px] xxl:h-[4px];
     }
 
     #block5 #timelineWrapper #eventsList {
@@ -276,7 +275,7 @@
     }
 
     #block5 #timelineWrapper #eventsList .event .content {
-      @apply md:w-[45%] tb:w-[50%] lg:w-[55%] xl:w-[60%] xxl:w-[65%];
+      @apply md:w-[60%] tb:w-[65%] lg:w-[70%] xl:w-[75%];
       @apply opacity-100 pointer-events-auto z-[450];
       @apply absolute left-1/2 -translate-x-1/2 top-0;
     }
@@ -847,7 +846,6 @@
   @apply bg-light-alertColour dark:bg-dark-alertColour opacity-85;
   @apply text-light-tipTextColour dark:text-dark-tipTextColour;
   @apply border-2 border-light-alertColour dark:border-dark-alertColour;
-  /* HERE */
   @apply xs:text-[0.6rem] sm:text-[0.7rem] md:text-[0.7rem] lg:text-[0.75rem] xl:text-[0.8rem];
   @apply min-h-[2.5rem] max-w-fit -translate-y-full;
 }

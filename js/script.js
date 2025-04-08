@@ -739,13 +739,12 @@ function block4Setup() {
   )
 }
 
-// ver3: 412 lines of code
 function block5Setup() {
   const eventsList = document.querySelector("#block5 #timelineWrapper #eventsList")
   let prevBtn = document.querySelector("#block5 #timelineWrapper #timeline #prevBtn")
   let nextBtn = document.querySelector("#block5 #timelineWrapper #timeline #nextBtn")
   const resumeButton = document.querySelector("#block5 #resumeDownloadButton")
-  const mobileCheck = window.matchMedia("(max-width: 600px)")
+  const mobileCheck = window.matchMedia("(max-width: 550px)")
   let isMobile = mobileCheck.matches
   let isAnimating = false
   let currentIndex = 0
