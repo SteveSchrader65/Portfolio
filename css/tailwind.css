@@ -250,23 +250,21 @@
     }
 
     #block5 #timelineWrapper {
-      @apply /*absolute*/relative w-full overflow-hidden mt-4;
-      /* @apply md:min-h-[50rem] lg:min-h-[38rem] md:-mb-72 lg:-mb-48 xl:-mb-36; */
+      @apply relative w-full mt-4 overflow-hidden;
     }
 
-    /* Area between red timeline and top of container needs to be flexible */
     #block5 #timelineWrapper #timeline {
-      @apply /* relative */ justify-between w-[97.5%] mx-auto z-[300];
+      @apply justify-between w-[97.5%] mx-auto z-[300];
       @apply translate-y-[70%] items-center;
       @apply min-h-96 max-h-[30rem];
     }
 
     #block5 #timelineWrapper #timeline #timelineTrack {
-      @apply /*relative*/ flex-grow md:h-[2px] tb:h-[2px] lg:h-[3px] xl:h-[4px] xxl:h-[4px];
+      @apply flex-grow md:h-[2px] tb:h-[2px] lg:h-[3px] xl:h-[4px] xxl:h-[4px];
     }
 
     #block5 #timelineWrapper #eventsList {
-      @apply p-0 m-0;
+      @apply p-0 m-0 /*pb-4 Will require re-alignment of eventMarkers */;
     }
 
     #block5 #timelineWrapper #eventsList .event {
@@ -275,7 +273,7 @@
     }
 
     #block5 #timelineWrapper #eventsList .event .content {
-      @apply md:w-[60%] tb:w-[65%] lg:w-[70%] xl:w-[75%];
+      @apply md:w-[70%];
       @apply opacity-100 pointer-events-auto z-[450];
       @apply absolute left-1/2 -translate-x-1/2 top-0;
     }
@@ -322,18 +320,18 @@
 
     #block5 #timelineWrapper #timeline #prevBtn,
     #block5 #timelineWrapper #timeline #nextBtn {
-      @apply absolute outline-none bg-none cursor-pointer;
-      @apply -translate-y-1/2 hover:scale-[120%];
-      @apply md:w-4 md:h-4 tb:w-6 tb:h-6 lg:w-8 lg:h-8 xl:w-9 xl:h-9 xxl:w-10 xxl:h-10;
+      @apply absolute outline-none bg-none cursor-pointer hover:scale-[120%];
+      @apply md:-translate-y-1/2 tb:-translate-y-[68%] lg:-translate-y-[55%];
+      @apply md:w-4 md:h-4 tb:w-6 tb:h-6 lg:w-8 lg:h-8 xl:w-9 xl:h-9 xxl:w-12 xxl:h-12;
       @apply text-light-alertColour dark:text-dark-alertColour;
     }
 
     #block5 #timelineWrapper #timeline #prevBtn {
-      @apply -left-3;
+      @apply md:-left-0 tb:-left-2 lg:-left-1 lg:-translate-y-1/2;
     }
 
     #block5 #timelineWrapper #timeline #nextBtn {
-      @apply -right-3;
+      @apply md:right-0 tb:-right-0.5 lg:-right-1;
     }
 
     .card-enter {
@@ -488,36 +486,6 @@
   .curve .shape-fill {
     @apply fill-light-backColour dark:fill-dark-backColour;
   }
-
-  .thank-you-bubble {
-    @apply absolute p-2 text-center rounded-xl bottom-5 min-w-[10rem] z-[500] whitespace-nowrap;
-    @apply bg-light-successColour dark:bg-dark-successColour;
-    @apply text-light-textColour dark:text-dark-textColour;
-    font-size: 1.2rem;
-    pointer-events: none;
-    @apply animate-floatUp;
-  }
-
-  .thank-you-bubble.thank-you-bubble-contact {
-    @apply left-1/2 -bottom-80;
-  }
-
-  .thank-you-bubble::before {
-    content: '';
-    position: absolute;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    /* border-top: 8px solid var(--bgColor); */
-    /* z-index: 10; */
-  }
-
-  .thank-you-bubble::after {
-    content: '';
-    position: absolute;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    /* border-top: 10px solid var(--textColor); */
-  }
 }
 
 /* || Overview */
@@ -606,8 +574,7 @@
 
 /* || Projects */
 #block4 #postIt li {
-  @apply ml-[8%];
-  background-color: transparent;
+  @apply ml-[8%] bg-none;
 }
 
 #block4 #postIt li:hover {
@@ -685,19 +652,28 @@
 }
 
 #block5 #resumeDownloadButton {
-  cursor: pointer;
-  display: inline-block;
+  @apply cursor-pointer relative inline-block outline-none;
   transition: opacity 0.2s ease;
-  position: relative;
-}
-
-#block5 #resumeDownloadButton:focus {
-  outline: 2px solid #0066cc;
-  outline-offset: 2px;
 }
 
 #block5 #resumeDownloadButton:hover {
-  opacity: 0.8;
+  @apply opacity-80;
+}
+
+.thank-you-bubble {
+  @apply xxs:text-f2 md:text-f3 lg:text-f4 xl:text-f5 xxl:text-f6;
+  @apply absolute left-[2%] p-3 bottom-0 rounded-md pointer-events-none z-[500];
+  @apply bg-light-contactButtonHoverColour dark:bg-dark-contactButtonHoverColour text-light-textColour dark:text-dark-textColour border border-light-colour1 dark:border-dark-colour2;
+  @apply animate-floatUp;
+}
+
+.thank-you-bubble::before,
+.thank-you-bubble::after {
+  @apply content-[''] absolute border-l-4 border-r-4 z-[500];
+}
+
+.thank-you-bubble.thank-you-bubble-contact {
+  @apply left-1/2;
 }
 
 /* || Contact */

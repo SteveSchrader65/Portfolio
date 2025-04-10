@@ -96,13 +96,10 @@ function navbarHide() {
 
 function updateScrollProgress() {
   const scrollProgress = document.querySelector("#scrollProgress")
-
-  // Calculate scroll percentage
   const scrollTop = window.scrollY
   const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
   const scrollPercentage = (scrollTop / scrollHeight) * 100
 
-  // Apply transform
   scrollProgress.style.transform = `scaleX(${scrollPercentage / 100})`
 }
 
@@ -1092,13 +1089,16 @@ function block5Setup() {
 
   resumeButton.addEventListener("click", function (e) {
     e.preventDefault()
+
     if (this.dataset.downloading) return
+
+    this.dataset.downloading = "true"
+    _thankYouBubble(this, "block5")
 
     const link = document.createElement("a")
 
     link.href = this.href
     link.download = "resumeSteveSchrader.pdf"
-    this.dataset.downloading = "true"
     link.style.display = "none"
     document.body.appendChild(link)
 
@@ -1112,8 +1112,6 @@ function block5Setup() {
         delete this.dataset.downloading
       }
     }, 1000)
-
-    _thankYouBubble(this)
   })
 
   return () => {
@@ -1167,6 +1165,7 @@ async function block6Setup() {
       setTimeout(() => {
         isShowingErrors = false
       }, 3000)
+
       return
     }
 
@@ -1190,7 +1189,11 @@ async function block6Setup() {
       }
 
       if (response.status === 200) {
-        _thankYouBubble(submitButton, "block6")
+        try {
+          _thankYouBubble(submitButton, "block6")
+        } catch (error) {
+          console.error("Error in _thankYouBubble:", error)
+        }
 
         this.reset()
 
@@ -1327,17 +1330,11 @@ async function block6Setup() {
   document.querySelector("#copyDate").innerHTML = "&copySteve Schrader " + currentYear
 }
 
-function _thankYouBubble(buttonElement, source = "block5") {
+function _thankYouBubble(buttonElement, source) {
   const bubbleContainer = document.createElement("div")
   const bubble = document.createElement("div")
 
   bubbleContainer.style.position = "relative"
-
-  if (source == "block5") {
-    bubbleContainer.style.left = "50%"
-    bubbleContainer.style.transform = "translateX(-50%)"
-  }
-
   bubble.className = "thank-you-bubble"
 
   if (source == "block6") {
@@ -1345,25 +1342,20 @@ function _thankYouBubble(buttonElement, source = "block5") {
   }
 
   bubble.textContent = "Thank You!"
-
   buttonElement.parentNode.insertBefore(bubbleContainer, buttonElement.nextSibling)
   bubbleContainer.appendChild(bubble)
-
   bubble.addEventListener("animationend", () => bubbleContainer.remove())
 }
 
 /*
   TO-DO LIST:
-    - Re-introduce sections. Focus on xs: sizing and up before moving to next
+  - Re-introduce sections. Focus on xs: sizing and up before moving to next
       : Overview
       : About
       : Studies
       : Projects
 
       : Employment
-    - Align vertical timeline with dateLabels
-    - thankYou bubble not displaying for resume download
-
     - !! Apply new sizings to Employment section
     - !! Develop a concept for Overview section !!
         (title plate similar to CaptSteve. Click on plate to view portfolio site)
